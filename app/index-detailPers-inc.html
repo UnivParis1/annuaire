@@ -1,0 +1,52 @@
+<div ng-if="p.resultSeach.length > 0">
+  <ol class="breadcrumb">
+    <li ng-repeat="crumb in p.breadcrumbApp">
+        <!--a href="#"  ng-click="p.clickBreadC(crumb)" ng-model="p.searchCrit.filter_supannEntiteAffectation" >{{ crumb.name }}</a>-->
+        <a href="#"  ng-click="p.searchUserFromBreadCrumb(crumb)" ng-model="p.searchCrit.filter_supannEntiteAffectation" >{{ crumb.name }}</a>
+
+    </li>
+  </ol>
+
+</div>
+<div class="col-md-12 alt" >
+  <div class="row" ng-repeat="res in p.resultSeach">
+
+      <div class="col-md-12">
+        <h2 class="cap">{{res.person.givenName}} {{res.person.sn}}
+          <i ng-show="res.person.supannCivilite!='M.'" ></i>
+          <i ng-show="res.person.supannCivilite=='M.'" class="fa fa-male"></i>
+        </h2>
+      </div>
+      <div class="col-md-3">
+            <!--label class="col-sm-2 control-label">Emploi type</label><p class="form-control-static" ng-repeat="supannActivite in res.person.supannActivite">{{supannActivite}}</p>-->
+            <label ng-show="res.person.supannActivite">Emploi type</label><span class="uneditable-input" ng-repeat="supannActivite in res.person.supannActivite"> {{supannActivite}}</span><br>
+            <label ng-show="res.person.supannRoleGenerique || res.person.description">Fonction(s)</label><span class="uneditable-input" ng-repeat="supannRoleGenerique in res.person.supannRoleGenerique"> {{supannRoleGenerique}}</br>
+                                      <span class="uneditable-input" ng-repeat="description in res.person.description">{{description}}</span><br>
+            <label>Structure(s)/Composante(s)</label><span class="uneditable-input" ng-repeat="affectation in res.person['supannEntiteAffectation-all']"> {{affectation.description}}</span><br>
+            <label>Courriel</label> <span class="uneditable-input"> {{res.person.mail}}</span>
+      </div>
+
+      <div class="col-md-3">
+        <label>Téléphone fixe </label><span class="uneditable-input" ng-repeat="telephoneNumber in res.person.telephoneNumber"> {{telephoneNumber}}</span><br>
+        <label>Tél secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in res.person.supannAutreTelephone"> {{supannAutreTelephone}}</span><br>
+        <label>Tél mobile </label> <span class="uneditable-input" ng-repeat="mobile in res.person.mobile"> {{mobile}}</span><br>
+        <label>Fax </label><span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in res.person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
+
+      </div>
+      <div class="col-md-3">
+        <label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br>
+        <label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br>
+        <label>Etage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in res.person.up1FloorNumber"> {{up1FloorNumber}}</span><br>
+        <!--label>Adresse profesionnelle</label><span class="uneditable-input"> {{res.person.postalAddress}}</span><br>-->
+        <div ng-if="res.person.postalAddress"><label>Adresse postale</label> {{res.person.postalAddress}}
+          <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{res.person.postalAddress}}" target="_blank"><img title="Carte" src="/images/map.png" class="img-responsive"></a>
+        </div>
+      </div>
+
+      <div class="col-md-1 text-center">
+          <img title="{{res.person.givenName}}" src="https://photo-ldap.univ-paris1.fr/ldap.php?test=1&uid={{res.person.uid}}" class="img-thumbnail img-responsive img-circle center-block">
+      </div>
+
+
+  </div>
+</div>

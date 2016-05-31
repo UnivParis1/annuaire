@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app="myApp">
+  <head>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="personService.js"></script>
+    <script src="personCtrl.js"></script>
+    <script src="translations.js"></script>
+    <script src="routes.js"></script>
+      <script src="directives.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div ng-controller="personController as p">
+        <div class="row panelshadow"">
+            <div class="col-md-3"><img src="/images/logo_paris1.png" alt="..."></div>
+            <div class="col-md-7" ng-include="'index-simpleSearch-inc.html'"></div>
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="p.deconnexion()">Connexion</button>
+            </div>
+
+        </div>
+        <div class="row" >
+           <div class="col-md-2">
+                <ul class="nav nav-stacked">
+                    <!--li style="border-top: 1px solid #f3f3f3;border-right: 1px solid #f3f3f3;"><a href="#RechercheSimple"> Recherche simple</a></li-->
+                    <!--li ><a href="#RechercheAvancee"> Recherche avancée</a></li>-->
+                    <li ><a href="#Organigramme">Organigramme Paris1</a></li>
+                    <li style="border-top: 1px solid #f3f3f3;;"><a href="#Preference">Preference</a></li>
+                    <li style="border-top: 1px solid #f3f3f3"><a href="#Apropos"> A propos</a></li>
+                </ul>
+           </div>
+           <div class="col-md-10 radio-inline" >
+           <!-- angular templating -->
+           <!-- this is where content will be injected -->
+          <div ng-view></div>
+        </div>
+      </div>
+      </div><!--Fin ng-controller="personController as p"-->
+      <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+      <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+      <!--annuaire css ne fonctionne pas -->
+      <link href="../style/annuaire.css" rel="stylesheet" media="screen">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+      <script src="https://wsgroups.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
+    </div>
+    </body>
+</html>

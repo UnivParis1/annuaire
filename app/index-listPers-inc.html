@@ -1,0 +1,46 @@
+<div class="row" ng-if="p.resultSeach.length >1" >
+  <div class="col-md-12" >
+    <h3 >{{p.resultSeach.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
+
+    <div class="bg-info" style="padding: 6px" >Affiner par:
+       <div class="radio-inline" ng-repeat="v in p.listStatus">
+          <input type="radio" ng-model="p.filter" ng-init="$index==0?(p.filter=v.id):''" name="filterName" id="{{v.id}}" value="{{v.id}}"/>{{v.translationTag|translate}}
+        </div>
+    </div>
+    </br>
+  </div>
+</div>
+
+
+
+<div class="row" ng-if="p.resultSeach.length > 0" >
+  <div class="col-md-12" >
+    <table class="table table-striped" >
+      <tr ng-repeat="res in p.resultSeach | filter:p.filter" ng-click='p.showUser(res.person.uid) ; p.showDetailPers=true' >
+          <!-- a voir quel syntaxe utilise pour img-thumbnail-->
+          <!--td><img title="{{res.person.givenName}}" src="{{p.urlJpegPhoto}}{{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
+          <td><img title="{{res.person.givenName}}" src="https://photo-ldap.univ-paris1.fr/ldap.php?test=1&uid={{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>
+          <td>
+              <div>{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</div>
+              <div ng-repeat="role in res.person.supannRoleGenerique">{{role}}</div>
+              <div ng-repeat="desc in res.person.description">{{desc}}</div>
+              <div ng-repeat="info in res.person.info">{{info}}</div>
+              <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{res.person.mail}}</a></div>
+          </td>
+          <td>
+            <div ng-repeat="affectation in res.person['supannEntiteAffectation-all']">
+            {{affectation.description}}
+            </div>
+          </td>
+          <td><div ng-repeat="telNum in res.person.telephoneNumber">{{telNum}}</div>
+              <div ng-repeat="telAut in res.person.supannAutreTelephone">{{telAut}}</div>
+              <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}}</div>
+              <!--si authentifié-->
+              <div ng-if="p.authenticated && res.person.mobile">
+                <div ng-repeat="mobile in res.person.mobile">{{mobile}}</div>
+              </div>
+          </td>
+      </tr>
+    </table>
+  </div>
+  </div>

@@ -1,0 +1,19 @@
+{
+  "name": "angular-typescript-example",
+  "version": "0.0.0",
+  "scripts": {
+    "postinstall": "tsd reinstall -r -o",
+    "tsc": "tsc -p app --watch",
+    "start": "live-server --open=app"
+  },
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-translate": "^2.9.0",
+    "bootstrap": "^3.3.6"
+  },
+  "devDependencies": {
+    "live-server": "~0.8.2",
+    "typescript": "~1.6.2",
+    "tsd": "~0.6.5"
+  }
+}

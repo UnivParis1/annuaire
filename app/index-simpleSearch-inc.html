@@ -1,0 +1,10 @@
+  <div class="input-group">
+    <!--Deux recherches possibles:
+          soit en saisissant le crirère de rechche+Touche Enter==> ng-submit=p.searchUser
+          soit en saisissant le crirère de rechche+sélection dans la liste==> on-select=p.showUser
+    -->
+    <form ng-submit="p.searchUser(p.searchCrit.token)">
+      <input type="text" autocomplete-user ng-model="p.searchCrit.token" class="form-control" on-select="p.showUser(p.searchCrit.token)" placeholder="Recherche rapide en saisissant votre nom et/ou prénom">
+    </form>
+      <input type="text" autocomplete-group ng-model="p.loginStructure" class="form-control"  on-select="p.initTokenStruture(p.loginStructure.key)" placeholder="Recherche rapide en saisissant une structure">
+  </div>
