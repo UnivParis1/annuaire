@@ -1,6 +1,9 @@
 function autocompleteUser () {
-  let globals={ wsgroupsURL:'https://wsgroups.univ-paris1.fr'};
-  var searchUserURL = globals.wsgroupsURL + '/searchUserCAS';
+  //let globals={ wsgroupsURL:'https://wsgroups.univ-paris1.fr'};
+  //var searchUserURL = globals.wsgroupsURL + '/searchUserCAS';
+  let globals={ wsgroupsURL:'https://wsgroups-test.univ-paris1.fr'};
+  var searchUserURL = globals.wsgroupsURL + '/searchUser';
+
 
   return {
     restrict: 'A',
