@@ -7,6 +7,7 @@ class personCtrl
 class PersonController {
   resultSearch={};
   breadcrumbApp=[];
+  breadcrumbTotal=[];
   searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:''};
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
               {id: 'teacher', translationTag: "STATUS_TEACHER"},
@@ -17,7 +18,6 @@ class PersonController {
               {id: 'alum', translationTag: "STATUS_ALUM"}
 
             ];
-  //urlJpegPhoto="https://photo-ldap.univ-paris1.fr/ldap.php?test=1&uid=";
   searchCritStructure={depth:10,key:''};
   authenticated=true;
   searchNoauthMaxResult=5;// Résultat maximal à afficher si pas authentifié
@@ -25,11 +25,11 @@ class PersonController {
   routeProviderParam='/showListPers';
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
+  IsMobile=false;
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
+
   }
-  /*
-  */
   private _getSearchPersons = (text: {}) => {
     if (text!=null) {
         return this.personService.searchPersons(text).then(
@@ -47,31 +47,42 @@ class PersonController {
   searchUser = (token, maxRows = null,filter_supannEntiteAffectation ) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows =  this.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
-    let searchCrit = { token, maxRows,filter_supannEntiteAffectation };
-
+    this.isMobile();
+    // Ne prendre que les personnes qui ne sont pas dans la liste rouge
+    let searchCrit = { token, maxRows,filter_supannEntiteAffectation};
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
     //Parcourrir la liste des personnes trouvées dans returnRessult et affecter dans objet person
     // puis retourne une liste de type person.
     this.resultSearch = returnResult.map(e => new personCtrl(e));
-    if (this.showDetailPers){
+    // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+    if((this.showDetailPers) || Object.keys(this.resultSearch).length ==1){
       this.showDetailPers = false;
-      var supannEntiteAffectationPrincipale;
+      var supannEntiteAffectation;
       var mailTo;
       for (let item of returnResult) {
-        Object.keys(item).map(function(e) {
           mailTo=item['mail'];
-          supannEntiteAffectationPrincipale=item['supannEntiteAffectationPrincipale'];
-          return supannEntiteAffectationPrincipale;
-          }
-        );
+          supannEntiteAffectation=  item['supannEntiteAffectation'];
+          break;
       }
-      this.searchCrumbUrl(supannEntiteAffectationPrincipale);
-      this.routeProviderParam='/showDetailPers'+mailTo;
+      // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
+      /*this.$q.all(supannEntiteAffectation.map(it => this.searchCrumbUrl(it))).then(breadcrumbTotal =>
+        this.breadcrumbTotal = breadcrumbTotal
+      );*/
+      if (supannEntiteAffectation!=null){
+        let breadcrumbTotal = this.breadcrumbTotal = [];
+        for (let it of supannEntiteAffectation) {
+          this.searchCrumbUrl(it).then(breadcrumb =>
+             breadcrumbTotal.push(breadcrumb)
+          );
+        }
+      }
+
+      //Envoi vers URL détail en passant en paramètre le mail
+      this.routeProviderParam='/showDetailPers/'+mailTo;
     }
     else this.routeProviderParam='/showListPers';
     this.$location.path(this.routeProviderParam);
     })
-
   }
 
   //Rechercher une personne
@@ -109,9 +120,7 @@ class PersonController {
       if (key.indexOf("structures-")> -1){key=key.replace('structures-','')}
       this.searchCrit.token=null;
       this.searchCrit.filter_supannEntiteAffectation=key;
-      //ajouter la propriété filter_supannEntiteAffectation dans searchCrit
-    //  Object.defineProperty(this.searchCrit, 'filter_supannEntiteAffectation', {value : key,writable : true,enumerable : true,configurable : true});
-     this.searchUser(null,null,key);
+      this.searchUser(null,null,key);
    }
 
   }
@@ -120,9 +129,9 @@ class PersonController {
     // si param ne contient pas 'structures-''
     if (param.indexOf("structures-")== -1){param='structures-'+param}
     this.searchCritStructure.key=''+param;
-    this._getSearchCrumbUrl(this.searchCritStructure).then((returnResultGroup : Array<{}>) => {
-    this.breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
-    this.breadcrumbApp.reverse();
+    return this._getSearchCrumbUrl(this.searchCritStructure).then((returnResultGroup : Array<{}>) => {
+       this.breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
+       return this.breadcrumbApp.reverse();
     })
   }
 
@@ -133,8 +142,16 @@ class PersonController {
     // supprimer structures- du paramètre, à revoir si nouvelle URL sans structures
     var paramStruct=param.replace('structures-','');
     this.searchCritStructure.key=''+param;
-    this.searchCrumbUrl(param);
+    //this.searchCrumbUrl(param);
     this.searchUser(null,null, paramStruct);
+  }
+
+  isMobile=()=>{
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      // You are in mobile browser
+      this.IsMobile=true;
+    }
+
   }
 
 
