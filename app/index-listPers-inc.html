@@ -1,6 +1,6 @@
-<div class="row" ng-if="p.resultSeach.length >1" >
+<div class="row" ng-if="p.resultSearch.length >1" >
   <div class="col-md-12" >
-    <h3 >{{p.resultSeach.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
+    <h3 >{{p.resultSearch.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
 
     <div class="bg-info" style="padding: 6px" >Affiner par:
        <div class="radio-inline" ng-repeat="v in p.listStatus">
@@ -13,10 +13,10 @@
 
 
 
-<div class="row" ng-if="p.resultSeach.length > 0" >
+<div class="row" ng-if="p.resultSearch.length > 0" >
   <div class="col-md-12" >
     <table class="table table-striped" >
-      <tr ng-repeat="res in p.resultSeach | filter:p.filter" ng-click='p.showUser(res.person.uid) ; p.showDetailPers=true' >
+      <tr ng-repeat="res in p.resultSearch | filter:p.filter" ng-click='p.showUser(res.person.uid) ; p.showDetailPers=true' >
           <!-- a voir quel syntaxe utilise pour img-thumbnail-->
           <!--td><img title="{{res.person.givenName}}" src="{{p.urlJpegPhoto}}{{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
           <td><img title="{{res.person.givenName}}" src="https://photo-ldap.univ-paris1.fr/ldap.php?test=1&uid={{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>

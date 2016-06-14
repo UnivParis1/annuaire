@@ -5,7 +5,7 @@ class personCtrl
 }
 
 class PersonController {
-  resultSeach={};
+  resultSearch={};
   breadcrumbApp=[];
   searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:''};
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
@@ -52,7 +52,7 @@ class PersonController {
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
     //Parcourrir la liste des personnes trouvées dans returnRessult et affecter dans objet person
     // puis retourne une liste de type person.
-    this.resultSeach = returnResult.map(e => new personCtrl(e));
+    this.resultSearch = returnResult.map(e => new personCtrl(e));
     if (this.showDetailPers){
       this.showDetailPers = false;
       var supannEntiteAffectationPrincipale;
