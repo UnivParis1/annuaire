@@ -12,7 +12,7 @@ function initRoutes($routeProvider) {
             controller  : 'personController'
         });
         // route for the showDetailPers page
-        $routeProvider.when('/showDetailPers', {
+        $routeProvider.when('/showDetailPers/:mailTo', {
             templateUrl : 'index-detailPers-inc.html',
             controller  : 'personController'
         });

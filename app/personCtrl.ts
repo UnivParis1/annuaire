@@ -55,16 +55,18 @@ class PersonController {
     this.resultSeach = returnResult.map(e => new personCtrl(e));
     if (this.showDetailPers){
       this.showDetailPers = false;
-      this.routeProviderParam='/showDetailPers';
       var supannEntiteAffectationPrincipale;
+      var mailTo;
       for (let item of returnResult) {
         Object.keys(item).map(function(e) {
+          mailTo=item['mail'];
           supannEntiteAffectationPrincipale=item['supannEntiteAffectationPrincipale'];
           return supannEntiteAffectationPrincipale;
           }
         );
       }
       this.searchCrumbUrl(supannEntiteAffectationPrincipale);
+      this.routeProviderParam='/showDetailPers'+mailTo;
     }
     else this.routeProviderParam='/showListPers';
     this.$location.path(this.routeProviderParam);
