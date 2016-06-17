@@ -1,20 +1,11 @@
 <div ng-if="p.resultSearch.length > 0">
-  <div ng-repeat="i in p.breadcrumbTotal">
-      {{i.name}}
-      <div ng-repeat="item in i">
-          {{item.name}}
-      </div>
-  </div>
-  <ol class="breadcrumb" >
-    <li ng-repeat="crumb in p.breadcrumbApp">
-        <!--a href="#"  ng-click="p.clickBreadC(crumb)" ng-model="p.searchCrit.filter_supannEntiteAffectation" >{{ crumb.name }}</a>-->
-        <a href="#"ng-click="p.searchUserFromBreadCrumb(crumb)" ng-model="p.searchCrit.filter_supannEntiteAffectation">{{crumb.name}}</a>
-    </li>
-  </ol>
-  {{p.breadcrumbApp}}
----------------------------
-  {{p.breadcrumbTotal}}
+  <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
+      <li ng-repeat="item in i">
+          <a href="#"ng-click="p.searchUserFromBreadCrumb(item.key)" ng-model="p.searchCrit.filter_supannEntiteAffectation">{{item.name}}</a>
+      </li>
+  </ul>
 </div>
+
 <div class="col-md-12 alt" >
   <div class="row" ng-repeat="res in p.resultSearch">
 
