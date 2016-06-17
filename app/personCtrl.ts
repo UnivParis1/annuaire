@@ -26,10 +26,11 @@ class PersonController {
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   IsMobile=false;
+  test;
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
-
   }
+
   private _getSearchPersons = (text: {}) => {
     if (text!=null) {
         return this.personService.searchPersons(text).then(
@@ -48,40 +49,39 @@ class PersonController {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows =  this.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
     this.isMobile();
-    // Ne prendre que les personnes qui ne sont pas dans la liste rouge
     let searchCrit = { token, maxRows,filter_supannEntiteAffectation};
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
-    //Parcourrir la liste des personnes trouvées dans returnRessult et affecter dans objet person
-    // puis retourne une liste de type person.
-    this.resultSearch = returnResult.map(e => new personCtrl(e));
-    // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
-    if((this.showDetailPers) || Object.keys(this.resultSearch).length ==1){
-      this.showDetailPers = false;
-      var supannEntiteAffectation;
-      var mailTo;
-      for (let item of returnResult) {
-          mailTo=item['mail'];
-          supannEntiteAffectation=  item['supannEntiteAffectation'];
-          break;
-      }
-      // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
-      /*this.$q.all(supannEntiteAffectation.map(it => this.searchCrumbUrl(it))).then(breadcrumbTotal =>
-        this.breadcrumbTotal = breadcrumbTotal
-      );*/
-      if (supannEntiteAffectation!=null){
-        let breadcrumbTotal = this.breadcrumbTotal = [];
-        for (let it of supannEntiteAffectation) {
-          this.searchCrumbUrl(it).then(breadcrumb =>
-             breadcrumbTotal.push(breadcrumb)
-          );
-        }
+      //Parcourrir la liste des personnes trouvées dans returnRessult et affecter dans objet person
+      // puis retourne une liste de type person.
+      this.resultSearch = returnResult.map(e => new personCtrl(e));
+      // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+      if((this.showDetailPers) || Object.keys(this.resultSearch).length ==1){
+        this.showDetailPers = false;
+        var supannEntiteAffectation;
+        var mailTo;
+        for (let item of returnResult) {
+            mailTo=item['mail'];
+            supannEntiteAffectation=  item['supannEntiteAffectation'];
+            break;
+        }
+        // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
+        /*this.$q.all(supannEntiteAffectation.map(it => this.searchCrumbUrl(it))).then(breadcrumbTotal =>
+          this.breadcrumbTotal = breadcrumbTotal
+        );*/
+        if (supannEntiteAffectation!=null){
+          let breadcrumbTotal = this.breadcrumbTotal = [];
+          for (let it of supannEntiteAffectation) {
+            this.searchCrumbUrl(it).then(breadcrumb =>
+               breadcrumbTotal.push(breadcrumb)
+            );
+          }
       }
 
-      //Envoi vers URL détail en passant en paramètre le mail
-      this.routeProviderParam='/showDetailPers/'+mailTo;
-    }
-    else this.routeProviderParam='/showListPers';
-    this.$location.path(this.routeProviderParam);
+        //Envoi vers URL détail en passant en paramètre le mail
+        this.routeProviderParam='/showDetailPers/'+mailTo;
+      }
+      else this.routeProviderParam='/showListPers';
+      this.$location.path(this.routeProviderParam);
     })
   }
 
@@ -107,20 +107,13 @@ class PersonController {
     }
   };
 
-  searchUserFromBreadCrumb=(param:Object)=>{
-    var key;
-    //Récupérer la valeur supannEntiteAffectation contenu dans le champs key
-    Object.keys(param).map(function(e) {
-      key=param['key'];
-      return key;
-      }
-    );
-    if(key!=null){
+  searchUserFromBreadCrumb=(param:String)=>{
+    if(param!=null){
     // si param ne contient pas 'structures-''
-      if (key.indexOf("structures-")> -1){key=key.replace('structures-','')}
+      if (param.indexOf("structures-")> -1){param=param.replace('structures-','')}
       this.searchCrit.token=null;
-      this.searchCrit.filter_supannEntiteAffectation=key;
-      this.searchUser(null,null,key);
+      this.searchCrit.filter_supannEntiteAffectation=''+param;
+      this.searchUser(null,null,param);
    }
 
   }
@@ -128,19 +121,20 @@ class PersonController {
   searchCrumbUrl=(param:String)=>{
     // si param ne contient pas 'structures-''
     if (param.indexOf("structures-")== -1){param='structures-'+param}
-    this.searchCritStructure.key=''+param;
-    return this._getSearchCrumbUrl(this.searchCritStructure).then((returnResultGroup : Array<{}>) => {
-       this.breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
-       return this.breadcrumbApp.reverse();
+    let searchCritStructure = angular.copy(this.searchCritStructure);
+    searchCritStructure.key=''+param;
+    return this._getSearchCrumbUrl(searchCritStructure).then((returnResultGroup : Array<{}>) => {
+       let breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
+       return breadcrumbApp.reverse();
     })
   }
-
 
   //Initialiser le key avec la structure sélectionné (Saisie rapide), puis lancer la recherche de la structure
   initTokenStruture=(param:String)=>{
     /*exemple url https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10*/
     // supprimer structures- du paramètre, à revoir si nouvelle URL sans structures
     var paramStruct=param.replace('structures-','');
+    let searchCritStructure = angular.copy(this.searchCritStructure);
     this.searchCritStructure.key=''+param;
     //this.searchCrumbUrl(param);
     this.searchUser(null,null, paramStruct);
@@ -151,9 +145,7 @@ class PersonController {
       // You are in mobile browser
       this.IsMobile=true;
     }
-
   }
-
 
 
 }
