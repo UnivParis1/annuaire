@@ -2,24 +2,35 @@
 <html ng-app="myApp">
   <head>
     <script src="../node_modules/angular/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="../node_modules/angular-route/angular-route.js"></script>
     <script src="personService.js"></script>
     <script src="personCtrl.js"></script>
     <script src="translations.js"></script>
     <script src="routes.js"></script>
-      <script src="directives.js"></script>
+    <script src="directives.js"></script>
     <script src="app.js"></script>
   </head>
   <body>
+    <!--Intégrer le bandeau ENT -->
+    <script type="text/javascript">
+      var connected = location.href.match(/connected/);
+      if (connected)
+        window.prolongation_ENT_args = { current: 'annuaire' };
+      else
+        window.bandeau_anonyme = { title: "Annuaire de l'université Paris 1" };
+    </script>
+    <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script>
+    <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+
     <div class="container">
       <div ng-controller="personController as p">
         <div class="row panelshadow"">
             <div class="col-md-3"></div>
             <div class="col-md-7" ng-include="'index-simpleSearch-inc.html'"></div>
             <div class="col-md-2">
-              <button class="btn btn-primary" ng-click="p.deconnexion()">Connexion</button>
+              <!--<button class="btn btn-primary" ng-click="p.deconnexion()">Connexion</button>-->
+              <a target="_self" href="/app/#/connected" onclick="location.href = '/app/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a>
             </div>
-
         </div>
         <div class="row" >
            <div class="col-md-2">
