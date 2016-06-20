@@ -57,11 +57,9 @@ function autocompleteStructure () {
 	    scope.$apply(attr['onSelect']);
 	    return false;
   };
-  // Si on veut filtrer sur status (personnel/etudiant...)
-	//var params = { select: select, wsParams: attr['filters'] };
-  var params = { select: select };
+	var params = { select: select, wsParams: { filter_category: "structures" } };
   // autocompleteUser de jQuery gère l'autocomplétion
-  jQuery(el)['autocompleteGroup'](searchUserURL, params);
+  jQuery(el)['autocompleteGroup'](searchGroupURL, params);
 }
 };
 }
