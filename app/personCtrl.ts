@@ -6,7 +6,6 @@ class personCtrl
 
 class PersonController {
   resultSearch={};
-  breadcrumbApp=[];
   breadcrumbTotal=[];
   searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:''};
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
@@ -26,7 +25,6 @@ class PersonController {
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   IsMobile=false;
-  test;
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
   }
@@ -46,9 +44,13 @@ class PersonController {
   };
 
   searchUser = (token, maxRows = null,filter_supannEntiteAffectation ) => {
+
     //Limiter le nombre d'affichage en fonction de l'authentification
-    if (!maxRows) maxRows =  this.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
+    if (!maxRows) maxRows =  (this.$location.absUrl().match('connected')!=null) ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
+
+    this.authenticated =  (this.$location.absUrl().match('connected')!=null) ? true: false;
     this.isMobile();
+
     let searchCrit = { token, maxRows,filter_supannEntiteAffectation};
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
       //Parcourrir la liste des personnes trouvées dans returnRessult et affecter dans objet person
@@ -131,12 +133,8 @@ class PersonController {
 
   //Initialiser le key avec la structure sélectionné (Saisie rapide), puis lancer la recherche de la structure
   initTokenStruture=(param:String)=>{
-    /*exemple url https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10*/
-    // supprimer structures- du paramètre, à revoir si nouvelle URL sans structures
+    // supprimer structures- du paramètre
     var paramStruct=param.replace('structures-','');
-    let searchCritStructure = angular.copy(this.searchCritStructure);
-    this.searchCritStructure.key=''+param;
-    //this.searchCrumbUrl(param);
     this.searchUser(null,null, paramStruct);
   }
 
@@ -146,6 +144,4 @@ class PersonController {
       this.IsMobile=true;
     }
   }
-
-
 }
