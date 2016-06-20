@@ -1,7 +1,7 @@
 typings/
 node_modules/
 app/npm-debug.log
-app/**/*.js
-app/**/*.js.map
+app/*.js
+app/*.js.map
 test/
 Documents/
