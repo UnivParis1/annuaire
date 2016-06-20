@@ -36,7 +36,7 @@ function autocompleteUser () {
 
 function autocompleteStructure () {
   let globals={ wsgroupsURL:'http://wsgroups-test.univ-paris1.fr'};
-  var searchUserURL = globals.wsgroupsURL + '/searchGroup';
+  var searchGroupURL = globals.wsgroupsURL + '/searchGroup';
 
   return {
     restrict: 'A',
