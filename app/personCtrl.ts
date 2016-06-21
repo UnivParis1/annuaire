@@ -32,14 +32,10 @@ class PersonController {
   private _getSearchPersons = (text: {}) => {
     if (text!=null) {
         return this.personService.searchPersons(text).then(
-        // Si listUsers est != null prendre toute la liste listUsres
-        (listUsers) => listUsers,
-        (errfunction) => undefined
-
-      //).then((listUsers) =>
-      //  (listUsers)
-      );
-
+          // Si listUsers est != null prendre toute la liste listUsres
+          (listUsers) => listUsers,
+          (errfunction) => undefined
+        );
     }
   };
 
@@ -67,9 +63,6 @@ class PersonController {
             break;
         }
         // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
-        /*this.$q.all(supannEntiteAffectation.map(it => this.searchCrumbUrl(it))).then(breadcrumbTotal =>
-          this.breadcrumbTotal = breadcrumbTotal
-        );*/
         if (supannEntiteAffectation!=null){
           let breadcrumbTotal = this.breadcrumbTotal = [];
           for (let it of supannEntiteAffectation) {
@@ -77,14 +70,25 @@ class PersonController {
                breadcrumbTotal.push(breadcrumb)
             );
           }
-      }
-
+        }
         //Envoi vers URL détail en passant en paramètre le mail
         this.routeProviderParam='/showDetailPers/'+mailTo;
       }
-      else this.routeProviderParam='/showListPers';
-      this.$location.path(this.routeProviderParam);
+      else
+        this.routeProviderParam='/showListPers';
+        this.$location.path(this.routeProviderParam);
     })
+  }
+
+  // Le web widget de recherche retourne des personnes ou des stcructures
+  show=(item)=>{
+    // recherche de personne
+    if (item.category === 'users') {
+      this.showUser(item.uid);
+    } else {
+      var param=item.key.replace('structures-','');
+      this.searchUser(null,null, param);
+    }
   }
 
   //Rechercher une personne
@@ -129,13 +133,6 @@ class PersonController {
        let breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
        return breadcrumbApp.reverse();
     })
-  }
-
-  //Initialiser le key avec la structure sélectionné (Saisie rapide), puis lancer la recherche de la structure
-  initTokenStruture=(param:String)=>{
-    // supprimer structures- du paramètre
-    var paramStruct=param.replace('structures-','');
-    this.searchUser(null,null, paramStruct);
   }
 
   isMobile=()=>{

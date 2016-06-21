@@ -19,18 +19,17 @@
       else
         window.bandeau_anonyme = { title: "Annuaire de l'université Paris 1" };
     </script>
-    <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script>
-    <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+
+    <div class="row">
+      <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+      <div class="col-md-10">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
+      <div class="col-md-2"><a target="_self" href="/app/#/connected" onclick="location.href = '/app/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>
+    </div>
 
     <div class="container">
       <div ng-controller="personController as p">
         <div class="row panelshadow"">
-            <div class="col-md-3"></div>
-            <div class="col-md-7" ng-include="'index-simpleSearch-inc.html'"></div>
-            <div class="col-md-2">
-              <!--<button class="btn btn-primary" ng-click="p.deconnexion()">Connexion</button>-->
-              <a target="_self" href="/app/#/connected" onclick="location.href = '/app/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a>
-            </div>
+            <div class="col-md-6 col-md-offset-3" ng-include="'index-simpleSearch-inc.html'"></div>
         </div>
         <div class="row" >
            <div class="col-md-2">
@@ -54,7 +53,7 @@
       <!--annuaire css ne fonctionne pas -->
       <link href="../style/annuaire.css" rel="stylesheet" media="screen">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-      <script src="https://wsgroups.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
+      <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
     </div>
     </body>
 </html>

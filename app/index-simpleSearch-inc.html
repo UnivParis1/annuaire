@@ -1,13 +1,12 @@
 
     <!--Deux recherches possibles:
           soit en saisissant le crirère de rechche+Touche Enter==> ng-submit=p.searchUser
-          soit en saisissant le crirère de rechche+sélection dans la liste==> on-select=p.showUser
+          soit en saisissant le crirère de rechche+sélection dans la liste==> on-select=p.show
     -->
 
     <form ng-submit="p.searchUser(p.searchCrit.token)">
       <div class="form-group has-feedback">
         <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        <input type="search" autocomplete-user ng-model="p.searchCrit.token" class="form-control" on-select="p.showUser(p.searchCrit.token)" placeholder="Recherche"/>
+        <input type="search" autocomplete-user-and-group ng-model="p.searchCrit.token" class="form-control" on-select="p.show(p.searchCrit.token)" placeholder="Recherche"/>
       </div>
     </form>
-      <input type="text" autocomplete-group ng-model="p.loginStructure" class="form-control"  on-select="p.initTokenStruture(p.loginStructure.key)" placeholder="Recherche rapide en saisissant une structure">
