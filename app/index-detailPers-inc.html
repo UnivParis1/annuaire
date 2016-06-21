@@ -10,10 +10,7 @@
   <div class="row" ng-repeat="res in p.resultSearch">
 
       <div class="col-md-12">
-        <h2 class="cap">{{res.person.givenName}} {{res.person.sn}}
-          <i ng-show="res.person.supannCivilite!='M.'" class="fa fa-female" ></i>
-          <i ng-show="res.person.supannCivilite=='M.'" class="fa fa-male"></i>
-        </h2>
+        <h2 class="cap">{{res.person.givenName}} {{res.person.sn}}</h2>
       </div>
       <div class="col-md-12">
             <div ng-if="res.person.eduPersonPrimaryAffiliation=='teacher' || res.person.eduPersonPrimaryAffiliation=='researcher'" ng-repeat="employeeType in res.person.employeeType">{{employeeType}}</div>
