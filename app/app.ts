@@ -10,4 +10,4 @@ app.service('personService', PersonService);
 app.controller('personController', PersonController);
 app.config(initTranslations);
 app.config(initRoutes);
-app.config(initRoutes);app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
+app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
