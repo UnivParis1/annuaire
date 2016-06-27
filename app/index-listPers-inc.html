@@ -1,3 +1,7 @@
+<div ng-if="p.showDetailPers">
+  <div ng-include="'index-detailPers-inc.html'"></div>
+</div>
+
 <div class="row" ng-if="p.resultSearch.length >1" >
   <div class="col-md-12" >
     <h3 >{{p.resultSearch.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
@@ -13,10 +17,10 @@
 
 
 
-<div class="row" ng-if="p.resultSearch.length > 0" >
+<div class="row" ng-if="p.resultSearch.length > 0 && !p.showDetailPers" >
   <div class="col-md-12" >
     <table class="table table-striped" >
-      <tr ng-repeat="res in p.resultSearch | filter:p.filter" ng-click='p.showUser(res.person.uid) ; p.showDetailPers=true' >
+      <tr ng-repeat="res in p.resultSearch | filter:p.filter" ng-click='p.showUser(res.person.uid, true)' >
           <!-- a voir quel syntaxe utilise pour img-thumbnail-->
           <!--td><img title="{{res.person.givenName}}" src="{{p.urlJpegPhoto}}{{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
           <td class="col-md-1">
@@ -37,19 +41,16 @@
           </td>
           <td class="col-md-2" style="white-space:nowrap">
               <div  ng-repeat="telNum in res.person.telephoneNumber">
-                <a ng-show ="p.IsMobile" ng-href="tel:{{telNum}}" target="_blank" ng-click='p.noShowUser = true'>{{telNum}}</a>
-                <span ng-show ="!p.IsMobile">{{telNum}}<span>
+                <a ng-href="tel:{{telNum}}" target="_blank" ng-click='p.noShowUser = true'>{{telNum}}</a>
               </div>
               <div ng-repeat="telAut in res.person.supannAutreTelephone">
-                <a ng-show ="p.IsMobile" ng-href="tel:{{telAut}}" target="_blank" ng-click='p.noShowUser = true'>{{telAut}}</a>
-                <span ng-show ="!p.IsMobile">{{telAut}}<span>
+                <a ng-href="tel:{{telAut}}" target="_blank" ng-click='p.noShowUser = true'>{{telAut}}</a>
               </div>
               <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}}</div>
               <!--si authentifié-->
               <div ng-if="p.authenticated && res.person.mobile">
                 <div ng-repeat="mobile in res.person.mobile">
-                  <a ng-show ="p.IsMobile"  ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a>
-                  <span ng-show ="!p.IsMobile">{{mobile}}<span>
+                  <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a>
                 </div>
               </div>
           </td>

@@ -2,20 +2,21 @@
 function initRoutes($routeProvider) {
 
         // route for the home page
-        $routeProvider.when('/RechercheSimple', {
-            templateUrl : 'index-simpleSearch-inc.html',
-            controller  : 'personController'
-        })
-        // route for the showListPers page
-        $routeProvider.when('/showListPers', {
+        $routeProvider.when('/Recherche', {
             templateUrl : 'index-listPers-inc.html',
-            controller  : 'personController'
-        });
-        // route for the showDetailPers page
-        $routeProvider.when('/showDetailPers/:mailTo', {
-            templateUrl : 'index-detailPers-inc.html',
-            controller  : 'personController'
-        });
+            controller  : 'PersonController'
+            controllerAs: 'p',
+        })
+        $routeProvider.when('/Recherche/:id', {
+            templateUrl : 'index-listPers-inc.html',
+            controller  : 'PersonController'
+            controllerAs: 'p',
+        })
+        $routeProvider.when('/Show/:id', {
+            templateUrl : 'index-listPers-inc.html',
+            controller  : 'PersonController'
+            controllerAs: 'p',
+        })
       /*  $routeProvider.when('/Organigramme', {
             templateUrl : 'index-organigramme-inc.html',
             controller  : 'personController'
@@ -24,15 +25,12 @@ function initRoutes($routeProvider) {
         // route for the Preference page
         $routeProvider.when('/Preference', {
             templateUrl : 'index-preference-inc.html',
-            controller  : 'personController'
         })
         // route for the Apropos page
         $routeProvider.when('/Apropos', {
             templateUrl : 'index-about-inc.html',
-            controller  : 'personController'
         });
         $routeProvider.when('/error', {
             templateUrl : 'index-error-inc.html',
-            controller  : 'personController'
         });
 }

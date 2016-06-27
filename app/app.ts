@@ -7,7 +7,9 @@
 var app = angular.module('myApp', ['pascalprecht.translate','ngRoute']);
 
 app.service('personService', PersonService);
-app.controller('personController', PersonController);
+app.controller('MainController', MainController);
+app.controller('PersonController', PersonController);
+app.controller('EmptyCtrl', function($scope) {});
 app.config(initTranslations);
 app.config(initRoutes);
 app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);

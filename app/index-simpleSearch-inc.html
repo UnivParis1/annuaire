@@ -4,9 +4,9 @@
           soit en saisissant le crirère de rechche+sélection dans la liste==> on-select=p.show
     -->
 
-    <form ng-submit="p.searchUser(p.searchCrit.token)">
+    <form ng-submit="main.searchUser(main.searchCrit.token)">
       <div class="form-group has-feedback">
         <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        <input type="search" autocomplete-user-and-group ng-model="p.searchCrit.token" class="form-control" on-select="p.show(p.searchCrit.token)" placeholder="Recherche"/>
+        <input type="search" autocomplete-user-and-group ng-model="main.searchCrit.token" class="form-control" on-select="main.show(main.searchCrit.token)" placeholder="Recherche"/>
       </div>
     </form>
