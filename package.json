@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "postinstall": "tsd reinstall -r -o",
-    "tsc": "tsc -p app --watch",
+    "tsc": "tsc -p app --watch --sourceMap",
     "start": "live-server --open=app"
   },
   "dependencies": {
