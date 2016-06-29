@@ -25,9 +25,8 @@ class MainController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-        console.log("PersonController constructor");
+      console.log("MainController constructor");
         if ($routeParams.id) {
-            console.log("PersonController constructor", $routeParams.id);            
             this.showUser($routeParams.id, true);
         }
     }
@@ -45,7 +44,7 @@ class MainController {
     searchUser = (token) => {
         this.$location.path("/Recherche/" + token);
     }
-    
+
   // Le web widget de recherche retourne des personnes ou des stcructures
   show=(item)=>{
     // recherche de personne
@@ -54,12 +53,13 @@ class MainController {
     } else {
       var param=item.key.replace('structures-','');
       this.$location.search("filter", param);
+      //this.$location.search("#/Recherche/?filter", param);
     }
   }
 
   //Rechercher une personne
   showUser=(id, showDetailPers = false)=>{
-    //Sur la page index-listPers-inc, le clic sur l'ensemble de cette page déclanche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
+    //Sur la page resultSearch, le clic sur l'ensemble de cette page déclanche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
     this.searchCrit.token = null;
     this.$location.path("/Show/" + id);
   }
@@ -90,14 +90,13 @@ class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-        console.log("PersonController2 constructor");
-        console.log(this.$location.path());
+      console.log("PersonController constructor");
+
         let filter = this.$location.search().filter;
         if (filter) {
             this.searchUserFromBreadCrumb(filter, $routeParams.id);
         } else if ($routeParams.id) {
             if (this.$location.path().match(/Show/)) {
-                console.log("PersonController2 constructor", $routeParams.id);            
                 this.showUser($routeParams.id, true);
             } else {
                 this.searchUser($routeParams.id, null, null, false);
@@ -128,7 +127,6 @@ class PersonController {
         this.resultSearch = returnResult.map(e => new personCtrl(e));
       // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
         this.showDetailPers = showDetailPers || returnResult.length ==1;
-        console.log(this.$location.path());
         if (this.showDetailPers) {
             this.compute_breadcrumbTotal(returnResult[0]);
             this.$location.path("/Show/" + returnResult[0].mail);
@@ -152,7 +150,7 @@ class PersonController {
 
   //Rechercher une personne
   showUser=(id, showDetailPers = false)=>{
-    //Sur la page index-listPers-inc, le clic sur l'ensemble de cette page déclanche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
+    //Sur la page resultSearch, le clic sur l'ensemble de cette page déclenche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
     if (this.noShowUser) {
       this.noShowUser = false;
       return;
@@ -172,16 +170,18 @@ class PersonController {
     }
   };
 
+
   searchUserFromBreadCrumb=(param:String, token)=>{
     if(param!=null){
     // si param ne contient pas 'structures-''
       if (param.indexOf("structures-")> -1){param=param.replace('structures-','')}
       this.searchCrit.token=null;
       this.searchCrit.filter_member_of_group = 'employees.administration.' + param;
+      //this.searchCrit.filter_supannEntiteAffectation=''+param;
       this.searchUser(token,null,param,false);
    }
 
-  }
+ }
 
   searchCrumbUrl=(param:String)=>{
     // si param ne contient pas 'structures-''
@@ -195,4 +195,3 @@ class PersonController {
   }
 
 }
-    

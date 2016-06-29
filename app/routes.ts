@@ -3,18 +3,18 @@ function initRoutes($routeProvider) {
 
         // route for the home page
         $routeProvider.when('/Recherche', {
-            templateUrl : 'index-listPers-inc.html',
-            controller  : 'PersonController'
+            templateUrl : 'resultSearch.html',
+            controller  : 'PersonController',
             controllerAs: 'p',
         })
         $routeProvider.when('/Recherche/:id', {
-            templateUrl : 'index-listPers-inc.html',
-            controller  : 'PersonController'
+            templateUrl : 'resultSearch.html',
+            controller  : 'PersonController',
             controllerAs: 'p',
         })
         $routeProvider.when('/Show/:id', {
-            templateUrl : 'index-listPers-inc.html',
-            controller  : 'PersonController'
+            templateUrl : 'resultSearch.html',
+            controller  : 'PersonController',
             controllerAs: 'p',
         })
       /*  $routeProvider.when('/Organigramme', {

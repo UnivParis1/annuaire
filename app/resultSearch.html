@@ -1,0 +1,34 @@
+<div ng-if="p.showDetailPers">
+  <div ng-include="'resultSearch-detailPers-inc.html'"></div>
+</div>
+
+<div class="row" ng-if="p.resultSearch.length >1" >
+  <div class="col-md-5 col-md-offset-7" ng-init="p.showList = true;p.showTrombi = fase" >
+    <a ng-href=""  ng-click="p.showList = true; p.showTrombi=false">Afficher Liste des personnes |</a>
+    <a ng-href=""  ng-click="p.showTrombi = true; p.showList=false" >Trombinoscope</a>
+  </div>
+<div ng-if="p.showList">
+  <div class="row" >
+    <div class="col-md-12" >
+      <h3 >{{p.resultSearch.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col-md-12" >
+      <div class="bg-info" style="padding: 6px" >Affiner par:
+         <div class="radio-inline" ng-repeat="v in p.listStatus">
+            <label style="font-weight: normal"><input type="radio" ng-model="p.filter" ng-init="$index==0?(p.filter=v.id):''" name="filterName" id="{{v.id}}" value="{{v.id}}"/>{{v.translationTag|translate}}</label>
+          </div>
+      </div>
+      </br>
+    </div>
+  </div>
+
+  <div class="row" ng-if="!p.showDetailPers" >
+    <div ng-include="'resultSearch-listPers-inc.html'"></div>
+  </div>
+</div>
+
+<div class="row"ng-if="p.showTrombi" style="margin-top:50px;">
+  <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
+</div>
