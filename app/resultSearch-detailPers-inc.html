@@ -13,29 +13,37 @@
         <h2 class="cap">{{res.person.givenName}} {{res.person.sn}}</h2>
       </div>
       <div class="col-md-12">
-            <div ng-if="res.person.eduPersonPrimaryAffiliation=='teacher' || res.person.eduPersonPrimaryAffiliation=='researcher'" ng-repeat="employeeType in res.person.employeeType">{{employeeType}}</div>
-            <div ng-repeat="role in res.person.supannRoleGenerique">{{role}}</div>
-            <div ng-repeat="desc in res.person.description">{{desc}}</div>
-            <div ng-repeat="info in res.person.info">{{info}}</div>
-            <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{res.person.mail}}</a></br></br>
+            <div ng-if="res.person.eduPersonPrimaryAffiliation=='teacher' || res.person.eduPersonPrimaryAffiliation=='researcher'" ng-repeat="employeeType in res.person.employeeType"> {{employeeType}}</div>
+            <div ng-repeat="role in res.person.supannRoleGenerique"> {{role}}</div>
+            <div ng-repeat="desc in res.person.description"> {{desc}}</div>
+            <div ng-repeat="info in res.person.info"> {{info}}</div>
+            <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{res.person.mail}}</a></br></br>
       </div>
       <div class="col-md-6">
-        <label>Téléphone fixe </label><span class="uneditable-input" ng-repeat="telephoneNumber in res.person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'>{{telephoneNumber}}</a></span><br>
-        <label>Téléphone secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in res.person.supannAutreTelephone"><a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'>{{supannAutreTelephone}}</a><br/></span><br>
-        <label>Téléphone mobile </label> <span class="uneditable-input" ng-repeat="mobile in res.person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
-        <label>Fax </label><span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in res.person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
+        <span  ng-if="res.person.telephoneNumber">
+          <label>Téléphone fixe </label><span class="uneditable-input" ng-repeat="telephoneNumber in res.person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a></span><br>
+        </span>
+        <span  ng-if="res.person.supannAutreTelephone">
+          <label>Téléphone secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in res.person.supannAutreTelephone"><a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a><br/></span><br>
+        </span>
+        <span  ng-if="res.person.mobile">
+          <label>Téléphone mobile </label> <span class="uneditable-input" ng-repeat="mobile in res.person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
+        </span>
+        <span  ng-if="res.person.facsimileTelephoneNumber">
+            <label>Fax </label><span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in res.person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
+        </span>
       </div>
       <div class="col-md-4">
-        <label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br>
-        <label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br>
-        <label>Étage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in res.person.up1FloorNumber"> {{up1FloorNumber}}</span><br>
+        <span  ng-if="res.person.buildingName"><label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br></span></span></span>
+        <span  ng-if="res.person.roomNumber"><label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br></span></span>
+        <span  ng-if="res.person.up1FloorNumber"><label>Étage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in res.person.up1FloorNumber"> {{up1FloorNumber}}</span><br></span>
         <!--label>Adresse profesionnelle</label><span class="uneditable-input"> {{res.person.postalAddress}}</span><br>-->
         <div ng-if="res.person.postalAddress"><label>Adresse postale</label> <span style="white-space:pre-wrap;"> {{res.person.postalAddress}}</span>
           <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{res.person.postalAddress}}" target="_blank"><span class="img-responsive glyphicon glyphicon-map-marker"></span></a><br>
         </div>
       </div>
       <div class="col-md-2 text-center">
-            <img title="{{res.person.givenName}} {{res.person.sn}}" src="https://userphoto-test.univ-paris1.fr/?uid={{res.person.uid}}"  width="84" height="64" class="img-thumbnail img-responsive img-circle">
+            <img title="{{res.person.givenName}} {{res.person.sn}}" src="https://userphoto-test.univ-paris1.fr/?uid={{res.person.uid}}"   height="64" class="img-thumbnail img-responsive img-circle">
       </div>
   </div>
 </div>
