@@ -28,7 +28,7 @@
             </div>
             <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}}</div>
             <!--si authentifié-->
-            <div ng-if="p.authenticated && res.person.mobile">
+            <div ng-if="main.authenticated && res.person.mobile">
               <div ng-repeat="mobile in res.person.mobile">
                 <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a>
               </div>

@@ -13,7 +13,7 @@
     <script src="directives.js"></script>
     <script src="app.js"></script>
   </head>
-  <body>
+  <body ng-controller="MainController as main">
     <!--Intégrer le bandeau ENT -->
     <script type="text/javascript">
       var connected = location.href.match(/connected/);
@@ -22,15 +22,16 @@
       else
         window.bandeau_anonyme = { title: "Annuaire de l'université Paris 1" };
     </script>
-
-    <div class="row">
-      <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
-      <div class="col-md-10">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
-      <div class="col-md-2"><a target="_self" href="/app/#/connected" onclick="location.href = '/app/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>
+    <script src="//ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+    <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script>
+    
+    <div class="row" >
+      <div class="col-md-10"></div>
+      <div class="col-md-2"><a ng-if="!main.authenticated" target="_self" href="/#/Recherche?connected" onclick="location.href = '/#/Recherche?connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>
     </div>
 
     <div class="container">
-      <div ng-controller="MainController as main">
+      <div>
         <div class="row panelshadow"">
             <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
         </div>

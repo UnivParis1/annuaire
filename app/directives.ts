@@ -25,7 +25,7 @@ function autocompleteUserAndGroup () {
       //scope.$apply(attr['onBlur']);
 	    return false;
   };
-   var params = { select: select, wsParams: { filter_category: "structures", group_attrs: "businessCategory" } };
+  var params = { select: select, wsParams: { filter_category: "structures", group_attrs: "businessCategory", CAS: !!location.href.match(/connected/) } };
   // autocompleteUser de jQuery gère l'autocomplétion
   jQuery(el)['autocompleteUserAndGroup'](searchURL, params);
 }

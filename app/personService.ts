@@ -20,7 +20,8 @@ class PersonService {
   En entrée: ptoken---> liste de paramètres entre {} ex:{"maxRows":5,"token":"sar"}
   En sortie: angular.IPromise<string[]> --> Liste de personnes
   */
-  searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
+    searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
+        console.log(ptoken);
     return this.$http.jsonp(
       PersonService.searchPersonsUrl,
       {params:ptoken}

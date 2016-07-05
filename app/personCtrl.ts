@@ -5,41 +5,13 @@ class personCtrl
 }
 
 class MainController {
-  resultSearch={};
-  breadcrumbTotal=[];
-  searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:''};
-  listStatus=[{id: '', translationTag: "STATUS_ALL"},
-              {id: 'teacher', translationTag: "STATUS_TEACHER"},
-              {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
-              {id: 'staff', translationTag: "STATUS_STAFF"},
-              {id: 'emeritus', translationTag: "STATUS_EMERITUS"},
-              {id: 'student', translationTag: "STATUS_STUDENT"},
-              {id: 'alum', translationTag: "STATUS_ALUM"}
-
-            ];
-  searchCritStructure={depth:10,key:''};
+  searchCrit={ token:'' };
   authenticated=true;
-  searchNoauthMaxResult=5;// Résultat maximal à afficher si pas authentifié
-  searchAuthMaxResult=100;// Résultat maximal à afficher si authentifié
-  routeProviderParam='/showListPers';
-  showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
 
-    constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-      console.log("MainController constructor");
-        if ($routeParams.id) {
-            this.showUser($routeParams.id, true);
-        }
+    constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
+        this.authenticated = this.$location.search().connected;        
+        console.log($location.search(), this.authenticated);
     }
-
-  private _getSearchPersons = (text: {}) => {
-    if (text!=null) {
-        return this.personService.searchPersons(text).then(
-          // Si listUsers est != null prendre toute la liste listUsres
-          (listUsers) => listUsers,
-          (errfunction) => undefined
-        );
-    }
-  };
 
     searchUser = (token) => {
         this.$location.path("/Recherche/" + token);
@@ -52,8 +24,8 @@ class MainController {
       this.showUser(item.uid);
     } else {
       var param=item.key.replace('structures-','');
-      this.$location.search("filter", param);
-      //this.$location.search("#/Recherche/?filter", param);
+        this.$location.path("/Recherche");
+        this.$location.search("filter", param);
     }
   }
 
@@ -82,8 +54,7 @@ class PersonController {
 
             ];
   searchCritStructure={depth:10,key:''};
-  authenticated=true;
-  searchNoauthMaxResult=5;// Résultat maximal à afficher si pas authentifié
+  searchNoauthMaxResult=5;// Résultat maximal à afficher si pasa uthentifié
   searchAuthMaxResult=100;// Résultat maximal à afficher si authentifié
   routeProviderParam='/showListPers';
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
@@ -91,7 +62,7 @@ class PersonController {
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
       console.log("PersonController constructor");
-
+        
         let filter = this.$location.search().filter;
         if (filter) {
             this.searchUserFromBreadCrumb(filter, $routeParams.id);
@@ -116,11 +87,9 @@ class PersonController {
 
   searchUser = (token, maxRows = null,filter_supannEntiteAffectation, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
-    if (!maxRows) maxRows =  (this.$location.absUrl().match('connected')!=null) ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
+    if (!maxRows) maxRows = this.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
-    this.authenticated = !this.$location.absUrl().match('RechercheAnonyme');
-
-    let searchCrit = { token, maxRows,filter_supannEntiteAffectation};
+      let searchCrit = { token, maxRows,filter_supannEntiteAffectation, CAS: this.$scope.$parent.main.authenticated };
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
       //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
         // puis retourne une liste de type person.
@@ -175,8 +144,8 @@ class PersonController {
     if(param!=null){
     // si param ne contient pas 'structures-''
       if (param.indexOf("structures-")> -1){param=param.replace('structures-','')}
-      this.searchCrit.token=null;
-      this.searchCrit.filter_member_of_group = 'employees.administration.' + param;
+      //this.searchCrit.token=null;
+      //this.searchCrit.filter_member_of_group = 'employees.administration.' + param;
       //this.searchCrit.filter_supannEntiteAffectation=''+param;
       this.searchUser(token,null,param,false);
    }
