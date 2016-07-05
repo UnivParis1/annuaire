@@ -20,29 +20,21 @@
       if (connected)
         window.prolongation_ENT_args = { current: 'annuaire' };
       else
-        window.bandeau_anonyme = { title: "Annuaire de l'université Paris 1" };
+        window.bandeau_anonyme = { title: "Annuaire public de l'université Paris 1" };
     </script>
-    <script src="//ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
-    <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script>
-    
-    <div class="row" >
-      <div class="col-md-10"></div>
-      <div class="col-md-2"><a ng-if="!main.authenticated" target="_self" href="/#/Recherche?connected" onclick="location.href = '/#/Recherche?connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>
-    </div>
-
     <div class="container">
-      <div>
         <div class="row panelshadow"">
-            <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
+          <div > <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
+          <!--div class="col-md-offset-11"><a target="_self" href="/#/connected" onclick="location.href = '/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>-->
+          <div class="col-md-6 col-md-offset-3" style="text-align:center">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
+            <div class="col-md-6 col-md-offset-3">&nbsp;</div>
+          <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
         </div>
         <div class="row" >
            <div class="col-md-2">
                 <ul class="nav nav-stacked">
-                    <!--li style="border-top: 1px solid #f3f3f3;border-right: 1px solid #f3f3f3;"><a href="#RechercheSimple"> Recherche simple</a></li-->
-                    <!--li ><a href="#RechercheAvancee"> Recherche avancée</a></li>-->
-                    <li ><a href="#Organigramme">Organigramme Paris1</a></li>
-                    <li style="border-top: 1px solid #f3f3f3;;"><a href="#Preference">Preference</a></li>
-                    <li style="border-top: 1px solid #f3f3f3"><a href="#Apropos"> A propos</a></li>
+                    <!--li ><a href="#Organigramme">Organigramme Paris1</a></li>-->
+                    <li><a href="#Apropos"> A propos</a></li>
                 </ul>
            </div>
            <div class="col-md-10 radio-inline" >
@@ -51,10 +43,9 @@
           <div ng-view></div>
         </div>
       </div>
-      </div><!--Fin ng-controller="personController as p"-->
       <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
       <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-      <link href="../style/annuaire.css" rel="stylesheet" media="screen">
+      <link href="style/annuaire.css" rel="stylesheet" media="screen">
       <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
     </div>
     </body>

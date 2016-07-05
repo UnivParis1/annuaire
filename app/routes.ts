@@ -23,9 +23,9 @@ function initRoutes($routeProvider) {
         })*/
 
         // route for the Preference page
-        $routeProvider.when('/Preference', {
+      /*  $routeProvider.when('/Preference', {
             templateUrl : 'index-preference-inc.html',
-        })
+        })*/
         // route for the Apropos page
         $routeProvider.when('/Apropos', {
             templateUrl : 'index-about-inc.html',
