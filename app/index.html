@@ -25,28 +25,25 @@
     <div class="container">
         <div class="row panelshadow"">
           <div > <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
-          <!--div class="col-md-offset-11"><a target="_self" href="/#/connected" onclick="location.href = '/#/connected'; location.reload()" class="btn btn-primary" >Connexion</a></div>-->
           <div class="col-md-6 col-md-offset-3" style="text-align:center">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
-            <div class="col-md-6 col-md-offset-3">&nbsp;</div>
+          <div class="col-md-6 col-md-offset-3">&nbsp;</div>
           <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
         </div>
         <div class="row" >
-           <div class="col-md-2">
+           <!--<div class="col-md-2">
                 <ul class="nav nav-stacked">
-                    <!--li ><a href="#Organigramme">Organigramme Paris1</a></li>-->
+                    <li ><a href="#Organigramme">Organigramme Paris1</a></li>
                     <li><a href="#Apropos"> A propos</a></li>
                 </ul>
-           </div>
-           <div class="col-md-10 radio-inline" >
+           </div>-->
            <!-- angular templating -->
            <!-- this is where content will be injected -->
           <div ng-view></div>
         </div>
-      </div>
-      <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
-      <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-      <link href="style/annuaire.css" rel="stylesheet" media="screen">
-      <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
     </div>
-    </body>
+  </body>
+  <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+  <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="style/annuaire.css" rel="stylesheet" media="screen">
+  <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
 </html>
