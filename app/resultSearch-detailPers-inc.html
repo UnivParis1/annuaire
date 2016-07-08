@@ -1,7 +1,7 @@
 <div ng-if="p.resultSearch.length > 0">
   <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
     <li ng-repeat="item in i">
-          <a ng-href="#/Recherche/?filter={{item.key}}" ng-model="p.searchCrit.filter_supannEntiteAffectation">{{item.name}}</a>
+          <a ng-href="#/Recherche/?filter={{item.key}}{{main.authenticated ? '&connected' : ''}}" ng-model="p.searchCrit.filter_supannEntiteAffectation">{{item.name}}</a>
       </li>
   </ul>
 </div>
@@ -10,7 +10,7 @@
   <div class="row" ng-repeat="res in p.resultSearch">
 
       <div class="col-md-12">
-        <h2 class="cap">{{res.person.givenName}} {{res.person.sn}}</h2>
+        <h2 class="cap">{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</h2>
       </div>
       <div class="col-md-12">
             <div ng-if="res.person.eduPersonPrimaryAffiliation=='teacher' || res.person.eduPersonPrimaryAffiliation=='researcher'" ng-repeat="employeeType in res.person.employeeType"> {{employeeType}}</div>

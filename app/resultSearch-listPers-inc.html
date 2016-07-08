@@ -16,7 +16,7 @@
               <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{res.person.mail}}</a></div>
             </div>
             <div ng-if="res.person.supannCivilite=='supannListeRouge'">
-              <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" href="/app/#/connected" onclick="location.href = '/app/#/connected'; location.reload()"> Connexion </a>
+              <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" href="/#?connected" onclick="p.goConnected()"> Connexion </a>
             </div>
         </td>
         <td class="col-md-4">

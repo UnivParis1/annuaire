@@ -9,7 +9,7 @@ class MainController {
   authenticated=true;
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
-        this.authenticated = this.$location.search().connected;        
+        this.authenticated = this.$location.search().connected;
         console.log($location.search(), this.authenticated);
     }
 
@@ -62,7 +62,7 @@ class PersonController {
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
       console.log("PersonController constructor");
-        
+
         let filter = this.$location.search().filter;
         if (filter) {
             this.searchUserFromBreadCrumb(filter, $routeParams.id);
@@ -162,5 +162,12 @@ class PersonController {
        return breadcrumbApp.reverse();
     })
   }
+
+  goConnected = () => {
+    this.$location.search('connected', true);
+    location.hash = this.$location.url();
+    location.reload();
+  };
+
 
 }
