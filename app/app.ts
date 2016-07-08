@@ -13,3 +13,9 @@ app.controller('EmptyCtrl', function($scope) {});
 app.config(initTranslations);
 app.config(initRoutes);
 app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
+
+
+
+app.service('globals', function () {
+  return { wsgroupsURL:'https://wsgroups-test.univ-paris1.fr' };
+})
