@@ -4,8 +4,8 @@
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name="viewport" content="initial-scale=1.0">
 
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-route/angular-route.js"></script>
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
     <script src="personService.js"></script>
     <script src="personCtrl.js"></script>
     <script src="translations.js"></script>
@@ -18,13 +18,13 @@
     <script type="text/javascript">
       var connected = location.href.match(/connected/);
       if (connected)
-        window.prolongation_ENT_args = { current: 'annuaire' };
+        window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true };
       else
         window.bandeau_anonyme = { title: "Annuaire public de l'université Paris 1" };
     </script>
     <div class="container">
         <div class="row panelshadow"">
-          <div > <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
+          <div > <script type="text/javascript" src="https://ent-test.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3" style="text-align:center">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3">&nbsp;</div>
           <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
@@ -41,9 +41,9 @@
           <div ng-view></div>
         </div>
     </div>
+    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="style/annuaire.css" rel="stylesheet" media="screen">
+    <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
   </body>
-  <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
-  <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-  <link href="style/annuaire.css" rel="stylesheet" media="screen">
-  <script src="https://wsgroups-test.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
 </html>
