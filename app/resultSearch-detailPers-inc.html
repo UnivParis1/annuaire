@@ -8,12 +8,11 @@
 
 <div class="col-md-12 alt" >
   <div class="row" ng-repeat="res in p.resultSearch">
-
       <div class="col-md-12">
         <h2 class="cap">{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</h2>
       </div>
       <div class="col-md-12">
-            <div ng-if="res.person.eduPersonPrimaryAffiliation=='teacher' || res.person.eduPersonPrimaryAffiliation=='researcher'" ng-repeat="employeeType in res.person.employeeType"> {{employeeType}}</div>
+            <div ng-repeat="employeeType in res.person.employeeType"> {{employeeType}}</div>
             <div ng-repeat="role in res.person.supannRoleGenerique"> {{role}}</div>
             <div ng-repeat="desc in res.person.description"> {{desc}}</div>
             <div ng-repeat="info in res.person.info"> {{info}}</div>
@@ -26,7 +25,7 @@
         <span  ng-if="res.person.supannAutreTelephone">
           <label>Téléphone secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in res.person.supannAutreTelephone"><a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a><br/></span><br>
         </span>
-        <span  ng-if="res.person.mobile">
+        <span  ng-if="main.authenticated && res.person.mobile">
           <label>Téléphone mobile </label> <span class="uneditable-input" ng-repeat="mobile in res.person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
         </span>
         <span  ng-if="res.person.facsimileTelephoneNumber">
