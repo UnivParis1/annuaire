@@ -65,12 +65,12 @@ class PersonController {
 
         let filter = this.$location.search().filter;
         if (filter) {
-            this.searchUserFromBreadCrumb(filter, $routeParams.id);
-        } else if ($routeParams.id) {
+            this.searchUserFromBreadCrumb(filter, $routeParams['id']);
+        } else if ($routeParams['id']) {
             if (this.$location.path().match(/Show/)) {
-                this.showUser($routeParams.id, true);
+                this.showUser($routeParams['id'], true);
             } else {
-                this.searchUser($routeParams.id, null, null, false);
+                this.searchUser($routeParams['id'], null, null, false);
             }
         }
     }
@@ -87,7 +87,7 @@ class PersonController {
 
   searchUser = (token, maxRows = null,filter_supannEntiteAffectation, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
-    if (!maxRows) maxRows = this.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
+    if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
       let searchCrit = { token, maxRows,filter_supannEntiteAffectation, CAS: this.$scope.$parent.main.authenticated };
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
@@ -98,7 +98,7 @@ class PersonController {
         this.showDetailPers = showDetailPers || returnResult.length ==1;
         if (this.showDetailPers) {
             this.compute_breadcrumbTotal(returnResult[0]);
-            this.$location.path("/Show/" + returnResult[0].mail);
+            this.$location.path("/Show/" + returnResult[0]['mail']);
         }
     })
   }
