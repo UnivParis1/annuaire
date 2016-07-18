@@ -5,6 +5,16 @@ class personCtrl
 }
 
 class MainController {
+  /*
+  Le MainController gère le routing de la partie saisie critère de recherche
+  Deux recherches possibles:
+    - En saisissant le crirère de rechche+Touche Enter (searchUser)
+    - En saisissant le crirère de rechche+sélection dans la liste (show):
+      La rechercher peut être faite, soit pour une personne soit pour une structure
+      1- sélectionner une personne (showUser)
+      2- sélectionner une structure (this.$location.path("/Recherche")+this.$location.search("affectation", param))
+  Le MainController utilise routes.ts qui appel le controller PersonController pour exécuter les recherches en utilisant les web services
+  */
   searchCrit={ token:'' };
   authenticated=true;
 
@@ -23,15 +33,14 @@ class MainController {
     if (item.category === 'users') {
       this.showUser(item.uid);
     } else {
+      // recherche d'une structure
       var param=item.key.replace('structures-','');
         this.$location.path("/Recherche");
         this.$location.search("filter", param);
     }
   }
 
-  //Rechercher une personne
   showUser=(id, showDetailPers = false)=>{
-    //Sur la page resultSearch, le clic sur l'ensemble de cette page déclanche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
     this.searchCrit.token = null;
     this.$location.path("/Show/" + id);
   }
@@ -43,7 +52,7 @@ class MainController {
 class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
-  searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:''};
+  searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:'',filter_eduPersonAffiliation:''};
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
               {id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
@@ -61,18 +70,32 @@ class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-      console.log("PersonController constructor");
+      /* Le constructeur de PersonController gère les routings autre que la partie critère de recherche (MainController)
+        - Rechercher sur la structure à partir du fil d'arianne (this.$location.search().affectation)
+        - Filtrer sur le statut ( this.$location.search().affiliation)
+
+      */
+
 
         let filter = this.$location.search().filter;
-        if (filter) {
+        let affiliation = this.$location.search().affiliation;
+
+        //filtrer sur le statut
+        if (filter && affiliation) {
+          this.searchUser($routeParams['id'], null, $routeParams['filter'],$routeParams['affiliation'], false);
+        }
+        // recherche sur la structure/composante
+        else if (filter && !affiliation && !$routeParams['id']) {
             this.searchUserFromBreadCrumb(filter, $routeParams['id']);
-        } else if ($routeParams['id']) {
+        }
+        else if ($routeParams['id']) {
             if (this.$location.path().match(/Show/)) {
                 this.showUser($routeParams['id'], true);
             } else {
-                this.searchUser($routeParams['id'], null, null, false);
+                this.searchUser($routeParams['id'], null, $routeParams['filter'],$routeParams['affiliation'], false);
             }
         }
+
     }
 
   private _getSearchPersons = (text: {}) => {
@@ -85,11 +108,11 @@ class PersonController {
     }
   };
 
-  searchUser = (token, maxRows = null,filter_supannEntiteAffectation, showDetailPers = false) => {
+  searchUser = (token, maxRows = null,filter_supannEntiteAffectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
-      let searchCrit = { token, maxRows,filter_supannEntiteAffectation, CAS: this.$scope.$parent.main.authenticated };
+      let searchCrit = { token, maxRows,filter_supannEntiteAffectation,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
       //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
         // puis retourne une liste de type person.
@@ -125,7 +148,7 @@ class PersonController {
       return;
     }
     this.searchCrit.token = null;
-    this.searchUser(id, 1,null, showDetailPers);
+    this.searchUser(id, 1,null,null, showDetailPers);
   }
 
   private _getSearchCrumbUrl = (text: {}) => {
@@ -140,23 +163,23 @@ class PersonController {
   };
 
 
-  searchUserFromBreadCrumb=(param:String, token)=>{
+  searchUserFromBreadCrumb=(param:string, token)=>{
     if(param!=null){
     // si param ne contient pas 'structures-''
       if (param.indexOf("structures-")> -1){param=param.replace('structures-','')}
       //this.searchCrit.token=null;
       //this.searchCrit.filter_member_of_group = 'employees.administration.' + param;
       //this.searchCrit.filter_supannEntiteAffectation=''+param;
-      this.searchUser(token,null,param,false);
+      this.searchUser(token,null,param,null,false);
    }
 
  }
 
-  searchCrumbUrl=(param:String)=>{
+  searchCrumbUrl=(param:string)=>{
     // si param ne contient pas 'structures-''
     if (param.indexOf("structures-")== -1){param='structures-'+param}
     let searchCritStructure = angular.copy(this.searchCritStructure);
-    searchCritStructure.key=''+param;
+    searchCritStructure.key = param;
     return this._getSearchCrumbUrl(searchCritStructure).then((returnResultGroup : Array<{}>) => {
        let breadcrumbApp=Object.keys(returnResultGroup).map(key => returnResultGroup[key]);
        return breadcrumbApp.reverse();
@@ -165,9 +188,18 @@ class PersonController {
 
   goConnected = () => {
     this.$location.search('connected', true);
+
     location.hash = this.$location.url();
     location.reload();
   };
+
+  goAffiliation = (param:string) => {
+    //Modifier l'url: ajouter à l'URL précédent (exp:) le filtre eduPersonAffiliation
+    this.$location.search('affiliation', param);
+
+
+  };
+
 
 
 }
