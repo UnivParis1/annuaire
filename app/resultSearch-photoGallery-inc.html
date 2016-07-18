@@ -1,7 +1,7 @@
 <div ng-repeat="res in p.resultSearch">
   <div class="col-md-3">
     <div class="card thumbnail" >
-        <img title="{{res.person.givenName}} {{res.person.sn}}" ng-src="https://userphoto-test.univ-paris1.fr/?uid={{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle">
+        <img title="{{res.person.givenName}} {{res.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1"  width="54" height="34" class="img-thumbnail img-responsive img-circle">
         <div style="text-align: center;">
           {{res.person.givenName}} {{res.person.sn}}
         <div  ng-repeat="telNum in res.person.telephoneNumber">

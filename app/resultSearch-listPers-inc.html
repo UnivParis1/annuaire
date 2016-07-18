@@ -4,11 +4,11 @@
         <!-- a voir quel syntaxe utilise pour img-thumbnail-->
         <!--td><img title="{{res.person.givenName}}" src="{{p.urlJpegPhoto}}{{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
         <td class="col-md-1">
-          <img title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}" ng-src="https://userphoto-test.univ-paris1.fr/?uid={{res.person.uid}}"  height="34" class="img-thumbnail img-responsive img-circle">
+          <img title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1"  height="34" class="img-thumbnail img-responsive img-circle">
         </td>
         <td class="col-md-5">
             <div ng-if="res.person.supannCivilite!='supannListeRouge'">
-              <div>{{res.person.supannCivilite}}{{res.person.givenName}}{{res.person.sn}}</div>
+              <div>{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</div>
               <div ng-repeat="employeeType in res.person.employeeType">{{employeeType}}</div>
               <div ng-repeat="role in res.person.supannRoleGenerique">{{role}}</div>
               <div ng-repeat="desc in res.person.description">{{desc}}</div>
