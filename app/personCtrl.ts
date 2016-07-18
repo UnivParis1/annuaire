@@ -36,7 +36,7 @@ class MainController {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
         this.$location.path("/Recherche");
-        this.$location.search("filter", param);
+        this.$location.search("affectation", param);
     }
   }
 
@@ -77,22 +77,22 @@ class PersonController {
       */
 
 
-        let filter = this.$location.search().filter;
+        let affectation = this.$location.search().affectation;
         let affiliation = this.$location.search().affiliation;
 
         //filtrer sur le statut
-        if (filter && affiliation) {
-          this.searchUser($routeParams['id'], null, $routeParams['filter'],$routeParams['affiliation'], false);
+        if (affectation && affiliation) {
+          this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
         }
         // recherche sur la structure/composante
-        else if (filter && !affiliation && !$routeParams['id']) {
-            this.searchUserFromBreadCrumb(filter, $routeParams['id']);
+        else if (affectation && !affiliation && !$routeParams['id']) {
+            this.searchUserFromBreadCrumb(affectation, $routeParams['id']);
         }
         else if ($routeParams['id']) {
             if (this.$location.path().match(/Show/)) {
                 this.showUser($routeParams['id'], true);
             } else {
-                this.searchUser($routeParams['id'], null, $routeParams['filter'],$routeParams['affiliation'], false);
+                this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
             }
         }
 
