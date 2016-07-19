@@ -52,7 +52,7 @@ class MainController {
 class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
-  searchCrit={ maxRows: 2,token:'',filter_supannEntiteAffectation:'',filter_eduPersonAffiliation:''};
+  searchCrit={ maxRows: 2,token:'',filter_member_of_group:'',filter_eduPersonAffiliation:''};
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
               {id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
@@ -70,13 +70,11 @@ class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-      /* Le constructeur de PersonController gère les routings autre que la partie critère de recherche (MainController)
-        - Rechercher sur la structure à partir du fil d'arianne (this.$location.search().affectation)
+      /* PersonController gère les routings autre que la partie critère de recherche (MainController)
+        - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
         - Filtrer sur le statut ( this.$location.search().affiliation)
 
       */
-
-
         let affectation = this.$location.search().affectation;
         let affiliation = this.$location.search().affiliation;
 
@@ -108,11 +106,11 @@ class PersonController {
     }
   };
 
-  searchUser = (token, maxRows = null,filter_supannEntiteAffectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
+  searchUser = (token, maxRows = null,filter_member_of_group : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
-      let searchCrit = { token, maxRows,filter_supannEntiteAffectation,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
+      let searchCrit = { token, maxRows,filter_member_of_group,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
       //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
         // puis retourne une liste de type person.
@@ -166,10 +164,10 @@ class PersonController {
   searchUserFromBreadCrumb=(param:string, token)=>{
     if(param!=null){
     // si param ne contient pas 'structures-''
-      if (param.indexOf("structures-")> -1){param=param.replace('structures-','')}
-      //this.searchCrit.token=null;
-      //this.searchCrit.filter_member_of_group = 'employees.administration.' + param;
-      //this.searchCrit.filter_supannEntiteAffectation=''+param;
+      if (param.indexOf("structures-")> -1){
+        param=param.replace('structures-','') ;
+      }
+      param="groups-employees.administration."+""+param;
       this.searchUser(token,null,param,null,false);
    }
 
