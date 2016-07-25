@@ -1,12 +1,13 @@
-<div ng-repeat="res in p.resultSearch">
-  <div class="col-md-3">
-    <div class="card thumbnail" >
-        <img title="{{res.person.givenName}} {{res.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1"  width="54" height="34" class="img-thumbnail img-responsive img-circle">
-        <div style="text-align: center;">
-          {{res.person.givenName}} {{res.person.sn}}
-        <div  ng-repeat="telNum in res.person.telephoneNumber">
-          <a ng-href="tel:{{telNum}}" target="_blank" ng-click='p.noShowUser = true'>{{telNum}}</a>
-        </div>
+<div class="row">
+  <div ng-repeat="res in p.resultSearch" ng-click="res.person.supannCivilite=='supannListeRouge'?'':p.showUser(res.person.uid, true)" >
+    <div class="col-md-2">
+      <div href="" class="thumbnail item-image">
+          <img  title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}"
+          ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1" class="img-responsive" >
+      </div>
+      <div style="text-align: center;">
+        <p ng-if="res.person.supannCivilite!='supannListeRouge'">{{res.person.givenName}} {{res.person.sn}}</p>
+        <p ng-if="res.person.supannCivilite=='supannListeRouge'">Personne sur liste rouge</p>
       </div>
     </div>
   </div>
