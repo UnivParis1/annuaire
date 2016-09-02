@@ -32,8 +32,10 @@
         </span>
       </div>
       <div class="col-md-4">
-        <span  ng-if="res.person.buildingName"><label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br></span></span></span>
-        <span  ng-if="res.person.roomNumber"><label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br></span></span>
+        <span  ng-if="res.person['supannActivite-all']"><label>Discipline(s) :</label><span class="uneditable-input" ng-repeat="activite in res.person['supannActivite-all']">
+        Section {{(activite.key.replace('{','')).replace('}','')}} - {{activite.name}}</span><br></span>
+        <span  ng-if="res.person.buildingName"><label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br></span>
+        <span  ng-if="res.person.roomNumber"><label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br></span>
         <span  ng-if="res.person.up1FloorNumber"><label>Étage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in res.person.up1FloorNumber"> {{up1FloorNumber}}</span><br></span>
         <!--label>Adresse profesionnelle</label><span class="uneditable-input"> {{res.person.postalAddress}}</span><br>-->
         <div ng-if="res.person.postalAddress"><label>Adresse postale</label> <span style="white-space:pre-wrap;"> {{res.person.postalAddress}}</span>
