@@ -15,7 +15,8 @@
         <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}} <a ng-href="http://annulien.univ-paris1.fr/?dn=supannCodeEntite={{role.structure.key}},ou=structures,dc=univ-paris1,dc=fr" target="_blank" ng-click='p.noShowUser = true'>({{role.structure.name}})</a></div>
         <div ng-repeat="desc in res.person.description"> {{desc}}</div>
         <div ng-repeat="info in res.person.info"> {{info}}</div>
-        <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{res.person.mail}}</a></br></br>
+        <div ng-repeat="uri in res.person.labeledURI" ><a ng-href="{{uri}}" target="_blank" ng-click='p.noShowUser = true'> {{uri}}</a></div>
+        <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{res.person.mail}}</a></div></br>
       </div>
       <div class="col-md-6">
         <span  ng-if="res.person.telephoneNumber">
