@@ -7,9 +7,9 @@ function initTranslations($translateProvider) {
         STATUS_RESEARCHER: "Chercheur",
         STATUS_STAFF: "Personnel administratif / technique / de bibliothèque",
         STATUS_EMERITUS: "Professeur émérite",
-        STATUS_STUDENT:"Etudiant",
+        STATUS_STUDENT:"Étudiant",
         STATUS_ALUM:"Ancien étudiant",
-        STATUS_ALL:"Tous les résultats"
+        STATUS_ALL:"Tous"
     });
     $translateProvider.preferredLanguage('fr');
 }
