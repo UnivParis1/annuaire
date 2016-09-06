@@ -9,7 +9,10 @@
         <td class="col-md-5">
             <div ng-if="res.person.supannCivilite!='supannListeRouge'">
               <div>{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</div>
-              <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}} <a ng-href="http://annulien.univ-paris1.fr/?dn=supannCodeEntite={{role.structure.key}},ou=structures,dc=univ-paris1,dc=fr" target="_blank" ng-click='p.noShowUser = true'>({{role.structure.name}})</a></div>
+              <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}}
+                 <a ng-href="#/Recherche/?affectation={{role.structure.key}}{{main.authenticated ? '&connected' : ''}}"
+                  ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group" tooltip-placement="top" uib-tooltip={{role.structure.description}}>{{role.structure.name}}</a>
+              </div>
               <div ng-repeat="desc in res.person.description">{{desc}}</div>
               <div ng-repeat="info in res.person.info">{{info}}</div>
               <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{res.person.mail}}</a></div>
