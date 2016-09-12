@@ -18,7 +18,8 @@
           <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
         </div>
         <div class="col-md-12">
-          <h3 class="text-muted">{{p.resultSearch.length}} résultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
+          <!--Afficher le libellé de la structure si recherche structure sinon la valeur saisie -->
+          <h3 class="text-muted">{{p.resultSearch.length}} résultat(s) pour {{main.searchCrit.token.name?main.searchCrit.token.name:main.searchCrit.token}}
         </div>
       </div>
       <div class="row" >
