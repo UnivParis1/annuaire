@@ -2,13 +2,12 @@
   <div ng-include="'resultSearch-detailPers-inc.html'"></div>
 </div>
 
-
 <div ng-if="p.resultSearch.length >1" >
   <div class="row" >
     <div class="col-md-12" id="menus">
-      <div class="nav" style="text-align:right" ng-init="p.showList = true;p.showTrombi = fase" >
-        <a ng-href=""  class="btn btn-primary {{p.showList?'youarehere':''}}" title="Afficher la liste" ng-click="p.showList = true; p.showTrombi=false"><span class='glyphicon glyphicon-th-list'></span> Liste</a>
-        <a ng-href=""  class="btn btn-primary {{p.showTrombi?'youarehere':''}}" title="Afficher le trombinoscope" ng-click="p.showTrombi = true; p.showList=false" ><span class='glyphicon glyphicon-user'></span><span class='glyphicon glyphicon-user'></span> Trombinoscope</a>
+      <div class="nav" style="text-align:right">
+        <a ng-href=""  class="btn btn-primary {{!main.showTrombi?'youarehere':''}}" title="Afficher la liste" ng-click="p.showTrombi(false)"><span class='glyphicon glyphicon-th-list'></span> Liste</a>
+        <a ng-href=""  class="btn btn-primary {{main.showTrombi?'youarehere':''}}" title="Afficher le trombinoscope" ng-click="p.showTrombi(true)" ><span class='glyphicon glyphicon-user'></span><span class='glyphicon glyphicon-user'></span> Trombinoscope</a>
       </div>
     </div>
   </div>
@@ -33,11 +32,11 @@
         </div>
       </div>
   </div>
-  <div class="row" ng-if="p.showList" >
+  <div class="row" ng-if="!main.showTrombi" >
     <div ng-include="'resultSearch-listPers-inc.html'"></div>
   </div>
 
-  <div class="row"ng-if="p.showTrombi" style="margin-top:50px;">
+  <div class="row"ng-if="main.showTrombi" style="margin-top:50px;">
     <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
   </div>
 </div>

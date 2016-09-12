@@ -17,6 +17,7 @@ class MainController {
   */
   searchCrit={ token:'' };
   authenticated=true;
+  showTrombi=false;
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -194,9 +195,12 @@ class PersonController {
   goAffiliation = (param:string) => {
     //Modifier l'url: ajouter à l'URL précédent (exp:) le filtre eduPersonAffiliation
     this.$location.search('affiliation', param);
-
-
   };
+
+  showTrombi=(showTrombi:boolean)=>{
+    this.$scope.$parent.main.showTrombi=showTrombi;
+
+  }
 
 
 
