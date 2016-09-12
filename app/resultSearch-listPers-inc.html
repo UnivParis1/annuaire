@@ -33,13 +33,13 @@
             <div ng-repeat="telAut in res.person.supannAutreTelephone">
               <a ng-href="tel:{{telAut}}" target="_blank" ng-click='p.noShowUser = true'>{{telAut}}</a>
             </div>
-            <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}} (Fax)</div>
             <!--si authentifié-->
             <div ng-if="main.authenticated && res.person.mobile">
               <div ng-repeat="mobile in res.person.mobile">
                 <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a>
               </div>
             </div>
+            <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}} (Fax)</div>
         </td>
     </tr>
   </table>
