@@ -12,33 +12,31 @@
       </div>
     </div>
   </div>
-</div>
-<div ng-if="p.showList">
-    <div class="row" >
-      <div class="col-md-12" ng-if="!main.authenticated" >
-        <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
-      </div>
-      <div class="col-md-12">
-        <h3 class="text-muted">{{p.resultSearch.length}} Resultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
-      </div>
-    </div>
-    <div class="row" >
-      <div class="col-md-12" >
-        <div class="bg-info" style="padding: 6px" >Affiner par:
-           <div class="radio-inline" ng-repeat="v in p.listStatus">
-             <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
-            </div>
+  <div ng-if="!p.showDetailPers">
+      <div class="row" >
+        <div class="col-md-12" ng-if="!main.authenticated" >
+          <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
         </div>
-        </br>
+        <div class="col-md-12">
+          <h3 class="text-muted">{{p.resultSearch.length}} résultat(s) pour {{p.searchCrit.token}} {{p.searchCrit.filter_eduPersonAffiliation}}</h3>
+        </div>
       </div>
-    </div>
+      <div class="row" >
+        <div class="col-md-12" >
+          <div class="bg-info" style="padding: 6px" >Affiner par:
+             <div class="radio-inline" ng-repeat="v in p.listStatus">
+               <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
+              </div>
+          </div>
+          </br>
+        </div>
+      </div>
+  </div>
+  <div class="row" ng-if="p.showList" >
+    <div ng-include="'resultSearch-listPers-inc.html'"></div>
+  </div>
 
-
-    <div class="row" ng-if="!p.showDetailPers" >
-      <div ng-include="'resultSearch-listPers-inc.html'"></div>
-    </div>
-</div>
-
-<div class="row"ng-if="p.showTrombi" style="margin-top:50px;">
-  <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
+  <div class="row"ng-if="p.showTrombi" style="margin-top:50px;">
+    <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
+  </div>
 </div>
