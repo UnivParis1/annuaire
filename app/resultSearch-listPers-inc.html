@@ -23,7 +23,8 @@
         </td>
         <td class="col-md-4">
           <div ng-repeat="affectation in res.person['supannEntiteAffectation-all']">
-            <a ng-href="http://annulien.univ-paris1.fr/?dn=supannCodeEntite={{affectation.key}},ou=structures,dc=univ-paris1,dc=fr" target="_blank" ng-click='p.noShowUser = true'>{{affectation.description}}</a>
+             <a ng-href="#/Recherche/?affectation={{affectation.key}}{{main.authenticated ? '&connected' : ''}}"
+             ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group">{{affectation.description}}</a>
           </div>
         </td>
         <td class="col-md-2" style="white-space:nowrap">
