@@ -25,6 +25,7 @@ class MainController {
     }
 
     searchUser = (token) => {
+        this.showTrombi=false;
         this.$location.path("/Recherche/" + token);
     }
 
@@ -197,7 +198,7 @@ class PersonController {
     this.$location.search('affiliation', param);
   };
 
-  showTrombi=(showTrombi:boolean)=>{
+  setTrombi=(showTrombi:boolean)=>{
     this.$scope.$parent.main.showTrombi=showTrombi;
 
   }
