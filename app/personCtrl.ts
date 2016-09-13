@@ -26,6 +26,7 @@ class MainController {
 
     searchUser = (token) => {
         this.showTrombi=false;
+        this.$location.search('affiliation', '');
         this.$location.path("/Recherche/" + token);
     }
 
