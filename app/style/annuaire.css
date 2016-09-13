@@ -33,3 +33,7 @@ Surcharger btn-primary
 .btn-primary {
     border-color: white !important;
 }
+
+.selected {
+  text-decoration: underline
+}

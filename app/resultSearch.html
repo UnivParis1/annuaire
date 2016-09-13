@@ -25,7 +25,7 @@
         <div class="col-md-12" >
           <div class="bg-info" style="padding: 6px" >Affiner par:
              <div class="radio-inline" ng-repeat="v in p.listStatus">
-               <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
+               <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-class="{'selected':$index == main.selectedRow}" ng-click="p.goAffiliation(v.id);p.setClickedRow($index)">{{v.translationTag|translate}}</a>
               </div>
           </div>
           </br>

@@ -18,6 +18,7 @@ class MainController {
   searchCrit={ token:'' };
   authenticated=true;
   showTrombi=false;
+  selectedRow=0;
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -26,6 +27,7 @@ class MainController {
 
     searchUser = (token) => {
         this.showTrombi=false;
+        this.selectedRow=0;
         this.$location.search('affiliation', '');
         this.$location.path("/Recherche/" + token);
     }
@@ -201,8 +203,12 @@ class PersonController {
 
   setTrombi=(showTrombi:boolean)=>{
     this.$scope.$parent.main.showTrombi=showTrombi;
-
   }
+
+  setClickedRow=(index)=>{
+    this.$scope.$parent.main.selectedRow=index;
+  }
+
 
 
 
