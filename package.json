@@ -5,12 +5,12 @@
     "postinstall": "tsd reinstall -r -o",
     "tsc": "tsc -p app --watch --sourceMap",
     "start": "cd app && live-server"
-
   },
   "dependencies": {
     "angular": "~1.4.7",
     "angular-route": "^1.5.7",
     "angular-translate": "^2.9.0",
+    "angular-ui-bootstrap": "^2.1.4",
     "bootstrap": "^3.3.6"
   },
   "devDependencies": {
