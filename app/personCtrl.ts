@@ -19,6 +19,7 @@ class MainController {
   authenticated=true;
   showTrombi=false;
   selectedRow=0;
+  businessCategory;
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -40,8 +41,9 @@ class MainController {
     } else {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
-        this.$location.path("/Recherche");
-        this.$location.search("affectation", param);
+      this.businessCategory=item.businessCategory;
+      this.$location.path("/Recherche");
+      this.$location.search("affectation",param);
     }
   }
 
@@ -172,7 +174,8 @@ class PersonController {
       if (param.indexOf("structures-")> -1){
         param=param.replace('structures-','') ;
       }
-      param="groups-employees.administration."+""+param;
+      var businessCategory= this.$scope.$parent.main.businessCategory;
+      param="groups-employees."+businessCategory+"."+param;
       this.searchUser(token,null,param,null,false);
    }
 
