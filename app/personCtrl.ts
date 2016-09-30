@@ -19,7 +19,7 @@ class MainController {
   authenticated=true;
   showTrombi=false;
   selectedRow=0;
-  businessCategory;
+  searchStrcture;
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -41,7 +41,7 @@ class MainController {
     } else {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
-      this.businessCategory=item.businessCategory;
+      this.searchStrcture=item;
       this.$location.path("/Recherche");
       this.$location.search("affectation",param);
     }
@@ -75,6 +75,7 @@ class PersonController {
   routeProviderParam='/showListPers';
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
+  managerName;
 
     constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
       /* PersonController gère les routings autre que la partie critère de recherche (MainController)
@@ -117,18 +118,23 @@ class PersonController {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
-      let searchCrit = { token, maxRows,filter_member_of_group,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
+    let searchCrit = { token, maxRows,filter_member_of_group,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
     this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
-      //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
-        // puis retourne une liste de type person.
-        this.resultSearch = returnResult.map(e => new personCtrl(e));
-      // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
-        this.showDetailPers = showDetailPers || returnResult.length ==1;
-        if (this.showDetailPers) {
-            this.compute_breadcrumbTotal(returnResult[0]);
-            this.$location.path("/Show/" + returnResult[0]['mail']);
-        }
-    })
+    //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
+    // puis retourne une liste de type person.
+    this.resultSearch = returnResult.map(e => new personCtrl(e));
+
+    // Récupérer le chef de la structure recherché
+    if (this.$scope.$parent.main.searchStrcture){
+      if (this.$scope.$parent.main.searchStrcture['category']!='users') {this.findManager(returnResult);}
+    }
+    // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+    this.showDetailPers = showDetailPers || returnResult.length ==1;
+    if (this.showDetailPers) {
+        this.compute_breadcrumbTotal(returnResult[0]);
+        this.$location.path("/Show/" + returnResult[0]['mail']);
+    }
+  })
   }
 
     compute_breadcrumbTotal = (item) => {
@@ -174,7 +180,7 @@ class PersonController {
       if (param.indexOf("structures-")> -1){
         param=param.replace('structures-','') ;
       }
-      var businessCategory= this.$scope.$parent.main.businessCategory;
+      var businessCategory= this.$scope.$parent.main.searchStrcture['businessCategory'];
       param="groups-employees."+businessCategory+"."+param;
       this.searchUser(token,null,param,null,false);
    }
@@ -212,7 +218,17 @@ class PersonController {
     this.$scope.$parent.main.selectedRow=index;
   }
 
+  findManager=(searchResult)=>{
+    var supannRoleEntiteAll=searchResult[0]['supannRoleEntite-all'];
+    for (let it of supannRoleEntiteAll) {
+        var list=it['structure'];
+          if (this.$scope.$parent.main.searchStrcture['key'].replace('structures-','')==list['key']){
+          this.managerName=searchResult[0]['displayName'];
+          return;
+        }
+      }
 
+  }
 
 
 }
