@@ -1,7 +1,8 @@
 <div ng-if="p.resultSearch.length > 0">
+
   <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
     <li ng-repeat="item in i">
-          <a ng-href="#/Recherche/?affectation={{item.key}}{{main.authenticated ? '&connected' : ''}}" ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
+          <a ng-href="#/Recherche/?affectation={{item.key}}&businessCategory={{item.businessCategory}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
       </li>
   </ul>
 </div>
@@ -13,7 +14,7 @@
       </div>
       <div class="col-md-12">
         <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}}
-           <a ng-href="#/Recherche/?affectation={{role.structure.key}}{{main.authenticated ? '&connected' : ''}}"
+           <a ng-href="#/Recherche/?affectation={{role.structure.key}}&businessCategory={{role.structure.businessCategory}}{{main.authenticated ? '&connected' : ''}}"
             ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group" tooltip-placement="top" uib-tooltip={{role.structure.description}}>{{role.structure.name}}</a>
         </div>
         <div ng-repeat="desc in res.person.description"> {{desc}}</div>

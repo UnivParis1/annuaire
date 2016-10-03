@@ -19,7 +19,7 @@ class MainController {
   authenticated=true;
   showTrombi=false;
   selectedRow=0;
-  searchStrcture;
+  searchStrcture="";
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -29,7 +29,7 @@ class MainController {
     searchUser = (token) => {
         this.showTrombi=false;
         this.selectedRow=0;
-        this.$location.search('affiliation', '');
+        //this.$location.search('affiliation', '');
         this.$location.path("/Recherche/" + token);
     }
 
@@ -125,7 +125,7 @@ class PersonController {
     this.resultSearch = returnResult.map(e => new personCtrl(e));
 
     // Récupérer le chef de la structure recherché
-    if (this.$scope.$parent.main.searchStrcture){
+    if (this.$scope.$parent.main.searchStrcture!=""){
       if (this.$scope.$parent.main.searchStrcture['category']!='users') {this.findManager(returnResult);}
     }
     // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
@@ -176,12 +176,13 @@ class PersonController {
 
   searchUserFromBreadCrumb=(param:string, token)=>{
     if(param!=null){
-    // si param ne contient pas 'structures-''
+      // si param ne contient pas 'structures-''
       if (param.indexOf("structures-")> -1){
         param=param.replace('structures-','') ;
       }
       var businessCategory= this.$scope.$parent.main.searchStrcture['businessCategory'];
-      param="groups-employees."+businessCategory+"."+param;
+      if (angular.isUndefined(businessCategory) || businessCategory === null )businessCategory=this.$location.search().businessCategory;
+      param="groups-employees."+businessCategory+'.'+param;
       this.searchUser(token,null,param,null,false);
    }
 
