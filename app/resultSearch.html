@@ -20,7 +20,7 @@
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
           <div class="text-muted">{{main.searchCrit.token.name?main.searchCrit.token.name:main.searchCrit.token}}<span class='glyphicon glyphicon-remove'></span> </div>
-          <div ng-if="p.managerName">Directeur: <span class="text-muted">{{p.managerName}}</span></div>
+          <div ng-if="p.managerName"><span class="text-muted">{{p.managerName}}</span></div>
           <div ng-if="main.searchStrcture['labeledURI']">Site web: <a ng-href="{{main.searchStrcture['labeledURI']}}" target="_blank">{{main.searchStrcture['labeledURI']}}</a></div>
         </div>
         </br>

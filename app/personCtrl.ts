@@ -139,7 +139,6 @@ class PersonController {
 
     compute_breadcrumbTotal = (item) => {
         var supannEntiteAffectation = item['supannEntiteAffectation'];
-
         // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
         if (supannEntiteAffectation!=null){
           let breadcrumbTotal = this.breadcrumbTotal = [];
@@ -224,7 +223,7 @@ class PersonController {
     for (let it of supannRoleEntiteAll) {
         var list=it['structure'];
           if (this.$scope.$parent.main.searchStrcture['key'].replace('structures-','')==list['key']){
-          this.managerName=searchResult[0]['displayName'];
+          this.managerName=searchResult[0]['displayName'] +" - "+it['role'];
           return;
         }
       }
