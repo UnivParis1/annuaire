@@ -29,7 +29,6 @@ class MainController {
     searchUser = (token) => {
         this.showTrombi=false;
         this.selectedRow=0;
-        //this.$location.search('affiliation', '');
         this.$location.path("/Recherche/" + token);
     }
 
@@ -77,100 +76,115 @@ class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   managerName;
 
-    constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
-      /* PersonController gère les routings autre que la partie critère de recherche (MainController)
-        - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
-        - Filtrer sur le statut ( this.$location.search().affiliation)
+  constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
+    /* PersonController gère les routings autre que la partie critère de recherche (MainController)
+      - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
+      - Filtrer sur le statut ( this.$location.search().affiliation)
 
-      */
-        let affectation = this.$location.search().affectation;
-        let affiliation = this.$location.search().affiliation;
+    */
+      let affectation = this.$location.search().affectation;
+      let affiliation = this.$location.search().affiliation;
 
-        //filtrer sur le statut
-        if (affectation && affiliation) {
-          this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
-        }
-        // recherche sur la structure/composante
-        else if (affectation && !affiliation && !$routeParams['id']) {
-            this.searchUserFromBreadCrumb(affectation, $routeParams['id']);
-        }
-        else if ($routeParams['id']) {
-            if (this.$location.path().match(/Show/)) {
-                this.showUser($routeParams['id'], true);
-            } else {
-                this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
-            }
-        }
-
-    }
+      //filtrer sur le statut
+      if (affectation && affiliation) {
+        this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
+      }
+      // recherche sur la structure/composante
+      else if (affectation && !affiliation && !$routeParams['id']) {
+          this.searchUserFromBreadCrumb(affectation, $routeParams['id']);
+      }
+      else if ($routeParams['id']) {
+          if (this.$location.path().match(/Show/)) {
+              this.showUser($routeParams['id']);
+          } else {
+              this.searchUser($routeParams['id'], null, $routeParams['affectation'],$routeParams['affiliation'], false);
+          }
+      }
+  }
 
   private _getSearchPersons = (text: {}) => {
-    if (text!=null) {
+    if (text) {
         return this.personService.searchPersons(text).then(
-          // Si listUsers est != null prendre toute la liste listUsres
           (listUsers) => listUsers,
           (errfunction) => undefined
         );
     }
   };
 
+  private _getSearchBusinessCategFromStruct = (text: {}) => {
+    if (text) {
+        return this.personService.searchBusinessCategFromStruct(text).then(
+          (businessCateg) => businessCateg,
+          (errfunction) => undefined
+        );
+      }
+  };
+
+  private _getSearchCrumbUrl = (text: {}) => {
+    if (text!=null) {
+      return this.personService.searchCrumbUrl(text).then(
+        (listStructures) => listStructures && listStructures,
+        (err) => undefined
+      ).then((listStructures) =>(listStructures)
+      );
+    }
+  };
+
+
+
+
   searchUser = (token, maxRows = null,filter_member_of_group : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
     let searchCrit = { token, maxRows,filter_member_of_group,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
-    this._getSearchPersons(searchCrit).then((returnResult : Array<{}>) => {
-    //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
-    // puis retourne une liste de type person.
-    this.resultSearch = returnResult.map(e => new personCtrl(e));
 
-    // Récupérer le chef de la structure recherché
-    if (this.$scope.$parent.main.searchStrcture!=""){
-      if (this.$scope.$parent.main.searchStrcture['category']!='users') {this.findManager(returnResult);}
+    // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user
+    if (filter_member_of_group && token){
+      let searchCritStructure={key:"structures-"+filter_member_of_group};
+      this._getSearchBusinessCategFromStruct(searchCritStructure).then(g => {
+         searchCrit.filter_member_of_group = "groups-employees." + g['businessCategory'] + "." + filter_member_of_group;
+         this.searchUserFinal(searchCrit,showDetailPers);
+      });
+    } else {
+      this.searchUserFinal(searchCrit,showDetailPers);
     }
-    // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
-    this.showDetailPers = showDetailPers || returnResult.length ==1;
-    if (this.showDetailPers) {
-        this.compute_breadcrumbTotal(returnResult[0]);
-        this.$location.path("/Show/" + returnResult[0]['mail']);
-    }
-  })
-  }
+  };
 
-    compute_breadcrumbTotal = (item) => {
-        var supannEntiteAffectation = item['supannEntiteAffectation'];
-        // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
-        if (supannEntiteAffectation!=null){
-          let breadcrumbTotal = this.breadcrumbTotal = [];
-          for (let it of supannEntiteAffectation) {
-            this.searchCrumbUrl(it).then(breadcrumb =>
-               breadcrumbTotal.push(breadcrumb)
-            );
-          }
-        }
-    }
+  searchUserFinal = (searchCrit,showDetailPers) => {
+     this._getSearchPersons(searchCrit).then((persons : Array<{}>) => {
+       if (!showDetailPers && persons.length === 1) {
+         this.$location.path("/Show/" + persons[0]['mail']);
+         return;
+       }
+       //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
+       // puis retourne une liste de type person.
+       this.resultSearch = persons.map(e => new personCtrl(e));
+
+       // Récupérer le chef de la structure recherché
+       let searchStructure = this.$scope.$parent.main.searchStrcture;
+       if (searchStructure && searchStructure['category'] !== 'users' &&
+           persons.length && persons[0]['supannRoleEntite-all']) {
+           this.findManager(persons);
+       }
+       // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+       if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
+
+     });
+   }
+
 
   //Rechercher une personne
-  showUser=(id, showDetailPers = false)=>{
+  showUser=(id)=>{
     //Sur la page resultSearch, le clic sur l'ensemble de cette page déclenche l'affichage du détail, sauf sur celui du mailTo qui n'ouvre que la fenetre de mail
     if (this.noShowUser) {
       this.noShowUser = false;
       return;
     }
+    this.showDetailPers = true;
     this.searchCrit.token = null;
-    this.searchUser(id, 1,null,null, showDetailPers);
+    this.searchUser(id, 1,null,null, true);
   }
-
-  private _getSearchCrumbUrl = (text: {}) => {
-    if (text!=null) {
-        return this.personService.searchCrumbUrl(text).then(
-        (listStructures) => listStructures && listStructures,
-        (err) => undefined
-      ).then((listStructures) =>
-        (listStructures)
-      );
-    }
-  };
 
 
   searchUserFromBreadCrumb=(param:string, token)=>{
@@ -187,6 +201,19 @@ class PersonController {
 
  }
 
+ compute_breadcrumbTotal = (item) => {
+   var supannEntiteAffectation = item['supannEntiteAffectation'];
+   // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
+   if (supannEntiteAffectation!=null){
+     let breadcrumbTotal = this.breadcrumbTotal = [];
+     for (let it of supannEntiteAffectation) {
+       this.searchCrumbUrl(it).then(breadcrumb =>
+          breadcrumbTotal.push(breadcrumb)
+       );
+     }
+   }
+ }
+
   searchCrumbUrl=(param:string)=>{
     // si param ne contient pas 'structures-''
     if (param.indexOf("structures-")== -1){param='structures-'+param}
@@ -200,13 +227,11 @@ class PersonController {
 
   goConnected = () => {
     this.$location.search('connected', true);
-
     location.hash = this.$location.url();
     location.reload();
   };
 
   goAffiliation = (param:string) => {
-    //Modifier l'url: ajouter à l'URL précédent (exp:) le filtre eduPersonAffiliation
     this.$location.search('affiliation', param);
   };
 
@@ -221,13 +246,12 @@ class PersonController {
   findManager=(searchResult)=>{
     var supannRoleEntiteAll=searchResult[0]['supannRoleEntite-all'];
     for (let it of supannRoleEntiteAll) {
-        var list=it['structure'];
-          if (this.$scope.$parent.main.searchStrcture['key'].replace('structures-','')==list['key']){
-          this.managerName=searchResult[0]['displayName'] +" - "+it['role'];
-          return;
-        }
+      var list=it['structure'];
+        if (this.$scope.$parent.main.searchStrcture['key'].replace('structures-','')==list['key']){
+        this.managerName=searchResult[0]['displayName'] +" - "+it['role'];
+        return;
       }
-
+    }
   }
 
 

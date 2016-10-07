@@ -1,5 +1,5 @@
 <div class="row">
-  <div ng-repeat="res in p.resultSearch" ng-click="res.person.supannCivilite=='supannListeRouge'?'':p.showUser(res.person.uid, true)" >
+  <div ng-repeat="res in p.resultSearch" ng-click="res.person.supannCivilite=='supannListeRouge'?'':p.showUser(res.person.uid)" >
     <div class="col-md-2">
       <div href="" class="thumbnail item-image">
           <img  title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}"

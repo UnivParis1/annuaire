@@ -7,8 +7,10 @@ class PersonService {
   //Fil ariane
   //private static searchGroupUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=groups-employees.administration.DGHA&depth=44&callback=JSON_CALLBACK";
   private static searchCrumbUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?&callback=JSON_CALLBACK";
-  // Rechercher les personnes d'une structure
-  private static searchPersonsFromStructure="https://wsgroups-test.univ-paris1.fr/searchUser?maxRows=10&filter_supannEntiteAffectation=dgha";
+  // Rechercher businessCategory d'une structure
+  private static searchBusinessCategFromStruct="https://wsgroups.univ-paris1.fr/getGroup?&callback=JSON_CALLBACK";
+  //private static searchBusinessCategFromStruct="https://wsgroups.univ-paris1.fr/getGroup?key=structures-DGH";
+
   /*getUserInfo = (ptoken : string) : angular.IPromise<string[]> => {
     return this.$http.jsonp(
       PersonService.townsSearchUrl,
@@ -21,7 +23,7 @@ class PersonService {
   En sortie: angular.IPromise<string[]> --> Liste de personnes
   */
     searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
-        console.log(ptoken);
+    console.log(ptoken);
     return this.$http.jsonp(
       PersonService.searchPersonsUrl,
       {params:ptoken}
@@ -35,15 +37,12 @@ class PersonService {
     ).then(r => r.data);
   };
 
- /*  searchGroups = (ptoken :{}) : angular.IPromise<string[]> => {
+  searchBusinessCategFromStruct = (pkey :{}) : angular.IPromise<string[]> => {
     return this.$http.jsonp(
-      PersonService.searchPersonsFromStructure
+      PersonService.searchBusinessCategFromStruct,
+      {params:pkey}
     ).then(r => r.data);
-  };*/
-
-
-
-
+  };
 
 
 }
