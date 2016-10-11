@@ -11,12 +11,14 @@
       </div>
     </div>
   </div>
+
   <div ng-if="!p.showDetailPers">
     <div class="row"  >
       <div class="col-md-12" ng-if="!main.authenticated" style="padding-bottom:8px">
         <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
       </div>
-      </br>
+    </div>
+    <div class="row"  >
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
           <div class="text-muted">{{main.searchCrit.token.name?main.searchCrit.token.name:main.searchCrit.token}}<span class='glyphicon glyphicon-remove'></span> </div>
@@ -25,6 +27,27 @@
         </div>
         </br>
       </div>
+    </div>
+    <div class="row"  >
+      <div class="col-md-12 bg-info" >{{p.resultSearch.length}} résultat(s) pour:</div>
+    </div>
+    <div class="row">
+      <div ng-repeat="res in p.displayFilter">
+        <div ng-if="res.filter_member_of_group" class="col-md-4" >
+          <span style="white-space:nowrap">{{main.searchStrcture['name']}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></span></br>
+          <span ng-if="p.managerName"><span class="text-muted">{{p.managerName}}</span></br>
+          <span ng-if="main.searchStrcture['labeledURI']">Site web: <a ng-href="{{main.searchStrcture['name']}}" target="_blank">{{main.searchStrcture['labeledURI']}}</a></span>
+        </div>
+        <div ng-if="res.token" class="col-md-4">
+          <span ng-if="main.searchCrit.token">{{main.searchCrit.token}}</span><span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></br>
+        </div>
+        <div ng-if="res.filter_eduPersonAffiliation" class="col-md-4">
+          <span ng-if="main.searchCrit.token">{{main.searchCrit.filter_eduPersonAffiliation}}</span><span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row"  >
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px" >Affiner par:
            <div class="radio-inline" ng-repeat="v in p.listStatus">
@@ -34,12 +57,15 @@
         </br>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="row" ng-if="!main.showTrombi && p.resultSearch.length>1">
-      <div ng-include="'resultSearch-listPers-inc.html'"></div>
-    </div>
 
-    <div class="row"ng-if="main.showTrombi&&p.resultSearch.length>1" style="margin-top:50px;">
-      <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
-    </div>
+  <div class="row" ng-if="!main.showTrombi && p.resultSearch.length>1">
+    <div ng-include="'resultSearch-listPers-inc.html'"></div>
+  </div>
+
+  <div class="row"ng-if="main.showTrombi&&p.resultSearch.length>1" style="margin-top:50px;">
+    <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
+  </div>
 </div>

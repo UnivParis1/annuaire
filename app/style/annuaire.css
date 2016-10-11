@@ -37,3 +37,8 @@ Surcharger btn-primary
 .selected {
   text-decoration: underline
 }
+
+
+.setHover {
+    cursor: pointer;
+}

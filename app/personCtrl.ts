@@ -75,6 +75,7 @@ class PersonController {
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   managerName;
+  displayFilter=[];
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
     /* PersonController gère les routings autre que la partie critère de recherche (MainController)
@@ -138,6 +139,7 @@ class PersonController {
     if (!maxRows) maxRows = this.$scope.$parent.main.authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
 
     let searchCrit = { token, maxRows,filter_member_of_group,filter_eduPersonAffiliation, CAS: this.$scope.$parent.main.authenticated };
+    this.addDisplayFilter(searchCrit);
 
     // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user
     if (filter_member_of_group && token){
@@ -153,25 +155,25 @@ class PersonController {
 
   searchUserFinal = (searchCrit,showDetailPers) => {
      this._getSearchPersons(searchCrit).then((persons : Array<{}>) => {
-       if (!showDetailPers && persons.length === 1) {
-         this.$location.path("/Show/" + persons[0]['mail']);
-         return;
-       }
-       //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
-       // puis retourne une liste de type person.
-       this.resultSearch = persons.map(e => new personCtrl(e));
+     if (!showDetailPers && persons.length === 1) {
+       this.$location.path("/Show/" + persons[0]['mail']);
+       return;
+     }
+     //Parcourrir la liste des personnes trouvées dans returnResult et affecter dans objet person
+     // puis retourne une liste de type person.
+     this.resultSearch = persons.map(e => new personCtrl(e));
 
-       // Récupérer le chef de la structure recherché
-       let searchStructure = this.$scope.$parent.main.searchStrcture;
-       if (searchStructure && searchStructure['category'] !== 'users' &&
-           persons.length && persons[0]['supannRoleEntite-all']) {
-           this.findManager(persons);
-       }
-       // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
-       if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
+     // Récupérer le chef de la structure recherché
+     let searchStructure = this.$scope.$parent.main.searchStrcture;
+     if (searchStructure && searchStructure['category'] !== 'users' &&
+         persons.length && persons[0]['supannRoleEntite-all']) {
+         this.findManager(persons);
+     }
+     // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+     if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
 
-     });
-   }
+   });
+ }
 
 
   //Rechercher une personne
@@ -232,8 +234,14 @@ class PersonController {
   };
 
   goAffiliation = (param:string) => {
+    this.displayFilter.push(param);
     this.$location.search('affiliation', param);
-  };
+  }
+
+  goDeletedFilter=(param:{})=>{
+    // Clear the current search
+    this.$location.search({});
+  }
 
   setTrombi=(showTrombi:boolean)=>{
     this.$scope.$parent.main.showTrombi=showTrombi;
@@ -252,6 +260,10 @@ class PersonController {
         return;
       }
     }
+  }
+
+  addDisplayFilter=(param)=>{
+    this.displayFilter.push(param);
   }
 
 
