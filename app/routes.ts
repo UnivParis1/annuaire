@@ -7,7 +7,7 @@ function initRoutes($routeProvider) {
             controller  : 'PersonController',
             controllerAs: 'p',
         })
-        $routeProvider.when('/Recherche/:id', {
+        $routeProvider.when('/Recherche/:token', {
             templateUrl : 'resultSearch.html',
             controller  : 'PersonController',
             controllerAs: 'p',

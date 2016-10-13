@@ -1,53 +1,53 @@
 <div ng-if="p.resultSearch.length > 0">
   <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
     <li ng-repeat="item in i">
-          <a ng-href="#/Recherche/?affectation={{item.key.toString().split('-')[1]}}&businessCategory={{item.businessCategory}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
+          <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
       </li>
   </ul>
 </div>
 
 <div class="col-md-12 alt" >
-  <div class="row" ng-repeat="res in p.resultSearch">
+  <div class="row" ng-repeat="person in p.resultSearch">
       <div class="col-md-12">
-        <h2 class="cap">{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</h2>
+        <h2 class="cap">{{person.supannCivilite}} {{person.givenName}} {{person.sn}}</h2>
       </div>
       <div class="col-md-12">
-        <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}}
-           <a ng-href="#/Recherche/?affectation={{role.structure.key}}&businessCategory={{role.structure.businessCategory}}{{main.authenticated ? '&connected' : ''}}"
+        <div ng-repeat="role in person['supannRoleEntite-all']">{{role.role}}
+           <a ng-href="#/Recherche/?affectation={{role.structure.key}}{{main.authenticated ? '&connected' : ''}}"
             ng-click='p.noShowUser = true' ng-model="p.searchCrit.filter_member_of_group" tooltip-placement="top" uib-tooltip={{role.structure.description}}>{{role.structure.name}}</a>
         </div>
-        <div ng-repeat="desc in res.person.description"> {{desc}}</div>
-        <div ng-repeat="info in res.person.info"> {{info}}</div>
-        <div ng-repeat="uri in res.person.labeledURI" ><a ng-href="{{uri}}" target="_blank" ng-click='p.noShowUser = true'> {{uri}}</a></div>
-        <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{res.person.mail}}</a></div></br>
+        <div ng-repeat="desc in person.description"> {{desc}}</div>
+        <div ng-repeat="info in person.info"> {{info}}</div>
+        <div ng-repeat="uri in person.labeledURI" ><a ng-href="{{uri}}" target="_blank" ng-click='p.noShowUser = true'> {{uri}}</a></div>
+        <div><a ng-href="mailto:{{person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{person.mail}}</a></div></br>
       </div>
       <div class="col-md-6">
-        <span  ng-if="res.person.telephoneNumber">
-          <label>Téléphone fixe </label><span class="uneditable-input" ng-repeat="telephoneNumber in res.person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a></span><br>
+        <span  ng-if="person.telephoneNumber">
+          <label>Téléphone fixe </label><span class="uneditable-input" ng-repeat="telephoneNumber in person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a></span><br>
         </span>
-        <span  ng-if="res.person.supannAutreTelephone">
-          <label>Téléphone secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in res.person.supannAutreTelephone"><a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a><br/></span><br>
+        <span  ng-if="person.supannAutreTelephone">
+          <label>Téléphone secondaire </label><span class="uneditable-input" ng-repeat="supannAutreTelephone in person.supannAutreTelephone"><a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a><br/></span><br>
         </span>
-        <span  ng-if="main.authenticated && res.person.mobile">
-          <label>Téléphone mobile </label> <span class="uneditable-input" ng-repeat="mobile in res.person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
+        <span  ng-if="main.authenticated && person.mobile">
+          <label>Téléphone mobile </label> <span class="uneditable-input" ng-repeat="mobile in person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
         </span>
-        <span  ng-if="res.person.facsimileTelephoneNumber">
-            <label>Fax </label><span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in res.person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
+        <span  ng-if="person.facsimileTelephoneNumber">
+            <label>Fax </label><span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
         </span>
       </div>
       <div class="col-md-4">
-        <span  ng-if="res.person['supannActivite-all']"><label>Discipline(s) :</label><span class="uneditable-input" ng-repeat="activite in res.person['supannActivite-all']">
+        <span  ng-if="person['supannActivite-all']"><label>Discipline(s) :</label><span class="uneditable-input" ng-repeat="activite in person['supannActivite-all']">
         Section {{(activite.key.replace('{','')).replace('}','')}} - {{activite.name}}</span><br></span>
-        <span  ng-if="res.person.buildingName"><label>Site</label><span class="uneditable-input" ng-repeat="buildingName in res.person.buildingName"> {{buildingName}}</span><br></span>
-        <span  ng-if="res.person.roomNumber"><label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in res.person.roomNumber"> {{roomNumber}}</span><br></span>
-        <span  ng-if="res.person.up1FloorNumber"><label>Étage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in res.person.up1FloorNumber"> {{up1FloorNumber}}</span><br></span>
-        <!--label>Adresse profesionnelle</label><span class="uneditable-input"> {{res.person.postalAddress}}</span><br>-->
-        <div ng-if="res.person.postalAddress"><label>Adresse postale</label> <span style="white-space:pre-wrap;"> {{res.person.postalAddress}}</span>
-          <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{res.person.postalAddress}}" target="_blank"><span class="img-responsive glyphicon glyphicon-map-marker"></span></a><br>
+        <span  ng-if="person.buildingName"><label>Site</label><span class="uneditable-input" ng-repeat="buildingName in person.buildingName"> {{buildingName}}</span><br></span>
+        <span  ng-if="person.roomNumber"><label>Bureau</label><span class="uneditable-input" ng-repeat="roomNumber in person.roomNumber"> {{roomNumber}}</span><br></span>
+        <span  ng-if="person.up1FloorNumber"><label>Étage</label><span class="uneditable-input" ng-repeat="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span><br></span>
+        <!--label>Adresse profesionnelle</label><span class="uneditable-input"> {{person.postalAddress}}</span><br>-->
+        <div ng-if="person.postalAddress"><label>Adresse postale</label> <span style="white-space:pre-wrap;"> {{person.postalAddress}}</span>
+          <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" target="_blank"><span class="img-responsive glyphicon glyphicon-map-marker"></span></a><br>
         </div>
       </div>
       <div class="col-md-2 text-center">
-            <img title="{{res.person.givenName}} {{res.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1"   height="64" class="img-thumbnail img-responsive img-circle">
+            <img title="{{person.givenName}} {{person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}&test=1"   height="64" class="img-thumbnail img-responsive img-circle">
       </div>
   </div>
 </div>

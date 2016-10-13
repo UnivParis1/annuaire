@@ -1,46 +1,46 @@
 <div class="col-md-12" >
   <table class="table table-striped" >
-    <tr ng-repeat="res in p.resultSearch" ng-click="res.person.supannCivilite=='supannListeRouge'?'':p.showUser(res.person.uid)" >
+    <tr ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.uid)" >
         <!-- a voir quel syntaxe utilise pour img-thumbnail-->
-        <!--td><img title="{{res.person.givenName}}" src="{{p.urlJpegPhoto}}{{res.person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
+        <!--td><img title="{{person.givenName}}" src="{{p.urlJpegPhoto}}{{person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
         <td class="col-md-1">
-          <img title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1"  height="34" class="img-thumbnail img-responsive img-circle">
+          <img title="{{person.supannListeRouge ? '': person.givenName}} {{person.supannListeRouge ? '' : person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}&test=1"  height="34" class="img-thumbnail img-responsive img-circle">
         </td>
         <td class="col-md-5">
-            <div ng-if="res.person.supannCivilite!='supannListeRouge'">
-              <div>{{res.person.supannCivilite}} {{res.person.givenName}} {{res.person.sn}}</div>
-              <div ng-repeat="role in res.person['supannRoleEntite-all']">{{role.role}}
-                 <a ng-href="#/Recherche/?affectation={{role.structure.key}}&businessCategory={{role.structure.businessCategory}}{{main.authenticated ? '&connected' : ''}}"
+            <div ng-if="!person.supannListeRouge">
+              <div>{{person.supannCivilite}} {{person.givenName}} {{person.sn}}</div>
+              <div ng-repeat="role in person['supannRoleEntite-all']">{{role.role}}
+                 <a ng-href="#/Recherche/?affectation={{role.structure.key}}{{main.authenticated ? '&connected' : ''}}"
                   ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group" tooltip-placement="top" uib-tooltip={{role.structure.description}}>{{role.structure.name}}</a>
               </div>
-              <div ng-repeat="desc in res.person.description">{{desc}}</div>
-              <div ng-repeat="info in res.person.info">{{info}}</div>
-              <div><a ng-href="mailto:{{res.person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{res.person.mail}}</a></div>
+              <div ng-repeat="desc in person.description">{{desc}}</div>
+              <div ng-repeat="info in person.info">{{info}}</div>
+              <div><a ng-href="mailto:{{person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{person.mail}}</a></div>
             </div>
-            <div ng-if="res.person.supannCivilite=='supannListeRouge'">
+            <div ng-if="person.supannListeRouge">
               <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" href="/#?connected" ng-click="p.goConnected()"> Connexion </a>
             </div>
         </td>
         <td class="col-md-4">
-          <div ng-repeat="affectation in res.person['supannEntiteAffectation-all']">
-             <a ng-href="#/Recherche/?affectation={{affectation.key}}&businessCategory={{affectation.businessCategory}}{{main.authenticated ? '&connected' : ''}}"
+          <div ng-repeat="affectation in person['supannEntiteAffectation-all']">
+             <a ng-href="#/Recherche/?affectation={{affectation.key}}{{main.authenticated ? '&connected' : ''}}"
              ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group">{{affectation.description}}</a>
           </div>
         </td>
         <td class="col-md-2" style="white-space:nowrap">
-            <div  ng-repeat="telNum in res.person.telephoneNumber">
+            <div  ng-repeat="telNum in person.telephoneNumber">
               <a ng-href="tel:{{telNum}}" target="_blank" ng-click='p.noShowUser = true'>{{telNum}}</a>
             </div>
-            <div ng-repeat="telAut in res.person.supannAutreTelephone">
+            <div ng-repeat="telAut in person.supannAutreTelephone">
               <a ng-href="tel:{{telAut}}" target="_blank" ng-click='p.noShowUser = true'>{{telAut}}</a>
             </div>
             <!--si authentifié-->
-            <div ng-if="main.authenticated && res.person.mobile">
-              <div ng-repeat="mobile in res.person.mobile">
+            <div ng-if="main.authenticated && person.mobile">
+              <div ng-repeat="mobile in person.mobile">
                 <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a>
               </div>
             </div>
-            <div ng-repeat="telFac in res.person.facsimileTelephoneNumber">{{telFac}} (Fax)</div>
+            <div ng-repeat="telFac in person.facsimileTelephoneNumber">{{telFac}} (Fax)</div>
         </td>
     </tr>
   </table>

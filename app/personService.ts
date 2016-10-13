@@ -1,5 +1,5 @@
 class PersonService {
-  constructor(private $http: angular.IHttpService) {
+  constructor(private $http: angular.IHttpService, private $q) {
   }
 
   // rechercher les données d'une personne
@@ -8,7 +8,7 @@ class PersonService {
   //private static searchGroupUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=groups-employees.administration.DGHA&depth=44&callback=JSON_CALLBACK";
   private static searchCrumbUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?&callback=JSON_CALLBACK";
   // Rechercher businessCategory d'une structure
-  private static searchBusinessCategFromStruct="https://wsgroups.univ-paris1.fr/getGroup?&callback=JSON_CALLBACK";
+  private static getGroup="https://wsgroups.univ-paris1.fr/getGroup?&callback=JSON_CALLBACK";
   //private static searchBusinessCategFromStruct="https://wsgroups.univ-paris1.fr/getGroup?key=structures-DGH";
 
   /*getUserInfo = (ptoken : string) : angular.IPromise<string[]> => {
@@ -22,26 +22,34 @@ class PersonService {
   En entrée: ptoken---> liste de paramètres entre {} ex:{"maxRows":5,"token":"sar"}
   En sortie: angular.IPromise<string[]> --> Liste de personnes
   */
+
+  private cache = {};
+    
+  cachedJsonp = (url, params) => {
+      let hashParams = JSON.stringify(params);
+      let v = this.cache[url + hashParams];
+      if (v) {
+          console.log("using cached value for " + url + " " + hashParams);
+          return this.$q.resolve(v);
+      } else {
+          return this.$http.jsonp(url, { params }).then(r => {
+              this.cache[url + hashParams] = r.data;
+              return r.data
+          });
+      }
+  };        
+    
     searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
     console.log(ptoken);
-    return this.$http.jsonp(
-      PersonService.searchPersonsUrl,
-      {params:ptoken}
-    ).then(r => r.data);
+    return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
   };
   //exemple url https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
   searchCrumbUrl = (pkey :{}) : angular.IPromise<string[]> => {
-    return this.$http.jsonp(
-      PersonService.searchCrumbUrl,
-      {params:pkey}
-    ).then(r => r.data);
+    return this.cachedJsonp(PersonService.searchCrumbUrl, pkey);
   };
 
-  searchBusinessCategFromStruct = (pkey :{}) : angular.IPromise<string[]> => {
-    return this.$http.jsonp(
-      PersonService.searchBusinessCategFromStruct,
-      {params:pkey}
-    ).then(r => r.data);
+  getGroup = (key : string) : angular.IPromise<string[]> => {
+      return this.cachedJsonp(PersonService.getGroup, {key});
   };
 
 

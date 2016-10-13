@@ -2,12 +2,12 @@
   <div ng-include="'resultSearch-detailPers-inc.html'"></div>
 </div>
 
-<div ng-if="p.resultSearch.length >1 || p.$location.url().includes('affiliation')" >
-  <div class="row" ng-if="p.resultSearch.length >1" >
+<div ng-if="p.resultSearch.length && !p.noShowUser || p.affiliation" >
+  <div class="row" ng-if="p.resultSearch.length" >
     <div class="col-md-12" id="menus">
       <div class="nav" style="text-align:right">
-        <a ng-href=""  class="btn btn-primary {{!main.showTrombi?'youarehere':''}}" title="Afficher la liste" ng-click="p.setTrombi(false)"><span class='glyphicon glyphicon-th-list'></span> Liste</a>
-        <a ng-href=""  class="btn btn-primary {{main.showTrombi?'youarehere':''}}" title="Afficher le trombinoscope" ng-click="p.setTrombi(true)" ><span class='glyphicon glyphicon-user'></span><span class='glyphicon glyphicon-user'></span> Trombinoscope</a>
+        <a ng-href=""  class="btn btn-primary {{!main.showTrombi?'youarehere':''}}" title="Afficher la liste" ng-click="main.setTrombi(false)"><span class='glyphicon glyphicon-th-list'></span> Liste</a>
+        <a ng-href=""  class="btn btn-primary {{main.showTrombi?'youarehere':''}}" title="Afficher le trombinoscope" ng-click="main.setTrombi(true)" ><span class='glyphicon glyphicon-user'></span><span class='glyphicon glyphicon-user'></span> Trombinoscope</a>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px" >Affiner par:
            <div class="radio-inline" ng-repeat="v in p.listStatus">
-             <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-class="{'selected':$index == main.selectedRow}" ng-click="p.goAffiliation(v.id);p.setClickedRow($index)">{{v.translationTag|translate}}</a>
+             <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-class="{'selected':v.id === p.affiliation}" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
           </div>
         </div>
         </br>
@@ -61,11 +61,11 @@
 </div>
 
 
-  <div class="row" ng-if="!main.showTrombi && p.resultSearch.length>1">
+  <div class="row" ng-if="!main.showTrombi && p.resultSearch.length && !p.noShowUser">
     <div ng-include="'resultSearch-listPers-inc.html'"></div>
   </div>
 
-  <div class="row"ng-if="main.showTrombi&&p.resultSearch.length>1" style="margin-top:50px;">
+  <div class="row"ng-if="main.showTrombi&&p.resultSearch.length" style="margin-top:50px;">
     <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
   </div>
 </div>

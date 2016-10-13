@@ -1,13 +1,13 @@
 <div class="row">
-  <div ng-repeat="res in p.resultSearch" ng-click="res.person.supannCivilite=='supannListeRouge'?'':p.showUser(res.person.uid)" >
+  <div ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.uid)" >
     <div class="col-md-2">
       <div href="" class="thumbnail item-image">
-          <img  title="{{res.person.supannCivilite!='supannListeRouge'? res.person.givenName :''}} {{res.person.supannCivilite!='supannListeRouge'? res.person.sn : ''}}"
-          ng-src="https://userphoto.univ-paris1.fr/?uid={{res.person.uid}}&test=1" class="img-responsive" >
+          <img  title="{{person.supannListeRouge ? '' : person.givenName}} {{person.supannListeRouge ? '' : person.sn}}"
+          ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}&test=1" class="img-responsive" >
       </div>
       <div style="text-align: center;">
-        <p ng-if="res.person.supannCivilite!='supannListeRouge'">{{res.person.givenName}} {{res.person.sn}}</p>
-        <p ng-if="res.person.supannCivilite=='supannListeRouge'">Personne sur liste rouge</p>
+        <p ng-if="!person.supannListeRouge">{{person.givenName}} {{person.sn}}</p>
+        <p ng-if="person.supannListeRouge">Personne sur liste rouge</p>
       </div>
     </div>
   </div>
