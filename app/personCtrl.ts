@@ -99,19 +99,19 @@ class PersonController {
     }
   };
 
-    private getBusinessCategFromStruct = (affectation: string) => {
-        //debugger;
-        return this.personService.getGroup("structures-" + affectation).then(
-          (g) => g['businessCategory'],
-          (errfunction) => undefined
-        );
+  private getBusinessCategFromStruct = (affectation: string) => {
+    //debugger;
+    return this.personService.getGroup("structures-" + affectation).then(
+      (g) => g['businessCategory'],
+      (errfunction) => undefined
+    );
   };
 
   private _getSearchCrumbUrl = (text: {}) => {
-      return this.personService.searchCrumbUrl(text).then(
-        (listStructures) => listStructures,
-        (err) => undefined
-      );
+    return this.personService.searchCrumbUrl(text).then(
+      (listStructures) => listStructures,
+      (err) => undefined
+    );
   };
 
 
@@ -152,9 +152,8 @@ class PersonController {
      this.resultSearch = persons;
 
      // Récupérer le chef de la structure recherché
-     if (affectation && persons.length && persons[0]['supannRoleEntite-all']) {
-         this.$scope.$parent.main.displayFilter.managerName=this.findRole(persons[0], affectation);
-     }
+     if (affectation && persons.length && persons[0]['supannRoleEntite-all']) this.$scope.$parent.main.displayFilter.managerName=this.findRole(persons[0], affectation);
+
      // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
      if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
    });
@@ -215,6 +214,8 @@ class PersonController {
     if (param==='affectation') {
       this.$scope.$parent.main.displayFilter.managerName="";
     }
+    //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
+    if(this.$location.url()==='/Recherche') this.$location.path("");
   }
 
   findRole=(person, affectation) => {
