@@ -26,15 +26,15 @@
         <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
           <div class="row">
             <div class="col-md-6 text-muted" ng-if="main.displayFilter.managerName">
-               <div>{{main.displayFilter.managerName.structure['description']}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+               <div>{{main.displayFilter.managerName.structure['description']}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affectation')"></span></div>
                <div>{{main.displayFilter.managerName.displayName}}</div>
                <div>Site web: <a ng-href="{{main.displayFilter.managerName.structure['labeledURI']}}" target="_blank">{{main.displayFilter.managerName.structure['labeledURI']}}</a></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="main.displayFilter.token">
-                <div >{{main.displayFilter.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+                <div >{{main.displayFilter.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('token')"></span></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="main.displayFilter.affiliation">
-              <div>{{main.displayFilter.affiliation}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+              <div>{{main.displayFilter.affiliation}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affiliation')"></span></div>
             </div>
           </div>
         </div>
