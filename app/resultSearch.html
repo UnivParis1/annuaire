@@ -1,8 +1,10 @@
 <div ng-if="p.showDetailPers">
   <div ng-include="'resultSearch-detailPers-inc.html'"></div>
+  {{p.resultSearch.length}}//{{p.showDetailPers}}
 </div>
 
-<div ng-if="p.resultSearch.length && !p.noShowUser || p.affiliation" >
+<!--Le filtre est affiché  si un filtre n'affiche aucune personne,cela permet à l'utlisateur d'avoir la possibilité de filtrer sur autre donnée (p.affiliation)-->
+<div ng-if="(p.resultSearch.length>1 && !p.showDetailPers)||(p.resultSearch.length<=1 && p.affiliation&&!p.showDetailPers)||(p.resultSearch.length<=1 && p.affectation&&!p.showDetailPers)" >
   <div class="row" ng-if="p.resultSearch.length" >
     <div class="col-md-12" id="menus">
       <div class="nav" style="text-align:right">
@@ -18,54 +20,45 @@
         <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
       </div>
     </div>
-    <div class="row"  >
-      <div class="col-md-12" >
-        <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
-          <div class="text-muted">{{main.searchCrit.token.name?main.searchCrit.token.name:main.searchCrit.token}}<span class='glyphicon glyphicon-remove'></span> </div>
-          <div ng-if="p.managerName"><span class="text-muted">{{p.managerName}}</span></div>
-          <div ng-if="main.searchStrcture['labeledURI']">Site web: <a ng-href="{{main.searchStrcture['labeledURI']}}" target="_blank">{{main.searchStrcture['labeledURI']}}</a></div>
-        </div>
-        </br>
-      </div>
-    </div>
-    <div class="row"  >
-      <div class="col-md-12 bg-info" >{{p.resultSearch.length}} résultat(s) pour:</div>
-    </div>
-    <div class="row">
-      <div ng-repeat="res in p.displayFilter">
-        <div ng-if="res.filter_member_of_group" class="col-md-4" >
-          <span style="white-space:nowrap">{{main.searchStrcture['name']}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></span></br>
-          <span ng-if="p.managerName"><span class="text-muted">{{p.managerName}}</span></br>
-          <span ng-if="main.searchStrcture['labeledURI']">Site web: <a ng-href="{{main.searchStrcture['name']}}" target="_blank">{{main.searchStrcture['labeledURI']}}</a></span>
-        </div>
-        <div ng-if="res.token" class="col-md-4">
-          <span ng-if="main.searchCrit.token">{{main.searchCrit.token}}</span><span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></br>
-        </div>
-        <div ng-if="res.filter_eduPersonAffiliation" class="col-md-4">
-          <span ng-if="main.searchCrit.token">{{main.searchCrit.filter_eduPersonAffiliation}}</span><span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(p.displayFilter)"></span></br>
-        </div>
-      </div>
-    </div>
 
     <div class="row"  >
       <div class="col-md-12" >
-        <div class="bg-info" style="padding: 6px" >Affiner par:
-           <div class="radio-inline" ng-repeat="v in p.listStatus">
-             <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-class="{'selected':v.id === p.affiliation}" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
+        <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
+          <div class="row">
+            <div class="col-md-6 text-muted" ng-if="main.displayFilter.managerName">
+               <div>{{main.displayFilter.managerName.structure['description']}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+               <div>{{main.displayFilter.managerName.displayName}}</div>
+               <div>Site web: <a ng-href="{{main.displayFilter.managerName.structure['labeledURI']}}" target="_blank">{{main.displayFilter.managerName.structure['labeledURI']}}</a></div>
+            </div>
+            <div class="col-md-3 text-muted" ng-if="main.displayFilter.token">
+                <div >{{main.displayFilter.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+            </div>
+            <div class="col-md-3 text-muted" ng-if="main.displayFilter.affiliation">
+              <div>{{main.displayFilter.affiliation}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter(main.displayFilter)"></span></div>
+            </div>
           </div>
         </div>
         </br>
       </div>
     </div>
   </div>
-</div>
 
+  <div class="row"  >
+    <div class="col-md-12" >
+      <div class="bg-info" style="padding: 6px" >Affiner par:
+         <div class="radio-inline" ng-repeat="v in p.listStatus">
+           <a target="_self" ng-model="p.searchCrit.filter_eduPersonAffiliation" ng-class="{'selected':v.id === p.affiliation}" ng-click="p.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
+        </div>
+      </div>
+      </br>
+    </div>
+  </div>
 
-  <div class="row" ng-if="!main.showTrombi && p.resultSearch.length && !p.noShowUser">
+  <div class="row" ng-if="!main.showTrombi">
     <div ng-include="'resultSearch-listPers-inc.html'"></div>
   </div>
 
-  <div class="row"ng-if="main.showTrombi&&p.resultSearch.length" style="margin-top:50px;">
+  <div class="row"ng-if="main.showTrombi" style="margin-top:50px;">
     <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
   </div>
 </div>

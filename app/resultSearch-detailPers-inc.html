@@ -1,4 +1,4 @@
-<div ng-if="p.resultSearch.length > 0">
+<div>
   <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
     <li ng-repeat="item in i">
           <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
