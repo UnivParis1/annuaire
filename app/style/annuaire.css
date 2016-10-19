@@ -8,11 +8,6 @@
 .alt {
     background-color:#eee;
 }
-.item-image {
-  position: relative;
-  overflow: hidden;
-  height: 230px;
-}
 
 #menus .nav a {
   background: #ddd;
