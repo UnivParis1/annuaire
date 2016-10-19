@@ -13,7 +13,6 @@ class MainController {
   searchCrit={ token:'' };
   authenticated=true;
   showTrombi=false;
-  displayFilter={};
 
     constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
         this.authenticated = this.$location.search().connected;
@@ -72,7 +71,11 @@ class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   affiliation;
   affectation;
+  affectationName;
+  token;
   authenticated;
+  manager;
+
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
     /* PersonController gère les routings autre que la partie critère de recherche (MainController)
@@ -82,7 +85,7 @@ class PersonController {
     */
       this.affiliation = $routeParams['affiliation'] || '';
       this.affectation = $routeParams['affectation'] || '';
-      this.saveFilterToDisplay($routeParams);
+      this.token = $routeParams['token'] || '';
       if ($routeParams['id']) {
           this.showUser($routeParams['id']);
       } else {
@@ -99,10 +102,10 @@ class PersonController {
     }
   };
 
-  private getBusinessCategFromStruct = (affectation: string) => {
+  private getGroupFromStruct = (affectation: string) => {
     //debugger;
     return this.personService.getGroup("structures-" + affectation).then(
-      (g) => g['businessCategory'],
+      (g) => g,
       (errfunction) => undefined
     );
   };
@@ -114,23 +117,23 @@ class PersonController {
     );
   };
 
-
-
-
   searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
       //Limiter le nombre d'affichage en fonction de l'authentification
     let authenticated = this.$scope.$parent.main.authenticated;
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
     let searchCrit = { token, maxRows,filter_eduPersonAffiliation, CAS: authenticated };
-    // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user, calculer filter_member_of_group
+
     if (affectation) {
         //searchUser n'affiche pas les étudiants pour remédier à ce problème, on peut les afficher en filtrant sur etudiant
         if (filter_eduPersonAffiliation === 'student' || filter_eduPersonAffiliation === 'alum') {
             searchCrit.filter_supannEntiteAffectation = affectation;
             this.searchUserFinal(searchCrit,showDetailPers, affectation);
         } else {
-            this.getBusinessCategFromStruct(affectation).then(businessCategory => {
-                searchCrit.filter_member_of_group = "groups-employees." + businessCategory + "." + affectation;
+            this.getGroupFromStruct(affectation).then((group : Array<{}>) => {
+                // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user, calculer filter_member_of_group
+                searchCrit.filter_member_of_group = "groups-employees." + group['businessCategory'] + "." + affectation;
+                // Récupérer le libellé de la structure
+                this.affectationName=group['name'];
                 this.searchUserFinal(searchCrit,showDetailPers, affectation);
             });
         }
@@ -151,8 +154,22 @@ class PersonController {
      });
      this.resultSearch = persons;
 
-     // Récupérer le chef de la structure recherché
-     if (affectation && persons.length && persons[0]['supannRoleEntite-all']) this.$scope.$parent.main.displayFilter.managerName=this.findRole(persons[0], affectation);
+     if (affectation) {
+       // Récupérer le chef de la structure recherché
+       var chef=null;
+       if (searchCrit.token||searchCrit.filter_eduPersonAffiliation) {
+         let search=angular.copy(searchCrit);
+         search.token = '';
+         search.filter_eduPersonAffiliation = '';
+         search.maxRows = 1;
+         chef = this._getSearchPersons(search).then(persons => persons[0]);
+       } else {
+         chef = this.$q.resolve(persons[0]);
+      }
+      chef.then(chef => {
+          if (chef['supannRoleEntite-all']) this.manager=this.getManager(chef, affectation);
+      });
+     }
 
      // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
      if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
@@ -208,17 +225,14 @@ class PersonController {
   }
 
   goDeletedFilter=(param)=>{
-    this.$scope.$parent.main.displayFilter[param]='';
     this.$location.search(param,null);
     if (param==='token') this.$location.path("/Recherche");
-    if (param==='affectation') {
-      this.$scope.$parent.main.displayFilter.managerName="";
-    }
+
     //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
     if(this.$location.url()==='/Recherche') this.$location.path("");
   }
 
-  findRole=(person, affectation) => {
+  getManager=(person, affectation) => {
     var supannRoleEntiteAll=person['supannRoleEntite-all'];
     for (let it of supannRoleEntiteAll) {
       if (it['structure']['key'] === affectation){
@@ -228,11 +242,6 @@ class PersonController {
     }
   }
 
-  saveFilterToDisplay=(routeParams)=>{
-    this.$scope.$parent.main.displayFilter['affiliation']=routeParams['affiliation'];
-    this.$scope.$parent.main.displayFilter['affectation']=routeParams['affectation'];
-    this.$scope.$parent.main.displayFilter['token']=routeParams['token'];
-  }
 
 
 }

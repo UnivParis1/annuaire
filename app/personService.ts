@@ -24,7 +24,7 @@ class PersonService {
   */
 
   private cache = {};
-    
+
   cachedJsonp = (url, params) => {
       let hashParams = JSON.stringify(params);
       let v = this.cache[url + hashParams];
@@ -37,8 +37,8 @@ class PersonService {
               return r.data
           });
       }
-  };        
-    
+  };
+
     searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
     console.log(ptoken);
     return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
@@ -48,7 +48,7 @@ class PersonService {
     return this.cachedJsonp(PersonService.searchCrumbUrl, pkey);
   };
 
-  getGroup = (key : string) : angular.IPromise<string[]> => {
+  getGroup = (key : {}) : angular.IPromise<string[]> => {
       return this.cachedJsonp(PersonService.getGroup, {key});
   };
 
