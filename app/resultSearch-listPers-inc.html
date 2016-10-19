@@ -1,6 +1,6 @@
 <div class="col-md-12" >
   <table class="table table-striped" >
-    <tr ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.uid)" >
+    <tr ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.uid)" class="setHover">
         <!-- a voir quel syntaxe utilise pour img-thumbnail-->
         <!--td><img title="{{person.givenName}}" src="{{p.urlJpegPhoto}}{{person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
         <td class="col-md-1">
