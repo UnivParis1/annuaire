@@ -72,12 +72,13 @@ class PersonController {
   affiliation;
   affectation;
   affectationName;
+  affiliationName;
   token;
   authenticated;
   manager;
 
 
-  constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}) {
+  constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}, private $filter:angular.IFilterService) {
     /* PersonController gère les routings autre que la partie critère de recherche (MainController)
       - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
       - Filtrer sur le statut ( this.$location.search().affiliation)
@@ -118,29 +119,36 @@ class PersonController {
   };
 
   searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
-      //Limiter le nombre d'affichage en fonction de l'authentification
+    //Limiter le nombre d'affichage en fonction de l'authentification
     let authenticated = this.$scope.$parent.main.authenticated;
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
     let searchCrit = { token, maxRows,filter_eduPersonAffiliation, CAS: authenticated };
+    if (this.affiliation) {
+      var status = this.$filter('filter')(this.listStatus, { id: this.affiliation });
+      this.affiliationName=status[0]['translationTag'];
+    }
 
     if (affectation) {
-        //searchUser n'affiche pas les étudiants pour remédier à ce problème, on peut les afficher en filtrant sur etudiant
+        this.getGroupFromStruct(affectation).then((group : Array<{}>) => {
+        // Récupérer le libellé de la structure
+        this.affectationName=group['name'];
+        //Lors de la recherche par structure, le webservice searchUser n'affiche que les personnels,
+        //pour avoir les étudiants, il faut ensuite filtrer sur etudiant
         if (filter_eduPersonAffiliation === 'student' || filter_eduPersonAffiliation === 'alum') {
-            searchCrit.filter_supannEntiteAffectation = affectation;
-            this.searchUserFinal(searchCrit,showDetailPers, affectation);
-        } else {
-            this.getGroupFromStruct(affectation).then((group : Array<{}>) => {
-                // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user, calculer filter_member_of_group
-                searchCrit.filter_member_of_group = "groups-employees." + group['businessCategory'] + "." + affectation;
-                // Récupérer le libellé de la structure
-                this.affectationName=group['name'];
-                this.searchUserFinal(searchCrit,showDetailPers, affectation);
-            });
+          searchCrit.filter_supannEntiteAffectation = affectation;
+          this.searchUserFinal(searchCrit,showDetailPers, affectation);
+        }else{
+          // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user, calculer filter_member_of_group
+          searchCrit.filter_member_of_group = "groups-employees." + group['businessCategory'] + "." + affectation;
+          this.searchUserFinal(searchCrit,showDetailPers, affectation);
         }
+        });
+
     } else {
       //Dans le cas d'une recherche simple (structure ou autre)sans filtre
       this.searchUserFinal(searchCrit,showDetailPers,'');
     }
+
   };
 
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
@@ -227,7 +235,6 @@ class PersonController {
   goDeletedFilter=(param)=>{
     this.$location.search(param,null);
     if (param==='token') this.$location.path("/Recherche");
-
     //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
     if(this.$location.url()==='/Recherche') this.$location.path("");
   }

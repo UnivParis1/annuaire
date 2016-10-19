@@ -19,7 +19,6 @@
         <span class="text-success">La recherche publique est limitée à 5 résultats, pour plus de résultats, <a target="_self" href="/#?connected" ng-click="p.goConnected()">veuillez vous identifier.</a></span>
       </div>
     </div>
-
     <div class="row"  >
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour:
@@ -33,7 +32,7 @@
                 <div >{{p.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('token')"></span></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="p.affiliation">
-              <div>{{p.affiliation}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affiliation')"></span></div>
+              <div>{{p.affiliationName|translate}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affiliation')"></span></div>
             </div>
           </div>
         </div>
