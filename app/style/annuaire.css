@@ -22,13 +22,6 @@
     background: #337ab7;
 }
 
-/**
-Surcharger btn-primary
-**/
-.btn-primary {
-    border-color: white !important;
-}
-
 .selected {
   text-decoration: underline
 }
@@ -37,3 +30,13 @@ Surcharger btn-primary
 .setHover {
     cursor: pointer;
 }
+
+/**
+Surcharger btn-primary,breadcrumb
+**/
+.btn-primary {
+    border-color: white !important;
+}
+
+.breadcrumb > li + li::before {
+    padding: 0 0 0 10px !important;
