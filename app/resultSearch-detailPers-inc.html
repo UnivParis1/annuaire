@@ -1,8 +1,13 @@
 <div>
   <ul class="breadcrumb" ng-repeat="i in p.breadcrumbTotal">
     <li ng-repeat="item in i">
-          <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
-      </li>
+      <span ng-if="!item.category">
+        {{item.name}}
+      </span>
+      <span ng-if="item.category">
+        <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}--{{item.category}}</a>
+      </span>
+    </li>
   </ul>
 </div>
 
