@@ -83,10 +83,11 @@
         </div>
         <div class="row" ng-if="person.postalAddress">
             <label class="col-md-3">Adresse postale:</label> <span style="white-space:pre-wrap;">{{person.postalAddress}}</span>
-            <label class="col-md-3">&nbsp;</label>
-            <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" target="_blank"><span class="img-responsive glyphicon glyphicon-map-marker"></span>
+            <label class="col-md-3">&nbsp;</label></br>
+            <a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" title="Afficher la carte" target="_blank"><span class="glyphicon glyphicon-map-marker"></span>
         </div>
-      </br>
+        </br>
       </div>
     </div>
   </div>
+</div>
