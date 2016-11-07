@@ -97,12 +97,10 @@ class PersonController {
   }
 
   private _getSearchPersons = (text: {}) => {
-    if (text) {
-        return this.personService.searchPersons(text).then(
-          (listUsers) => listUsers,
-          (errfunction) => undefined
-        );
-    }
+    return this.personService.searchPersons(text).then(
+      (listUsers) => listUsers,
+      (errfunction) => undefined
+    );
   };
 
   private getGroupFromStruct = (affectation: string) => {
@@ -166,17 +164,18 @@ class PersonController {
 
      if (affectation) {
        // Récupérer le chef de la structure recherché
-       var chef=null;
+       let pChef : angular.IPromise<> =null;
        if (searchCrit.token||searchCrit.filter_eduPersonAffiliation) {
          let search=angular.copy(searchCrit);
          search.token = '';
          search.filter_eduPersonAffiliation = '';
          search.maxRows = 1;
-         chef = this._getSearchPersons(search).then(persons => persons[0]);
+         pChef = this._getSearchPersons(search).then(persons => persons[0]);
        } else {
-         chef = this.$q.resolve(persons[0]);
+         // optimisation: pas besoin d'appeler le web-service
+         pChef = this.$q.resolve(persons[0]);
       }
-      chef.then(chef => {
+      pChef.then(chef => {
           if (chef['supannRoleEntite-all']) this.manager=this.getManager(chef, affectation);
       });
      }
