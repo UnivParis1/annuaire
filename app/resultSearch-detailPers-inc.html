@@ -5,7 +5,7 @@
         {{item.name}}
       </span>
       <span ng-if="item.category">
-        <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}--{{item.category}}</a>
+        <a ng-href="#/Recherche/?affectation={{item.rawKey}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{item.name}}</a>
       </span>
     </li>
   </ul>
@@ -47,25 +47,37 @@
   </div></br>
 
   <div class="row" >
+    <div ng-if="person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum'">
+      <div class="col-md-12" ng-if="p.lastDiplomas">
+        <div class="row" ng-if="p.lastDiplomas">
+            <label class="col-md-1">Diplôme(s):</label>
+            <span class="uneditable-input col-md-11" ng-repeat="diploma in p.lastDiplomas">
+              {{diploma.etape}}</br>
+            </span>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="!(person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum')">
       <div class="col-md-4">
-          <div class="row" ng-if="person.telephoneNumber">
-            <label class="col-md-6">Téléphone fixe: </label><span class="uneditable-input col-md-6" ng-repeat="telephoneNumber in person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a>
+        <div class="row" ng-if="person.telephoneNumber">
+          <label class="col-md-6">Téléphone fixe: </label><span class="uneditable-input col-md-6" ng-repeat="telephoneNumber in person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a>
+          </span>
+        </div>
+        <div class="row" ng-if="person.supannAutreTelephone">
+          <div>
+            <label class="col-md-6">Téléphone secondaire: </label>
+            <span class="uneditable-input col-md-6" ng-repeat="supannAutreTelephone in person.supannAutreTelephone">
+              <a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a>
             </span>
           </div>
-          <div class="row" ng-if="person.supannAutreTelephone">
-            <div>
-              <label class="col-md-6">Téléphone secondaire: </label>
-              <span class="uneditable-input col-md-6" ng-repeat="supannAutreTelephone in person.supannAutreTelephone">
-                <a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a>
-              </span>
-            </div>
+        </div>
+        <div class="row" ng-if="main.authenticated && person.mobile">
+            <label class="col-md-6">Téléphone mobile: </label> <span class="uneditable-input col-md-6" ng-repeat="mobile in person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
           </div>
-          <div class="row" ng-if="main.authenticated && person.mobile">
-              <label class="col-md-6">Téléphone mobile: </label> <span class="uneditable-input col-md-6" ng-repeat="mobile in person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
-            </div>
-          <div class="row" ng-if="person.facsimileTelephoneNumber">
-              <label class="col-md-6">Fax: </label><span class="uneditable-input col-md-6" ng-repeat="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
-          </div>
+        <div class="row" ng-if="person.facsimileTelephoneNumber">
+            <label class="col-md-6">Fax: </label><span class="uneditable-input col-md-6" ng-repeat="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
+        </div>
       </div>
       <div class="col-md-8">
         <div class="row" ng-if="person['supannActivite-all']">

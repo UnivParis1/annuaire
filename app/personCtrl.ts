@@ -56,6 +56,7 @@ class MainController {
 class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
+  lastDiplomas=[];
   listStatus=[{id: '', translationTag: "STATUS_ALL"},
               {id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
@@ -181,9 +182,26 @@ class PersonController {
      }
 
      // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
-     if (showDetailPers) this.compute_breadcrumbTotal(persons[0]);
+     if (showDetailPers) {
+        var arrayEtuInscription=persons[0]['supannEtuInscription-all'];
+        if (arrayEtuInscription) {
+         var anneeInscMax = Math.max.apply(null, arrayEtuInscription.map(item => item.anneeinsc));
+         this.lastDiplomas = this.getLastDiplomas(arrayEtuInscription,anneeInscMax);
+      }
+      this.compute_breadcrumbTotal(persons[0]);
+     }
+
    });
  }
+  getLastDiplomas=(ltEtuInscription, anneeMax) =>{
+    var l1 = [];
+    ltEtuInscription.forEach(p => {
+        if (p.anneeinsc==anneeMax){
+          var test=p.anneeinsc;
+          l1.push(p);}
+    });
+    return l1;
+  }
 
 
   //Rechercher une personne
