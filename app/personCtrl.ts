@@ -29,6 +29,7 @@ class MainController {
   show=(item)=>{
     // recherche de personne
     if (item.category === 'users') {
+      this.$location.url("");
       this.showUser(item.uid);
     } else {
       // recherche d'une structure
