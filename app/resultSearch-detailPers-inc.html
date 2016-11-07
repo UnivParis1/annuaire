@@ -14,11 +14,16 @@
 
 <div class="col-md-12 alt" ng-repeat="person in p.resultSearch">
   <div  class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
           <div class="row" >
               <div class="col-md-12"><h2 class="cap">{{person.supannCivilite}} {{person.givenName}} {{person.sn}}</h2></div>
           </div>
           <div class="row">
+              <div class="col-md-12">
+                <div  ng-repeat="affiliation in person.eduPersonAffiliation">
+                  <div ng-repeat="libelle in p.listStatus | filter : {'id': affiliation}: true">{{libelle.translationTag|translate}}</div>
+                 </div>
+              </div>
               <div class="col-md-12" ng-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
                 <div ng-repeat="emplType in person.employeeType"> {{emplType}}</div>
               </div>
