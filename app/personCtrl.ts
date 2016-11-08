@@ -11,19 +11,23 @@ class MainController {
   Le MainController utilise routes.ts qui appel le controller PersonController pour exécuter les recherches en utilisant les web services
   */
   searchCrit={ token:'' };
+  //alimenté dans la directive autocompleteUserAndGroup (onSearchSuccess)
+  searchResults : { users: {}[], groups: {}[] };
   authenticated=true;
   showTrombi=false;
 
-    constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
-        this.authenticated = this.$location.search().connected;
-        console.log($location.search(), this.authenticated);
-    }
+  constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
+      this.authenticated = this.$location.search().connected;
+      console.log($location.search(), this.authenticated);
+  }
 
-    searchUser = (token) => {
-        this.showTrombi=false;
-        this.searchCrit.token = null;
-        this.$location.path("/Recherche/" + token);
-    }
+  searchUser = (token) => {
+    // Si aucune donnée renseignée(ex Critère vide+Enter) ou le resultat de la recherche (webwidget) ne contient que des structures, ne pas lancer la recherche(bloqué le Enter)
+    if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
+      this.showTrombi=false;
+      this.searchCrit.token = null;
+      this.$location.path("/Recherche/" + token);
+  }
 
   // Le web widget de recherche retourne des personnes ou des stcructures
   show=(item)=>{
