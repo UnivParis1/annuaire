@@ -13,6 +13,7 @@ app.controller('EmptyCtrl', function($scope) {});
 app.config(initTranslations);
 app.config(initRoutes);
 app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
+app.directive('showFocus', showFocus);
 
 
 
