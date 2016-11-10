@@ -1,3 +1,21 @@
+/**
+Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
+En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
+**/
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .table tr td  {
+      width:100%;
+      display: block;
+      border-top: 0px solid #d42626 !important;
+    }
+    .table tr td img{
+       width:100px ;height:100px;
+    }
+
+    .table tr { border: 1px solid #ccc; }
+}
+
 .panelshadow {
     margin-top: 10px;
     margin-bottom: 10px;
