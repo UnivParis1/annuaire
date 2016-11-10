@@ -26,7 +26,8 @@ class MainController {
     if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
       this.showTrombi=false;
       this.searchCrit.token = null;
-      this.$location.path("/Recherche/" + token);
+      this.$location.path("/Recherche/");
+      this.$location.search("token",token);
   }
 
   // Le web widget de recherche retourne des personnes ou des stcructures
