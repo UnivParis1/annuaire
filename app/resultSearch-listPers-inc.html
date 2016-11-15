@@ -3,8 +3,10 @@
     <tr ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.uid)" class="setHover">
         <!-- a voir quel syntaxe utilise pour img-thumbnail-->
         <!--td><img title="{{person.givenName}}" src="{{p.urlJpegPhoto}}{{person.uid}}"  width="54" height="34" class="img-thumbnail img-responsive img-circle"></td>-->
-        <td class="col-md-1">
-          <img title="{{person.supannListeRouge ? '': person.givenName}} {{person.supannListeRouge ? '' : person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}&test=1"  height="34" class="img-thumbnail img-responsive img-circle">
+        <td class="col-md-1" >
+          <div class="imgCicle">
+          <img title="{{person.supannListeRouge ? '': person.givenName}} {{person.supannListeRouge ? '' : person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}"  height="34" class="img-responsive img-circle">
+          <div>
         </td>
         <td class="col-md-5">
             <div ng-if="!person.supannListeRouge">

@@ -9,11 +9,9 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
       display: block;
       border-top: 0px solid #d42626 !important;
     }
-    .table tr td img{
-       width:100px ;height:100px;
+    .table tr {
+      border: 1px solid #ccc;
     }
-
-    .table tr { border: 1px solid #ccc; }
 }
 
 .panelshadow {
@@ -48,6 +46,51 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 .setHover {
     cursor: pointer;
 }
+
+.setpadding{
+	padding-left:152px;
+  left:0;
+}
+.imgCicle{
+  position: relative;
+  width: 144px;
+  height: 144px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.imgCicle img{
+  width: 100%;
+  height: auto;
+  border: 0 none;
+  float: left;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.photoGallery{
+position: relative;
+width: 144px;
+height: 200px;
+overflow: hidden;
+margin: 0 auto;
+padding: 0;
+}
+
+.photoGallery img{
+width: 100%;
+height: auto;
+border: 0 none;
+float: left;
+margin: 0;
+max-height: none;
+max-width: none;
+padding: 0;}
 
 /**
 Surcharger btn-primary,breadcrumb
