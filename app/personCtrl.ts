@@ -201,7 +201,6 @@ class PersonController {
     var l1 = [];
     ltEtuInscription.forEach(p => {
         if (p.anneeinsc==anneeMax){
-          var test=p.anneeinsc;
           l1.push(p);}
     });
     return l1;

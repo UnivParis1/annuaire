@@ -18,5 +18,5 @@ app.directive('showFocus', showFocus);
 
 
 app.service('globals', function () {
-  return { wsgroupsURL:'https://wsgroups-test.univ-paris1.fr' };
+  return { wsgroupsURL:'https://wsgroups.univ-paris1.fr' };
 })

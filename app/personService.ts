@@ -3,10 +3,10 @@ class PersonService {
   }
 
   // rechercher les données d'une personne
-  private static searchPersonsUrl = "https://wsgroups-test.univ-paris1.fr/searchUser?&callback=JSON_CALLBACK";
+  private static searchPersonsUrl = "https://wsgroups.univ-paris1.fr/searchUser?&callback=JSON_CALLBACK";
   //Fil ariane
-  //private static searchGroupUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=groups-employees.administration.DGHA&depth=44&callback=JSON_CALLBACK";
-  private static searchCrumbUrl="https://wsgroups-test.univ-paris1.fr/getSuperGroups?&callback=JSON_CALLBACK";
+  //private static searchGroupUrl="https://wsgroups.univ-paris1.fr/getSuperGroups?key=groups-employees.administration.DGHA&depth=44&callback=JSON_CALLBACK";
+  private static searchCrumbUrl="https://wsgroups.univ-paris1.fr/getSuperGroups?&callback=JSON_CALLBACK";
   // Rechercher businessCategory d'une structure
   private static getGroup="https://wsgroups.univ-paris1.fr/getGroup?&callback=JSON_CALLBACK";
   //private static searchBusinessCategFromStruct="https://wsgroups.univ-paris1.fr/getGroup?key=structures-DGH";
@@ -43,7 +43,7 @@ class PersonService {
     console.log(ptoken);
     return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
   };
-  //exemple url https://wsgroups-test.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
+  //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
   searchCrumbUrl = (pkey :{}) : angular.IPromise<string[]> => {
     return this.cachedJsonp(PersonService.searchCrumbUrl, pkey);
   };
