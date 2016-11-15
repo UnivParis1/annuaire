@@ -259,7 +259,7 @@ class PersonController {
     this.$location.search(param,null);
     if (param==='token') this.$location.path("/Recherche");
     //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
-    if(this.$location.url()==='/Recherche') this.$location.path("");
+    if(this.$location.url()==='/Recherche' || this.$location.url()==='/Recherche?connected') this.$location.path("");
   }
 
   getManager=(person, affectation) => {
