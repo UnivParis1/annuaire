@@ -88,14 +88,12 @@
           <span ng-if="person.postalAddress">
               <label>Adresse postale</label>
               <span style="white-space:pre-wrap;">{{person.postalAddress}}</span><br>
-              <label><a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" title="Afficher la carte" target="_blank"><span class="glyphicon glyphicon-map-marker"></span><br></label>
-
+              <label><a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" title="Afficher la carte" target="_blank"><span class="glyphicon glyphicon-map-marker"></span></a><br></label>
           </span>
         </div>
-        <div class="col-md-2 text-center photoGallery">
+        <div class="col-md-2 text-center imgCicleOther">
             <img title="{{person.givenName}} {{person.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}"   class="img-responsive img-circle">
         </div>
-
       </div>
   </div><!--fin class="row" ng-repeat="person in p.resultSearch" -->
 </div>
