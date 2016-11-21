@@ -48,3 +48,17 @@ function showFocus($timeout) {
     }
   }
 }
+
+function focusOut($timeout) {
+  return function(scope, elem, attr) {
+    scope.$on('focusOut', function(e, name) {
+        if (name === attr.focusOut) {
+            $timeout(function () {
+                console.log("blur", elem[0]);
+                return elem[0].blur();
+            });
+      }
+    });
+  };
+}
+

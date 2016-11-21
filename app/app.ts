@@ -14,6 +14,7 @@ app.config(initTranslations);
 app.config(initRoutes);
 app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
 app.directive('showFocus', showFocus);
+app.directive('focusOut', focusOut);
 
 
 
