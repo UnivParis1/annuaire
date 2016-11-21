@@ -36,6 +36,12 @@
       <div ng-if="person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum'">
         <div class="col-md-6 radio-inline" ng-if="p.lastDiplomas">
           <div ng-if="p.lastDiplomas">
+	    <div class="row">
+              <div class="col-md-5"><label>Structure(s)/Composante(s)</label></div>
+              <div class="uneditable-inpu col-md-5" ng-repeat="aff in person['supannEntiteAffectation-all']">
+                {{aff.name}}
+              </div>
+             </div>
               <div class="row">
                 <div class="col-md-2"><label>Diplôme(s)</label></div>
                 <div class="uneditable-inpu col-md-10" ng-repeat="diploma in p.lastDiplomas">
@@ -44,34 +50,35 @@
               </div>
           </div>
         </div>
-        <div class="col-md-2 text-center">
-            <img title="{{person.givenName}} {{person.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}"   height="64" class="img-thumbnail img-responsive img-circle">
-        </div>
       </div>
       <div ng-if="!(person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum')">
         <div class="col-md-4">
-          <span ng-if="person.telephoneNumber">
+          <div ng-if="person.telephoneNumber">
             <label>Téléphone fixe </label>
-            <span class="uneditable-input" ng-repeat="telephoneNumber in person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a></span><br>
-          </span>
-          <span ng-if="person.supannAutreTelephone">
-              <label>Téléphone secondaire </label>
-              <span class="uneditable-input {{!$first?'setpadding':''}}" ng-repeat="supannAutreTelephone in person.supannAutreTelephone">
-                <a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a></br>
-          </span>
-          <span ng-if="main.authenticated && person.mobile">
+            <span class="uneditable-input" ng-repeat="telephoneNumber in person.telephoneNumber"><a ng-href="tel:{{telephoneNumber}}" target="_blank" ng-click='p.noShowUser = true'> {{telephoneNumber}}</a></span>
+          </div>
+          <div ng-if="person.supannAutreTelephone">
+            <label>Téléphone secondaire </label>
+            <span style="display: inline-block; vertical-align: middle">
+              <span class="uneditable-input" ng-repeat="supannAutreTelephone in person.supannAutreTelephone">
+                <a ng-href="tel:{{supannAutreTelephone}}" target="_blank" ng-click='p.noShowUser = true'> {{supannAutreTelephone}}</a>
+                <br>
+              </span>
+            </span>
+          </div>
+          <div ng-if="main.authenticated && person.mobile">
               <label>Téléphone mobile </label>
-              <span class="uneditable-input" ng-repeat="mobile in person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span><br>
-          </span>
-          <span ng-if="person.facsimileTelephoneNumber">
+              <span class="uneditable-input" ng-repeat="mobile in person.mobile"> <a ng-href="tel:{{mobile}}" target="_blank" ng-click='p.noShowUser = true'>{{mobile}}</a></span>
+          </div>
+          <div ng-if="person.facsimileTelephoneNumber">
               <label>Fax </label>
-              <span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span><br>
-          </span>
+              <span class="uneditable-input" ng-repeat="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span>
+          </div>
         </div>
         <div class="col-md-6">
           <span ng-if="person['supannActivite-all']">
             <label>Discipline(s)</label>
-            <span class="uneditable-input" ng-repeat="activite in person['supannActivite-all']">Section {{(activite.key.replace('{','')).replace('}','')}} - {{activite.name}}</span><br>
+            <span class="uneditable-input" ng-repeat="activite in person['supannActivite-all']"> {{activite.name}}</span><br>
           </span>
           <span ng-if="person.buildingName">
               <label >Site</label>
@@ -91,9 +98,10 @@
               <label><a ng-href="http://maps.google.fr/maps?t=m&amp;z=16&amp;q={{person.postalAddress}}" title="Afficher la carte" target="_blank"><span class="glyphicon glyphicon-map-marker"></span></a><br></label>
           </span>
         </div>
+      </div>
+      
         <div class="col-md-2 text-center imgCicleOther">
             <img title="{{person.givenName}} {{person.person.sn}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}"   class="img-responsive img-circle">
         </div>
-      </div>
   </div><!--fin class="row" ng-repeat="person in p.resultSearch" -->
 </div>
