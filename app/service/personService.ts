@@ -1,4 +1,7 @@
-class PersonService {
+import Person from "../service/person";
+
+export default class PersonService {
+  
   constructor(private $http: angular.IHttpService, private $q) {
   }
 
@@ -39,7 +42,7 @@ class PersonService {
       }
   };
 
-    searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
+  searchPersons = (ptoken :{}) : angular.IPromise<Array<Person>> => {
     console.log(ptoken);
     return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
   };

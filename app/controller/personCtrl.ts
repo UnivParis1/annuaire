@@ -1,5 +1,7 @@
+import Person from "../service/person";
+import PersonService from "../service/personService";
 
-class MainController {
+export class MainController {
   /*
   Le MainController gère le routing de la partie saisie critère de recherche
   Deux recherches possibles:
@@ -18,14 +20,14 @@ class MainController {
 
   constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
-      console.log($location.search(), this.authenticated);
+      //console.log($location.search(), this.authenticated);
   }
 
   searchUser = (token) => {
     // Si aucune donnée renseignée(ex Critère vide+Enter) ou le resultat de la recherche (webwidget) ne contient que des structures, ne pas lancer la recherche(bloqué le Enter)
     if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
       this.showTrombi=false;
-      this.clearSearchCrit();
+      this.searchCrit.token = null;
       this.$location.path("/Recherche/");
       this.$location.search("token",token);
   }
@@ -35,18 +37,18 @@ class MainController {
     // recherche de personne
     if (item.category === 'users') {
       this.$location.url("");
-      this.showUser(item.mail);
+      this.showUser(item.uid);
     } else {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
-      this.clearSearchCrit();
+      this.searchCrit.token = null;
       this.$location.path("/Recherche");
       this.$location.search("affectation",param);
     }
   }
 
   showUser=(id, showDetailPers = false)=>{
-    this.clearSearchCrit();
+    this.searchCrit.token = null;
     this.$location.path("/Show/" + id);
   }
 
@@ -54,16 +56,9 @@ class MainController {
     this.showTrombi=showTrombi;
   }
 
-  clearSearchCrit = () => {
-    this.searchCrit.token = null;
-    $scope.$broadcast('focusOut', 'mainSearch');
-  }
-
 }
 
-
-
-class PersonController {
+export class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
   lastDiplomas=[];
@@ -94,7 +89,6 @@ class PersonController {
     /* PersonController gère les routings autre que la partie critère de recherche (MainController)
       - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
       - Filtrer sur le statut ( this.$location.search().affiliation)
-
     */
       this.affiliation = $routeParams['affiliation'] || '';
       this.affectation = $routeParams['affectation'] || '';
@@ -130,9 +124,10 @@ class PersonController {
 
   searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
-    let authenticated = this.$scope.$parent.main.authenticated;
+    let authenticated = this.$scope.$parent['main'].authenticated;
+    
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
-    let searchCrit = { token, maxRows,filter_eduPersonAffiliation, CAS: authenticated };
+    let searchCrit = { token, maxRows, filter_eduPersonAffiliation, CAS: authenticated, filter_supannEntiteAffectation: null, filter_member_of_group: null };
     if (this.affiliation) {
       var status = this.$filter('filter')(this.listStatus, { id: this.affiliation });
       this.affiliationName=status[0]['translationTag'];
@@ -160,9 +155,10 @@ class PersonController {
     }
 
   };
-
+  
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
-     this._getSearchPersons(searchCrit).then((persons : Array<{}>) => {
+     
+     this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
      if (!showDetailPers && persons.length === 1 && !affectation) {
        this.$location.path("/Show/" + persons[0]['mail']);
        return;
@@ -174,7 +170,7 @@ class PersonController {
 
      if (affectation) {
        // Récupérer le chef de la structure recherché
-       let pChef : angular.IPromise<> =null;
+       let pChef : angular.IPromise<Person> =null;
        if (searchCrit.token||searchCrit.filter_eduPersonAffiliation) {
          let search=angular.copy(searchCrit);
          search.token = '';
@@ -232,7 +228,7 @@ class PersonController {
        this.searchCrumbUrl(it).then(breadcrumb =>
           breadcrumbTotal.push(breadcrumb)
        );
-     }
+     }
    }
  }
 
