@@ -20,6 +20,7 @@ export class MainController {
 
   constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
+      this.$scope = $scope;
       //console.log($location.search(), this.authenticated);
   }
 
@@ -27,7 +28,7 @@ export class MainController {
     // Si aucune donnée renseignée(ex Critère vide+Enter) ou le resultat de la recherche (webwidget) ne contient que des structures, ne pas lancer la recherche(bloqué le Enter)
     if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
       this.showTrombi=false;
-      this.searchCrit.token = null;
+      this.clearSearchCrit();
       this.$location.path("/Recherche/");
       this.$location.search("token",token);
   }
@@ -37,23 +38,28 @@ export class MainController {
     // recherche de personne
     if (item.category === 'users') {
       this.$location.url("");
-      this.showUser(item.uid);
+      this.showUser(item.mail);
     } else {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
-      this.searchCrit.token = null;
+      this.clearSearchCrit();
       this.$location.path("/Recherche");
       this.$location.search("affectation",param);
     }
   }
 
   showUser=(id, showDetailPers = false)=>{
-    this.searchCrit.token = null;
+    this.clearSearchCrit();
     this.$location.path("/Show/" + id);
   }
 
   setTrombi=(showTrombi:boolean)=>{
     this.showTrombi=showTrombi;
+  }
+  
+  clearSearchCrit = () => {		
+    this.searchCrit.token = null;		
+    this.$scope.$broadcast('focusOut', 'mainSearch');		
   }
 
 }

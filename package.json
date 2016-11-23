@@ -7,7 +7,7 @@
     "build:dev": "npm run clean && webpack --progress --colors --profile --env=dev",
     "build:prod": "npm run clean && webpack --progress --colors --profile --env=prod --bail",
     "build": "npm run build:dev",
-    "server:dev": "webpack-dev-server --content-base build/ --progress --colors --inline --hot",
+    "server:dev": "webpack-dev-server --content-base build/ --progress --colors --inline --hot --host 0.0.0.0 --port 8080",
     "server:prod": "http-server build --cors",
     "server": "npm run server:dev"
   },

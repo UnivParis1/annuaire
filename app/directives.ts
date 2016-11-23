@@ -1,5 +1,5 @@
 export function autocompleteUserAndGroup (globals) {
-  //let globals={ wsgroupsURL:'https://wsgroups.univ-paris1.fr'};
+  //let globals={ wsgroupsURL:'https://wsgroups.univparis1.fr'};
   //var searchUserURL = globals.wsgroupsURL + '/searchUserCAS';
   var searchURL = globals.wsgroupsURL + '/search';
 
@@ -19,7 +19,7 @@ export function autocompleteUserAndGroup (globals) {
       scope.$apply(function () {
           ngModel.$setViewValue(ui.item);
       });
-      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir on-select de index.html )
+      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir onselect de index.html )
 	    scope.$apply(attr['onSelect']);
       //scope.$apply(attr['onBlur']);
 	    return false;
@@ -33,7 +33,6 @@ export function autocompleteUserAndGroup (globals) {
   //onSearchSuccess renvoie une liste des groups et/ou users
   var params = { select: select, onSearchSuccess,wsParams: { filter_category: "structures", group_attrs: "businessCategory", CAS: !!location.href.match(/connected/) } };
   // autocompleteUser de jQuery gère l'autocomplétion
-  console.log(jQuery(el));
   jQuery(el)['autocompleteUserAndGroup'](searchURL, params);
 }
 };
@@ -48,4 +47,17 @@ export function showFocus($timeout) {
       });
     }
   }
+}
+
+export function focusOut($timeout) {		
+  return function(scope, elem, attr) {		
+    scope.$on('focusOut', function(e, name) {		
+        if (name === attr.focusOut) {		
+            $timeout(function () {		
+                console.log("blur", elem[0]);		
+                return elem[0].blur();		
+            });		
+      }		
+    });		
+  };		
 }
