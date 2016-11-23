@@ -5,3 +5,5 @@ app/*.js
 app/*.js.map
 test/
 Documents/
+build/
+.c9/
