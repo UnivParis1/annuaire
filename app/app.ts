@@ -1,5 +1,5 @@
 /// <reference path="../typings/main.d.ts" />
-import 'bootstrap-loader'; //can be very slow
+import 'bootstrap-loader';
 import "./style/annuaire.css";
 import * as angular from "angular";
 import "angular-translate";
