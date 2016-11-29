@@ -39,8 +39,8 @@ class PersonService {
       }
   };
 
-    searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
-    console.log(ptoken);
+  searchPersons = (ptoken :{}) : angular.IPromise<Array<Person>> => {
+    //console.log(ptoken);
     return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
   };
   //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10

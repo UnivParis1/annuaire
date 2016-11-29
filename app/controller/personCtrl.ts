@@ -18,7 +18,8 @@ class MainController {
 
   constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
-      console.log($location.search(), this.authenticated);
+      this.$scope = $scope;
+      //console.log($location.search(), this.authenticated);
   }
 
   searchUser = (token) => {
@@ -53,10 +54,10 @@ class MainController {
   setTrombi=(showTrombi:boolean)=>{
     this.showTrombi=showTrombi;
   }
-
-  clearSearchCrit = () => {
-    this.searchCrit.token = null;
-    $scope.$broadcast('focusOut', 'mainSearch');
+  
+  clearSearchCrit = () => {		
+    this.searchCrit.token = null;		
+    this.$scope.$broadcast('focusOut', 'mainSearch');		
   }
 
 }
@@ -130,9 +131,10 @@ class PersonController {
 
   searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
-    let authenticated = this.$scope.$parent.main.authenticated;
+    let authenticated = this.$scope.$parent['main'].authenticated;
+    
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
-    let searchCrit = { token, maxRows,filter_eduPersonAffiliation, CAS: authenticated };
+    let searchCrit = { token, maxRows, filter_eduPersonAffiliation, CAS: authenticated, filter_supannEntiteAffectation: null, filter_member_of_group: null };
     if (this.affiliation) {
       var status = this.$filter('filter')(this.listStatus, { id: this.affiliation });
       this.affiliationName=status[0]['translationTag'];
@@ -162,7 +164,8 @@ class PersonController {
   };
 
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
-     this._getSearchPersons(searchCrit).then((persons : Array<{}>) => {
+     
+     this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
      if (!showDetailPers && persons.length === 1 && !affectation) {
        this.$location.path("/Show/" + persons[0]['mail']);
        return;
@@ -174,7 +177,7 @@ class PersonController {
 
      if (affectation) {
        // Récupérer le chef de la structure recherché
-       let pChef : angular.IPromise<> =null;
+       let pChef : angular.IPromise<Person> =null;
        if (searchCrit.token||searchCrit.filter_eduPersonAffiliation) {
          let search=angular.copy(searchCrit);
          search.token = '';

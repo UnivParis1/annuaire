@@ -7,7 +7,7 @@ function autocompleteUserAndGroup (globals) {
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function (scope : ng.IScope, el, attr, ngModel : ng.INgModelController) {
+    link: function (scope : any, el, attr, ngModel : ng.INgModelController) {
 	  var select = function (event, ui) {
 	    // NB: this event is called before the selected value is set in the "input"
 
@@ -19,7 +19,7 @@ function autocompleteUserAndGroup (globals) {
       scope.$apply(function () {
           ngModel.$setViewValue(ui.item);
       });
-      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir on-select de index.html )
+      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir onselect de index.html )
 	    scope.$apply(attr['onSelect']);
       //scope.$apply(attr['onBlur']);
 	    return false;
