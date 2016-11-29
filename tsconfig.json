@@ -9,8 +9,7 @@
     },
     "exclude": [
         ".c9",
-        "typings/browser.d.ts",
-        "typings/browser",
+        "typings",
         "node_modules"
     ]
 }
