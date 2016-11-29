@@ -1,4 +1,7 @@
-class PersonService {
+import Person from "../service/person";
+
+export default class PersonService {
+  
   constructor(private $http: angular.IHttpService, private $q) {
   }
 
@@ -29,7 +32,7 @@ class PersonService {
       let hashParams = JSON.stringify(params);
       let v = this.cache[url + hashParams];
       if (v) {
-          console.log("using cached value for " + url + " " + hashParams);
+          //console.log("using cached value for " + url + " " + hashParams);
           return this.$q.resolve(v);
       } else {
           return this.$http.jsonp(url, { params }).then(r => {
@@ -39,8 +42,8 @@ class PersonService {
       }
   };
 
-    searchPersons = (ptoken :{}) : angular.IPromise<string[]> => {
-    console.log(ptoken);
+  searchPersons = (ptoken :{}) : angular.IPromise<Array<Person>> => {
+    //console.log(ptoken);
     return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
   };
   //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10

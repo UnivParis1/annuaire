@@ -1,6 +1,6 @@
 <div class="col-md-12">
 <div ng-if="p.showDetailPers">
-  <div ng-include="'resultSearch-detailPers-inc.html'"></div>
+  <div ng-include="'template/resultSearch-detailPers-inc.html'"></div>
 </div>
 
 <!--Le filtre est affiché  si un filtre n'affiche aucune personne,cela permet à l'utlisateur d'avoir la possibilité de filtrer sur autre donnée (p.affiliation)-->
@@ -54,11 +54,11 @@
   </div>
 
   <div class="row" ng-if="!main.showTrombi">
-    <div ng-include="'resultSearch-listPers-inc.html'"></div>
+    <div ng-include="'template/resultSearch-listPers-inc.html'"></div>
   </div>
 
   <div class="row"ng-if="main.showTrombi" style="margin-top:50px;">
-    <div ng-include="'resultSearch-photoGallery-inc.html'"></div>
+    <div ng-include="'template/resultSearch-photoGallery-inc.html'"></div>
   </div>
 </div>
 </div>

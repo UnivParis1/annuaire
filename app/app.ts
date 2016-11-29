@@ -1,5 +1,15 @@
-/// <reference path="../typings/tsd.d.ts" />
-
+/// <reference path="../typings/main.d.ts" />
+import 'bootstrap-loader';
+import "./style/annuaire.css";
+import * as angular from "angular";
+import "angular-translate";
+import "angular-route";
+import "angular-ui-bootstrap";
+import PersonService from "./service/personService";
+import * as personCtrl from "./controller/personCtrl";
+import * as translations from "./translations";
+import * as routes from "./routes";
+import * as directives from "./directives";
 
 // pascalprecht.translate est le nom associé au module angular-translate.min.js
 // et doit être appelé une fois au début de l'application
@@ -7,14 +17,13 @@
 var app = angular.module('myApp', ['pascalprecht.translate','ngRoute','ui.bootstrap']);
 
 app.service('personService', PersonService);
-app.controller('MainController', MainController);
-app.controller('PersonController', PersonController);
+app.controller('MainController', personCtrl.MainController);
+app.controller('PersonController', personCtrl.PersonController);
 app.controller('EmptyCtrl', function($scope) {});
-app.config(initTranslations);
-app.config(initRoutes);
-app.directive('autocompleteUserAndGroup', autocompleteUserAndGroup);
-app.directive('showFocus', showFocus);
-app.directive('focusOut', focusOut);
+app.config(translations.initTranslations);
+app.config(routes.initRoutes);
+app.directive('autocompleteUserAndGroup', directives.autocompleteUserAndGroup);
+app.directive('showFocus', directives.showFocus);
 
 
 

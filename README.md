@@ -6,7 +6,7 @@ Small AngularJS 1.x example with:
 ## Preparation
 
 ````
-npm install
+npm run setup
 ````
 
 > You must of course install first nodejs & npm. On ubuntu, you can do:
@@ -17,16 +17,33 @@ npm install
 
 ## Run
 
-````
-npm run tsc &
-npm start
-````
-
-## Update typings from DefinitelyTyped
+The web server will always have access to only build folder, so `npm run build` will generate
+only the js/html/css that will be available.
 
 ````
-./node_modules/.bin/tsd update -o -s
+//In dev, the command allow the user to see the generated content, but this is not user by webpack-dev-server
+// because webpack-dev-server store content in memory (not on disk)
+npm run build:dev
+//In prod, needs to be generated on the prod server
+npm run build:prod
 ````
+
+## Server
+
+````
+//In dev, webpack-dev-server is used with hot reload and inline options
+npm run server:dev
+//In prod, this is a simple prod server in order to test prod environment in dev
+npm run server:prod
+````
+
+## Typings
+
+The version used is 0.7, so option --ambient must be used
+
+```
+typings install jquery --ambient --save
+```
 
 ## Browser
 

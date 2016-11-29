@@ -1,5 +1,5 @@
-function autocompleteUserAndGroup (globals) {
-  //let globals={ wsgroupsURL:'https://wsgroups.univ-paris1.fr'};
+export function autocompleteUserAndGroup (globals) {
+  //let globals={ wsgroupsURL:'https://wsgroups.univparis1.fr'};
   //var searchUserURL = globals.wsgroupsURL + '/searchUserCAS';
   var searchURL = globals.wsgroupsURL + '/search';
 
@@ -7,7 +7,7 @@ function autocompleteUserAndGroup (globals) {
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function (scope : ng.IScope, el, attr, ngModel : ng.INgModelController) {
+    link: function (scope : any, el, attr, ngModel : ng.INgModelController) {
 	  var select = function (event, ui) {
 	    // NB: this event is called before the selected value is set in the "input"
 
@@ -19,7 +19,7 @@ function autocompleteUserAndGroup (globals) {
       scope.$apply(function () {
           ngModel.$setViewValue(ui.item);
       });
-      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir on-select de index.html )
+      //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir onselect de index.html )
 	    scope.$apply(attr['onSelect']);
       //scope.$apply(attr['onBlur']);
 	    return false;
@@ -38,7 +38,7 @@ function autocompleteUserAndGroup (globals) {
 };
 }
 
-function showFocus($timeout) {
+export function showFocus($timeout) {
   return {
     restrict: 'A',
     link : function($scope, $element) {
@@ -49,16 +49,15 @@ function showFocus($timeout) {
   }
 }
 
-function focusOut($timeout) {
-  return function(scope, elem, attr) {
-    scope.$on('focusOut', function(e, name) {
-        if (name === attr.focusOut) {
-            $timeout(function () {
-                console.log("blur", elem[0]);
-                return elem[0].blur();
-            });
-      }
-    });
-  };
+export function focusOut($timeout) {		
+  return function(scope, elem, attr) {		
+    scope.$on('focusOut', function(e, name) {		
+        if (name === attr.focusOut) {		
+            $timeout(function () {		
+                console.log("blur", elem[0]);		
+                return elem[0].blur();		
+            });		
+      }		
+    });		
+  };		
 }
-

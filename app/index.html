@@ -3,15 +3,6 @@
   <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <meta name="viewport" content="initial-scale=1.0">
-
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="node_modules/angular-route/angular-route.js"></script>
-    <script src="personService.js"></script>
-    <script src="personCtrl.js"></script>
-    <script src="translations.js"></script>
-    <script src="routes.js"></script>
-    <script src="directives.js"></script>
-    <script src="app.js"></script>
   </head>
   <body ng-controller="MainController as main">
     <!--Intégrer le bandeau ENT -->
@@ -27,7 +18,7 @@
           <div > <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3" style="text-align:center">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3">&nbsp;</div>
-          <div class="col-md-6 col-md-offset-3" ng-include="'index-search-inc.html'"></div>
+          <div class="col-md-6 col-md-offset-3" ng-include="'template/index-search-inc.html'"></div>
         </div>
         <div class="row" >
            <!--<div class="col-md-2">
@@ -41,10 +32,6 @@
           <div ng-view></div>
         </div>
     </div>
-    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
-    <link href="node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen">
-    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-    <link href="style/annuaire.css" rel="stylesheet" media="screen">
     <script src="https://wsgroups.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
   </body>
 </html>
