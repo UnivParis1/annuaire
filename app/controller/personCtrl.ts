@@ -1,5 +1,7 @@
+import Person from "../service/person";
+import PersonService from "../service/personService";
 
-class MainController {
+export class MainController {
   /*
   Le MainController gère le routing de la partie saisie critère de recherche
   Deux recherches possibles:
@@ -62,9 +64,7 @@ class MainController {
 
 }
 
-
-
-class PersonController {
+export class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
   lastDiplomas=[];
@@ -95,7 +95,6 @@ class PersonController {
     /* PersonController gère les routings autre que la partie critère de recherche (MainController)
       - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
       - Filtrer sur le statut ( this.$location.search().affiliation)
-
     */
       this.affiliation = $routeParams['affiliation'] || '';
       this.affectation = $routeParams['affectation'] || '';
@@ -162,7 +161,7 @@ class PersonController {
     }
 
   };
-
+  
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
      
      this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
@@ -235,7 +234,7 @@ class PersonController {
        this.searchCrumbUrl(it).then(breadcrumb =>
           breadcrumbTotal.push(breadcrumb)
        );
-     }
+     }
    }
  }
 

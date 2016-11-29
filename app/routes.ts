@@ -1,5 +1,4 @@
-
-function initRoutes($routeProvider) {
+export function initRoutes($routeProvider) {
 
         // route for the home page
         $routeProvider.when('/Recherche', {

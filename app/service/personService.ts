@@ -1,4 +1,7 @@
-class PersonService {
+import Person from "../service/person";
+
+export default class PersonService {
+  
   constructor(private $http: angular.IHttpService, private $q) {
   }
 
@@ -29,7 +32,7 @@ class PersonService {
       let hashParams = JSON.stringify(params);
       let v = this.cache[url + hashParams];
       if (v) {
-          console.log("using cached value for " + url + " " + hashParams);
+          //console.log("using cached value for " + url + " " + hashParams);
           return this.$q.resolve(v);
       } else {
           return this.$http.jsonp(url, { params }).then(r => {

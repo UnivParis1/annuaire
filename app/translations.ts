@@ -1,4 +1,4 @@
-function initTranslations($translateProvider) {
+export function initTranslations($translateProvider) {
     $translateProvider.translations('fr', {
         APPROVALS_SEARCH: "Lancer la recherche",
         LABEL_CRIT_NAME: "Nom",

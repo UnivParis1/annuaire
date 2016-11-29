@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES5",
+        "noImplicitAny": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "sourceMap": true
+    },
+    "exclude": [
+        ".c9",
+        "typings",
+        "node_modules"
+    ]
+}
