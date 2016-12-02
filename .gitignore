@@ -3,6 +3,10 @@ node_modules/
 app/npm-debug.log
 app/*.js
 app/*.js.map
+app/service/*.js
+app/service/*.js.map
+app/controller/*.js
+app/controller/*.js.map
 test/
 Documents/
 build/
