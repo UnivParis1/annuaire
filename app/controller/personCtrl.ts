@@ -273,6 +273,7 @@ export class PersonController {
     for (let it of supannRoleEntiteAll) {
       if (it['structure']['key'] === affectation){
         it['displayName']=person['displayName'];
+        it['mail']=person['mail'];
         return it;
       }
     }

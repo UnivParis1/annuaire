@@ -26,7 +26,7 @@
           <div class="row">
             <div class="col-md-6 text-muted" ng-if="p.affectation">
                <div>{{p.affectationName}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affectation')"></span></div>
-               <div ng-if="p.manager.role" >{{p.manager.role}} - {{p.manager.displayName}}</div>
+               <div ng-if="p.manager.role" >{{p.manager.role}} - <a href="" ng-click="p.$location.path('/Show/' + p.manager.mail)">{{p.manager.displayName}}</a></div>
                <div ng-if="p.manager.structure['labeledURI']" >Site web: <a ng-href="{{p.manager.structure['labeledURI']}}" target="_blank">{{p.manager.structure['labeledURI']}}</a></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="p.token">
