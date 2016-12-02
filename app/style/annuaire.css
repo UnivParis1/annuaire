@@ -1,42 +1,30 @@
-label {
-    margin-right: 0.5em;
-    margin-bottom: 0;
-}
-
-.phoneNumbers > div {
-    white-space:nowrap;
-    display: inline-block;
-    margin-right: 1em;        
-}
-
 /**
 Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
 En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 **/
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .table tr td:first-child  {
-        float: right;
-    }
-    .table tr td  {
-      display: block;
-      border-top: 0px solid #d42626 !important;
-    }
-    .table tr {
-      border: 1px solid #ccc;
-    }
-
+  /* For mobile phones: */
+  .table tr td:first-child  {
+      float: right;
+  }
+  .table tr td  {
+    display: block;
+    border-top: 0px solid #d42626 !important;
+  }
+  .table tr {
+    border: 1px solid #ccc;
+  }
 }
 
 .panelshadow {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    box-shadow: 0 8px 0 rgba(0, 0, 0, .10);
-    padding-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .10);
+  padding-bottom: 10px;
 }
 .alt {
-    background-color:#eee;
+  background-color:#eee;
 }
 
 #menus .nav a {
@@ -49,7 +37,7 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 }
 
 #menus .nav a.youarehere {
-    background: #337ab7;
+  background: #337ab7;
 }
 
 .selected {
@@ -58,7 +46,7 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 
 
 .setHover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .setpadding{
@@ -67,12 +55,15 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 }
 .imgCicle{
   position: relative;
-  width: 100px;
-  height: auto;
+  width: 130px;
+  height: 130px;
   overflow: hidden;
   border-radius: 50%;
-  margin: 0 auto;
-  padding: 0;
+  padding-left: 0;
+}
+.imgMarg{
+  margin: 5px 5px auto;
+  padding-right: 0;
 }
 
 .imgCicle img{
@@ -80,24 +71,22 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   height: auto;
   border: 0 none;
   float: left;
-  margin: 0;
+  margin: -20px 0 0 0px;
   max-height: none;
   max-width: none;
   padding: 0;
-  border-radius: 0;
 }
 
-.imgCicleOther{
+.photoGallery{
   position: relative;
   width: 144px;
-  height: auto;
+  height: 200px;
   overflow: hidden;
-  border-radius: 50%;
   margin: 0 auto;
   padding: 0;
 }
 
-.imgCicleOther img{
+.photoGallery img{
   width: 100%;
   height: auto;
   border: 0 none;
@@ -105,36 +94,31 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   margin: 0;
   max-height: none;
   max-width: none;
-  padding: 0;
-  border-radius: 0;
+  padding: 0;}
+
+label {
+  margin-right: 0.5em;
+  margin-bottom: 0;
 }
 
-.photoGallery{
-position: relative;
-width: 144px;
-height: 200px;
-overflow: hidden;
-margin: 0 auto;
-padding: 0;
+.marginTop{
+  margin-top:10px;
 }
-
-.photoGallery img{
-width: 100%;
-height: auto;
-border: 0 none;
-float: left;
-margin: 0;
-max-height: none;
-max-width: none;
-padding: 0;}
-
+.phoneNumbers > div {
+  white-space:nowrap;
+  display: inline-block;
+  margin-right: 1em;
+}
 /**
 Surcharger btn-primary,breadcrumb
 **/
 .btn-primary {
-    border-color: white !important;
+  border-color: white !important;
 }
 
 .breadcrumb > li + li::before {
-    padding: 0 0 0 10px !important;
+  padding: 0 0 0 10px !important;
+}
+.table > tbody > tr > td{
+  vertical-align: middle !important;
 }
