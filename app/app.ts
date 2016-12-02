@@ -24,8 +24,7 @@ app.config(translations.initTranslations);
 app.config(routes.initRoutes);
 app.directive('autocompleteUserAndGroup', directives.autocompleteUserAndGroup);
 app.directive('showFocus', directives.showFocus);
-
-
+app.directive('focusOut', directives.focusOut);
 
 app.service('globals', function () {
   return { wsgroupsURL:'https://wsgroups.univ-paris1.fr' };
