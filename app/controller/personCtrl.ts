@@ -56,10 +56,10 @@ export class MainController {
   setTrombi=(showTrombi:boolean)=>{
     this.showTrombi=showTrombi;
   }
-  
-  clearSearchCrit = () => {		
-    this.searchCrit.token = null;		
-    this.$scope.$broadcast('focusOut', 'mainSearch');		
+
+  clearSearchCrit = () => {
+    this.searchCrit.token = null;
+    this.$scope.$broadcast('focusOut', 'mainSearch');
   }
 
 }
@@ -89,6 +89,9 @@ export class PersonController {
   token;
   authenticated;
   manager;
+  diploma;
+  diplomaName;
+  searchCritDipl={filter_category:'diploma',token:''};
 
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}, private $filter:angular.IFilterService) {
@@ -98,11 +101,13 @@ export class PersonController {
     */
       this.affiliation = $routeParams['affiliation'] || '';
       this.affectation = $routeParams['affectation'] || '';
+      this.diploma = $routeParams['diploma'] || '';
       this.token = $routeParams['token'] || '';
+
       if ($routeParams['id']) {
           this.showUser($routeParams['id']);
       } else {
-          this.searchUser($routeParams['token'], null, $routeParams['affectation'], $routeParams['affiliation'], false);
+          this.searchUser($routeParams['token'], null, $routeParams['affectation'], $routeParams['affiliation'],  $routeParams['diploma'],false);
       }
   }
 
@@ -121,6 +126,14 @@ export class PersonController {
     );
   };
 
+  private getDiplomaLib= (token: {}) => {
+    //debugger;
+    return this.personService.getDiplomaLib(token).then(
+      (d) => d,
+      (errfunction) => undefined
+    );
+  };
+
   private _getSearchCrumbUrl = (text: {}) => {
     return this.personService.searchCrumbUrl(text).then(
       (listStructures) => listStructures,
@@ -128,10 +141,10 @@ export class PersonController {
     );
   };
 
-  searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string, showDetailPers = false) => {
+  searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string,diploma : string, showDetailPers = false) => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     let authenticated = this.$scope.$parent['main'].authenticated;
-    
+
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
     let searchCrit = { token, maxRows, filter_eduPersonAffiliation, CAS: authenticated, filter_supannEntiteAffectation: null, filter_member_of_group: null };
     if (this.affiliation) {
@@ -140,7 +153,7 @@ export class PersonController {
     }
 
     if (affectation) {
-        this.getGroupFromStruct(affectation).then((group : Array<{}>) => {
+        this.getGroupFromStruct(affectation).then((group : {}) => {
         // Récupérer le libellé de la structure
         this.affectationName=group['name'];
         //Lors de la recherche par structure, le webservice searchUser n'affiche que les personnels,
@@ -155,15 +168,24 @@ export class PersonController {
         }
         });
 
-    } else {
+    }else if(diploma){
+      this.searchCritDipl.token=diploma;
+      this.getDiplomaLib(this.searchCritDipl).then((dip : Array<{}>) => {
+        // Récupérer le libellé du diplome
+        this.diplomaName=dip[0]['name'];
+        //Rechercher les étudiants d'un diplôme
+        searchCrit.filter_member_of_group = "diploma"+ "-" + diploma;
+        this.searchUserFinal(searchCrit,showDetailPers,'');
+      });
+    }
+    else {
       //Dans le cas d'une recherche simple (structure ou autre)sans filtre
       this.searchUserFinal(searchCrit,showDetailPers,'');
     }
 
   };
-  
+
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
-     
      this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
      if (!showDetailPers && persons.length === 1 && !affectation) {
        this.$location.path("/Show/" + persons[0]['mail']);
@@ -208,6 +230,9 @@ export class PersonController {
     var l1 = [];
     ltEtuInscription.forEach(p => {
         if (p.anneeinsc==anneeMax){
+          // Récupérer le code etape, utilisé dans fiche detail, et l'affecter dans attribut etapeCode de l'objet p
+          var array=p.etape.split('-');
+          p.etapeCode=array[0].trim()||'';
           l1.push(p);}
     });
     return l1;
@@ -222,7 +247,7 @@ export class PersonController {
       return;
     }
     this.showDetailPers = true;
-    this.searchUser(id, 1,null,null, true);
+    this.searchUser(id, 1,null,null,null, true);
   }
 
  compute_breadcrumbTotal = (item) => {

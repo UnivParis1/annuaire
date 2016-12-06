@@ -33,7 +33,7 @@
           <div ng-repeat="uri in person.labeledURI" ><a ng-href="{{uri}}" target="_blank" ng-click='p.noShowUser = true'> {{uri}}</a></div>
           <div><a ng-href="mailto:{{person.mail}}" target="_blank" ng-click='p.noShowUser = true'> {{person.mail}}</a></div></br></br>
       </div>
-
+      <!--Affichage étudiant -->
       <div ng-if="person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum'">
         <div class="col-md-6" ng-if="p.lastDiplomas">
           <div ng-if="p.lastDiplomas">
@@ -46,12 +46,13 @@
             <div class="row">
               <div class="col-md-2"><label>Diplôme(s)</label></div>
               <div class="uneditable-input" ng-repeat="diploma in p.lastDiplomas">
-                {{diploma.etape}}
+                <a ng-href="#/Recherche/?diploma={{diploma.etapeCode}}{{main.authenticated ? '&connected' : ''}}"  ng-model="p.searchCrit.filter_member_of_group">{{diploma.etape}}</a>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Affichage personnel-->
       <div ng-if="!(person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum')">
         <div class="col-md-4 marginTop" ng-if="person.telephoneNumber || person.supannAutreTelephone || (main.authenticated && person.mobile) ||person.facsimileTelephoneNumber">
           <div ng-if="person.telephoneNumber">
