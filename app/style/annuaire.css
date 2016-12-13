@@ -62,7 +62,7 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   padding-left: 0;
 }
 .imgMarg{
-  margin: 5px 5px auto;
+  margin: 15px auto 0;
   padding-right: 0;
 }
 
