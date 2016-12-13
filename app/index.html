@@ -14,21 +14,13 @@
         window.bandeau_anonyme = { title: "Annuaire public de l'université Paris 1" };
     </script>
     <div class="container">
-        <div class="row panelshadow"">
+        <div class="row">
           <div > <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3" style="text-align:center">  <script src="//esup-data.univ-paris1.fr/esup/bandeau-anonyme/loader.js"></script></div>
           <div class="col-md-6 col-md-offset-3">&nbsp;</div>
           <div class="col-md-6 col-md-offset-3" ng-include="'template/index-search-inc.html'"></div>
         </div>
         <div class="row" >
-           <!--<div class="col-md-2">
-                <ul class="nav nav-stacked">
-                    <li ><a href="#Organigramme">Organigramme Paris1</a></li>
-                    <li><a href="#Apropos"> A propos</a></li>
-                </ul>
-           </div>-->
-           <!-- angular templating -->
-           <!-- this is where content will be injected -->
           <div ng-view></div>
         </div>
     </div>
