@@ -6,7 +6,7 @@
           <img title="{{person.supannListeRouge ? '': person.displayName}}" ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}" class="img-responsive">
           <div>
         </td>
-        <td class="col-md-5">
+        <td class="col-md-3">
             <div ng-if="!person.supannListeRouge">
               <div>{{person.supannCivilite}} {{person.displayName}}</div>
               <div ng-repeat="role in person['supannRoleEntite-all']">{{role.role}}
@@ -21,7 +21,7 @@
               <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" href="/#?connected" ng-click="p.goConnected()"> Connexion </a>
             </div>
         </td>
-        <td class="col-md-4">
+        <td class="col-md-6">
           <div ng-repeat="affectation in person['supannEntiteAffectation-all']">
              <a ng-href="#/Recherche/?affectation={{affectation.key}}{{main.authenticated ? '&connected' : ''}}"
              ng-click='p.noShowUser = true' g-model="p.searchCrit.filter_member_of_group">{{affectation.description}}</a>
