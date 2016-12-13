@@ -92,6 +92,7 @@ export class PersonController {
   diploma;
   diplomaName;
   searchCritDipl={filter_category:'diploma',token:''};
+  statusPers=[];
 
 
   constructor(private personService: PersonService, private $q: angular.IQService, private $log: angular.ILogService, private $scope: angular.IRootScopeService, private $location:angular.ILocationService, $routeParams : {}, private $filter:angular.IFilterService) {
@@ -187,6 +188,7 @@ export class PersonController {
 
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
      this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
+     // Si le web widget ne ramène qu'une personne, rediriger vers page détail
      if (!showDetailPers && persons.length === 1 && !affectation) {
        this.$location.path("/Show/" + persons[0]['mail']);
        return;
@@ -214,13 +216,20 @@ export class PersonController {
       });
      }
 
-     // Si l'utilisateur veut voir le détail d'une personne ou si la recherche ne ramène qu'un résultat rediriger vers la page détail
+     // Si click sur le détail d'une personne
      if (showDetailPers) {
+        //Récupérer les diplomes de l'étudiant
         var arrayEtuInscription=persons[0]['supannEtuInscription-all'];
         if (arrayEtuInscription) {
          var anneeInscMax = Math.max.apply(null, arrayEtuInscription.map(item => item.anneeinsc));
          this.lastDiplomas = this.getLastDiplomas(arrayEtuInscription,anneeInscMax);
-      }
+        }
+        //Récupérer les translationTag des affiliations d'une personne
+        var ltAffiliation=persons[0]['eduPersonAffiliation'];
+        for (let it of ltAffiliation) {
+          var status = this.$filter('filter')(this.listStatus, { id: it });
+            if (status[0]){this.statusPers.push(status[0]['translationTag']);}
+        }
       this.compute_breadcrumbTotal(persons[0]);
      }
 
@@ -272,7 +281,7 @@ export class PersonController {
     searchCritStructure.key = param;
     return this._getSearchCrumbUrl(searchCritStructure).then((returnResultGroup : Array<{}>) => {
        let breadcrumbApp= this.objectValues(returnResultGroup);
-       return breadcrumbApp.reverse();
+       return breadcrumbApp;
     })
   }
 
