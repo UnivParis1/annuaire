@@ -8,8 +8,7 @@ export function initTranslations($translateProvider) {
         STATUS_STAFF: "Personnel administratif / technique / de bibliothèque",
         STATUS_EMERITUS: "Professeur émérite",
         STATUS_STUDENT:"Étudiant",
-        STATUS_ALUM:"Ancien étudiant",
-        STATUS_ALL:"Tous"
+        STATUS_ALUM:"Ancien étudiant"
     });
     $translateProvider.preferredLanguage('fr');
 }
