@@ -68,7 +68,7 @@ export class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
   lastDiplomas=[];
-  listStatus=[{{id: 'teacher', translationTag: "STATUS_TEACHER"},
+  listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
               {id: 'staff', translationTag: "STATUS_STAFF"},
               {id: 'emeritus', translationTag: "STATUS_EMERITUS"},
