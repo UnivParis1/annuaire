@@ -18,6 +18,14 @@ export class MainController {
   authenticated=true;
   showTrombi=false;
   wsparams : any;
+  listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
+              {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
+              {id: 'staff', translationTag: "STATUS_STAFF"},
+              {id: 'emeritus', translationTag: "STATUS_EMERITUS"},
+              {id: 'student', translationTag: "STATUS_STUDENT"},
+              {id: 'alum', translationTag: "STATUS_ALUM"}
+
+            ];
 
   constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
@@ -71,6 +79,11 @@ export class MainController {
              affectation ? "structures-" + affectation :
              '';
   };
+  goAffiliation = (param:string) => {
+    this.$location.path("/Recherche");
+    this.$location.search('affiliation', param);
+  }
+
 }
 
 export class WelcomeController {
@@ -83,14 +96,7 @@ export class PersonController {
   resultSearch={};
   breadcrumbTotal=[];
   lastDiplomas=[];
-  listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
-              {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
-              {id: 'staff', translationTag: "STATUS_STAFF"},
-              {id: 'emeritus', translationTag: "STATUS_EMERITUS"},
-              {id: 'student', translationTag: "STATUS_STUDENT"},
-              {id: 'alum', translationTag: "STATUS_ALUM"}
 
-            ];
   searchCritStructure={depth:10,key:''};
   searchNoauthMaxResult=5;// Résultat maximal à afficher si pasa uthentifié
   searchAuthMaxResult=100;// Résultat maximal à afficher si authentifié
@@ -165,7 +171,7 @@ export class PersonController {
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
     let searchCrit = { token, maxRows, filter_eduPersonAffiliation, CAS: authenticated, filter_supannEntiteAffectation: null, filter_member_of_group: null };
     if (this.affiliation) {
-      var status = this.$filter('filter')(this.listStatus, { id: this.affiliation });
+      var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: this.affiliation });
       this.affiliationName=status[0]['translationTag'];
     }
 
@@ -238,7 +244,7 @@ export class PersonController {
         //Récupérer les translationTag des affiliations d'une personne
         var ltAffiliation=persons[0]['eduPersonAffiliation'];
         for (let it of ltAffiliation) {
-          var status = this.$filter('filter')(this.listStatus, { id: it });
+          var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: it });
             if (status[0]){this.statusPers.push(status[0]['translationTag']);}
         }
       this.compute_breadcrumbTotal(persons[0]);
@@ -301,11 +307,6 @@ export class PersonController {
     location.hash = this.$location.url();
     location.reload();
   };
-
-  goAffiliation = (param:string) => {
-    this.$location.path("/Recherche");
-    this.$location.search('affiliation', param);
-  }
 
   goDeletedFilter=(param)=>{
     this.$location.search(param,null);

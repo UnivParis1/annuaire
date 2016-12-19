@@ -23,9 +23,9 @@
         </div>
         <div class="row" style="text-align:center;margin-bottom: 5px">
           <div class="col-md-12" >
-              <div class="bg-info" style="padding: 6px"  ng-controller="PersonController as c">
-               <div class="radio-inline" ng-repeat="v in c.listStatus">
-                 <a target="_self" ng-model="c.searchCrit.filter_eduPersonAffiliation" ng-click="c.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
+              <div class="bg-info" style="padding: 6px">
+               <div class="radio-inline" ng-repeat="v in main.listStatus">
+                 <a target="_self" ng-model="c.searchCrit.filter_eduPersonAffiliation" ng-click="main.goAffiliation(v.id)">{{v.translationTag|translate}}</a>
                </div>
              </div>
           </div>
