@@ -17,11 +17,13 @@ export class MainController {
   searchResults : { users: {}[], groups: {}[] };
   authenticated=true;
   showTrombi=false;
+  wsparams : any;
 
   constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
       this.$scope = $scope;
       //console.log($location.search(), this.authenticated);
+      this.wsparams = { filter_category: "structures", group_attrs: "businessCategory", CAS: !!location.href.match(/connected/) };
   }
 
   searchUser = (token) => {
@@ -62,6 +64,19 @@ export class MainController {
     this.$scope.$broadcast('focusOut', 'mainSearch');
   }
 
+  set_wsparams = ({ affiliation, affectation, diploma }) => {
+      this.wsparams.filter_eduPersonAffiliation = affiliation;
+      this.wsparams.filter_member_of_group = 
+             diploma ? "diploma-" + diploma : 
+             affectation ? "structures-" + affectation :
+             '';  
+  };
+}
+
+export class WelcomeController {
+  constructor(private $scope: angular.IRootScopeService, $routeParams : {}) {
+      this.$scope.$parent['main'].set_wsparams(this);
+  }
 }
 
 export class PersonController {
@@ -103,6 +118,8 @@ export class PersonController {
       this.affectation = $routeParams['affectation'] || '';
       this.diploma = $routeParams['diploma'] || '';
       this.token = $routeParams['token'] || '';
+
+      this.$scope.$parent['main'].set_wsparams(this);
 
       if ($routeParams['id']) {
           this.showUser($routeParams['id']);

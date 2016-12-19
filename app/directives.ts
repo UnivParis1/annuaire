@@ -7,6 +7,10 @@ export function autocompleteUserAndGroup (globals) {
   return {
     restrict: 'A',
     require: 'ngModel',
+    scope: {
+        wsparams: '=',
+        onSelect: '&',
+    },
     link: function (scope : any, el, attr, ngModel : ng.INgModelController) {
 	  var select = function (event, ui) {
 	    // NB: this event is called before the selected value is set in the "input"
@@ -20,7 +24,7 @@ export function autocompleteUserAndGroup (globals) {
           ngModel.$setViewValue(ui.item);
       });
       //Ajouter un attribut onSelect, qui sera utilisé pour initialier le token ( voir onselect de index.html )
-	    scope.$apply(attr['onSelect']);
+	    scope.$apply(scope.onSelect);
       //scope.$apply(attr['onBlur']);
 	    return false;
   };
@@ -31,9 +35,13 @@ export function autocompleteUserAndGroup (globals) {
   };
 
   //onSearchSuccess renvoie une liste des groups et/ou users
-  var params = { select: select, onSearchSuccess,wsParams: { filter_category: "structures", group_attrs: "businessCategory", CAS: !!location.href.match(/connected/) } };
-  // autocompleteUser de jQuery gère l'autocomplétion
-  jQuery(el)['autocompleteUserAndGroup'](searchURL, params);
+  scope.$watch('wsparams', function () {
+      console.log('updated value', scope.wsparams);      
+      var params = { select: select, onSearchSuccess, wsParams: scope.wsparams };
+      // autocompleteUser de jQuery gère l'autocomplétion
+      jQuery(el)['autocompleteUserAndGroup'](searchURL, params);
+  }, true);
+
 }
 };
 }
