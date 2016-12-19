@@ -17,7 +17,7 @@ export function initRoutes($routeProvider) {
             controllerAs: 'p',
         })
         $routeProvider.when('/Show/:id', {
-            templateUrl : 'template/resultSearch.html',
+            templateUrl : 'template/resultSearch-detailPers-inc.html',
             controller  : 'PersonController',
             controllerAs: 'p',
         })

@@ -66,10 +66,10 @@ export class MainController {
 
   set_wsparams = ({ affiliation, affectation, diploma }) => {
       this.wsparams.filter_eduPersonAffiliation = affiliation;
-      this.wsparams.filter_member_of_group = 
-             diploma ? "diploma-" + diploma : 
+      this.wsparams.filter_member_of_group =
+             diploma ? "diploma-" + diploma :
              affectation ? "structures-" + affectation :
-             '';  
+             '';
   };
 }
 
@@ -204,11 +204,6 @@ export class PersonController {
 
   searchUserFinal = (searchCrit,showDetailPers, affectation) => {
      this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
-     // Si le web widget ne ramène qu'une personne, rediriger vers page détail
-     if (!showDetailPers && persons.length === 1 && !affectation) {
-       this.$location.path("/Show/" + persons[0]['mail']);
-       return;
-     }
      persons.forEach(p => {
          p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
      });

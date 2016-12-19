@@ -1,8 +1,4 @@
 <div class="col-md-12">
-
-  <!--Le filtre est affiché  si un filtre n'affiche aucune personne,cela permet à l'utlisateur d'avoir la possibilité de filtrer sur autre donnée (p.affiliation)-->
-  <div ng-if="(p.resultSearch.length>1 && !p.showDetailPers)||(p.resultSearch.length<=1 && p.affiliation&&!p.showDetailPers)||(p.resultSearch.length<=1 && p.affectation&&!p.showDetailPers)" >
-    <div ng-if="!p.showDetailPers">
       <div class="row"  >
         <div class="col-md-12" >
           <div class="bg-info" style="padding: 6px" >{{p.resultSearch.length}} résultat(s) pour :
@@ -26,7 +22,6 @@
           </br>
         </div>
       </div>
-    </div>
     <div >
       <div class="row">
         <div class="panelshadow" >
@@ -56,9 +51,4 @@
     <div class="row"ng-if="main.showTrombi">
       <div ng-include="'template/resultSearch-photoGallery-inc.html'"></div>
     </div>
-  </div><!--<div ng-if="(p.resultSearch.length>1 && !p.showDetailPers)||(p.resultSearch.length<=1 && p.affiliation&&!p.showDetailPers)||(p.resultSearch.length<=1 && p.affectation&&!p.showDetailPers)" -->
-
-  <div ng-if="p.showDetailPers">
-    <div ng-include="'template/resultSearch-detailPers-inc.html'"></div>
-  </div>
 </div>
