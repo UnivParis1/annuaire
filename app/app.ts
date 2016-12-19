@@ -18,6 +18,7 @@ var app = angular.module('myApp', ['pascalprecht.translate','ngRoute','ui.bootst
 app.service('personService', PersonService);
 app.controller('MainController', personCtrl.MainController);
 app.controller('PersonController', personCtrl.PersonController);
+app.controller('WelcomeController', personCtrl.WelcomeController);
 app.controller('EmptyCtrl', function($scope) {});
 app.config(translations.initTranslations);
 app.config(routes.initRoutes);

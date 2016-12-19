@@ -1,6 +1,11 @@
 export function initRoutes($routeProvider) {
 
         // route for the home page
+        $routeProvider.when('/', {
+            template : '',
+            controller  : 'WelcomeController',
+            controllerAs: 'p',
+        })
         $routeProvider.when('/Recherche', {
             templateUrl : 'template/resultSearch.html',
             controller  : 'PersonController',
