@@ -37,7 +37,6 @@ export class MainController {
   searchUser = (token) => {
     // Si aucune donnée renseignée(ex Critère vide+Enter) ou le resultat de la recherche (webwidget) ne contient que des structures, ne pas lancer la recherche(bloqué le Enter)
     if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
-      this.showTrombi=false;
       this.clearSearchCrit();
       this.$location.path("/Recherche/");
       this.$location.search("token",token);
@@ -89,6 +88,7 @@ export class MainController {
 export class WelcomeController {
   constructor(private $scope: angular.IRootScopeService, $routeParams : {}) {
       this.$scope.$parent['main'].set_wsparams(this);
+      this.$scope.$parent['main'].showTrombi=false;
   }
 }
 
