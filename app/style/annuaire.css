@@ -80,7 +80,7 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
 .photoGallery{
   position: relative;
   width: 144px;
-  height: 200px;
+  height: 240px;
   overflow: hidden;
   margin: 0 auto;
   padding: 0;
