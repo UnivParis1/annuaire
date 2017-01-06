@@ -1,5 +1,5 @@
 <div class="row">
-  <div ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && p.$location.path('/Show/' + person.mail)" >
+  <div ng-repeat="person in p.resultSearch" ng-click="!person.supannListeRouge && main.showUser(person.mail)" >
     <div class="col-md-2">
       <div href="" class="setHover photoGallery">
           <div style="height: 180px;overflow: hidden;">

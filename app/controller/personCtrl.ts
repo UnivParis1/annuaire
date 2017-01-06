@@ -59,6 +59,9 @@ export class MainController {
 
   showUser=(id, showDetailPers = false)=>{
     this.clearSearchCrit();
+    //Initialiser tous les paramètres de l'URL a null, permettant de rechercher n'importe quelle personne dans écran détail
+    //sans tenir compte des critères précédemment saisis de l'écran liste
+    this.$location.search({});
     this.$location.path("/Show/" + id);
   }
 
