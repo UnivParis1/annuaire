@@ -133,16 +133,13 @@ export class PersonController {
   searchAuthMaxResult=100;// Résultat maximal à afficher si authentifié
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
-  affiliation;
-  affectation;
   affectationName;
   affiliationName;
   token;
   authenticated;
   manager;
-  diploma;
   diplomaName;
-  searchCritDipl={filter_category:'diploma',token:''};
+  goConnectedUrl : string;
   statusPers=[];
 
 
@@ -326,8 +323,7 @@ export class PersonController {
   }
 
   goConnected = () => {
-    this.$location.search('connected', true);
-    location.hash = this.$location.url();
+    location.hash = this.goConnectedUrl;
     location.reload();
   };
 
