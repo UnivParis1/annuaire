@@ -1,3 +1,4 @@
+import { wsparams, filters } from "../types";
 import Person from "../service/person";
 
 export default class PersonService {
@@ -31,20 +32,52 @@ export default class PersonService {
       }
   };
 
-  searchPersons = (ptoken :{}) : angular.IPromise<Array<Person>> => {
+  getGroupFromStruct = (affectation: string)  : angular.IPromise<string[]> => {
+    //debugger;
+    return this.getGroup("structures-" + affectation).then(
+      (g) => g,
+      (errfunction) => undefined
+    );
+  };
+
+  searchPersons = (wsparams : wsparams) : angular.IPromise<Array<Person>> => {
     //console.log(ptoken);
-    return this.cachedJsonp(PersonService.searchPersonsUrl, ptoken)
+    return this.cachedJsonp(PersonService.searchPersonsUrl, wsparams)
   };
   //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
-  searchCrumbUrl = (pkey :{}) : angular.IPromise<string[]> => {
+  searchCrumbUrl = (pkey :{}) : angular.IPromise<Array<{}>> => {
     return this.cachedJsonp(PersonService.searchCrumbUrl, pkey);
   };
 
-  getGroup = (key : {}) : angular.IPromise<string[]> => {
+  getGroup = (key : {}) : angular.IPromise<Array<{}>> => {
     return this.cachedJsonp(PersonService.getGroup, {key});
   };
 
-  getDiplomaLib= (token : {}) : angular.IPromise<string[]> => {
-    return this.cachedJsonp(PersonService.getDiplomaLib, token);
+  getDiplomaLib= (diploma : string) : angular.IPromise<Array<{}>> => {
+    return this.cachedJsonp(PersonService.getDiplomaLib, {filter_category:'diploma',token: diploma});
   };
+
+  set_wsparams = (wsparams: wsparams, { affiliation, affectation, diploma } : filters) : angular.IPromise<void> => {
+    wsparams.filter_eduPersonAffiliation = affiliation;
+
+    // ensure both are not set
+    wsparams.filter_supannEntiteAffectation = '';
+    wsparams.filter_member_of_group = '';
+    if (diploma) {
+        wsparams.filter_member_of_group = "diploma-" + diploma;
+        return this.$q.resolve();
+    } else if (affectation){
+      if (affiliation === 'student' || affiliation === 'alum') {
+          wsparams.filter_supannEntiteAffectation = affectation;
+          return this.$q.resolve();
+      } else {
+        return this.getGroupFromStruct(affectation).then((group : {}) => {
+            wsparams.filter_member_of_group = "groups-employees." + group['businessCategory'] + "." + affectation;
+        });
+      }
+    } else {
+        return this.$q.resolve();
+    }
+  }
+
 }

@@ -1,3 +1,4 @@
+import { wsparams, filters } from "../types";
 import Person from "../service/person";
 import PersonService from "../service/personService";
 
@@ -5,7 +6,7 @@ export class MainController {
   /*
   Le MainController gère le routing de la partie saisie critère de recherche
   Deux recherches possibles:
-    - En saisissant le crirère de rechche+Touche Enter (searchUser)
+    - En saisissant le crirère de rechche+Touche Enter (showUsers)
     - En saisissant le crirère de rechche+sélection dans la liste (show):
       La rechercher peut être faite, soit pour une personne soit pour une structure
       1- sélectionner une personne (showUser)
@@ -17,7 +18,7 @@ export class MainController {
   searchResults : { users: {}[], groups: {}[] };
   authenticated=true;
   showTrombi=false;
-  wsparams : any;
+  wsparams : wsparams;
   listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
               {id: 'staff', translationTag: "STATUS_STAFF"},
@@ -34,7 +35,7 @@ export class MainController {
       this.wsparams = { filter_category: "structures", group_attrs: "businessCategory", CAS: !!location.href.match(/connected/) };
   }
 
-  searchUser = (token) => {
+  showUsers = (token) => {
     // Si aucune donnée renseignée(ex Critère vide+Enter) ou le resultat de la recherche (webwidget) ne contient que des structures, ne pas lancer la recherche(bloqué le Enter)
     if (!token || !this.searchResults || this.searchResults.users.length === 0) return;
       this.clearSearchCrit();
@@ -42,8 +43,8 @@ export class MainController {
       this.$location.search("token",token);
   }
 
-  // Le web widget de recherche retourne des personnes ou des stcructures
-  show=(item)=>{
+  // Le web widget de recherche retourne des personnes ou des structures
+  showUserOrStructure = (item) => {
     // recherche de personne
     if (item.category === 'users') {
         this.showUser(item.mail);
@@ -74,31 +75,8 @@ export class MainController {
     this.$scope.$broadcast('focusOut', 'mainSearch');
   }
 
-  set_wsparams = ({ affiliation,affectation, diploma}) => {
-    var affectationGroup;
-    if (affectation){
-      /*this.getGroupFromStruct(affectation).then((group : {}) => {
-      if (affiliation === 'student' || affiliation === 'alum') {
-          this.set_wsparamsFinal(affiliation,affectation, diploma);
-      }else{
-        affectationGroup  = "groups-employees." + group['businessCategory'] + "." + affectation;
-        this.set_wsparamsFinal(affiliation,affectationGroup, diploma);
-      }
-    });*/
-      this.getGroupFromStruct(affectation).then((group : {}) => {
-      affectationGroup  = "groups-employees." + group['businessCategory'] + "." + affectation;
-      this.set_wsparamsFinal(affiliation,affectationGroup, diploma);
-      });
-    }
-    else this.set_wsparamsFinal(affiliation,affectation, diploma);
-  };
-
-  set_wsparamsFinal = (affiliation,affectation, diploma) => {
-    this.wsparams.filter_eduPersonAffiliation = affiliation;
-    this.wsparams.filter_member_of_group =
-                 diploma ? "diploma-" + diploma :
-                 affectation ? affectation :
-                 '';
+  set_autocomplete_wsparams = (filters) => {
+    this.personService.set_wsparams(this.wsparams, filters);
   };
 
   goAffiliation = (param:string) => {
@@ -106,25 +84,17 @@ export class MainController {
     this.$location.search('affiliation', param);
   }
 
-  getGroupFromStruct = (affectation: string) => {
-    //debugger;
-    return this.personService.getGroup("structures-" + affectation).then(
-      (g) => g,
-      (errfunction) => undefined
-    );
-  };
-
 }
 
 export class WelcomeController {
   constructor(private $scope: angular.IRootScopeService, $routeParams : {}) {
-      this.$scope.$parent['main'].set_wsparams(this);
+      this.$scope.$parent['main'].set_autocomplete_wsparams(this);
       this.$scope.$parent['main'].showTrombi=false;
   }
 }
 
 export class PersonController {
-  resultSearch={};
+  resultSearch=[];
   breadcrumbTotal=[];
   lastDiplomas=[];
 
@@ -148,32 +118,27 @@ export class PersonController {
       - Recherche des personnels à partir du fil d'arianne (this.$location.search().affectation)
       - Filtrer sur le statut ( this.$location.search().affiliation)
     */
-      this.affiliation = $routeParams['affiliation'] || '';
-      this.affectation = $routeParams['affectation'] || '';
-      this.diploma = $routeParams['diploma'] || '';
       this.token = $routeParams['token'] || '';
+      this.goConnectedUrl = $location.url() + "&connected";
 
-      this.$scope.$parent['main'].set_wsparams(this);
+      let filters = <filters> $routeParams;
+
+      this.$scope.$parent['main'].set_autocomplete_wsparams(filters);
 
       if ($routeParams['id']) {
           this.showUser($routeParams['id']);
       } else {
-          this.searchUser($routeParams['token'], null, $routeParams['affectation'], $routeParams['affiliation'],  $routeParams['diploma'],false);
+          this.showUsers(filters, null, false);
       }
   }
 
-  private _getSearchPersons = (text: {}) => {
-    return this.personService.searchPersons(text).then(
-      (listUsers) => listUsers,
-      (errfunction) => undefined
-    );
-  };
-
-  private getDiplomaLib= (token: {}) => {
-    //debugger;
-    return this.personService.getDiplomaLib(token).then(
-      (d) => d,
-      (errfunction) => undefined
+  private _getSearchPersons = (wsparams: wsparams, filters: filters) : angular.IPromise<Array<Person>> => {
+    wsparams.token = filters.token;
+    return this.personService.set_wsparams(wsparams, filters).then(() =>
+      this.personService.searchPersons(wsparams).then(
+        (listUsers) => listUsers,
+        (errfunction) => undefined
+      )
     );
   };
 
@@ -184,95 +149,68 @@ export class PersonController {
     );
   };
 
-  searchUser = (token, maxRows = null,affectation : string,filter_eduPersonAffiliation : string,diploma : string, showDetailPers = false) => {
+  showUsers = (filters: filters, maxRows = null, showDetailPers = false) : angular.IPromise<Array<Person>> => {
     //Limiter le nombre d'affichage en fonction de l'authentification
     let authenticated = this.$scope.$parent['main'].authenticated;
 
     if (!maxRows) maxRows = authenticated ? this.searchAuthMaxResult : this.searchNoauthMaxResult;
-    let searchCrit = { token, maxRows, filter_eduPersonAffiliation, CAS: authenticated, filter_supannEntiteAffectation: null, filter_member_of_group: null };
-    if (this.affiliation) {
-      var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: this.affiliation });
-      this.affiliationName=status[0]['translationTag'];
-    }
 
-    if (affectation) {
-        this.$scope.$parent['main'].getGroupFromStruct(affectation).then((group : {}) => {
-        // Récupérer le libellé de la structure
-        this.affectationName=group['name'];
-        //Lors de la recherche par structure, le webservice searchUser n'affiche que les personnels,
-        //pour avoir les étudiants, il faut ensuite filtrer sur etudiant
-        if (filter_eduPersonAffiliation === 'student' || filter_eduPersonAffiliation === 'alum') {
-          searchCrit.filter_supannEntiteAffectation = affectation;
-          this.searchUserFinal(searchCrit,showDetailPers, affectation);
-        }else{
-          // Dans le cas d'une recherche d'une structure et ensuite d'un filtre sur le user, calculer filter_member_of_group
-          searchCrit.filter_member_of_group = "groups-employees." + group['businessCategory'] + "." + affectation;
-          this.searchUserFinal(searchCrit,showDetailPers, affectation);
-        }
-        });
-
-    }else if(diploma){
-      this.searchCritDipl.token=diploma;
-      this.getDiplomaLib(this.searchCritDipl).then((dip : Array<{}>) => {
-        // Récupérer le libellé du diplome
-        this.diplomaName=dip[0]['name'];
-        //Rechercher les étudiants d'un diplôme
-        searchCrit.filter_member_of_group = "diploma"+ "-" + diploma;
-        this.searchUserFinal(searchCrit,showDetailPers,'');
+    return this._getSearchPersons({ maxRows, CAS: authenticated }, filters).then((persons) => {
+      persons.forEach(p => {
+         p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
       });
-    }
-    else {
-      //Dans le cas d'une recherche simple (structure ou autre)sans filtre
-      this.searchUserFinal(searchCrit,showDetailPers,'');
-    }
-
+      this.resultSearch = persons;
+      this.setSearchVariousNames(filters, persons);
+      return persons;
+    });
   };
 
-  searchUserFinal = (searchCrit,showDetailPers, affectation) => {
-     this._getSearchPersons(searchCrit).then((persons : Array<Person>) => {
-     persons.forEach(p => {
-         p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
-     });
-     this.resultSearch = persons;
+  setSearchVariousNames = (filters : filters, persons: Array<Person>) => {
+      if (filters.affiliation) {
+        var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: filters.affiliation });
+        this.affiliationName=status[0]['translationTag'];
+      }
 
-     if (affectation) {
+     if (filters.affectation) {
+         this.getManager_(filters, persons).then(manager => {
+            this.manager = manager;
+         });
+        this.personService.getGroupFromStruct(filters.affectation).then((group) => {
+          // Récupérer le libellé de la structure
+          this.affectationName=group['name'];
+        });
+      } else if(filters.diploma){
+        this.personService.getDiplomaLib(filters.diploma).then((dip) => {
+          // Récupérer le libellé du diplome
+          this.diplomaName=dip[0]['name'];
+        });
+      }
+  };
+
+  getManager_ = (filters: filters, persons: Array<Person>) : angular.IPromise<string> => {
+      let affectation = filters.affectation;
        // Récupérer le chef de la structure recherché
        let pChef : angular.IPromise<Person> =null;
-       if (searchCrit.token||searchCrit.filter_eduPersonAffiliation) {
-         let search=angular.copy(searchCrit);
-         search.token = '';
-         search.filter_eduPersonAffiliation = '';
-         search.maxRows = 1;
-         pChef = this._getSearchPersons(search).then(persons => persons[0]);
+       if (filters.token||filters.affiliation) {
+         pChef = this._getSearchPersons({ token: '', maxRows: 1, CAS: false }, { affectation }).then(persons => persons[0]);
        } else {
          // optimisation: pas besoin d'appeler le web-service
          pChef = this.$q.resolve(persons[0]);
       }
-      pChef.then(chef => {
-          if (chef['supannRoleEntite-all']) this.manager=this.getManager(chef, affectation);
+      return pChef.then(chef => {
+          return chef['supannRoleEntite-all'] ? this.getManager(chef, affectation) : '';
       });
-     }
+  };
 
-     // Si click sur le détail d'une personne
-     if (showDetailPers) {
-        //Récupérer les diplomes de l'étudiant
-        var arrayEtuInscription=persons[0]['supannEtuInscription-all'];
-        if (arrayEtuInscription) {
-         var anneeInscMax = Math.max.apply(null, arrayEtuInscription.map(item => item.anneeinsc));
-         this.lastDiplomas = this.getLastDiplomas(arrayEtuInscription,anneeInscMax);
-        }
-        //Récupérer les translationTag des affiliations d'une personne
-        var ltAffiliation=persons[0]['eduPersonAffiliation'];
-        for (let it of ltAffiliation) {
-          var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: it });
-            if (status[0]){this.statusPers.push(status[0]['translationTag']);}
-        }
-      this.compute_breadcrumbTotal(persons[0]);
-     }
+  getLastDiplomas_ = (person: Person) => {
+    var arrayEtuInscription=person['supannEtuInscription-all'];
+    if (arrayEtuInscription) {
+       var anneeInscMax = Math.max.apply(null, arrayEtuInscription.map(item => item.anneeinsc));
+       return this.getLastDiplomas(arrayEtuInscription,anneeInscMax);
+    }
+  };
 
-   });
- }
-  getLastDiplomas=(ltEtuInscription, anneeMax) =>{
+  getLastDiplomas=(ltEtuInscription, anneeMax) => {
     var l1 = [];
     ltEtuInscription.forEach(p => {
         if (p.anneeinsc==anneeMax){
@@ -293,21 +231,40 @@ export class PersonController {
       return;
     }
     this.showDetailPers = true;
-    this.searchUser(id, 1,null,null,null, true);
+    this.showUsers({ token: id }, 1, true).then((persons) => persons[0]).then(person => {
+        //Récupérer les diplomes de l'étudiant
+        this.lastDiplomas = this.getLastDiplomas_(person);
+        this.statusPers = this.computeStatusPers(person);
+        // async!
+        this.breadcrumbTotal = this.compute_breadcrumbTotal(person);
+    });
   }
 
- compute_breadcrumbTotal = (item) => {
-   var supannEntiteAffectation = item['supannEntiteAffectation'];
+   computeStatusPers = (person: Person) => {
+       let statusPers = [];
+        //Récupérer les translationTag des affiliations d'une personne
+        var ltAffiliation=person.eduPersonAffiliation;
+        for (let it of ltAffiliation) {
+          var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: it });
+          if (status[0]){statusPers.push(status[0]['translationTag']);}
+        }
+        return statusPers;
+   };
+
+ // computes breadcrumbTotal, async !!
+ compute_breadcrumbTotal = (item: Person) => {
+   let breadcrumbTotal = [];
+   var supannEntiteAffectation = item.supannEntiteAffectation;
    // Si la personne possède plusieurs affecttations, afficher autant de fil d'ariane que d'affectation
    if (supannEntiteAffectation!=null){
-     let breadcrumbTotal = this.breadcrumbTotal = [];
      for (let it of supannEntiteAffectation) {
        this.searchCrumbUrl(it).then(breadcrumb =>
           breadcrumbTotal.push(breadcrumb)
        );
      }
    }
- }
+   return breadcrumbTotal;
+ };
 
   private objectValues = (o) => Object.keys(o).map(key => o[key]);
 
@@ -334,7 +291,7 @@ export class PersonController {
     if(this.$location.url()==='/Recherche' || this.$location.url()==='/Recherche?connected') this.$location.path("/");
   }
 
-  getManager=(person, affectation) => {
+  getManager=(person : Person, affectation: string) => {
     var supannRoleEntiteAll=person['supannRoleEntite-all'];
     for (let it of supannRoleEntiteAll) {
       if (it['structure']['key'] === affectation){
