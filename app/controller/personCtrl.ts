@@ -27,7 +27,7 @@ export class MainController {
 
             ];
 
-  constructor(private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
+  constructor(private personService: PersonService,private $scope: angular.IRootScopeService, private $location:angular.ILocationService) {
       this.authenticated = this.$location.search().connected;
       this.$scope = $scope;
       //console.log($location.search(), this.authenticated);
@@ -46,8 +46,7 @@ export class MainController {
   show=(item)=>{
     // recherche de personne
     if (item.category === 'users') {
-      this.$location.url("");
-      this.showUser(item.mail);
+        this.showUser(item.mail);
     } else {
       // recherche d'une structure
       var param=item.key.replace('structures-','');
@@ -70,21 +69,50 @@ export class MainController {
   }
 
   clearSearchCrit = () => {
+    //initialiser le champs de recherche a vide
     this.searchCrit.token = null;
     this.$scope.$broadcast('focusOut', 'mainSearch');
   }
 
-  set_wsparams = ({ affiliation, affectation, diploma }) => {
-      this.wsparams.filter_eduPersonAffiliation = affiliation;
-      this.wsparams.filter_member_of_group =
-             diploma ? "diploma-" + diploma :
-             affectation ? "structures-" + affectation :
-             '';
+  set_wsparams = ({ affiliation,affectation, diploma}) => {
+    var affectationGroup;
+    if (affectation){
+      /*this.getGroupFromStruct(affectation).then((group : {}) => {
+      if (affiliation === 'student' || affiliation === 'alum') {
+          this.set_wsparamsFinal(affiliation,affectation, diploma);
+      }else{
+        affectationGroup  = "groups-employees." + group['businessCategory'] + "." + affectation;
+        this.set_wsparamsFinal(affiliation,affectationGroup, diploma);
+      }
+    });*/
+      this.getGroupFromStruct(affectation).then((group : {}) => {
+      affectationGroup  = "groups-employees." + group['businessCategory'] + "." + affectation;
+      this.set_wsparamsFinal(affiliation,affectationGroup, diploma);
+      });
+    }
+    else this.set_wsparamsFinal(affiliation,affectation, diploma);
   };
+
+  set_wsparamsFinal = (affiliation,affectation, diploma) => {
+    this.wsparams.filter_eduPersonAffiliation = affiliation;
+    this.wsparams.filter_member_of_group =
+                 diploma ? "diploma-" + diploma :
+                 affectation ? affectation :
+                 '';
+  };
+
   goAffiliation = (param:string) => {
     this.$location.path("/Recherche");
     this.$location.search('affiliation', param);
   }
+
+  getGroupFromStruct = (affectation: string) => {
+    //debugger;
+    return this.personService.getGroup("structures-" + affectation).then(
+      (g) => g,
+      (errfunction) => undefined
+    );
+  };
 
 }
 
@@ -144,14 +172,6 @@ export class PersonController {
     );
   };
 
-  private getGroupFromStruct = (affectation: string) => {
-    //debugger;
-    return this.personService.getGroup("structures-" + affectation).then(
-      (g) => g,
-      (errfunction) => undefined
-    );
-  };
-
   private getDiplomaLib= (token: {}) => {
     //debugger;
     return this.personService.getDiplomaLib(token).then(
@@ -179,7 +199,7 @@ export class PersonController {
     }
 
     if (affectation) {
-        this.getGroupFromStruct(affectation).then((group : {}) => {
+        this.$scope.$parent['main'].getGroupFromStruct(affectation).then((group : {}) => {
         // Récupérer le libellé de la structure
         this.affectationName=group['name'];
         //Lors de la recherche par structure, le webservice searchUser n'affiche que les personnels,
