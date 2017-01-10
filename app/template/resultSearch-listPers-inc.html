@@ -18,7 +18,12 @@
               <div><a ng-href="mailto:{{person.mail}}" target="_blank" ng-click='p.noShowUser = true'>{{person.mail}}</a></div>
             </div>
             <div ng-if="person.supannListeRouge">
-              <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" ng-href=/#{{p.goConnectedUrl}}" ng-click="p.goConnected()"> Connexion </a>
+              <span ng-if="!main.authenticated">
+                <span class="text-warning">Cette personne est sur la liste rouge. Veuillez vous identifier pour pouvoir la visualiser</span><a target="_self" ng-href=/#{{p.goConnectedUrl}} ng-click="p.goConnected()"> Connexion </a>
+              </span>
+              <span ng-if="main.authenticated">
+                <span class="text-warning">Cette personne est sur la liste rouge.</span>
+              </span>
             </div>
         </td>
         <td class="col-md-6">
