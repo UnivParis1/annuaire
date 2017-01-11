@@ -4,7 +4,7 @@
       <div href="" class="setHover photoGallery">
           <div style="height: 180px;overflow: hidden;">
             <img  title="{{person.supannListeRouge ? '' : person.displayName}}"
-            ng-src="https://userphoto.univ-paris1.fr/?uid={{person.uid}}" class="img-responsive">
+            ng-src="{{person.photoURL}}" class="img-responsive">
           </div>
           <div style="text-align: center;padding: 9px;">
             <p ng-if="!person.supannListeRouge">{{person.displayName}}</p>

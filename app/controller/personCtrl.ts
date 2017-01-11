@@ -158,6 +158,7 @@ export class PersonController {
     return this._getSearchPersons({ maxRows, CAS: authenticated }, filters).then((persons) => {
       persons.forEach(p => {
          p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
+         p.photoURL = "https://userphoto.univ-paris1.fr/?uid=" + p.uid;
       });
       this.resultSearch = persons;
       this.setSearchVariousNames(filters, persons);
