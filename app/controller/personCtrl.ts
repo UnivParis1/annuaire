@@ -233,6 +233,8 @@ export class PersonController {
     }
     this.showDetailPers = true;
     this.showUsers({ token: id }, 1, true).then((persons) => persons[0]).then(person => {
+        //Supprimer les espaces de adresse postale qui peut ne contenir que des espaces à cause de  $ $ 
+        if (person['postalAddress']!=null)person['postalAddress']=person['postalAddress'].trim();
         //Récupérer les diplomes de l'étudiant
         this.lastDiplomas = this.getLastDiplomas_(person);
         this.statusPers = this.computeStatusPers(person);
