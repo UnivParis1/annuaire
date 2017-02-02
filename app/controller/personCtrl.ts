@@ -105,6 +105,7 @@ export class PersonController {
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   affectationName;
   affiliationName;
+  labeledURI;
   token;
   authenticated;
   manager;
@@ -179,6 +180,7 @@ export class PersonController {
         this.personService.getGroupFromStruct(filters.affectation).then((group) => {
           // Récupérer le libellé de la structure
           this.affectationName=group['name'];
+          this.labeledURI=group['labeledURI'];
         });
       } else if(filters.diploma){
         this.personService.getDiplomaLib(filters.diploma).then((dip) => {
@@ -233,7 +235,7 @@ export class PersonController {
     }
     this.showDetailPers = true;
     this.showUsers({ token: id }, 1, true).then((persons) => persons[0]).then(person => {
-        //Supprimer les espaces de adresse postale qui peut ne contenir que des espaces à cause de  $ $ 
+        //Supprimer les espaces de adresse postale qui peut ne contenir que des espaces à cause de  $ $
         if (person['postalAddress']!=null)person['postalAddress']=person['postalAddress'].trim();
         //Récupérer les diplomes de l'étudiant
         this.lastDiplomas = this.getLastDiplomas_(person);
