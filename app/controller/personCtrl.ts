@@ -19,6 +19,7 @@ export class MainController {
   authenticated=true;
   showTrombi=false;
   wsparams : wsparams;
+  selectedRow = null;
   listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
               {id: 'staff', translationTag: "STATUS_STAFF"},
@@ -79,7 +80,8 @@ export class MainController {
     this.personService.set_wsparams(this.wsparams, filters);
   };
 
-  goAffiliation = (param:string) => {
+  goAffiliation = (param:string,index) => {
+    this.selectedRow = index;
     this.$location.path("/Recherche");
     this.$location.search('affiliation', param);
   }
