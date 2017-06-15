@@ -19,7 +19,7 @@ export class MainController {
   authenticated=true;
   showTrombi=false;
   wsparams : wsparams;
-  selectedRow = null;
+  affiliation : string;
   listStatus=[{id: 'teacher', translationTag: "STATUS_TEACHER"},
               {id: 'researcher', translationTag: "STATUS_RESEARCHER"},
               {id: 'staff', translationTag: "STATUS_STAFF"},
@@ -77,11 +77,11 @@ export class MainController {
   }
 
   set_autocomplete_wsparams = (filters) => {
+    this.affiliation = filters.affiliation;
     this.personService.set_wsparams(this.wsparams, filters);
   };
 
-  goAffiliation = (param:string,index) => {
-    this.selectedRow = index;
+  goAffiliation = (param:string) => {
     this.$location.path("/Recherche");
     this.$location.search('affiliation', param);
   }
