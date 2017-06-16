@@ -16,13 +16,6 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   }
 }
 
-.panelshadow {
-  margin-top: -20px;
-  margin-bottom: 10px;
-  background-color: #fff;
-  box-shadow:  0 5px 0 rgb(33, 137, 198);
-  padding-bottom: 4px;
-}
 .alt {
   background-color:#eee;
 }
@@ -44,10 +37,6 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   cursor: pointer;
 }
 
-.setpadding{
-	padding-left:152px;
-  left:0;
-}
 .imgCicle{
   position: relative;
   width: 130px;
