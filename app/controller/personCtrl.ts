@@ -86,6 +86,13 @@ export class MainController {
     this.$location.search('affiliation', param);
   }
 
+  goDeletedFilter=(param)=>{
+    this.$location.search(param,null);
+    if (param==='token') this.$location.path("/Recherche");
+    //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
+    if(this.$location.url()==='/Recherche' || this.$location.url()==='/Recherche?connected') this.$location.path("/");
+  }
+
 }
 
 export class WelcomeController {
@@ -291,12 +298,6 @@ export class PersonController {
     location.reload();
   };
 
-  goDeletedFilter=(param)=>{
-    this.$location.search(param,null);
-    if (param==='token') this.$location.path("/Recherche");
-    //Ne pas lancer la recherche (afficher les 5 premieres personnes par défaut) lorsque tous les filtres ont été supprimés
-    if(this.$location.url()==='/Recherche' || this.$location.url()==='/Recherche?connected') this.$location.path("/");
-  }
 
   getManager=(person : Person, affectation: string) => {
     var supannRoleEntiteAll=person['supannRoleEntite-all'];

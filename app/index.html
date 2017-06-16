@@ -26,7 +26,7 @@
           <div class="col-md-12" >
               <ul class="nav nav-pills menu-top" role="tablist">
                <div class="radio-inline" ng-repeat="v in main.listStatus">
-                 <li ><a target="_self" ng-class="{'selected': v.id == main.affiliation}" ng-model="c.searchCrit.filter_eduPersonAffiliation" ng-click="main.goAffiliation(v.id)">{{v.size}}{{v.translationTag|translate}} <span class="badge"><span class='glyphicon glyphicon-user'></span></span></a>
+                 <li ><a target="_self" ng-class="{'selected': v.id == main.affiliation}" ng-model="c.searchCrit.filter_eduPersonAffiliation" ng-click="main.goAffiliation(v.id)">{{v.size}}{{v.translationTag|translate}}</a><span class="badge"><span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('affiliation')"></span></span></span></li>
                </div>
              </ul>
             </div>

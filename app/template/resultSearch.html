@@ -4,18 +4,18 @@
         <div class="bg-info" style="padding: 6px">
           <div class="row">
             <div class="col-md-6 text-muted" ng-if="p.affectationName">
-               <div>{{p.affectationName}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affectation')"></span></div>
+               <div>{{p.affectationName}} <span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('affectation')"></span></div>
                <div ng-if="p.manager.role" >{{p.manager.role}} : <a href="" ng-click="main.showUser(p.manager.mail)">{{p.manager.displayName}}</a></div>
                <div ng-if="p.labeledURI" >Site web : <a ng-href="{{p.labeledURI}}" target="_blank">{{p.labeledURI}}</a></div>
             </div>
             <div class="col-md-6 text-muted" ng-if="p.diplomaName">
-              <div>{{p.diplomaName}}<span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('diploma')"></span></div>
+              <div>{{p.diplomaName}}<span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('diploma')"></span></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="p.token">
-                <div >{{p.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('token')"></span></div>
+                <div >{{p.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('token')"></span></div>
             </div>
             <div class="col-md-3 text-muted" ng-if="p.affiliationName">
-              <div>{{p.affiliationName|translate}} <span class='glyphicon glyphicon-remove setHover' ng-click="p.goDeletedFilter('affiliation')"></span></div>
+              <div>{{p.affiliationName|translate}} <span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('affiliation')"></span></div>
             </div>
           </div>
         </div>
