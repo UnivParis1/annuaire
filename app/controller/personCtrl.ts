@@ -113,7 +113,6 @@ export class PersonController {
   noShowUser;//Flag permettant de savoir s'il y a eu un clic sur mailto
   showDetailPers; //flag permettant de savoir s'il y eu une visualisation(clic) sur le détail d'une personne
   affectationName;
-  affiliationName;
   labeledURI;
   token;
   authenticated;
@@ -177,11 +176,6 @@ export class PersonController {
   };
 
   setSearchVariousNames = (filters : filters, persons: Array<Person>) => {
-      if (filters.affiliation) {
-        var status = this.$filter('filter')(this.$scope.$parent['main'].listStatus, { id: filters.affiliation });
-        this.affiliationName=status[0]['translationTag'];
-      }
-
      if (filters.affectation) {
          this.getManager_(filters, persons).then(manager => {
             this.manager = manager;

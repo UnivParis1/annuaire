@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <div class="row"  >
+    <div class="row" ng-if="p.affectationName||p.diplomaName||p.token" >
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px">
           <div class="row">
@@ -13,9 +13,6 @@
             </div>
             <div class="col-md-3 text-muted" ng-if="p.token">
                 <div >{{p.token}} <span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('token')"></span></div>
-            </div>
-            <div class="col-md-3 text-muted" ng-if="p.affiliationName">
-              <div>{{p.affiliationName|translate}} <span class='glyphicon glyphicon-remove setHover' ng-click="main.goDeletedFilter('affiliation')"></span></div>
             </div>
           </div>
         </div>
