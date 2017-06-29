@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Users from '@/components/Users'
+import User from '../components/User'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    }
+    { path: '/Show/:userId', 
+      component: User, 
+      props: (route) => ({ userId: route.params.userId, connected: route.query.connected }),
+    },
+    { path: '/', 
+      component: Users,
+      props: (route) => ({ query: route.query }),
+    },   
   ]
 })

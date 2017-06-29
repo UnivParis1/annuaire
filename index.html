@@ -2,10 +2,31 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0">
     <title>annuaire</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   </head>
   <body>
+    <!--Intégrer le bandeau ENT -->
+    <script type="text/javascript">
+      var connected = location.href.match(/connected/);
+      if (connected)
+        window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true };
+      else
+        window.bandeau_anonyme = { title: "Annuaire public de l'université Paris 1" };
+    </script>
+    <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3" style="text-align:center">
+              <script src="https://ent.univ-paris1.fr/assets/bandeau-anonyme/loader.js"></script>
+          </div>
+        </div>
+    </div>
+
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="https://wsgroups.univ-paris1.fr//web-widget/autocompleteUser-resources.html.js"></script>
   </body>
 </html>
