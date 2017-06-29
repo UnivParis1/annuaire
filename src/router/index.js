@@ -7,8 +7,8 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path: '/Show/:userId', 
-      component: User, 
+    { path: '/:userId',
+      component: User,
       props: (route) => ({ userId: route.params.userId, connected: route.query.connected }),
     },
     { path: '/', 

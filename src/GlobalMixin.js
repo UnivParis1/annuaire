@@ -5,7 +5,7 @@ export default {
     withUser(id) {
         id = id.replace(new RegExp("\\.?" + config.domain + "$"), '');
         let query = this.$route.query.connected ? { connected: 1 } : {};
-        return { path: "/Show/" + id, query };
+        return { path: "/" + id, query };
     },
     withParam(name, value) {
         let query = {...this.$route.query}
