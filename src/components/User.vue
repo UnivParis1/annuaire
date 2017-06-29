@@ -212,7 +212,8 @@ export default {
   },
   methods: {
       updateAsyncData() {
-        WsService.searchPersons({ token: this.userId, maxRows: 1, CAS: this.connected }).then(persons => persons[0]).then(person => {
+        let userId = this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain);
+        WsService.searchPersons({ token: userId, maxRows: 1, CAS: this.connected }).then(persons => persons[0]).then(person => {
             this.error = !person && "Utilisateur inconnu";
             if (this.error) return;
             if (person.postalAddress) person.postalAddress = person.postalAddress.trim();

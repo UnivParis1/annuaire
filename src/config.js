@@ -1,4 +1,5 @@
 export default {
+    domain: 'univ-paris1.fr',
     wsgroupsURL: "https://wsgroups.univ-paris1.fr",
     photoURL: (person) => "https://userphoto.univ-paris1.fr/?uid=" + person.uid + "&penpalAffiliation=loggedUser",
 
