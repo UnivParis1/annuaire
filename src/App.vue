@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">&nbsp;</div>
         <div class="col-md-6 col-md-offset-3">
-            <form @submit="showUsers(search_token)">
+            <form @submit.prevent="showUsers(search_token)">
             <div class="form-group has-feedback">
                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                 <autocompleteUserAndGroup
