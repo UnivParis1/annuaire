@@ -155,14 +155,6 @@ export default {
             }
         });
     },
-
-    mayShowUser(person) {
-        if (this.noShowUser) {
-            this.noShowUser = false;
-        } else {
-            this.$router.push(this.withUser(person.mail));
-        }
-    },
   },
 }
 </script>
