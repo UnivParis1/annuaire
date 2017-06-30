@@ -11,6 +11,9 @@
               <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam('affectation', role.structure.key)" tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
               </div>
+              <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
+                <div v-for="emplType in person.employeeType">{{emplType}}</div>
+              </div>
               <div v-for="desc in person.description">{{desc}}</div>
               <div v-for="info in person.info">{{info}}</div>
             </div>
