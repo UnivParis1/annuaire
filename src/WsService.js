@@ -25,7 +25,7 @@ let wsgroupsJsonp = (name, params) => (
 );
 
 export let getGroupFromStruct = (affectation) => (
-    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation })
+    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true })
 );
 
 export let getRoleGenerique = (role) => (
@@ -39,6 +39,10 @@ export let searchPersons = (wsparams) => (
 //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
 export let parentGroups = (pkey) => (
     wsgroupsJsonp("/getSuperGroups", pkey)
+);
+
+export let getSubGroups = (wsparams) => (
+    wsgroupsJsonp("/getSubGroups", wsparams)
 );
 
 export let getDiploma = (diploma) => (

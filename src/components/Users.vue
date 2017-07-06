@@ -4,16 +4,19 @@
 <div class="col-md-12">
     <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
 
-    <div v-if="persons" class="row" style="text-align:left;margin-bottom: 5px">
+    <div v-if="persons || query.format === 'chart'" class="row" style="text-align:left;margin-bottom: 5px">
         <div class="col-md-12" id="menus">
             <div class="bg-info" style="padding: 6px">
-            {{persons.length}} résultat(s)
+                <span v-if="persons">{{persons.length}} résultat(s)</span>
             <span class="btn-group pull-right nav">
-              <router-link class="btn btn-primary" :class="{ youarehere: !query.trombi }" title="Afficher la liste" :to="withParam('trombi', undefined)">
+              <router-link class="btn btn-primary" :class="{ youarehere: !query.format }" title="Afficher la liste" :to="withParam('format', undefined)">
                   <span class='glyphicon glyphicon-th-list'></span> Liste
               </router-link>
-              <router-link class="btn btn-primary" :class="{ youarehere: query.trombi }" title="Afficher le trombinoscope" :to="withParam('trombi', true)" >
-                  <span class='glyphicon glyphicon-user'></span><span class='glyphicon glyphicon-user'></span> Trombinoscope
+              <router-link class="btn btn-primary" :class="{ youarehere: query.format === 'trombi' }" title="Afficher le trombinoscope" :to="withParam('format', 'trombi')" >
+                  <span class='glyphicon glyphicon-user'></span> Trombinoscope
+              </router-link>
+              <router-link class="btn btn-primary" :class="{ youarehere: query.format === 'chart' }" title="Afficher l'organigramme" :to="withParam('format', 'chart')" >
+                  <span class='glyphicon glyphicon-indent-left'></span> Organigramme
               </router-link>
             </span>
            </div>
@@ -34,17 +37,16 @@
     </div>
 </div>
 
-<div v-if="noFilters">
+<div v-if="noFilters || query.format === 'chart'">
 </div>
 <div v-else-if="!persons" class="container">
   <div class="row"><div class="col-md-12">   
     Veuillez patienter...
   </div></div>
 </div>
-<div v-if="query.trombi">
-    <div v-for="person in persons">
-      <router-link class="col-md-2" :to="withUser(person.mail)" :tag="person.supannListeRouge ? 'div' : 'a'">
-        <div class="photoGallery">
+<div v-if="query.format === 'trombi'">
+    <span v-for="person in persons">
+      <router-link :to="withUser(person.mail)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
             <div class="photo">
                 <img :title="person.supannListeRouge ? '' : person.displayName"
                     :src="person.photoURL" class="img-responsive">
@@ -52,9 +54,11 @@
             <div class="text">
                 {{person.supannListeRouge ? "Personne sur liste rouge" : person.displayName}}
             </div>
-        </div>
       </router-link>
-    </div>
+    </span>
+</div>
+<div v-else-if="query.format === 'chart'" style="clear: both">
+    <OrgChart :selected="query.affectation" :connected="query.connected"></OrgChart>
 </div>
 <div class="col-md-12" v-else>
   <table class="table table-striped" >
@@ -70,6 +74,7 @@
 <script>
 import * as WsService from "../WsService";
 import UserInTable from './UserInTable';
+import OrgChart from './OrgChart';
 import Filters from './Filters';
 import config from '../config';
 
@@ -116,7 +121,7 @@ function getManagerRole(person, affectation) {
 
 export default {
   props: ['query'],
-  components: { UserInTable, Filters },
+  components: { UserInTable, Filters, OrgChart },
   data() {
       return {
         affectation_manager: undefined, // person
@@ -144,7 +149,7 @@ export default {
         this.persons = undefined;
         this.affectation_manager = undefined;
 
-        if (this.noFilters) return;
+        if (this.noFilters || this.query.format === 'chart') return;
 
         _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
             this.persons = persons;
@@ -196,6 +201,8 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   width: 144px;
   height: 240px;
   overflow: hidden;
+  display: inline-block;
+  margin: 0 12px;
 }
 
 .photoGallery .photo {
