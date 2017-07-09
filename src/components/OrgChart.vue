@@ -50,7 +50,7 @@
                <div class="verticalCenter"></div>
                <span class="bloc" :class="classes(e)">
                  <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
-                 <members :roles="e.roles"  :members="e.members"></members>
+                 <members :affectation="e.key" :roles="e.roles" :query="query"></members>
                </span>
                <div class="vertical" v-if="e.subGroups">
                  <ul>
@@ -60,7 +60,7 @@
                        <div class="horizMiddle"></div>            
                        <span class="bloc" :class="classes(e)" :title="e.key">
                            <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
-                           <members :roles="e.roles" :members="e.members"></members>
+                           <members :affectation="e.key" :roles="e.roles" :query="query"></members>
                        </span>
                    </li>
                  </ul>
@@ -73,7 +73,7 @@
          <span v-if="e2.roles && e2.roles.length || e2.members && e2.members.length">
            Personnes attachées directement à {{getName(e2)}} :
          </span>
-         <members :roles="e2.roles" :members="e2.members"></members>
+         <members :affectation="e2.key" :roles="e2.roles" :query="query"></members>
    </div>
   </div>
   </div>
@@ -99,7 +99,7 @@ function groupBy(l, by) {
 }
 
 const members = Vue.extend({
-    props: ['members', 'roles'],
+    props: ['affectation', 'roles', 'query'],
     template: `
   <div class="members" v-if="members && members.length || roles.length">
     <span v-for="role in rolesGrouped">
@@ -146,6 +146,18 @@ const members = Vue.extend({
             }
             return r;
         }
+    },
+    asyncComputed: {
+      members() {
+         if (!this.query.connected) {
+             return [];
+         }
+         return WsService.searchPersons({
+             CAS: true,
+             filter_eduPersonPrimaryAffiliation: this.query.affiliation || 'teacher|researcher|staff',
+             filter_supannEntiteAffectation: this.affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
+         });
+      },
     },
     methods: {
         translateAff(aff, plural) {
@@ -217,7 +229,7 @@ let withSubGroups = (e) => (
 
 export default {
    components: { members },
-   props: ['selected', 'connected'],
+   props: ['selected', 'query'],
    computed: {
      selectedList() { return this.e1 && this.selected ? get_selectedList(this.e1, this.selected) : [] },
      e2() { return this.selectedList[0] || {} },
@@ -233,35 +245,12 @@ export default {
         return withSubGroups({ name: "Président de l'université", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] });
     },      
    },
-   watch: {
-     l3: 'getMembers',
-     l4: 'getMembersAll',
-   },
    methods: {
      getName(e) {
        return e.name.replace(/^[\w- ]*?\s[:–-] /i, '');
      },
      classes(e) {
        return ['depth' + e.key.length, e.businessCategory, { leaf: !e.subGroups }];
-     },
-     getMembers(l) {
-       if (!l || !this.connected) return;
-       l.forEach(e => {
-         if (e.members) return; // already done
-         let structure = e.key
-         
-         WsService.searchPersons({
-             CAS: true,
-             filter_eduPersonAffiliation: 'teacher|researcher|staff',
-             filter_supannEntiteAffectation: structure, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
-         }).then(users => e.members = users);
-       });
-     },
-     getMembersAll(l) {
-         if (l) {
-             this.getMembers(l);
-             l.forEach(e => this.getMembers(e.subGroups));
-         }
      },
    },
 };
