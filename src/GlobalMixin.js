@@ -8,16 +8,25 @@ export default {
         return { path: "/" + id, query };
     },
     withParam(name, value) {
+        return this.withParams({ [name]: value });
+    },
+    withParams(params) {
         let query = {...this.$route.query}
 
-        // we can't have both
-        if (name === "diploma") delete query.affectation;
-        if (name === "affectation") delete query.diploma;
+        for (let name in params) {
+            let value = params[name];
 
-        if (value) {
-            query[name] = value;
-        } else {
-            delete query[name];
+            // we can't have both
+            if (name === "affectation" || name === "diploma") {
+                delete query.affectation;
+                delete query.diploma;
+            }
+
+            if (value) {
+                query[name] = value;
+            } else {
+                delete query[name];
+            }
         }
         return { path: "/", query };
     },
