@@ -6,12 +6,12 @@
     <li>
       <span class="bloc">{{e1.name}}</span>
       <ul>
-          <li v-for="(e, index) in l2" :key="e.key">
+          <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
               <div class="verticalCenter"></div>
               <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">{{getName(e)}}</router-link>
-              <div class="horizLeftBelow" :class="{ withBorder: index === e2_index }" v-if="index <= e2_index"></div>
+              <div class="horizLeftBelow" v-if="index <= e2_index"></div>
               <div class="horizRightBelow" v-if="index < e2_index"></div>              
           </li>        
       </ul>
@@ -26,16 +26,20 @@
      <ul>
        <li class="withBorder">
         </li>
-        <li v-for="(e, index) in l3">
+        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
             <div class="horizMiddle"></div>            
-            <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">
-              <img class="photo" :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
-              <span class="name">{{getName(e)}}</span>
-              <members :roles="e.roles" :members="e.members" v-if="index === e3_index"></members>
-            </router-link>
-            <div class="verticalTopRight" :class="{ withBorder: index === e3_index }" v-if="l4 && index <= e3_index"></div>
+            <span class="bloc" :class="classes(e)">
+                <div class="imgCircle">
+                   <img class="Xphoto" :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
+                </div>
+              <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
+                <span class="name">{{getName(e)}}</span>
+              </router-link>
+              <members :affectation="!e4.key && e.key" :roles="e.roles" :query="query" v-if="e === e3"></members>
+            </span>
+            <div class="verticalTopRight" v-if="l4 && index <= e3_index"></div>
             <div class="verticalBottomRight" v-if="l4 && index < e3_index"></div>
         </li>        
     </ul>
@@ -44,23 +48,23 @@
    <div class="tree thirdPane" v-if="l4">
        <div style="flex-grow: 1; min-width: 20px; border-top: 1px solid #143e6e" ></div>
        <ul>
-           <li v-for="e in l4">
+           <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
                <div class="horizLeft"></div>
                <div class="horizRight"></div>
                <div class="verticalCenter"></div>
                <span class="bloc" :class="classes(e)">
                  <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
-                 <members :affectation="e.key" :roles="e.roles" :query="query"></members>
+                 <members :affectation="!e5.key && e.key" :roles="e.roles" :query="query" v-if="e === e4 || displayAll"></members>
                </span>
-               <div class="vertical" v-if="e.subGroups">
+               <div class="vertical" v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
                  <ul>
-                   <li v-for="e in e.subGroups">
+                   <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
                        <div class="horizMiddle"></div>            
                        <span class="bloc" :class="classes(e)" :title="e.key">
                            <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
-                           <members :affectation="e.key" :roles="e.roles" :query="query"></members>
+                           <members :affectation="e.key" :roles="e.roles" :query="query" v-if="e === e5 || displayAll"></members>
                        </span>
                    </li>
                  </ul>
@@ -73,7 +77,7 @@
          <span v-if="e2.roles && e2.roles.length || e2.members && e2.members.length">
            Personnes attachées directement à {{getName(e2)}} :
          </span>
-         <members :affectation="e2.key" :roles="e2.roles" :query="query"></members>
+         <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query"></members>
    </div>
   </div>
   </div>
@@ -149,7 +153,7 @@ const members = Vue.extend({
     },
     asyncComputed: {
       members() {
-         if (!this.query.connected) {
+         if (!this.query.connected || !this.affectation) {
              return [];
          }
          return WsService.searchPersons({
@@ -221,24 +225,31 @@ let withSubGroups = (e) => (
     getCodes(e1);
     
     let e = code2tree[selected];
-    while (e.depth >= 4) {
+    let r = [];
+    while (e.depth >= 2) {
+        r.unshift(e);
         e = code2tree[e.parentKey];
     }
-    return e.depth === 3 ? [ code2tree[e.parentKey], e ] : [ e ];
+    return r;
 }
 
 export default {
    components: { members },
-   props: ['selected', 'query'],
+   props: ['selected', 'query', 'displayAll'],
    computed: {
+     nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },
      selectedList() { return this.e1 && this.selected ? get_selectedList(this.e1, this.selected) : [] },
      e2() { return this.selectedList[0] || {} },
      e3() { return this.selectedList[1] || {} },
+     e4() { return this.selectedList[2] || {} },
+     e5() { return this.selectedList[3] || {} },
      e2_index() { return this.l2.indexOf(this.e2) },
      e3_index() { return this.l3.indexOf(this.e3) },
+     e4_index() { return this.l4.indexOf(this.e4) },
      l2() { return this.e1.subGroups.filter(e => e.businessCategory !== "council") },
      l3() { return this.e2.subGroups },
-     l4() { return this.e3.subGroups },
+     l4() { return (this.displayAll || this.e4.key) && this.e3.subGroups },
+     l5() { return (this.displayAll || this.e5.key) && this.e4.subGroups },
    },
    asyncComputed: {
     e1() {     
@@ -316,6 +327,24 @@ img.photo {
      display: flex;
  }
 
+ li.nonSelectedElt {
+     font-size: 30%;
+     text-align: initial;
+ }
+li.nonSelectedElt .imgCircle {
+     display: none;
+ }
+
+ li.nonSelectedElt .bloc {
+     opacity: 0.5;
+     overflow: hidden;
+ }
+ .tree li.nonSelectedElt .bloc {
+     min-height: 0;
+     width: 15px;
+     padding: 5px 2px;
+ }
+ 
  .tree li > .verticalCenter {
      position: absolute; top: 0; left: 1px; right: 0;
      height: 21px;
@@ -350,7 +379,7 @@ img.photo {
  .tree li > .horizRight {
    border-left: 1px solid #143e6e;
  }
- .tree li > .horizLeftBelow.withBorder {
+ .tree li.selectedElt > .horizLeftBelow {
      border-right: 1px solid #143e6e;
      border-radius: 0 0 5px 0;
  }
@@ -393,10 +422,6 @@ img.photo {
  }
 
  
- .vertical {
-     float: left;
- }
-
  .vertical > ul > li.withBorder {
      border-left: 1px solid #143e6e;
      border-top: 1px solid #143e6e;
@@ -408,12 +433,20 @@ img.photo {
  }
 
  .vertical li {
-     padding-left: 20px;
-     padding-right: 20px;
+     padding: 0px 20px 8px 20px;
  }
  .vertical li .bloc {
+   margin-top: 8px;
    width: 15em;
    padding: 0;
+ }
+ .vertical li.nonSelectedElt {
+     padding-top: 8px;
+ }
+ .vertical li.nonSelectedElt .bloc {
+   margin-top: 0;
+   min-height: initial;
+   height: 8px;
  }
 
  .vertical .name {
@@ -454,7 +487,7 @@ img.photo {
  }
 
  .vertical li > .verticalTop,
- .vertical li > .verticalTopRight.withBorder {
+ .vertical li.selectedElt > .verticalTopRight {
      border-bottom: 1px solid #143e6e;
  }
 
@@ -490,6 +523,21 @@ img.photo {
  .thirdPane li {
    min-width: 10em;
  }
+ .thirdPane li.nonSelectedElt {
+   min-width: initial;
+ }
+
+ .imgCircle {
+    width: 26px;
+    height: 26px;
+    margin: -13px 0 0 -13px;
+    display: block;
+    float: left;
+ }
+ .imgCircle img {
+     margin-top: -4px;
+ }
+
 </style>
 
 <style>
