@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">&nbsp;</div>
@@ -33,10 +34,9 @@
             </ul>
         </div>
     </div>
-    <div class="row" >
-        <router-view></router-view>
-    </div>
-   </div>
+  </div>
+  <router-view></router-view>
+</div>
 </template>
 
 <script>

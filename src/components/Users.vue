@@ -1,7 +1,6 @@
 <template>
 <div>
-
-<div class="col-md-12">
+<div class="container">
     <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
 
     <div v-if="persons || query.format === 'chart'" class="row" style="text-align:left;margin-bottom: 5px">
@@ -44,7 +43,8 @@
     Veuillez patienter...
   </div></div>
 </div>
-<div v-if="query.format === 'trombi'">
+<div v-if="query.format === 'trombi'" class="container">
+  <div class="row"><div class="col-md-12">
     <span v-for="person in persons">
       <router-link :to="withUser(person.mail)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
             <div class="photo">
@@ -56,16 +56,21 @@
             </div>
       </router-link>
     </span>
+  </div></div>
 </div>
-<div v-else-if="query.format === 'chart'" style="clear: both">
-    <OrgChart :selected="query.affectation" :connected="query.connected"></OrgChart>
+<div v-else-if="query.format === 'chart'" class="container-fluid">
+  <div class="row"><div class="col-md-12">
+    <OrgChart :selected="query.affectation" :query="query"></OrgChart>
+  </div></div>
 </div>
-<div class="col-md-12" v-else>
+<div v-else class="container">
+ <div class="row"><div class="col-md-12">
   <table class="table table-striped" >
       <tbody>
         <UserInTable :person="person" :query="query" v-for="person in persons" :key="person.mail"></UserInTable>
       </tbody>
   </table>
+ </div></div>
 </div>
 
 </div>

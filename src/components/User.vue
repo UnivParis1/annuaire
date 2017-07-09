@@ -1,5 +1,6 @@
 <template>
-<div>
+<div class="container">
+<div class="row">
 <div v-if="error">
     {{error}}
 </div>
@@ -141,6 +142,7 @@
     </div>
     </div>
   </div>
+</div>
 </div>
 </div>
 </template>
