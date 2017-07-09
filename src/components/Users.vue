@@ -33,6 +33,12 @@
             </span>
           </span>
         </div>
+        <div class="col-md-12" v-if="query.format === 'chart' && !query.connected" >
+          <span class="text-success">
+              Seul les responsables sont affichés, pour voir le personnel,
+              <router-link :to="withParam('connected', true)">veuillez vous identifier.</router-link>
+          </span>
+        </div>
     </div>
 </div>
 
