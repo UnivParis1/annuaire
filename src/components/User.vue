@@ -56,6 +56,7 @@
                 </span>
               </span>
             </div>
+            <router-link :to="withParams({ format: 'chart', affectations: person.supannEntiteAffectation.join(',') })">Voir dans l'organigramme</router-link>            
           </div>
         </div>
       </div>

@@ -65,9 +65,16 @@
   </div></div>
 </div>
 <div v-else-if="query.format === 'chart'" class="container-fluid">
-  <div class="row"><div class="col-md-12">
-    <OrgChart :selected="query.affectation" :query="query"></OrgChart>
-  </div></div>
+  <div class="row">
+    <div v-if="query.affectation">
+        <OrgChart :selected="query.affectation" :query="query" :displayAll="true" class="col-md-12"></OrgChart>
+    </div>
+    <div v-else>
+        <div v-for="aff in affectations">
+          <OrgChart :selected="aff" :query="query" :displayAll="false" :class="['col-md-' + (12/affectations.length)]"></OrgChart>
+        </div>
+    </div>
+  </div>
 </div>
 <div v-else class="container">
  <div class="row"><div class="col-md-12">
@@ -147,6 +154,9 @@ export default {
       },
       maxRows() {
           return this.query.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
+      },
+      affectations() {
+          return this.query.affectations && this.query.affectations.split(',');
       },
   },
   watch: {

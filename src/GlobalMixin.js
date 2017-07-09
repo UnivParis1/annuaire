@@ -15,10 +15,11 @@ export default {
 
         for (let name in params) {
             let value = params[name];
-
+            
             // we can't have both
-            if (name === "affectation" || name === "diploma") {
+            if (name === "affectation" || name === "affectations" || name === "diploma") {
                 delete query.affectation;
+                delete query.affectations;
                 delete query.diploma;
             }
 
