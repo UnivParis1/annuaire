@@ -36,8 +36,10 @@
 
 <div v-if="noFilters">
 </div>
-<div v-else-if="!persons">
+<div v-else-if="!persons" class="container">
+  <div class="row"><div class="col-md-12">   
     Veuillez patienter...
+  </div></div>
 </div>
 <div v-if="query.trombi">
     <div v-for="person in persons">
