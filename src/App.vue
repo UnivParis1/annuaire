@@ -18,7 +18,7 @@
     </div>
 
     <div class="row" style="margin-bottom: 25px">
-        <div class="col-md-12" >
+        <div class="col-md-12 text-center" >
             <ul class="nav nav-pills menu-top" role="tablist">
             <div class="radio-inline" v-for="aff in usefulAffiliations">
                 <li :class="aff == query.affiliation ? 'selected' : 'deselected'">
