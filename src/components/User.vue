@@ -1,18 +1,22 @@
 <template>
-<div class="container">
-<div class="row">
+<div>
 <div v-if="error">
     {{error}}
 </div>
-<div v-if="!person">
-    <div class="col-md-12">Veuillez patienter</div>
+<div v-if="!person" class="container">
+   <div class="row"><div class="col-md-12">
+       Veuillez patienter
+    </div></div>
 </div>
-<div v-else-if="format === 'chart'">
-    <div v-for="aff in person.supannEntiteAffectation">
-        <OrgChart :selected="aff" :query="{ connected: connected, affectation: aff, token: person.mail }" :displayAll="false" :class="['col-md-' + (12/person.supannEntiteAffectation.length)]"></OrgChart>
+<div v-else-if="format === 'chart'" class="container-fluid">
+    <div class="row"><div class="col-md-12" style="margin-top: 2em; display: flex; flex-wrap: wrap; justify-content: center">
+     <div v-for="aff in person.supannEntiteAffectation">
+        <OrgChart :selected="aff" :query="{ connected: connected, affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
+     </div></div>
     </div>
 </div>
-<div class="col-md-12" v-else>
+<div class="container" v-else>
+ <div class="row"><div class="col-md-12">
   <div class="alt">
     <div class="row">
       <div class="col-md-2">
@@ -150,7 +154,7 @@
     </div>
     </div>
   </div>
-</div>
+ </div></div>
 </div>
 </div>
 </template>
