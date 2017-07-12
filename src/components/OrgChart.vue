@@ -13,7 +13,11 @@
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
               <div class="verticalCenter"></div>
-              <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">{{getName(e)}}</router-link>
+              <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
+                <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">{{getName(e)}}
+                  <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query" v-if="e === e2 && !e3.key"></members>
+                </router-link>
+              </span>
               <div class="horizLeftBelow" v-if="index <= e2_index"></div>
               <div class="horizRightBelow" v-if="index < e2_index"></div>              
           </li>        
@@ -75,12 +79,6 @@
            </li>
        </ul>
        <div style="flex-grow: 1" ></div>
-   </div>
-   <div v-else style="margin: 3em">
-         <span v-if="e2.roles && e2.roles.length || e2.members && e2.members.length">
-           Personnes attachées directement à {{getName(e2)}} :
-         </span>
-         <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query"></members>
    </div>
   </div>
   </div>
@@ -283,6 +281,10 @@ export default {
    list-style-type: none;
    position: relative;
    padding: 5px;
+ }
+
+ .sameBlocSize {
+     display: flex;
  }
 
  li .bloc {
@@ -539,8 +541,9 @@ li.nonSelectedElt .imgCircle {
 </style>
 
 <style>
+ .mainTree .members_other,
  .secondPane > .vertical .members_other {
-   max-height: 5em;
+   max-height: 10em;
    overflow-y: auto;
  }
   .members {
