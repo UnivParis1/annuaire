@@ -12,6 +12,7 @@ export default {
     },
     withParams(params) {
         let query = {...this.$route.query}
+        let path = this.$route.path;
 
         for (let name in params) {
             let value = params[name];
@@ -21,6 +22,9 @@ export default {
                 delete query.affectation;
                 delete query.diploma;
             }
+            if (name !== 'format') {
+                path = "/";
+            }
 
             if (value) {
                 query[name] = value;
@@ -28,7 +32,7 @@ export default {
                 delete query[name];
             }
         }
-        return { path: "/", query };
+        return { path, query };
     },
   },
 }
