@@ -153,11 +153,12 @@ const members = Vue.extend({
     },
     asyncComputed: {
       members() {
-         if (!this.query.connected || !this.affectation) {
+         if (!this.query.connected && !this.query.token || !this.affectation) {
              return [];
          }
          return WsService.searchPersons({
-             CAS: true,
+             CAS: this.query.connected,
+             token: this.query.token,
              filter_eduPersonPrimaryAffiliation: this.query.affiliation || 'teacher|researcher|staff',
              filter_supannEntiteAffectation: this.affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
          });
