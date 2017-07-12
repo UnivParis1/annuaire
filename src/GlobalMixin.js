@@ -17,9 +17,8 @@ export default {
             let value = params[name];
             
             // we can't have both
-            if (name === "affectation" || name === "affectations" || name === "diploma") {
+            if (name === "affectation" || name === "diploma") {
                 delete query.affectation;
-                delete query.affectations;
                 delete query.diploma;
             }
 

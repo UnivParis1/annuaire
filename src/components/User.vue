@@ -4,7 +4,15 @@
 <div v-if="error">
     {{error}}
 </div>
-<div class="col-md-12" v-if="person">
+<div v-if="!person">
+    <div class="col-md-12">Veuillez patienter</div>
+</div>
+<div v-else-if="format === 'chart'">
+    <div v-for="aff in person.supannEntiteAffectation">
+        <OrgChart :selected="aff" :query="{ connected: connected, affectation: aff, token: person.mail }" :displayAll="false" :class="['col-md-' + (12/person.supannEntiteAffectation.length)]"></OrgChart>
+    </div>
+</div>
+<div class="col-md-12" v-else>
   <div class="alt">
     <div class="row">
       <div class="col-md-2">
@@ -56,7 +64,6 @@
                 </span>
               </span>
             </div>
-            <router-link :to="withParams({ format: 'chart', affectations: person.supannEntiteAffectation.join(',') })">Voir dans l'organigramme</router-link>            
           </div>
         </div>
       </div>
@@ -151,6 +158,8 @@
 <script>
 import * as WsService from "../WsService";
 import config from '../config';
+import OrgChart from './OrgChart';
+
 
 function translateAffiliation(affiliation) {
     let useful = config.usefulAffiliations.filter(a => a === affiliation)[0];
@@ -193,7 +202,8 @@ const parentGroups = (groupKey) => (
 
 export default {
   name: "User",
-  props: ["userId", "connected"],
+  props: ["userId", "connected", "format"],
+  components: { OrgChart }, 
   computed: {
     statusPers() { return computeStatusPers(this.person) },
     lastDiplomas() { return getLastDiplomas_(this.person) },

@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     { path: '/:userId',
       component: User,
-      props: (route) => ({ userId: route.params.userId, connected: route.query.connected }),
+      props: (route) => ({ userId: route.params.userId, connected: route.query.connected, format: route.query.format }),
     },
     { path: '/', 
       component: Users,
