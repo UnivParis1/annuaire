@@ -1,5 +1,8 @@
 <template>
-<div v-if="e1">
+<div v-if="!e1">
+    Veuillez patienter
+</div>
+<div v-else>
   <div class="tree mainTree" style="margin-left: 4px">
   <ul>
     <li style="flex-grow: 1; border-bottom: 1px solid #143e6e;"></li>
