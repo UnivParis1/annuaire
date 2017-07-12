@@ -35,7 +35,7 @@
             <div class="horizMiddle"></div>            
             <span class="bloc" :class="classes(e)">
                 <div class="imgCircle">
-                   <img class="Xphoto" :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
+                   <img :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
                 </div>
               <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
                 <span class="name">{{getName(e)}}</span>
@@ -273,12 +273,6 @@ export default {
 </script>
 
 <style scoped>
-img.photo {
-   width: 32px;
-   float: left;
-   border-radius: 5px 0 0 5px;
- }
-
  ul {
    margin: 0; padding: 0;
    position: relative;
