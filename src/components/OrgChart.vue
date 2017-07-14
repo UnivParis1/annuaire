@@ -14,7 +14,6 @@
           <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
-              <div class="verticalCenter"></div>
               <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
                 <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">{{getName(e)}}
                   <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query" v-if="e === e2 && !e3.key"></members>
@@ -38,7 +37,6 @@
         <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
-            <div class="horizMiddle"></div>            
             <span class="bloc" :class="classes(e)">
                 <div class="imgCircle">
                    <img :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
@@ -60,7 +58,6 @@
            <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
                <div class="horizLeft"></div>
                <div class="horizRight"></div>
-               <div class="verticalCenter"></div>
                <span class="bloc" :class="classes(e)">
                  <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
                  <members :affectation="!e5.key && e.key" :roles="e.roles" :query="query" v-if="e === e4 || displayAll"></members>
@@ -70,7 +67,6 @@
                    <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
-                       <div class="horizMiddle"></div>            
                        <span class="bloc" :class="classes(e)" :title="e.key">
                            <span :title="'(' + e.key + ') ' + e.name">{{getName(e)}}</span>
                            <members :affectation="e.key" :roles="e.roles" :query="query" v-if="e === e5 || displayAll"></members>
@@ -347,21 +343,22 @@ li.nonSelectedElt .imgCircle {
      padding: 5px 2px;
  }
  
- .tree li > .verticalCenter {
-     position: absolute; top: 0; left: 1px; right: 0;
-     height: 21px;
-     background-image: url(arrow.svg);
-     background-size: 11px;
-     background-position: center bottom;
-     background-repeat: no-repeat;
- }
- 
  .tree li > .horizLeft,
  .tree li > .horizRight {
    position: absolute; top: 0; 
-   width: 50%; height: 19px;
+   width: 50%; height: 20px;
    border-top: 1px solid #143e6e;
+
+   background-image: url(arrow-NE.svg);
+   background-size: 5px;
+   background-position: left bottom;
+   background-repeat: no-repeat;   
  }
+ .tree li > .horizLeft {
+   background-image: url(arrow-NW.svg);
+   background-position: right bottom;
+ }
+
 
  .tree li > .horizLeftBelow,
  .tree li > .horizRightBelow {
@@ -454,24 +451,23 @@ li.nonSelectedElt .imgCircle {
  .vertical .name {
    padding: 5px 10px;
  }
-
- 
- .vertical li > .horizMiddle {
-     position: absolute; top: 0; bottom: 1px; left: 0;
-     width: 22px;
-     background-image: url(arrow-right.svg);
-     background-size: 11px;
-     background-position: right center;
-     background-repeat: no-repeat;
- }
  
  .vertical li > .verticalTop,
  .vertical li > .verticalBottom {
      position: absolute; left: 0; 
      border-left: 1px solid #143e6e;
-     width: 19px; height: 50%;
+     width: 20px; height: 50%;
+
+   background-image: url(arrow-WN.svg);
+   background-size: 5px;
+   background-position: right bottom;
+   background-repeat: no-repeat;   
  }
- 
+ .vertical li > .verticalBottom {
+    background-image: url(arrow-WS.svg);
+    background-position: right top;
+ }
+
  .vertical li > .verticalTopRight,
  .vertical li > .verticalBottomRight {
      position: absolute; right: 0; 
