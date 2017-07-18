@@ -53,7 +53,7 @@
    </div>
 
    <div class="tree thirdPane" v-if="l4">
-       <div style="flex-grow: 1; min-width: 20px; border-top: 1px solid #143e6e" ></div>
+       <div class="empty4"></div>
        <ul>
            <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
                <div class="horizLeft"></div>
@@ -542,6 +542,12 @@ li.nonSelectedElt .imgCircle {
  .imgCircle img {
      margin-top: -4px;
  }
+
+.empty4 {
+    flex-grow: 1;
+    border-top: 1px solid #143e6e;
+    min-width: 20px;
+}
 
 </style>
 
