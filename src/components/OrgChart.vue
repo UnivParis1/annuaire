@@ -101,6 +101,18 @@ function groupBy(l, by) {
     return r;
 }
 
+function getMembers(query, affectation) {
+    if (!query.connected && !query.token || !affectation) {
+        return Promise.resolve([]);
+    }
+    return WsService.searchPersons({
+        CAS: query.connected,
+        token: query.token,
+        filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff',
+        filter_supannEntiteAffectation: affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
+    });    
+}
+
 const members = Vue.extend({
     props: ['affectation', 'roles', 'query'],
     template: `
@@ -152,15 +164,7 @@ const members = Vue.extend({
     },
     asyncComputed: {
       members() {
-         if (!this.query.connected && !this.query.token || !this.affectation) {
-             return [];
-         }
-         return WsService.searchPersons({
-             CAS: this.query.connected,
-             token: this.query.token,
-             filter_eduPersonPrimaryAffiliation: this.query.affiliation || 'teacher|researcher|staff',
-             filter_supannEntiteAffectation: this.affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
-         });
+          return getMembers(this.query, this.affectation);
       },
     },
     methods: {
