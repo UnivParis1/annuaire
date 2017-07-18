@@ -9,7 +9,7 @@
   <ul>
     <li style="flex-grow: 1; border-bottom: 1px solid #143e6e;"></li>
     <li>
-      <span class="bloc">{{e1.name}}</span>
+      <span class="bloc bordered">{{e1.name}}</span>
       <ul>
           <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
@@ -265,7 +265,7 @@ export default {
        return e.name.replace(/^[\w- ]*?\s[:–-] /i, '');
      },
      classes(e) {
-       return ['depth' + e.key.length, e.businessCategory, { leaf: !e.subGroups }];
+       return ['bordered', 'depth' + e.key.length, e.businessCategory, { leaf: !e.subGroups }];
      },
    },
 };
@@ -290,21 +290,24 @@ export default {
  }
 
  li .bloc {
-     border: 1px solid #e94a1c;
      padding: 5px 10px;
      display: inline-block;   
      border-radius: 5px;
      min-height: 32px;
  }
 
- li .bloc.library,
- li .bloc.leaf {
+ .bordered {
+     border: 1px solid #e94a1c;    
+ }
+
+ .bordered.library,
+ .bordered.leaf {
      border-color: #00adef;
  }
- li .bloc.pedagogy {
+ .bordered.pedagogy {
      border-color: #a08777;
  }
- li .bloc.gold {
+ .bordered.gold {
      border-color: #bf8719;
  }
 
