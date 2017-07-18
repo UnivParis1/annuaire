@@ -28,25 +28,35 @@
   </ul>
   </div>
 
-  <div class="secondPane" v-if="l3">
-      
+  <div class="secondPane" v-if="l3" :class="{ display_secondary_bloc }">
    <div class="vertical">
      <ul>
-       <li class="withBorder">
+       <li class="withBorder"></li>
+            <div class="verticalTop" v-if="l4"></div>
+            <div class="verticalBottom" v-if="l4"></div>
         </li>
         <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
-            <span class="bloc" :class="classes(e)">
+
+            <div class="secondary-bloc" v-if="e === e3 && display_secondary_bloc">
+              <div class="bloc" :class="classes(e)">
+                <members :affectation="!e4.key && e.key" :roles="e.roles" :query="query"></members>
+            </div>
+              <div class="verticalTopRight" v-if="l4"></div>
+            </div>
+            <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
+
+            <span class="bloc first-bloc" :class="classes(e)">
                 <div class="imgCircle">
                    <img :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
                 </div>
               <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
                 <span class="name">{{getName(e)}}</span>
               </router-link>
-              <members :affectation="!e4.key && e.key" :roles="e.roles" :query="query" v-if="e === e3"></members>
+              <members :affectation="!e4.key && e.key" :roles="e.roles" :query="query" v-if="e === e3 && !display_secondary_bloc"></members>
             </span>
-            <div class="verticalTopRight" v-if="l4 && index <= e3_index"></div>
+            <div class="verticalTopRight" v-if="l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
             <div class="verticalBottomRight" v-if="l4 && index < e3_index"></div>
         </li>        
     </ul>
@@ -252,13 +262,21 @@ export default {
      e4_index() { return this.l4.indexOf(this.e4) },
      l2() { return this.e1.subGroups.filter(e => e.businessCategory !== "council") },
      l3() { return this.e2.subGroups },
-     l4() { return (this.displayAll || this.e4.key) && this.e3.subGroups },
-     l5() { return (this.displayAll || this.e5.key) && this.e4.subGroups },
+     l4() { return (this.displayAll || this.e4.key) && this.e3.members && this.e3.subGroups },
+     l5() { return (this.displayAll || this.e5.key) && this.e3.members && this.e4.subGroups },
+
+     display_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length > 0 },
+     no_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length === 0 },
    },
    asyncComputed: {
     e1() {     
         return withSubGroups({ name: "Président de l'université", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] });
     },      
+   },
+   watch: {
+    e3(e) {
+        if (e) getMembers(this.query, e.key).then(l => e.members = l);
+    },
    },
    methods: {
      getName(e) {
@@ -433,19 +451,25 @@ li.nonSelectedElt .imgCircle {
      border-top: 1px solid #143e6e;
      border-radius: 5px 0 0 0;
      width: 4px;
-     height: 40px;
+     height: 24px;
      padding: 0;
      margin-top: -1px;
  }
 
+ .display_secondary_bloc .vertical > ul {
+     width: 34.2em;
+ }
  .vertical li {
-     padding: 0px 20px 8px 20px;
+     padding: 8px 20px 8px 20px;
+ }
+ .display_secondary_bloc .vertical li {
+     padding-right: 2px;
  }
  .vertical li .bloc {
-   margin-top: 8px;
    width: 15em;
-   padding: 0;
+   display: block;
  }
+
  .vertical li.nonSelectedElt {
      padding-top: 8px;
  }
@@ -475,25 +499,40 @@ li.nonSelectedElt .imgCircle {
     background-position: right top;
  }
 
- .vertical li > .verticalTopRight,
- .vertical li > .verticalBottomRight {
+ .vertical li .verticalTopRight,
+ .vertical li .verticalBottomRight {
      position: absolute; right: 0; 
      border-right: 1px solid #143e6e;
      width: 19px; height: 50%;
  }
 
- .vertical li > .verticalTop,
- .vertical li > .verticalTopRight {
+ .vertical li .verticalTop,
+ .vertical li .verticalTopRight {
      bottom: 50%;
  } 
- .vertical li > .verticalBottom,
- .vertical li > .verticalBottomRight {
+ .vertical li .verticalBottom,
+ .vertical li .verticalBottomRight {
      top: 50%;
  }
 
+ .fakeOne {
+     padding-top: 4px;
+     border-left: 1px solid #143e6e;
+     border-right: 1px solid #143e6e;
+ }
+
  .vertical li > .verticalTop,
- .vertical li.selectedElt > .verticalTopRight {
+ .vertical li.selectedElt .verticalTopRight {
      border-bottom: 1px solid #143e6e;
+ }
+
+ .vertical li .first-bloc {
+     padding: 0;
+ }
+
+ .display_secondary_bloc .vertical li.selectedElt .first-bloc {
+     border-radius: 5px 0 0 5px;
+     border-right: none;
  }
 
  .vertical li:last-child > .verticalBottom {
@@ -518,7 +557,7 @@ li.nonSelectedElt .imgCircle {
  }
 
  .thirdPane {
-     margin-top: 40px;
+     margin-top: 23px;
      display: flex;
  }
 
@@ -543,17 +582,56 @@ li.nonSelectedElt .imgCircle {
      margin-top: -4px;
  }
 
+li .secondary-bloc {
+    position: relative;
+    float: right;
+    background: white;
+    padding-top: 0;
+    margin-top: 0;
+    padding-right: 19px;
+    margin-right: -2px;
+}
+
+li .secondary-bloc .verticalTopRight {
+    top: -8px;
+}
+
+li .secondary-bloc .bloc {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+li .secondary-bloc .members {
+    margin-top: 0;
+}
+
+.connect-blocs {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+
+    background: white;
+    width: 1.52em;
+    border-style: solid;
+}
+.connect-blocs {
+    border-width: 1px 0;
+    margin: 8px 0 8px -10px;
+}
+
 .empty4 {
     flex-grow: 1;
     border-top: 1px solid #143e6e;
     min-width: 20px;
 }
+.display_secondary_bloc .empty4 {
+    min-width: none;
+}
 
 </style>
 
 <style>
- .mainTree .members_other,
- .secondPane > .vertical .members_other {
+ .mainTree .members_other {
    max-height: 10em;
    overflow-y: auto;
  }
