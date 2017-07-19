@@ -75,3 +75,17 @@ export let compute_wsparams_user_filters = ({ affiliation, affectation, diploma,
         return Promise.resolve(wsparams);
     }
 };
+
+export const OrgChart = {
+  getMembers(query, affectation) {
+    if (!query.connected && !query.token || !affectation) {
+        return Promise.resolve([]);
+    }
+    return searchPersons({
+        CAS: query.connected,
+        token: query.token,
+        filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff',
+        filter_supannEntiteAffectation: affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
+    });
+  },
+};
