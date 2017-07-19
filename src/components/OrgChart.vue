@@ -165,6 +165,7 @@ const members = Vue.extend({
             for (let person of this.members) {
                 if (!toIgnore.includes(person.uid)) {
                     let aff = person.eduPersonPrimaryAffiliation;
+                    aff = aff === "teacher" || aff === "researcher" ? "teacher_researcher" : aff;
                     r[aff in r ? aff : "other"].push(person);
                 }
             }
