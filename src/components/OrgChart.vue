@@ -48,9 +48,7 @@
             <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
 
             <span class="bloc first-bloc" :class="classes(e)">
-                <div class="imgCircle">
-                   <img :src="'https://userphoto.univ-paris1.fr/?uid=' + e.roles[0].uid + '&penpalAffiliation=loggedUser'" v-if="e.roles.length">
-                </div>
+              <Photo :user="e.roles && e.roles[0]"></Photo>
               <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
                 <span class="name">{{getName(e)}}</span>
               </router-link>
@@ -95,6 +93,7 @@
 <script>
 import Vue from 'vue'
 import * as WsService from '../WsService';
+import Photo from './Photo';
 import config from '../config';
 
 function groupBy(l, by) {
@@ -248,7 +247,7 @@ let withSubGroups = (e) => (
 }
 
 export default {
-   components: { members },
+   components: { Photo, members },
    props: ['selected', 'query', 'displayAll'],
    computed: {
      nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },
@@ -353,9 +352,6 @@ export default {
  li.nonSelectedElt {
      font-size: 30%;
      text-align: initial;
- }
-li.nonSelectedElt .imgCircle {
-     display: none;
  }
 
  li.nonSelectedElt .bloc {
@@ -569,17 +565,6 @@ li.nonSelectedElt .imgCircle {
  }
  .thirdPane li.nonSelectedElt {
    min-width: initial;
- }
-
- .imgCircle {
-    width: 26px;
-    height: 26px;
-    margin: -13px 0 0 -13px;
-    display: block;
-    float: left;
- }
- .imgCircle img {
-     margin-top: -4px;
  }
 
 li .secondary-bloc {
