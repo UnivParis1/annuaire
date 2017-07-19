@@ -15,9 +15,12 @@
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
               <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
-                <router-link :to="withParam('affectation', e.key)" class="bloc" :class="classes(e)" :title="e.key">{{getName(e)}}
+               <span class="bloc" :class="classes(e)">
+                <Photo :user="e.roles && e.roles[0]"></Photo>
+                <router-link :to="withParam('affectation', e.key)" :title="e.key">{{getName(e)}}
                   <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query" v-if="e === e2 && !e3.key"></members>
                 </router-link>
+               </span>
               </span>
               <div class="horizLeftBelow" v-if="index <= e2_index"></div>
               <div class="horizRightBelow" v-if="index < e2_index"></div>              
@@ -300,7 +303,7 @@ export default {
    text-align: center;
    list-style-type: none;
    position: relative;
-   padding: 5px;
+   padding: 5px 5px 5px 10px;
  }
 
  .sameBlocSize {

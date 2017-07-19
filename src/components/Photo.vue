@@ -21,12 +21,16 @@ export default {
  .imgCircle {
     width: 26px;
     height: 26px;
-    margin: -13px 0 0 -13px;
+    margin: -18px 0 0 -23px;
     display: block;
     float: left;
  }
  .imgCircle img {
      margin-top: -4px;
+ }
+
+ .vertical .imgCircle {
+    margin: -13px 0 0 -13px;
  }
 
  li.nonSelectedElt .imgCircle {
