@@ -57,6 +57,7 @@ export default {
         membersByAffiliation() {
             if (!this.members) return;
 
+            this.members.sort((a,b) => a.displayName < b.displayName ? -1 : 1);
             let toIgnore = this.roles.map(e => e.uid);
 
             let r = {};
