@@ -9,7 +9,12 @@
   <ul>
     <li style="flex-grow: 1; border-bottom: 1px solid #143e6e;"></li>
     <li>
-      <span class="bloc bordered">{{e1.name}}</span>
+      <span class="bloc" :class="classes(e1)">
+        <Photo :user="e1.roles[0]" v-if="e1.roles[0]"></Photo>
+        {{getName(e1)}}
+        <br>
+        <router-link :to="withUser(e1.roles[0].uid)" v-if="e1.roles[0]">{{e1.roles[0].displayName}}</router-link>
+      </span>
       <ul>
           <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
@@ -111,16 +116,20 @@ import config from '../config';
      roles.sort((a,b) => a.importance - b.importance);
  }
 
- function initTree(tree, depth) {
+ function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
      tree.depth = depth;
      tree.key = tree.key.replace(/^structures-/, '');
-     if (tree.key.match(/^PR/)) tree.business = "gold";
      sortRoles(tree.roles);
+     if (tree.key.match(/^PR/)) tree.businessCategory = "gold";
+     if (tree.key === 'PR' && parent && parent.roles.length === 0) {
+       parent.roles = tree.roles;
+       tree.roles = [];
+     }
      
      (tree.subGroups || []).forEach(e => {
          e.parentKey = tree.key;
-         initTree(e, depth+1);
+         initTree(e, depth+1, tree);
      });
  }
  
