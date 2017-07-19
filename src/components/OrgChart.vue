@@ -179,7 +179,7 @@ const members = Vue.extend({
     },
     methods: {
         translateAff(aff, plural) {
-           return "STATUS_" + aff + (plural > 1 || aff === "staff" ? "s" : "");
+           return "STATUS_" + aff + (plural > 1 ? "s" : "");
         },
     },
 });
