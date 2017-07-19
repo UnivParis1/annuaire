@@ -31,6 +31,15 @@ export default {
 
  .vertical .imgCircle {
     margin: -13px 0 0 -13px;
+    z-index: 2;
+ }
+
+.secondary-bloc .imgCircle {
+   margin: -2px 3px 0 -16px;
+}
+
+ .thirdPane .imgCircle {
+   margin: -2px 3px 0 -16px;
  }
 
  li.nonSelectedElt .imgCircle {

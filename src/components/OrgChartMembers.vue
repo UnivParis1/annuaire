@@ -3,7 +3,8 @@
     <span v-for="role in rolesGrouped">
       <span class="role">{{role.v}}&nbsp;: </span>
       <br>
-      <span v-for="u in role.group">
+      <span class="user-with-role" v-for="u in role.group">
+        <Photo :user="u"></Photo>
         <router-link :to="withUser(u.uid)">{{u.displayName}}</router-link>
         <br>
       </span>
@@ -26,6 +27,8 @@
 <script>
 import * as WsService from '../WsService';
 import config from '../config';
+import Photo from './Photo';
+
 
 function groupBy(l, by) {
     let r = [];
@@ -43,6 +46,7 @@ function groupBy(l, by) {
 
 export default {
     props: ['affectation', 'roles', 'query'],
+    components: { Photo },
     computed: {
         rolesGrouped() {
             return groupBy(this.roles, u => u.supannRoleGenerique.join(", "));
@@ -91,8 +95,8 @@ export default {
    margin-top: 1em;
  }
 
- .vertical .members {
-   margin-left: 0.5em;
+ .members .user-with-role {
+   display: block;
  }
 
  .role {
