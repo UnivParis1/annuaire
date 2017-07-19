@@ -11,10 +11,10 @@ let cachedJsonp = (url, params) => {
       let v = cache[url + hashParams];
       if (v) {
           //console.log("using cached value for " + url + " " + hashParams);
-          return Promise.resolve(v);
+          return Promise.resolve(JSON.parse(v));
       } else {
           return realPromiseWrap(jQuery.ajax(url + "?callback=?", { dataType: "jsonp", data: params })).then(r => {
-              cache[url + hashParams] = r;
+              cache[url + hashParams] = JSON.stringify(r);
               return r;
           });
       }
