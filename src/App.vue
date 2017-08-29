@@ -74,7 +74,7 @@ export default {
       wsparams() {
         //console.log('set_autocomplete_wsparams', this.query);
         return WsService.compute_wsparams_user_filters(this.query).then(wsparams_filters => {
-            let wsparams = { filter_category: "structures", group_attrs: "businessCategory", CAS: !!this.query.connected }
+            let wsparams = { filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: !!this.query.connected }
             return { ...wsparams, ...wsparams_filters }
         });
       },
@@ -102,9 +102,9 @@ export default {
         if (userOrGroup.category === 'users') {
             this.go(this.withUser(userOrGroup.mail));
         } else {
-            // recherche d'une structure
-            let affectation = userOrGroup.key.replace('structures-','');
-            this.go(this.withParam('affectation', affectation));
+            // recherche d'un groupe "structures-xxx" or "diploma-xxx"
+            let [, kind, val] = userOrGroup.key.match(/^(\w+)-(.*)/) || [];
+            this.go(this.withParam(kind === 'structures' ? 'affectation' : kind, val));
         }
     },
 
