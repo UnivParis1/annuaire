@@ -383,6 +383,7 @@ export default {
  }
  .vertical li {
      padding: 8px 20px 8px 20px;
+     pointer-events: none;
  }
  .display_secondary_bloc .vertical li {
      padding-right: 2px;
@@ -390,6 +391,7 @@ export default {
  .vertical li .bloc {
    width: 15em;
    display: block;
+   pointer-events: all;
  }
 
  .vertical li.nonSelectedElt {
