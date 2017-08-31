@@ -28,6 +28,10 @@ export let getGroupFromStruct = (affectation) => (
     wsgroupsJsonp("/getGroup", { key: "structures-" + affectation })
 );
 
+export let getRoleGenerique = (role) => (
+    wsgroupsJsonp("/search", { token: role, kinds: 'supannRoleGenerique', maxRows: 1 }).then(r => r.supannRoleGenerique[0])
+);
+
 export let searchPersons = (wsparams) => (
     wsgroupsJsonp("/searchUser", wsparams)
 );
@@ -41,10 +45,14 @@ export let getDiploma = (diploma) => (
     wsgroupsJsonp("/searchGroup", {filter_category:'diploma', token: diploma, maxRows: 1 }).then(l => l && l[0])
 );
 
-export let compute_wsparams_user_filters = ({ affiliation, affectation, diploma }) => {
+export let compute_wsparams_user_filters = ({ affiliation, affectation, diploma, role }) => {
     let wsparams = {};
 
     wsparams.filter_eduPersonAffiliation = affiliation;
+
+    if (role) {
+        wsparams.filter_supannRoleGenerique = role;
+    }
 
     if (diploma) {
         wsparams.filter_member_of_group = "diploma-" + diploma;

@@ -127,7 +127,7 @@ export default {
   },
   computed: {
       noFilters() {
-           return !['token', 'affectation', 'affiliation', 'diploma'].find(filter => this.query[filter]);
+           return !['token', 'affectation', 'affiliation', 'diploma', 'role'].find(filter => this.query[filter]);
       },
       maxRows() {
           return this.query.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;

@@ -1,5 +1,5 @@
 <template>
-<div class="row" v-if="affectation || diploma || query.token">
+<div class="row" v-if="affectation || diploma || role || query.token">
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px">
           <div class="row">
@@ -27,6 +27,14 @@
                   </router-link>
               </div>
             </div>
+            <div class="col-md-3 text-muted" v-if="role">
+                <div>
+                    {{role.name}}
+                    <router-link :to="withParam('role', undefined)">
+                        <span class='glyphicon glyphicon-remove'></span>
+                    </router-link>
+                </div>
+            </div>
             <div class="col-md-3 text-muted" v-if="query.token">
                 <div>
                     {{query.token}}
@@ -51,6 +59,9 @@ export default {
   asyncComputed: {
       affectation() {
           return this.query.affectation && WsService.getGroupFromStruct(this.query.affectation);
+      },
+      role() {
+          return this.query.role && WsService.getRoleGenerique(this.query.role);
       },
       diploma() {
           return this.query.diploma && WsService.getDiploma(this.query.diploma);

@@ -74,7 +74,7 @@ export default {
       wsparams() {
         //console.log('set_autocomplete_wsparams', this.query);
         return WsService.compute_wsparams_user_filters(this.query).then(wsparams_filters => {
-            let wsparams = { filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: !!this.query.connected }
+            let wsparams = { kinds: 'users,groups,supannRoleGenerique', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: !!this.query.connected }
             return { ...wsparams, ...wsparams_filters }
         });
       },
@@ -101,6 +101,8 @@ export default {
         // recherche de personne
         if (userOrGroup.category === 'users') {
             this.go(this.withUser(userOrGroup.mail));
+        } else if (userOrGroup.category === 'supannRoleGenerique') {
+            this.go(this.withParam('role', userOrGroup.key));
         } else {
             // recherche d'un groupe "structures-xxx" or "diploma-xxx"
             let [, kind, val] = userOrGroup.key.match(/^(\w+)-(.*)/) || [];
