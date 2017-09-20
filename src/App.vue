@@ -34,22 +34,6 @@
             </ul>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12 formats">
-            <span class="btn-group pull-right nav">
-              <router-link class="btn btn-primary" :class="{ youarehere: !query.format }" title="Afficher la liste" :to="withParam('format', undefined)">
-                  <span class='glyphicon glyphicon-th-list'></span> Liste
-              </router-link>
-              <router-link class="btn btn-primary" :class="{ youarehere: query.format === 'trombi' }" title="Afficher le trombinoscope" :to="withParam('format', 'trombi')" >
-                  <span class='glyphicon glyphicon-user'></span> Trombinoscope
-              </router-link>
-              <router-link class="btn btn-primary" :class="{ youarehere: query.format === 'chart' }" title="Afficher l'organigramme" :to="withParam('format', 'chart')" >
-                  <span class='glyphicon glyphicon-indent-left'></span> Organigramme
-              </router-link>
-            </span>
-        </div>
-    </div>
   </div>
   <router-view></router-view>
 </div>
@@ -175,23 +159,6 @@ export default {
    padding: 2px;
    margin: 1px 1px 1px 10px;
   }
-
-
-.formats .nav .btn {
-  padding: 4px 10px;
-  min-height: 27px;
-  border-left: 1px solid #fff;
-}
-
-.formats .nav a {
-  background-color: #727780;
-  border: 0px; border-radius: 0px;
-  font-size: 12px;
-}
-
-.formats .nav a.youarehere, .formats .nav a:hover {
-  background-color: #C89108;
-}
 
 </style>
 

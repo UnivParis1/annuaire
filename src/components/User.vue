@@ -3,6 +3,15 @@
 <div v-if="error">
     {{error}}
 </div>
+<div v-else class="container">
+    <div class="row">
+        <div class="col-md-12" id="menus">
+            <div class="bg-info" style="padding: 6px">
+           </div>
+        </div>
+    </div>
+    <ChooseFormat :format="format" style="padding-bottom: 2em"></ChooseFormat>
+</div>
 <div v-if="!person" class="container">
    <div class="row"><div class="col-md-12">
        Veuillez patienter
@@ -14,6 +23,11 @@
         <OrgChart :selected="aff" :query="{ connected: connected, affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
      </div></div>
     </div>
+</div>
+<div v-else-if="format === 'trombi'" class="container">
+  <div class="row"><div class="col-md-12">
+    <Trombi :person="person"></Trombi>
+  </div></div>
 </div>
 <div class="container" v-else>
  <div class="row"><div class="col-md-12">
@@ -162,6 +176,8 @@
 <script>
 import * as WsService from "../WsService";
 import config from '../config';
+import ChooseFormat from './ChooseFormat';
+import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 
 
@@ -207,7 +223,7 @@ const parentGroups = (groupKey) => (
 export default {
   name: "User",
   props: ["userId", "connected", "format"],
-  components: { OrgChart },
+  components: { ChooseFormat, Trombi, OrgChart },
   computed: {
     statusPers() { return computeStatusPers(this.person) },
     lastDiplomas() { return getLastDiplomas_(this.person) },

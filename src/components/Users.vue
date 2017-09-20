@@ -3,13 +3,14 @@
 <div class="container">
     <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
 
-    <div v-if="persons || query.format === 'chart'" class="row" style="text-align:left;margin-bottom: 5px">
+    <div class="row">
         <div class="col-md-12">
             <div class="bg-info">
                 <span v-if="persons">{{persons.length}} résultat(s)</span>
            </div>
         </div>
       </div>
+    <ChooseFormat :format="query.format"></ChooseFormat>
       <div class="row" style="height:40px" >
         <div class="col-md-12 warning" v-if="persons && persons.length >= maxRows" >
             <span v-if="query.connected">
@@ -40,15 +41,7 @@
 <div v-if="query.format === 'trombi'" class="container">
   <div class="row"><div class="col-md-12">
     <span v-for="person in persons">
-      <router-link :to="withUser(person.mail)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
-            <div class="photo">
-                <img :title="person.supannListeRouge ? '' : person.displayName"
-                    :src="person.photoURL" class="img-responsive">
-            </div>
-            <div class="text">
-                {{person.supannListeRouge ? "Personne sur liste rouge" : person.displayName}}
-            </div>
-      </router-link>
+      <Trombi :person="person"></Trombi>
     </span>
   </div></div>
 </div>
@@ -72,7 +65,9 @@
 
 <script>
 import * as WsService from "../WsService";
+import ChooseFormat from './ChooseFormat';
 import UserInTable from './UserInTable';
+import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 import Filters from './Filters';
 import config from '../config';
@@ -120,7 +115,7 @@ function getManagerRole(person, affectation) {
 
 export default {
   props: ['query'],
-  components: { UserInTable, Filters, OrgChart },
+  components: { ChooseFormat, Trombi, UserInTable, Filters, OrgChart },
   data() {
       return {
         affectation_manager: undefined, // person
@@ -200,24 +195,6 @@ En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
   .table tr {
     border: 1px solid #ccc;
   }
-}
-
-.photoGallery {
-  width: 144px;
-  height: 240px;
-  overflow: hidden;
-  display: inline-block;
-  margin: 0 12px;
-}
-
-.photoGallery .photo {
-  height: 180px;
-  overflow: hidden;
-}
-
-.photoGallery .text {
-  text-align: center;
-  padding: 9px;
 }
 
 </style>
