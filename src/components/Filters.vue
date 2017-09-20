@@ -69,3 +69,18 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.bg-info {
+  background: none;
+  font-size: 12px;
+}
+
+.bg-info > .row > div {
+    padding: 4px 4px 4px 13px;
+    margin: 10px;
+    color: #333;
+    border: 1px solid #bbb;
+    border-radius: 15px;
+  }
+</style>

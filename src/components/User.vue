@@ -17,7 +17,7 @@
 </div>
 <div class="container" v-else>
  <div class="row"><div class="col-md-12">
-  <div class="alt">
+  <div class="boite">
     <div class="row">
       <div class="col-md-2">
         <div class="text-center imgCircle imgMarg">
@@ -207,12 +207,12 @@ const parentGroups = (groupKey) => (
 export default {
   name: "User",
   props: ["userId", "connected", "format"],
-  components: { OrgChart }, 
+  components: { OrgChart },
   computed: {
     statusPers() { return computeStatusPers(this.person) },
     lastDiplomas() { return getLastDiplomas_(this.person) },
     photoURL() { return config.photoURL(this.person) },
-  },  
+  },
   data() {
       return {
         person: undefined,
@@ -244,8 +244,27 @@ export default {
 </script>
 
 <style scoped>
-.alt {
-  background-color:#eee;
+.boite {
+  font-size: 13px;
+  margin-top: 30px;
+  padding: 15px;
+
+  border:#aaaFB9 1px solid;
+  border-top: #D5DCeA 25px solid;
+  border-radius: 12px;
+
+  background:url("https://eee-test.univ-paris1.fr/TESTYA/ANR-31.svg") no-repeat 510px 10px,
+           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-32.svg") no-repeat 550px 10px,
+           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-33.svg") no-repeat 590px 10px,
+           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat 630px 10px,
+           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-37.svg") no-repeat 670px 10px,
+           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-36.svg") no-repeat 720px 10px;
+   background-size: 1.8em,1.8em,2em,2em,2em,2.5em ;
+}
+
+.cap {
+  color:#555;
+  font-size: 24px;
 }
 
 .imgMarg{

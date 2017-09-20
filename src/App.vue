@@ -20,7 +20,7 @@
 
     <div class="row" style="margin-bottom: 25px">
         <div class="col-md-12 text-center" >
-            <ul class="nav nav-pills menu-top" role="tablist">
+            <ul class="nav nav-pills menu-top affiliations" role="tablist">
             <div class="radio-inline" v-for="aff in usefulAffiliations">
                 <li :class="aff == query.affiliation ? 'selected' : 'deselected'">
                   <router-link :to="withParam('affiliation', aff)">
@@ -36,7 +36,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12" id="menus">
+        <div class="col-md-12 formats">
             <span class="btn-group pull-right nav">
               <router-link class="btn btn-primary" :class="{ youarehere: !query.format }" title="Afficher la liste" :to="withParam('format', undefined)">
                   <span class='glyphicon glyphicon-th-list'></span> Liste
@@ -49,7 +49,7 @@
               </router-link>
             </span>
         </div>
-    </div>    
+    </div>
   </div>
   <router-view></router-view>
 </div>
@@ -137,6 +137,65 @@ export default {
 
 </script>
 
+<style scoped>
+  .affiliations .radio-inline  {
+    margin: 40px 0 0 0;
+    padding: 0px;
+    font-size: 13px;
+  }
+
+  .affiliations li {
+    padding: 3px 3px 3px 10px;
+    margin: 1px 5px;
+  }
+
+  .affiliations li a { color: #666; }
+
+  .affiliations li.selected a { color: #333; }
+
+  .affiliations li :hover {
+    color: #00326e;
+    text-decoration: none;
+  }
+
+  .affiliations li.selected  {
+    border: 1px solid #bbb;
+    border-radius: 15px;
+    background-color:white;
+  }
+
+ .deselected .badge {
+   display: none;
+  }
+
+.badge  {
+   background-color: #bbb; color: white;
+   border: 1px #fff solid; border-radius: 9px;
+   font-size:10px;
+   padding: 2px;
+   margin: 1px 1px 1px 10px;
+  }
+
+
+.formats .nav .btn {
+  padding: 4px 10px;
+  min-height: 27px;
+  border-left: 1px solid #fff;
+}
+
+.formats .nav a {
+  background-color: #727780;
+  border: 0px; border-radius: 0px;
+  font-size: 12px;
+}
+
+.formats .nav a.youarehere, .formats .nav a:hover {
+  background-color: #C89108;
+}
+
+</style>
+
+
 <style>
 .imgCircle {
   position: relative;
@@ -169,11 +228,25 @@ label {
     text-decoration: none;
 }
 
-/**
-Surcharger btn-primary,breadcrumb
-**/
 .btn-primary {
   border-color: white !important;
 }
+
+.glyphicon.glyphicon-remove  {
+    position:absolute;  right:5px; top:4px;
+    background-color:#bbb; color: white;
+
+    border:1px #95A7CB solid; border-radius: 9px; font-size:9px; padding:2px;
+    margin :0px;
+}
+
+  /*********************  Page des Listes : les champs INFO   ******/
+  /* Nom */
+.displayName.ng-binding {font-size :17px; margin-bottom: 8px; }
+
+.glyphicon-envelope {  border:1px dotted #ccc;}
+
+.glyphicon-phone {  background: url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat left top; }
+
 
 </style>

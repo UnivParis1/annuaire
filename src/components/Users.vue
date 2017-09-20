@@ -4,15 +4,14 @@
     <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
 
     <div v-if="persons || query.format === 'chart'" class="row" style="text-align:left;margin-bottom: 5px">
-        <div class="col-md-12" id="menus">
-            <div class="bg-info" style="padding: 6px">
+        <div class="col-md-12">
+            <div class="bg-info">
                 <span v-if="persons">{{persons.length}} résultat(s)</span>
            </div>
         </div>
       </div>
       <div class="row" style="height:40px" >
-        <div class="col-md-12" v-if="persons && persons.length >= maxRows" >
-          <span class="text-success">
+        <div class="col-md-12 warning" v-if="persons && persons.length >= maxRows" >
             <span v-if="query.connected">
               Le nombre de résultats est limité. Veuillez affiner la recherche.
             </span>
@@ -22,8 +21,8 @@
             </span>
           </span>
         </div>
-        <div class="col-md-12" v-if="query.format === 'chart' && !query.connected" >
-          <span class="text-success">
+        <div class="col-md-12 warning" v-if="query.format === 'chart' && !query.connected" >
+          <span>
               Seul les responsables sont affichés, pour voir le personnel,
               <router-link :to="withParam('connected', true)">veuillez vous identifier.</router-link>
           </span>
@@ -34,7 +33,7 @@
 <div v-if="noFilters || query.format === 'chart'">
 </div>
 <div v-else-if="!persons" class="container">
-  <div class="row"><div class="col-md-12">   
+  <div class="row"><div class="col-md-12">
     Veuillez patienter...
   </div></div>
 </div>
@@ -167,12 +166,18 @@ export default {
 </script>
 
 <style scoped>
-#menus .nav a {
-  background: #ddd;
+.bg-info {
+  min-height: 27px;
+  padding-left: 15px;
+  background-color: #727780;
+  font-size: 18px;
+  color: #eee;
 }
 
-#menus .nav a.youarehere {
-  background: #337ab7;
+.warning {
+  text-align: center;
+  color: #666;
+  font-style: italic; font-family: georgia, times; font-size: 15px;
 }
 
 .table > tbody > tr > td{
