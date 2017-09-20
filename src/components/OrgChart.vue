@@ -21,7 +21,7 @@
               <div class="horizRight"></div>
               <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
                <span class="bloc" :class="classes(e)">
-                <Photo :user="e.roles && e.roles[0]"></Photo>
+                <Photo :user="e.roles && e.roles[0]" v-if="e !== e2"></Photo>
                 <router-link :to="withParam('affectation', e.key)" :title="e.key">{{getName(e)}}
                   <members :affectation="!e3.key && e2.key" :roles="e2.roles" :query="query" v-if="e === e2 && !e3.key"></members>
                 </router-link>
@@ -56,7 +56,7 @@
             <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
 
             <span class="bloc first-bloc" :class="classes(e)">
-              <Photo :user="e.roles && e.roles[0]"></Photo>
+              <Photo :user="e.roles && e.roles[0]" v-if="e !== e3"></Photo>
               <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
                 <span class="name">{{getName(e)}}</span>
               </router-link>
