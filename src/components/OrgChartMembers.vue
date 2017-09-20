@@ -1,13 +1,12 @@
 <template>
   <div class="members" v-if="members && members.length || roles.length">
     <span v-for="role in rolesGrouped">
-      <span class="role">{{role.v}}&nbsp;: </span>
-      <br>
-      <span class="user-with-role" v-for="u in role.group">
+      <div class="role">{{role.v}}&nbsp;: </div>
+      <div class="user-with-role" v-for="u in role.group">
         <Photo :user="u"></Photo>
         <router-link :to="withUser(u.uid)">{{u.displayName}}</router-link>
         <br>
-      </span>
+      </div>
     </span>
     <span v-if="members && members.length">
       <br v-if="roles.length">
@@ -97,12 +96,13 @@ export default {
  }
 
  .members .user-with-role {
-   display: block;
+   clear: both;
  }
 
  .role {
    color: #00326E;
    font-size: 80%;
+   clear: both;
  }
 
   .affiliationName {
