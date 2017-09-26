@@ -1,11 +1,11 @@
 <template>
-<div>
+<div class="User">
 <div v-if="error">
     {{error}}
 </div>
 <div v-else class="container">
     <div class="row">
-        <div class="col-md-12" id="menus">
+        <div class="col-md-12 formats">
             <div class="bg-info" style="padding: 6px">
            </div>
         </div>
@@ -115,15 +115,13 @@
       <div v-else>
         <div class="col-md-10 col-md-offset-2">
           <div class="row">
-            <div class="col-md-5  marginTop" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
+            <div class="col-md-5 marginTop phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
               <div v-if="person.telephoneNumber">
-                <label>Téléphone fixe </label>
                 <span class="uneditable-input" v-for="telephoneNumber in person.telephoneNumber">
                     <a :href="'tel:' + telephoneNumber" target="_blank"> {{telephoneNumber}}</a>
                 </span>
               </div>
               <div v-if="person.supannAutreTelephone">
-                <label>Téléphone(s) secondaire(s) </label>
                 <span style="display: inline-block; vertical-align: top">
                   <span class="uneditable-input" v-for="supannAutreTelephone in person.supannAutreTelephone">
                     <a :href="'tel:' + supannAutreTelephone" target="_blank"> {{supannAutreTelephone}}</a>
@@ -132,12 +130,10 @@
                 </span>
               </div>
               <div v-if="person.mobile">
-                  <label>Téléphone mobile </label>
                   <span class="uneditable-input" v-for="mobile in person.mobile"> <a :href="'tel:' + mobile" target="_blank">{{mobile}}</a></span>
               </div>
               <div v-if="person.facsimileTelephoneNumber">
-                  <label>Fax </label>
-                  <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}}</span>
+                  <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}} (Fax)</span>
               </div>
           </div>
           <div class="col-md-7 marginTop">
@@ -259,39 +255,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.boite {
-  font-size: 13px;
-  margin-top: 30px;
-  padding: 15px;
 
-  border:#aaaFB9 1px solid;
-  border-top: #D5DCeA 25px solid;
-  border-radius: 12px;
-
-  background:url("https://eee-test.univ-paris1.fr/TESTYA/ANR-31.svg") no-repeat 510px 10px,
-           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-32.svg") no-repeat 550px 10px,
-           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-33.svg") no-repeat 590px 10px,
-           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat 630px 10px,
-           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-37.svg") no-repeat 670px 10px,
-           url("https://eee-test.univ-paris1.fr/TESTYA/ANR-36.svg") no-repeat 720px 10px;
-   background-size: 1.8em,1.8em,2em,2em,2em,2.5em ;
-}
-
-.cap {
-  color:#555;
-  font-size: 24px;
-}
-
-.imgMarg{
-  margin-top: 15px;
-}
-
-.breadcrumb > li + li::before {
-  padding: 0 0 0 10px !important;
-}
-
-.marginTop{
-  margin-top:10px;
-}
-</style>

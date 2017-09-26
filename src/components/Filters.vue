@@ -1,5 +1,5 @@
 <template>
-<div class="row" v-if="affectation || diploma || role || query.token">
+<div class="row Filters" v-if="affectation || diploma || role || query.token">
       <div class="col-md-12" >
         <div class="bg-info" style="padding: 6px">
           <div class="row">
@@ -70,17 +70,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.bg-info {
-  background: none;
-  font-size: 12px;
-}
-
-.bg-info > .row > div {
-    padding: 4px 4px 4px 13px;
-    margin: 10px;
-    color: #333;
-    border: 1px solid #bbb;
-    border-radius: 15px;
-  }
-</style>

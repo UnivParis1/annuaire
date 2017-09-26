@@ -1,0 +1,784 @@
+.affiliations .radio-inline  {
+  margin: 10px 0 0 0;
+  padding: 0px;
+  font-size: 11px;
+}
+
+.affiliations li {
+  padding: 3px 3px 3px 10px;
+  margin: 1px 5px;
+}
+
+.affiliations li a { color: #666; }
+
+.affiliations li.selected a { color: #00326e; text-decoration: none;}
+
+.affiliations li :hover {
+  color: #00326e;
+  text-decoration: none;
+}
+
+.affiliations li.selected  {
+  border-bottom: 1px solid #ccc;
+  border-radius: 7px;
+  background-color:#D5DCeA;
+}
+
+.deselected .badge {
+ display: none;
+}
+
+.badge  {
+ background-color:white; color: #95A7CB;
+ border: 1px #fff solid; border-radius: 7px;
+ font-size: 8px;
+ padding: 2px;
+ margin: 0px 4px 0px 7px;
+}
+
+.imgCircle {
+position: relative;
+width: 130px;
+height: 130px;
+overflow: hidden;
+border-radius: 50%;
+padding-left: 0;
+}
+
+.imgCircle img {
+width: 100%;
+height: auto;
+border: 0 none;
+float: left;
+margin: -20px 0 0 0px;
+max-height: none;
+max-width: none;
+padding: 0;
+}
+
+label {
+margin-right: 0.5em;
+margin-bottom: 0;
+}
+
+.selected {
+  background-color:#dad3d3;
+  color:white;
+  text-decoration: none;
+}
+
+.glyphicon.glyphicon-remove  {
+  position:absolute;  right:5px; top:4px;
+  background-color:#bbb; color: white;
+
+  border:1px #95A7CB solid; border-radius: 9px; font-size:9px; padding:2px;
+  margin :0px;
+}
+
+/*********************  Page des Listes : les champs INFO   ******/
+/* Nom */
+.displayName.ng-binding {font-size :17px; margin-bottom: 8px; }
+
+.glyphicon-envelope {  border:1px dotted #ccc;}
+
+.glyphicon-phone {  background: url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat left top; }
+
+
+.bg-info > .row > div
+{
+padding: 4px;
+padding-left: 13px;
+
+margin : 10px;
+
+color: #333333;
+background-color: #f2f2f2;
+border: 1px solid #bbb; ;
+border-radius: 15px;
+
+}
+
+
+.bg-info {background: none; }
+
+
+.text-success {color:#666; font-style: italic; font-family: georgia, times; font-size:14px;   }
+
+.btn {
+padding-top: 2px;
+padding-right: 12px;
+padding-bottom: 3px;
+padding-left: 12px;
+margin-bottom: 0px;
+font-size: 12px;
+font-weight: 400;
+background-image: none;
+border-top:0px;
+border-radius: 0px;
+}
+
+/* Ligne 5 */
+.btn-primary
+{
+color: #ffffff;
+background-color: #727780;
+border-top-color: #2e6da4;
+border-right-color: #2e6da4;
+border-bottom-color: #2e6da4;
+border-left-color: #2e6da4;
+}
+
+
+.nav .btn-primary.focus,
+.nav .btn-primary:focus {
+color: #ffffff;
+background-color: #C89108;
+
+}
+
+.nav .btn-primary:hover
+{
+color: #ffffff;
+background-color: red;
+border-top-color: #204d74;
+border-right-color: #204d74;
+border-bottom-color: #204d74;
+border-left-color: #204d74;
+}
+
+
+.User .bg-info
+{
+
+background :none;  min-height: 27px;
+color:#9F6C07;
+font-size: 16px;
+border :0px dotted yellowgreen;
+border-bottom: #727780 3px solid ;
+margin-right:1px;
+text-align:left;
+}
+
+.ChooseFormat .nav a.youarehere,
+.ChooseFormat .nav a:hover {
+   background-color: #C89108;   border-radius:0px;
+}
+
+
+
+
+/* _____________________ Trombino ______________________*/
+
+
+.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img
+{
+border: 1px solid #ccc;
+
+}
+
+
+.ChooseFormat .nav .btn {
+  padding: 4px 10px;
+  min-height: 27px;
+  border-left: 1px solid #fff;
+}
+
+.ChooseFormat .nav a {
+  background-color: #727780;
+  border: 0px; border-radius: 0px;
+  font-size: 12px;
+}
+
+.ChooseFormat .nav a.youarehere, .ChooseFormat .nav a:hover {
+  background-color: #C89108;
+}
+
+.Users .bg-info {
+    min-height: 27px;
+    padding-left: 15px;
+    background-color: #727780;
+    font-size: 18px;
+    color: #eee;
+}
+  
+.Users .warning {
+    text-align: center;
+    color: #666;
+    font-style: italic; font-family: georgia, times; font-size: 15px;
+}
+
+.Users .table {
+    margin-top: 15px;
+}
+
+.Filters .bg-info {
+    background: none;
+    font-size: 12px;
+  }
+  
+.Filters .bg-info > .row > div {
+    padding: 4px 4px 4px 13px;
+    margin: 10px;
+    color: #333;
+    border: 1px solid #bbb;
+    border-radius: 15px;
+}
+  
+.OrgChart ul {
+    margin: 0; padding: 0;
+    position: relative;
+  }
+ 
+ .OrgChart li {
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 5px 5px 5px 10px;
+  }
+ 
+ .OrgChart .sameBlocSize {
+      display: flex;
+  }
+ 
+ .OrgChart li .bloc {
+      padding: 5px 10px;
+      display: inline-block;
+      border-radius: 5px;
+      min-height: 32px;
+  }
+  .tree, .vertical {
+      font-size:12px;
+  }
+ 
+  .bordered {
+      border: 2px solid #B5C1DA;
+      background-color: #F4F6FA; background-color:#EEF1F7;
+  }
+ 
+  .bordered.library,
+  .bordered.leaf {
+      border-color: #00adef;
+  }
+  .bordered.pedagogy {
+      border-color: #a08777;
+  }
+  .bordered.gold {
+      border-color: #bf8719;
+  }
+ 
+  .mainTree ul {
+      padding-top: 20px;
+  }
+ 
+  .tree a  { color:#20558A;   }
+ 
+  .tree li {
+      padding-top: 20px;
+  }
+  .mainTree li li {
+      padding-bottom: 20px;
+      display: flex;
+  }
+ 
+ /* We will use  .horizLeft and  .horizRight to draw the connectors. Both  .horizLeft and  .horizRight are displayed ABOVE li>a :
+    li .horizLeft, ul::before on the left
+    li .horizRight on the right
+  */
+ 
+  .tree ul {
+      display: flex;
+  }
+ 
+  li.nonSelectedElt {
+      font-size: 30%;
+      text-align: initial;
+  }
+ 
+  li.nonSelectedElt .bloc {
+      opacity: 0.5;
+      overflow: hidden;
+  }
+  .tree li.nonSelectedElt .bloc {
+      min-height: 0;
+      width: 15px;
+      padding: 5px 2px;
+  }
+ 
+  .tree li > .horizLeft,
+  .tree li > .horizRight {
+    position: absolute; top: 0;
+    width: 50%; height: 20px;
+    border-top: 1px solid #143e6e;
+ 
+    background-image: url(arrow-NE.svg);
+    background-size: 5px;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+  }
+  .tree li > .horizLeft {
+    background-image: url(arrow-NW.svg);
+    background-position: right bottom;
+  }
+ 
+ 
+  .tree li > .horizLeftBelow,
+  .tree li > .horizRightBelow {
+      position: absolute; bottom: 0;
+      width: 50%; height: 19px;
+      border-bottom: 1px solid #143e6e;
+  }
+ 
+  .tree li > .horizLeft,
+  .tree li > .horizLeftBelow {
+    right: 50%;
+  }
+  .tree li > .horizRight,
+  .tree li > .horizRightBelow {
+    left: 50%;
+  }
+  .tree li > .horizRight {
+    border-left: 1px solid #143e6e;
+  }
+  .tree li.selectedElt > .horizLeftBelow {
+      border-right: 1px solid #143e6e;
+      border-radius: 0 0 5px 0;
+  }
+ 
+  /* Remove left connector from first child and right connector from last child*/
+  .mainTree li:first-child > .horizLeft,
+  .tree li:last-child > .horizRight {
+    border-top: none;
+  }
+ 
+  /* rounded left border */
+  .mainTree li:first-child > .horizRight {
+      border-radius: 5px 0 0 0;
+  }
+ 
+  /* replace last border-left with border-right to allow rounded border in the left direction */
+  .tree li:last-child > .horizRight {
+    border-left: none;
+  }
+  .tree li:last-child > .horizLeft {
+    border-right: 1px solid #143e6e;
+    border-radius: 0 5px 0 0;
+  }
+ 
+  /* but remove it for root node */
+  .mainTree > ul > li > .horizLeft {
+      display: none;
+  }
+ 
+  .mainTree > ul, .mainTree > ul > li {
+      padding: 0;
+  }
+ 
+ /* add downward connectors from parents*/
+  .mainTree ul ul::before {
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-right: 1px solid #143e6e;
+    width: 0; height: 20px;
+  }
+ 
+ 
+  .vertical > ul > li.withBorder {
+      border-left: 1px solid #143e6e;
+      border-top: 1px solid #143e6e;
+      border-radius: 5px 0 0 0;
+      width: 4px;
+      height: 24px;
+      padding: 0;
+      margin-top: -1px;
+  }
+ 
+  .display_secondary_bloc .vertical > ul {
+      width: 34.2em;
+  }
+  .vertical li {
+      padding: 8px 20px 8px 20px;
+      pointer-events: none;
+  }
+  .display_secondary_bloc .vertical li {
+      padding-right: 2px;
+  }
+  .vertical li .bloc {
+    width: 15em;
+    display: block;
+    pointer-events: all;
+  }
+ 
+  .vertical li.nonSelectedElt {
+      padding-top: 8px;
+  }
+  .vertical li.nonSelectedElt .bloc {
+    margin-top: 0;
+    min-height: initial;
+    height: 8px;
+  }
+ 
+  .vertical .name {
+    padding: 5px 10px;
+  }
+ 
+  .vertical li > .verticalTop,
+  .vertical li > .verticalBottom {
+      position: absolute; left: 0;
+      border-left: 1px solid #143e6e;
+      width: 20px; height: 50%;
+ 
+    background-image: url(arrow-WN.svg);
+    background-size: 5px;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+  }
+  .vertical li > .verticalBottom {
+     background-image: url(arrow-WS.svg);
+     background-position: right top;
+  }
+ 
+  .vertical li .verticalTopRight,
+  .vertical li .verticalBottomRight {
+      position: absolute; right: 0;
+      border-right: 1px solid #143e6e;
+      width: 19px; height: 50%;
+  }
+ 
+  .vertical li .verticalTop,
+  .vertical li .verticalTopRight {
+      bottom: 50%;
+  }
+  .vertical li .verticalBottom,
+  .vertical li .verticalBottomRight {
+      top: 50%;
+  }
+ 
+  .fakeOne {
+      padding-top: 4px;
+      border-left: 1px solid #143e6e;
+      border-right: 1px solid #143e6e;
+  }
+ 
+  .vertical li > .verticalTop,
+  .vertical li.selectedElt .verticalTopRight {
+      border-bottom: 1px solid #143e6e;
+  }
+ 
+  .vertical li .first-bloc {
+      padding: 0;
+  }
+ 
+  .display_secondary_bloc .vertical li.selectedElt .first-bloc {
+      border-radius: 5px 0 0 5px;
+      border-right: none;
+  }
+ 
+  .vertical li:last-child > .verticalBottom {
+      border-left: none;
+  }
+ 
+  /* rounded bottom border */
+  .vertical li:last-child > .verticalTop {
+      border-radius:  0 0 0 5px;
+  }
+ 
+  .secondPane {
+      display: flex;
+  }
+ 
+  .secondPane .tree {
+      flex-grow: 1;
+  }
+ 
+  .members_other {
+    font-size: 80%;
+  }
+ 
+  .thirdPane {
+      margin-top: 23px;
+      display: flex;
+  }
+ 
+  .thirdPane > ul {
+      padding-top: 0;
+  }
+  .thirdPane li {
+    min-width: 10em;
+  }
+  .thirdPane li.nonSelectedElt {
+    min-width: initial;
+  }
+ 
+ li .secondary-bloc {
+     position: relative;
+     float: right;
+     background: white;
+     padding-top: 0;
+     margin-top: 0;
+     padding-right: 19px;
+     margin-right: -2px;
+ }
+ 
+ li .secondary-bloc .verticalTopRight {
+     top: -8px;
+ }
+ 
+ li .secondary-bloc .bloc {
+     border-radius: 0 5px 5px 0 !important;
+ }
+ 
+ li .secondary-bloc .members {
+     margin-top: 0;
+ }
+ 
+ .connect-blocs {
+     position: absolute;
+     left: 50%;
+     top: 0;
+     bottom: 0;
+ 
+     background: white;
+     width: 1.52em;
+     border-style: solid;
+ }
+ .connect-blocs {
+     border-width: 1px 0;
+     margin: 8px 0 8px -10px;
+ }
+ 
+ .empty4 {
+     flex-grow: 1;
+     border-top: 1px solid #143e6e;
+     min-width: 20px;
+ }
+ .display_secondary_bloc .empty4 {
+     min-width: none;
+ }
+ 
+ 
+ /*_____________________________ ORGANIGRAMME __________________________**/
+ 
+.tree a  { /*color: #337ab7; */  color:#20558A;   }
+ 
+ 
+ /**** ORGANIGRAMME : horizontale **/
+ 
+.bordered
+   { background-color: #fff;border:2px solid  #B5C1DA; border:2px solid  #B5C1DA;
+     font-size:12px;
+     background-color: #F4F6FA; background-color:#EEF1F7;
+   }
+ 
+ 
+.bordered.gold
+ {
+   border-color: #C89108; border-color: #95A7CB ;
+   background-color: #F4F6FA; background-color: #DEEAFE; border-width: 3px;
+   font-size:12px; font-weight: bold;
+ }
+ 
+ 
+.bordered.leaf, .bordered.library {
+   border-color : #BCC7DE; border-color : #d9d9d9;
+   background-color: #f6f6f6;
+ }
+ 
+ 
+ 
+ /***** ORGANIGRAMME : tous les vertical**/
+ 
+.vertical li .first-bloc {
+   padding-top: 10px;
+   padding-right: 0px;
+   padding-bottom: 10px;
+   padding-left: 0px;
+   background-color: #eeee55;   background-color: #F4CD71;
+   background-color: #FDE7BE; background-color:#FADDA7;   background-color: #F4CD71;
+   border-color: #DAB559;
+   border-width:2px ;
+ }
+ 
+ 
+.vertical li .selectedElt { border-width: 5px; }
+ 
+ 
+.OrgChart .imgCircle {
+     display: block;
+     /* float: left; */  float: right;
+     height: 26px;
+     margin: -18px 0 0 -23px;
+     width: 26px;
+ }
+ 
+ .mainTree .members_other {
+    max-height: 10em;
+    overflow-y: auto;
+  }
+   .members {
+    text-align: left;
+    margin-top: 1em;
+  }
+ 
+  .members .user-with-role {
+    clear: both;
+  }
+ 
+  .members .role {
+    color: #00326E;
+    font-size: 80%;
+    clear: both;
+  }
+ 
+  .members .affiliationName {
+     font-variant: small-caps;
+     font-weight: bold;
+     font-size: 80%;
+  }
+
+  .OrgChart .imgCircle {
+     width: 26px;
+     height: 26px;
+     margin: -18px 0 0 -23px;
+     display: block;
+     float: left;
+  }
+  .OrgChart .imgCircle img {
+      margin-top: -4px;
+  }
+ 
+  .vertical .imgCircle {
+     margin: -13px 0 0 -13px;
+     z-index: 2;
+  }
+ 
+ .secondary-bloc .imgCircle {
+    margin: 0 2px 0 0;
+ }
+ 
+  .thirdPane .imgCircle {
+    margin: 0;
+    Xmargin: -2px 3px 0 -16px;
+  }
+ 
+  .OrgChart li.nonSelectedElt .imgCircle {
+      display: none;
+  }
+
+  .photoGallery {
+    width: 144px;
+    height: 240px;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0 12px;
+  }
+  
+  .photoGallery .photo {
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .photoGallery .text {
+    text-align: center;
+    padding: 4px 0 8px 0px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    color:#20558A;
+  }
+  
+  .User .boite {
+    font-size: 13px;
+    margin-top: 30px;
+    padding: 15px;
+  
+    border:#aaaFB9 1px solid;
+    border-top: #D5DCeA 25px solid;
+    border-radius: 12px;
+  
+    background:url("https://eee-test.univ-paris1.fr/TESTYA/ANR-31.svg") no-repeat 510px 10px,
+             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-32.svg") no-repeat 550px 10px,
+             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-33.svg") no-repeat 590px 10px,
+             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat 630px 10px,
+             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-37.svg") no-repeat 670px 10px,
+             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-36.svg") no-repeat 720px 10px;
+     background-size: 1.8em,1.8em,2em,2em,2em,2.5em ;
+  }
+  
+  .User .cap {
+    color:#555;
+    font-size: 24px;
+  }
+  
+  .User .imgMarg{
+    margin-top: 15px;
+  }
+  
+  .User .breadcrumb > li + li::before {
+    padding: 0 0 0 10px !important;
+  }
+  
+  .User .marginTop {
+    margin-top:10px;
+  }
+  
+  .User .formats > div {
+    background :none;  min-height: 27px;
+    color:#9F6C07;
+    font-size: 16px;
+    border :0px dotted yellowgreen;
+    border-bottom: #727780 3px solid ;
+    margin-right:1px;
+    text-align:left;
+  }
+  
+.UserInTable td {
+    vertical-align: middle !important;
+    font-family: arial,verdana !important;
+    font-size : 12px;
+    color: #555;
+  }
+  
+  .UserInTable a {
+    color:#20558A;
+  }
+  
+  .UserInTable .btn-primary {
+    font-size: 13px;
+    Xwidth: 140px;
+  
+    padding: 3px 12px;
+    margin-top:  30px;
+    margin-bottom: 10px;
+  
+    border:1px solid #ccc;
+    border-bottom-width: 2px;
+    border-radius: 4px;
+  
+    background-color: #fff;
+    color: #337AB7;
+  }
+  
+  .UserInTable .btn-primary:hover {
+    color: #000;
+    background-color:#B5C1DA;
+    font-weight: bold;
+  }
+  
+  /**
+  Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
+  En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
+  **/
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .table tr td:first-child  {
+        float: right;
+    }
+    .table tr td  {
+      display: block;
+      border-top: 0px solid #d42626 !important;
+    }
+    .table tr {
+      border: 1px solid #ccc;
+    }
+  }
+  

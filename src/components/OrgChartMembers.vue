@@ -84,30 +84,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
- .mainTree .members_other {
-   max-height: 10em;
-   overflow-y: auto;
- }
-  .members {
-   text-align: left;
-   margin-top: 1em;
- }
-
- .members .user-with-role {
-   clear: both;
- }
-
- .role {
-   color: #00326E;
-   font-size: 80%;
-   clear: both;
- }
-
-  .affiliationName {
-    font-variant: small-caps;
-    font-weight: bold;
-    font-size: 80%;
- }
- </style>

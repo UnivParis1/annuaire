@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="Users">
 <div class="container">
     <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
 
@@ -159,42 +159,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.bg-info {
-  min-height: 27px;
-  padding-left: 15px;
-  background-color: #727780;
-  font-size: 18px;
-  color: #eee;
-}
-
-.warning {
-  text-align: center;
-  color: #666;
-  font-style: italic; font-family: georgia, times; font-size: 15px;
-}
-
-.table > tbody > tr > td{
-  vertical-align: middle !important;
-}
-
-/**
-Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
-En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
-**/
-@media only screen and (max-width: 768px) {
-  /* For mobile phones: */
-  .table tr td:first-child  {
-      float: right;
-  }
-  .table tr td  {
-    display: block;
-    border-top: 0px solid #d42626 !important;
-  }
-  .table tr {
-    border: 1px solid #ccc;
-  }
-}
-
-</style>

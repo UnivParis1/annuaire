@@ -1,5 +1,5 @@
 <template>
- <tr>
+ <tr class="UserInTable">
         <td class="col-md-1" >
           <div class="imgCircle">
             <img :title="person.supannListeRouge ? '': person.displayName" :src="person.photoURL" class="img-responsive">
@@ -68,16 +68,3 @@ export default {
   props: ['person', 'query'],
 }
 </script>
-<style scoped>
-td {
-  font-family: arial,verdana !important;
-  font-size : 12px;
-  color: #555;
-}
-
-.btn {
-  padding: 3px 12px;
-  font-size: 13px;
-}
-
-</style>

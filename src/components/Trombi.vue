@@ -21,22 +21,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.photoGallery {
-  width: 144px;
-  height: 240px;
-  overflow: hidden;
-  display: inline-block;
-  margin: 0 12px;
-}
-
-.photoGallery .photo {
-  height: 180px;
-  overflow: hidden;
-}
-
-.photoGallery .text {
-  text-align: center;
-  padding: 9px;
-}
-</style>
