@@ -55,19 +55,15 @@
               </div>
               <div v-for="desc in person.description">{{desc}}</div>
               <div v-for="info in person.info">{{info}}</div>
-              <div>
-                  <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
-              </div>
-              <div v-for="uri in person.labeledURI" >
-                  <a :href="uri" target="_blank">{{uri}}</a>
-              </div>
-          </div>
-          <div class="col-md-7">
             <div>
               <span v-for="(aff, index) in statusPers">
                 <span>{{index ? ' - ' : ''}}{{t(aff)}}</span>
               </span>
             </div>
+              <div v-for="uri in person.labeledURI" >
+                  Page perso :
+                  <a :href="uri" target="_blank">{{uri.replace(/^https?:\/\//, '')}}</a>
+              </div>
             <div>
               <span v-if="person['supannActivite-all']">
                 <span v-for="activite in person['supannActivite-all']">{{activite.name}}</span>
@@ -82,6 +78,55 @@
                 </span>
               </span>
             </div>
+          </div>
+          <div class="col-md-7">
+            <div>Coordonnées</div>
+            <div>
+                <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
+            </div>
+            <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
+              <div v-if="person.telephoneNumber">
+                <span class="uneditable-input" v-for="telephoneNumber in person.telephoneNumber">
+                    <a :href="'tel:' + telephoneNumber" target="_blank"> {{telephoneNumber}}</a>
+                </span>
+              </div>
+              <div v-if="person.supannAutreTelephone">
+                <span style="display: inline-block; vertical-align: top">
+                  <span class="uneditable-input" v-for="supannAutreTelephone in person.supannAutreTelephone">
+                    <a :href="'tel:' + supannAutreTelephone" target="_blank"> {{supannAutreTelephone}}</a>
+                    <br>
+                  </span>
+                </span>
+              </div>
+              <div v-if="person.mobile">
+                  <span class="uneditable-input" v-for="mobile in person.mobile"> <a :href="'tel:' + mobile" target="_blank">{{mobile}}</a></span>
+              </div>
+              <div v-if="person.facsimileTelephoneNumber">
+                  <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}} (Fax)</span>
+              </div>
+          </div>
+          <div class="adress">
+            <span v-if="person.buildingName">
+                <label >Site</label>
+                <span class="uneditable-input " v-for="buildingName in person.buildingName"> {{buildingName}}</span><br>
+            </span>
+            <span v-if="person.roomNumber">
+              <label>Bureau</label>
+              <span class="uneditable-input" v-for="roomNumber in person.roomNumber"> {{roomNumber}}</span><br>
+            </span>
+            <span v-if="person.up1FloorNumber">
+              <label>Étage</label>
+              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span><br>
+            </span>
+            <span v-if="person.postalAddress">
+              <label>Adresse postale</label>
+              <span style="display: inline-block; vertical-align: top">
+                <span style="white-space:pre-wrap;">{{person.postalAddress}}</span>
+                <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + person.postalAddress" title="Afficher la carte" target="_blank">
+                  <span class="glyphicon glyphicon-map-marker"></span></a><br><br>
+                </span>
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -109,56 +154,6 @@
             </div>
           </div>
           <br>
-        </div>
-      </div>
-      <!-- Affichage personnel-->
-      <div v-else>
-        <div class="col-md-10 col-md-offset-2">
-          <div class="row">
-            <div class="col-md-5 marginTop phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
-              <div v-if="person.telephoneNumber">
-                <span class="uneditable-input" v-for="telephoneNumber in person.telephoneNumber">
-                    <a :href="'tel:' + telephoneNumber" target="_blank"> {{telephoneNumber}}</a>
-                </span>
-              </div>
-              <div v-if="person.supannAutreTelephone">
-                <span style="display: inline-block; vertical-align: top">
-                  <span class="uneditable-input" v-for="supannAutreTelephone in person.supannAutreTelephone">
-                    <a :href="'tel:' + supannAutreTelephone" target="_blank"> {{supannAutreTelephone}}</a>
-                    <br>
-                  </span>
-                </span>
-              </div>
-              <div v-if="person.mobile">
-                  <span class="uneditable-input" v-for="mobile in person.mobile"> <a :href="'tel:' + mobile" target="_blank">{{mobile}}</a></span>
-              </div>
-              <div v-if="person.facsimileTelephoneNumber">
-                  <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}} (Fax)</span>
-              </div>
-          </div>
-          <div class="col-md-7 marginTop">
-            <span v-if="person.buildingName">
-                <label >Site</label>
-                <span class="uneditable-input " v-for="buildingName in person.buildingName"> {{buildingName}}</span><br>
-            </span>
-            <span v-if="person.roomNumber">
-              <label>Bureau</label>
-              <span class="uneditable-input" v-for="roomNumber in person.roomNumber"> {{roomNumber}}</span><br>
-            </span>
-            <span v-if="person.up1FloorNumber">
-              <label>Étage</label>
-              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span><br>
-            </span>
-            <span v-if="person.postalAddress">
-              <label>Adresse postale</label>
-              <span style="display: inline-block; vertical-align: top">
-                <span style="white-space:pre-wrap;">{{person.postalAddress}}</span>
-                <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + person.postalAddress" title="Afficher la carte" target="_blank">
-                  <span class="glyphicon glyphicon-map-marker"></span></a><br><br>
-                </span>
-              </span>
-            </span>
-          </div>
         </div>
       </div>
     </div>
