@@ -19,7 +19,7 @@
       <span class="bloc" :class="classes(e1)">
         {{e1.roles[0].supannRoleGenerique[0]}}
         <br>
-        <router-link :to="withUser(e1.roles[0])" v-if="e1.roles[0]">{{e1.roles[0].displayName}}</router-link>
+        <maybe-router-link :to="withUser(e1.roles[0])">{{e1.roles[0].displayName}}</maybe-router-link>
       </span>
       <ul>
           <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">

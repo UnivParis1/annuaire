@@ -3,7 +3,7 @@
     <span v-for="role in rolesGrouped">
       <div class="role">{{role.v}}&nbsp;: </div>
       <div class="user-with-role" v-for="u in role.group">
-        <router-link :to="withUser(u)" :tag="u.mail ? 'a' : 'span'">{{u.displayName}}</router-link>
+        <maybe-router-link :to="withUser(u)">{{u.displayName}}</maybe-router-link>
         <br>
       </div>
     </span>
@@ -15,7 +15,7 @@
             <div v-for="byDescr in byAff.group" class="description">
               <div>{{byDescr.v}}</div>
               <span v-for="u in byDescr.group" :title="u.info">
-                <router-link :to="withUser(u)" :tag="u.mail ? 'a' : 'span'">{{u.displayName}}</router-link><br>
+                <maybe-router-link :to="withUser(u)">{{u.displayName}}</maybe-router-link><br>
               </span>
             </div>
            <br>

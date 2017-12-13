@@ -1,5 +1,5 @@
 <template>
-      <router-link :to="withUser(person)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
+      <maybe-router-link :to="withUser(person)" class="photoGallery">
             <div class="photo">
                 <img :title="title"
                     :src="photoURL" class="img-responsive">
@@ -7,7 +7,7 @@
             <div class="text">
                 {{person.supannListeRouge ? "Personne sur liste rouge" : person.displayName}}
             </div>
-      </router-link>
+      </maybe-router-link>
 </template>
 
 <script>

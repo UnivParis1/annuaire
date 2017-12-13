@@ -24,7 +24,7 @@ export default {
     withUser(user, query) {
         let id = user.mail;
         if (!id) {
-            return {};
+            return;
         }
         id = id.replace(new RegExp("\\.?" + config.domain + "$"), '');
         if (!query) query = {};

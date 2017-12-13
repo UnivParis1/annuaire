@@ -13,7 +13,7 @@
 
                <div v-for="role in affectationRolesGrouped" class="manager">
                   {{role.v}}&nbsp;:
-                  <span v-for="(u, i) in role.group">{{i ? ", " : ''}}<router-link :to="withUser(u)">{{u.displayName}}</router-link>
+                  <span v-for="(u, i) in role.group">{{i ? ", " : ''}}<maybe-router-link :to="withUser(u)">{{u.displayName}}</maybe-router-link>
                   </span>
                </div>
                <div v-if="affectation && affectation.labeledURI" class="labeledURI">
