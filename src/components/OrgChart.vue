@@ -60,7 +60,7 @@
             <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
 
             <span class="bloc first-bloc" :class="classes(e)">
-              <router-link :to="withParam('affectation', e.key)" :title="e.key" :tag="e.subGroups ? 'a' : 'span'">
+              <router-link :to="withParam('affectation', e.key)" :title="e.key">
                 <span class="name">{{e.name}}</span>
               </router-link>
               <members :structure="e" :onlyRoles="e4.key" :query="query" v-if="e === e3 && !display_secondary_bloc"></members>
