@@ -228,7 +228,6 @@ export default {
     async searchPerson() {
         const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
         if (!person) return { error: "Utilisateur inconnu" };
-        if (person.postalAddress) person.postalAddress = person.postalAddress.trim();
         return { person };
     },
   },
