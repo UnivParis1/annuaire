@@ -35,11 +35,12 @@ export default {
  }
 
 .secondary-bloc .imgCircle {
-   margin: -2px 3px 0 -16px;
+   margin: 0 2px 0 0;
 }
 
  .thirdPane .imgCircle {
-   margin: -2px 3px 0 -16px;
+   margin: 0;
+   Xmargin: -2px 3px 0 -16px;
  }
 
  li.nonSelectedElt .imgCircle {
