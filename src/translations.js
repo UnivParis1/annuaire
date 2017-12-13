@@ -5,7 +5,8 @@ export default {
         LABEL_CRIT_STATUS: "Statut",
         STATUS_teacher: "Enseignant",
         STATUS_researcher: "Chercheur",
-        STATUS_teacher_researcher: "Enseignant / Chercheur",
+        STATUS_teacher_researcher: "Enseignant-chercheur",
+        "STATUS_teacher|researcher": "Enseignant / Chercheur",
         STATUS_staff: "Personnel Biatss",
         STATUS_emeritus: "Professeur émérite",
         STATUS_student:"Étudiant",
@@ -13,7 +14,7 @@ export default {
 
         STATUS_teachers: "Enseignants",
         STATUS_researchers: "Chercheurs",
-        STATUS_teacher_researchers: "Enseignants / Chercheurs",
+        "STATUS_teacher|researchers": "Enseignants / Chercheurs",
         STATUS_staffs: "Personnels Biatss",
         STATUS_emerituss: "Professeurs émérites",
         STATUS_students:"Étudiants",

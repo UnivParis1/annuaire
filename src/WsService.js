@@ -32,8 +32,20 @@ export let getRoleGenerique = (role) => (
     wsgroupsJsonp("/search", { token: role, kinds: 'supannRoleGenerique', maxRows: 1 }).then(r => r.supannRoleGenerique[0])
 );
 
+export let getActivite = (key) => (
+    wsgroupsJsonp("/search", { token: key, kinds: 'supannActivite', maxRows: 1 }).then(r => r.supannActivite[0])
+);
+
 export let searchPersons = (wsparams) => (
-    wsgroupsJsonp("/searchUser", wsparams)
+    wsgroupsJsonp("/searchUser", wsparams).then(persons => (
+      persons.map(p => {
+          p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
+          if (p.supannListeRouge) {
+            p = { supannListeRouge: true };
+          }
+          return p;
+      })
+    ))
 );
 
 //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
@@ -49,43 +61,47 @@ export let getDiploma = (diploma) => (
     wsgroupsJsonp("/searchGroup", {filter_category:'diploma', token: diploma, maxRows: 1 }).then(l => l && l[0])
 );
 
-export let compute_wsparams_user_filters = ({ affiliation, affectation, diploma, role }) => {
+export async function compute_wsparams_user_filters ({ affiliation, affectation, diploma, role, activite }) {
     let wsparams = {};
 
+    wsparams.filter_mail = '*';
     wsparams.filter_eduPersonAffiliation = affiliation;
 
     if (role) {
         wsparams.filter_supannRoleGenerique = role;
     }
 
+    if (activite && activite.match(/^\{UAI:0751717J:ACT\}/)) {
+        wsparams.filter_description = (await getActivite(activite)).name;
+    }
+
     if (diploma) {
         wsparams.filter_member_of_group = "diploma-" + diploma;
-        return Promise.resolve(wsparams);
+        return wsparams;
     } else if (affectation){
       if (affiliation === 'student' || affiliation === 'alum') {
           wsparams.filter_supannEntiteAffectation = affectation;
-          return Promise.resolve(wsparams);
+          return wsparams;
       } else {
-        return getGroupFromStruct(affectation).then(group => {
-            wsparams.filter_member_of_group = "groups-employees." + group.businessCategory + "." + affectation;
-            return wsparams;
-        });
+        const group = await getGroupFromStruct(affectation);
+        wsparams.filter_member_of_group = "groups-employees." + group.businessCategory + "." + affectation;
+        return wsparams;
       }
     } else {
-        return Promise.resolve(wsparams);
+        return wsparams;
     }
 };
 
 export const OrgChart = {
   getMembers(query, affectation) {
-    if (!query.connected && !query.token || !affectation) {
+    if (!config.connected && !query.token || !affectation) {
         return Promise.resolve([]);
     }
     return searchPersons({
-        CAS: query.connected,
+        CAS: config.connected,
         token: query.token,
         filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff',
-        filter_supannEntiteAffectation: affectation, attrs: 'uid,displayName,mail,info,eduPersonPrimaryAffiliation',
+        filter_supannEntiteAffectation: affectation, attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,employeeType,supannActivite-all',
     });
   },
 };

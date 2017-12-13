@@ -10,11 +10,11 @@
   <body>
     <!--Intégrer le bandeau ENT -->
     <script type="text/javascript">
-      var connected = location.href.match(/connected/);
+      var connected = location.pathname.match(/^\/(annuaire|ent)\//);
       if (connected)
         window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true };
       else
-        window.bandeau_anonyme = { title: "Annuaire public de l'université Paris 1" };
+        window.bandeau_anonyme = { title: "Annuaire public" };
     </script>
     <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
 

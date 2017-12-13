@@ -1,37 +1,41 @@
 <template>
 <div class="Users">
 <div class="container">
-    <Filters :query="query" :affectation_manager="affectation_manager"></Filters>
+    <Filters :query="query"></Filters>
 
-    <div class="row">
+    <div class="row" v-if="!noFilters">
         <div class="col-md-12">
             <div class="bg-info">
+               <ChooseFormat :format="query.format"></ChooseFormat>
                 <span v-if="persons">{{persons.length}} résultat(s)</span>
            </div>
         </div>
       </div>
-    <ChooseFormat :format="query.format"></ChooseFormat>
-      <div class="row" style="height:40px" >
+      <div class="row">
         <div class="col-md-12 warning" v-if="persons && persons.length >= maxRows" >
-            <span v-if="query.connected">
+            <span v-if="connected">
               Le nombre de résultats est limité. Veuillez affiner la recherche.
             </span>
             <span v-else>
               La recherche publique est limitée à {{maxRows}} résultats, pour plus de résultats,
-              <router-link :to="withParam('connected', true)">veuillez vous identifier.</router-link>
+              <a :href="connectedHref($route)">veuillez vous identifier.</a>
             </span>
           </span>
         </div>
-        <div class="col-md-12 warning" v-if="query.format === 'chart' && !query.connected" >
+        <div class="col-md-12 warning" v-if="query.format === 'chart' && !connected" >
           <span>
-              Seul les responsables sont affichés, pour voir le personnel,
-              <router-link :to="withParam('connected', true)">veuillez vous identifier.</router-link>
+              Seul les responsables sont affichés, pour voir tous les personnels,
+              <a :href="connectedHref($route)">veuillez vous identifier.</a>
           </span>
         </div>
     </div>
 </div>
 
-<div v-if="noFilters || query.format === 'chart'">
+<div v-if="query.format === 'chart'">
+    <OrgChart :selected="query.affectation" :query="query" :displayAll="true"></OrgChart>
+</div>
+<div v-else-if="noFilters">
+    <Slider :slides="slides" slide_duration="4"></Slider>
 </div>
 <div v-else-if="!persons" class="container">
   <div class="row"><div class="col-md-12">
@@ -39,16 +43,11 @@
   </div></div>
 </div>
 <div v-if="query.format === 'trombi'" class="container">
-  <div class="row"><div class="col-md-12">
+  <div class="row"><div class="col-md-12 text-center">
     <span v-for="person in persons">
       <Trombi :person="person"></Trombi>
     </span>
   </div></div>
-</div>
-<div v-else-if="query.format === 'chart'" class="container-fluid">
-  <div class="row">
-    <OrgChart :selected="query.affectation" :query="query" :displayAll="true" class="col-md-12"></OrgChart>
-  </div>
 </div>
 <div v-else class="container">
  <div class="row"><div class="col-md-12">
@@ -65,96 +64,69 @@
 
 <script>
 import * as WsService from "../WsService";
+import * as sortUsers from '../sortUsers';
+import helpers from '../helpers';
 import ChooseFormat from './ChooseFormat';
 import UserInTable from './UserInTable';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 import Filters from './Filters';
+import Slider from './Slider';
 import config from '../config';
 
 function _getSearchPersons({ maxRows }, query) {
-    let wsparams = { maxRows, CAS: !!query.connected, token: query.token };
+    let wsparams = { maxRows, CAS: config.connected, token: query.token };
     return WsService.compute_wsparams_user_filters(query).then(wsparams_filters =>
         WsService.searchPersons({ ...wsparams, ...wsparams_filters })
     ).then(persons => {
         persons.forEach(p => {
-            p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
             p.photoURL = config.photoURL(p);
         });
         return persons;
     })
 }
 
-function getAffectationManager_(query, persons) {
-    let affectation = query.affectation;
-
-    // Récupérer le chef de la structure recherché
-    const addRole = (person) => {
-        let role = person && getManagerRole(person, affectation);
-        return role && { role, ...person };
-    };
-    let chef = addRole(persons[0]);
-    if (chef) {
-        console.log(`the first search result is the manager of ${affectation}`);
-        // optimisation: pas besoin d'appeler le web-service
-        return Promise.resolve(chef);
-    } else {
-        return _getSearchPersons({ token: '', maxRows: 1 }, { affectation }).then(persons => addRole(persons[0]))
-    }
-}
-
-function getManagerRole(person, affectation) {
-    let supannRoleEntiteAll = person['supannRoleEntite-all'] || [];
-    for (let it of supannRoleEntiteAll) {
-      if (it.structure.key === affectation){
-        return it.role;
-      }
-    }
-    return undefined;
-}
-
 export default {
   props: ['query'],
-  components: { ChooseFormat, Trombi, UserInTable, Filters, OrgChart },
+  components: { ChooseFormat, Trombi, UserInTable, Filters, OrgChart, Slider },
   data() {
       return {
-        affectation_manager: undefined, // person
-
         // users matching filters
         persons: [],
       };
   },
   computed: {
       noFilters() {
-           return !['token', 'affectation', 'affiliation', 'diploma', 'role'].find(filter => this.query[filter]);
+           return !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => this.query[filter]);
+      },
+      connected() {
+          return config.connected;
       },
       maxRows() {
-          return this.query.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
+          return config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
+      },
+      slides() {
+          return config.slides;
       },
   },
   watch: {
-    'query': 'updateAsyncData',
-  },
-  mounted() {
-      this.updateAsyncData();
+    'query': {
+        handler: 'updateAsyncData',
+        immediate: true,
+    },
   },
   methods: {
     updateAsyncData() {
         this.persons = undefined;
-        this.affectation_manager = undefined;
 
-        if (this.noFilters || this.query.format === 'chart') return;
-
-        _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
+        if (this.noFilters || this.query.format === 'chart') {
+        } else {
+          _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
+            persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p)) }));
+            persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
             this.persons = persons;
-
-            if (this.query.affectation) {
-                getAffectationManager_(this.query, persons).then(manager => {
-                    console.log("affectation_manager", manager);
-                    this.affectation_manager = manager;
-                });
-            }
-        });
+          });
+        }
     },
   },
 }

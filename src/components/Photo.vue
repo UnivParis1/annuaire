@@ -1,6 +1,6 @@
 <template>
   <div class="imgCircle">
-    <img :src="photoURL" v-if="user">
+    <img :src="photoURL" v-if="user" class="img-responsive">
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
-      <router-link :to="withUser(person.mail)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
+      <router-link :to="withUser(person)" :tag="person.supannListeRouge ? 'span' : 'a'" class="photoGallery">
             <div class="photo">
-                <img :title="person.supannListeRouge ? '' : person.displayName"
+                <img :title="title"
                     :src="photoURL" class="img-responsive">
             </div>
             <div class="text">
@@ -17,6 +17,16 @@ export default {
   props: ['person'],
   computed: {
     photoURL() { return config.photoURL(this.person) },
+    title() {
+        const person = this.person;
+        if (person.supannListeRouge) return '';
+
+        let lines = [person.displayName];
+        lines.push(... (person['supannRoleEntite-all'] || []).map(role => role.role));
+        lines.push(... (person.telephoneNumber || []));
+
+        return lines.join("\n");
+    },
   },
 }
 </script>

@@ -28,19 +28,23 @@ export default {
             this.$emit("searchSuccess", data);
             return data; // we could filter the results, but we just want to know the results
         };
-        
-        let params = { select, onSearchSuccess, wsParams: this.wsparams };
+
+        const warning_listeRouge = `Les personnels de l'université peuvent voir d'autres résultats. <br><a onclick='document.location = this.href' href='${this.connectedHref({})}'>Connexion</a>`;
+        const warningMsgs = {
+            listeRouge_plural: warning_listeRouge,
+            listeRouge_one:    warning_listeRouge,
+        };
+
+        let params = { select, onSearchSuccess, warningMsgs, wsParams: this.wsparams };
         // autocompleteUser de jQuery gère l'autocomplétion
         let searchURL = config.wsgroupsURL + '/search';
         jQuery(this.$el)['autocompleteUserAndGroup'](searchURL, params);
       },
   },
-  mounted() {
-    this.installWidget();
-  },
   watch: {
     wsparams: {
         handler: 'installWidget',
+        immediate: true,
         deep: true,
     },
     value(val) {

@@ -1,27 +1,21 @@
 <template>
-<div>
+<div class="App">
   <div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">&nbsp;</div>
-        <div class="col-md-6 col-md-offset-3">
+    <div class="search">
             <form @submit.prevent="showUsers(search_token)">
             <div class="form-group has-feedback">
                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                 <autocompleteUserAndGroup
-                     placeholder="Recherche d'une personne, d'une structure..." class="form-control" v-auto-focus
+                     placeholder="Rechercher une personne, une structure, une fonction, ..." class="form-control" v-auto-focus
                      :wsparams="wsparams" v-model="search_token"
                      @searchSuccess="searchResults = $event" @select="showUserOrStructure">
                 </autocompleteUserAndGroup>
             </div>
             </form>
 
-        </div>
-    </div>
-
-    <div class="row" style="margin-bottom: 25px">
-        <div class="col-md-12 text-center" >
+        <div class="text-center" >
             <ul class="nav nav-pills menu-top affiliations" role="tablist">
-            <div class="radio-inline" v-for="aff in usefulAffiliations">
+            <div class="radio-inline" v-for="aff in usefulAffiliationsGrouped">
                 <li :class="aff == query.affiliation ? 'selected' : 'deselected'">
                   <router-link :to="withParam('affiliation', aff)">
                     {{t("STATUS_" + aff)}}
@@ -34,8 +28,14 @@
             </ul>
         </div>
     </div>
+    <router-link class="chartFormatLink" :to="{ path: '/', query: { format: 'chart' } }">
+        <span>Organigramme</span>
+    </router-link>
   </div>
   <router-view></router-view>
+  <div class="legalFooter">
+    Avis de la CNIL numéro 370298. Il est rappelé que les droits des personnes figurant sur ce serveur sont garantis et protégés par la législation française et qu'il est interdit de capturer les informations nominatives pour les utiliser à des fins commerciales, publicitaires ou autres (cf. loi du 6/01/1978)
+  </div>
 </div>
 </template>
 
@@ -67,25 +67,17 @@ export default {
       };
   },
   computed: {
-    usefulAffiliations() { return config.usefulAffiliations },
+    usefulAffiliationsGrouped() { return config.usefulAffiliationsGrouped },
     query() { return this.$route.query },
   },
   asyncComputed: {
       wsparams() {
         //console.log('set_autocomplete_wsparams', this.query);
         return WsService.compute_wsparams_user_filters(this.query).then(wsparams_filters => {
-            let wsparams = { kinds: 'users,groups,supannRoleGenerique', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: !!this.query.connected }
+            let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: config.connected }
             return { ...wsparams, ...wsparams_filters }
         });
       },
-  },
-
-  watch: {
-    query() {
-        if (this.query.connected && !window.prolongation_ENT_args) {
-            window.location.reload();
-        }
-    }
   },
 
   methods: {
@@ -100,9 +92,11 @@ export default {
     showUserOrStructure(userOrGroup) {
         // recherche de personne
         if (userOrGroup.category === 'users') {
-            this.go(this.withUser(userOrGroup.mail));
+            this.go(this.withUser(userOrGroup));
         } else if (userOrGroup.category === 'supannRoleGenerique') {
             this.go(this.withParam('role', userOrGroup.key));
+        } else if (userOrGroup.category === 'supannActivite') {
+            this.go(this.withParam('activite', userOrGroup.key));
         } else {
             // recherche d'un groupe "structures-xxx" or "diploma-xxx"
             let [, kind, val] = userOrGroup.key.match(/^(\w+)-(.*)/) || [];

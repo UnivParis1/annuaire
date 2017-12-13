@@ -1,784 +1,1851 @@
-.affiliations .radio-inline  {
-  margin: 10px 0 0 0;
-  padding: 0px;
-  font-size: 11px;
+a {
+    color: #20558a;
+}
+
+a:hover {
+    color: #00326e
+}
+
+Div.App {
+    margin-top: 30px;
+    font-family: Arial, Helvetica, "Liberation Sans", FreeSans, sans-serif;
+    font-size: 12px;
+    color: #555;
+}
+
+
+
+#bandeau-anonyme .bandeau-titlebar, #bandeau-anonyme .bandeau-titlebar a {
+    font-size: 23px !important;
+    padding: 13px 6px 18px 13px !important;
+}
+
+.nav.nav-pills.menu-top.affiliations {
+    margin-bottom: 30px;
+}
+
+.search {
+    float: left;
+    width: 75%;
+    min-width: 250px;
+    border: none;
+    text-align: center;
+}
+
+.chartFormatLink {
+    float: right;
+    width: 25%;
+    margin-top: 10px;
+    min-width: 100px;
+}
+
+.search form {
+    width: 70%;
+    padding-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+}
+
+.form-control {
+    background-color: #fff;
+    border: 1px solid #5381ac;
+    font-size: 13px;
+    height: 31px;
+    outline: medium none;
+}
+
+/* ____________ Menu deroulant _________________ */
+
+
+.ui-menu {
+    padding: 0px !important;
+    -webkit-box-shadow: 3px 6px 2px -3px rgba(102,102,102,1);
+    -moz-box-shadow: 3px 6px 2px -3px rgba(102,102,102,1);
+    box-shadow: 3px 6px 2px -3px rgba(102,102,102,1);
+}
+
+.ui-menu-item {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+}
+
+.ui-widget {
+    font-size: 1em !important;
+}
+
+.ui-menu-item.odd {
+    border-top: 1px dotted #999;
+    border-bottom: 1px dotted #999;
+    background-color: white !important;
+}
+
+.ui-autocomplete-loading :hover {
+    background-color: white !important;
+}
+
+
+/* Les statuts centr�  */
+.ui-menu .kind {
+    text-transform: uppercase;
+    color: #666 !important;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px !important;
+    margin: 0px;
+    background-color: #f0f0f0 !important;
+}
+
+.ui-menu .warning {
+    color: #20558a !important;
+    background-color: #f4f6fa;
+    padding: 10px !important;
+    border-top: 1px dotted #999;
+    border-radius: 7px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.ui-corner-all .warning a {
+    color: #20558a!important;
+    border: 1px #999 solid;
+    text-align: center;
+    text-transform: uppercase;
+    width: 101px;
+    margin-top: 6px;
+    padding: 3px !important;
+}
+
+.ui-corner-all .warning a:hover {
+    border: 1px #999 solid;
+    margin-top: 6px !important;
+    text-align: center;
+    font-weight: bold !important;
+    background-color: #fff !important;
+    padding: 3px !important;
+}
+
+
+/* _______________________ AFFILIATION ______________________ */
+
+
+.affiliations .radio-inline {
+    margin: 10px 0 0 0;
+    padding: 0px;
+    font-size: 11px;
+    font-family: "Brandon Grotesque",Arial,sans-serif;
+    text-transform: uppercase;
 }
 
 .affiliations li {
-  padding: 3px 3px 3px 10px;
-  margin: 1px 5px;
+    padding: 3px 9px 3px 1px;
+    margin: 1px 0px 1px 11px;
 }
 
-.affiliations li a { color: #666; }
+.affiliations li a {
+    color: #666;
+}
 
-.affiliations li.selected a { color: #00326e; text-decoration: none;}
+.affiliations li.selected a {
+    color: #00326e !important;
+    text-decoration: none;
+}
 
 .affiliations li :hover {
-  color: #00326e;
-  text-decoration: none;
+    color: #20558A !important;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #c89108;
 }
 
-.affiliations li.selected  {
-  border-bottom: 1px solid #ccc;
-  border-radius: 7px;
-  background-color:#D5DCeA;
+.affiliations li.selected {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #c89108;
+    color: #c89108;
+    margin-right: 0px;
 }
 
-.deselected .badge {
- display: none;
-}
-
-.badge  {
- background-color:white; color: #95A7CB;
- border: 1px #fff solid; border-radius: 7px;
- font-size: 8px;
- padding: 2px;
- margin: 0px 4px 0px 7px;
-}
-
-.imgCircle {
-position: relative;
-width: 130px;
-height: 130px;
-overflow: hidden;
-border-radius: 50%;
-padding-left: 0;
-}
-
-.imgCircle img {
-width: 100%;
-height: auto;
-border: 0 none;
-float: left;
-margin: -20px 0 0 0px;
-max-height: none;
-max-width: none;
-padding: 0;
-}
-
-label {
-margin-right: 0.5em;
-margin-bottom: 0;
-}
-
-.selected {
-  background-color:#dad3d3;
-  color:white;
-  text-decoration: none;
-}
-
-.glyphicon.glyphicon-remove  {
-  position:absolute;  right:5px; top:4px;
-  background-color:#bbb; color: white;
-
-  border:1px #95A7CB solid; border-radius: 9px; font-size:9px; padding:2px;
-  margin :0px;
-}
-
-/*********************  Page des Listes : les champs INFO   ******/
-/* Nom */
-.displayName.ng-binding {font-size :17px; margin-bottom: 8px; }
-
-.glyphicon-envelope {  border:1px dotted #ccc;}
-
-.glyphicon-phone {  background: url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat left top; }
-
-
-.bg-info > .row > div
-{
-padding: 4px;
-padding-left: 13px;
-
-margin : 10px;
-
-color: #333333;
-background-color: #f2f2f2;
-border: 1px solid #bbb; ;
-border-radius: 15px;
-
+.badge {
+    background-color: white;
+    padding: 0;
+    margin: 0;
 }
 
 
-.bg-info {background: none; }
+/* __________________________FILTRES________________ */
 
-
-.text-success {color:#666; font-style: italic; font-family: georgia, times; font-size:14px;   }
-
-.btn {
-padding-top: 2px;
-padding-right: 12px;
-padding-bottom: 3px;
-padding-left: 12px;
-margin-bottom: 0px;
-font-size: 12px;
-font-weight: 400;
-background-image: none;
-border-top:0px;
-border-radius: 0px;
+.Filters .bg-info {
+    background-color: #fff !important;
 }
 
-/* Ligne 5 */
-.btn-primary
-{
-color: #ffffff;
-background-color: #727780;
-border-top-color: #2e6da4;
-border-right-color: #2e6da4;
-border-bottom-color: #2e6da4;
-border-left-color: #2e6da4;
+.Users .Filters {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
 }
 
-
-.nav .btn-primary.focus,
-.nav .btn-primary:focus {
-color: #ffffff;
-background-color: #C89108;
-
+.Filters .bg-info > .row > div {
+    padding: 4px 2px 3px 4px;
+    margin: 7px;
+    color: #555;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #c89108;
+    font-size: 12px;
 }
 
-.nav .btn-primary:hover
-{
-color: #ffffff;
-background-color: red;
-border-top-color: #204d74;
-border-right-color: #204d74;
-border-bottom-color: #204d74;
-border-left-color: #204d74;
+.text-muted {
+    width: initial;
+    clear: left;
+    font-weight: bold;
+    padding-right: 29px !important;
+    min-width: 129px;
+}
+
+.text-muted.affectationFilter .name {
+    font-size: 18px;
+    font-weight: normal;
+    padding-bottom: 12px;
 }
 
 
-.User .bg-info
-{
 
-background :none;  min-height: 27px;
-color:#9F6C07;
-font-size: 16px;
-border :0px dotted yellowgreen;
-border-bottom: #727780 3px solid ;
-margin-right:1px;
-text-align:left;
+.glyphicon.glyphicon-remove {
+    background-color: #aaa;
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    color: white;
+    font-size: 9px;
+    margin: 0;
+    padding: 1px;
+    padding-left: 2px;
+    padding-right: 1px;
+    position: absolute;
+    right: 0;
+    top: 7px;
 }
 
-.ChooseFormat .nav a.youarehere,
-.ChooseFormat .nav a:hover {
-   background-color: #C89108;   border-radius:0px;
+
+.glyphicon.glyphicon-remove {
+    background-color: #e55302;
+    border: 1px solid #e55302;
 }
 
 
 
 
-/* _____________________ Trombino ______________________*/
+/******* ligne navigation affichage par liste / Trombino **********/
 
 
-.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img
-{
-border: 1px solid #ccc;
-
+.Users .bg-info {
+    background-color: #727780;
+    min-height: 27px;
+    padding-left: 15px;
+    font-size: 18px;
+    color: #FFEFBF;
 }
 
+.ChooseFormat {
+    margin-top: 25px;
+}
 
 .ChooseFormat .nav .btn {
-  padding: 4px 10px;
-  min-height: 27px;
-  border-left: 1px solid #fff;
+    padding: 4px 10px;
+    min-height: 27px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
 }
 
 .ChooseFormat .nav a {
-  background-color: #727780;
-  border: 0px; border-radius: 0px;
-  font-size: 12px;
-}
-
-.ChooseFormat .nav a.youarehere, .ChooseFormat .nav a:hover {
-  background-color: #C89108;
-}
-
-.Users .bg-info {
-    min-height: 27px;
-    padding-left: 15px;
     background-color: #727780;
-    font-size: 18px;
-    color: #eee;
+    border: 0px;
+    border-radius: 0px;
+    font-size: 12px;
 }
-  
+
+.ChooseFormat .nav .chart {
+    background-image: url(images/chart.svg);
+    background-position: 5px 4px;
+    background-size: 18px auto;
+    background-repeat: no-repeat;
+    padding-left: 31px;
+    display: inline-block;
+}
+
+.ChooseFormat .nav a.youarehere {
+    background-color: #9f6c07;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.ChooseFormat .nav a:hover {
+    background-color: #C89108;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
 .Users .warning {
     text-align: center;
-    color: #666;
-    font-style: italic; font-family: georgia, times; font-size: 15px;
+    font-size: 15px;
+    color: #555;
+    font-style: italic;
+    font-family: Georgia, "DejaVu Serif", Norasi, "Times", serif;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
+
+.Users .warning a {
+    background-color: #f4e9ce;
+    border: 1px solid #d8b252;
+    border-radius: 9px;
+    display: inline-block;
+    padding: 1px 11px;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.Users .warning a:hover {
+    background-color: #fff;
+    text-decoration: none;
+    border: 1px solid #c89108;
+    color: #20558a;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+
+/* _______________ (2)  TABLE LISTE & PHOTO _____________ */
+
 
 .Users .table {
     margin-top: 15px;
 }
 
-.Filters .bg-info {
-    background: none;
-    font-size: 12px;
-  }
-  
-.Filters .bg-info > .row > div {
-    padding: 4px 4px 4px 13px;
-    margin: 10px;
-    color: #333;
-    border: 1px solid #bbb;
-    border-radius: 15px;
+.User label {
+    font-weight: initial;
+    margin-right: 0;
 }
-  
-.OrgChart ul {
-    margin: 0; padding: 0;
+
+.UserInTable td {
+    vertical-align: middle !important;
+    padding-top: 16px;
+    padding-bottom: 6px;
+}
+
+tr.UserInTable {
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #f4f6fa;
+}
+
+.table-striped > tbody > tr:nth-of-type(2n) {
+    background-color: #fff;
+}
+
+.table-striped {
+    border-bottom: 1px solid #ccc;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: 1px solid #b5c1da;
+}
+
+.imgCircle {
     position: relative;
-  }
- 
- .OrgChart li {
-    text-align: center;
-    list-style-type: none;
-    position: relative;
-    padding: 5px 5px 5px 10px;
-  }
- 
- .OrgChart .sameBlocSize {
-      display: flex;
-  }
- 
- .OrgChart li .bloc {
-      padding: 5px 10px;
-      display: inline-block;
-      border-radius: 5px;
-      min-height: 32px;
-  }
-  .tree, .vertical {
-      font-size:12px;
-  }
- 
-  .bordered {
-      border: 2px solid #B5C1DA;
-      background-color: #F4F6FA; background-color:#EEF1F7;
-  }
- 
-  .bordered.library,
-  .bordered.leaf {
-      border-color: #00adef;
-  }
-  .bordered.pedagogy {
-      border-color: #a08777;
-  }
-  .bordered.gold {
-      border-color: #bf8719;
-  }
- 
-  .mainTree ul {
-      padding-top: 20px;
-  }
- 
-  .tree a  { color:#20558A;   }
- 
-  .tree li {
-      padding-top: 20px;
-  }
-  .mainTree li li {
-      padding-bottom: 20px;
-      display: flex;
-  }
- 
- /* We will use  .horizLeft and  .horizRight to draw the connectors. Both  .horizLeft and  .horizRight are displayed ABOVE li>a :
-    li .horizLeft, ul::before on the left
-    li .horizRight on the right
-  */
- 
-  .tree ul {
-      display: flex;
-  }
- 
-  li.nonSelectedElt {
-      font-size: 30%;
-      text-align: initial;
-  }
- 
-  li.nonSelectedElt .bloc {
-      opacity: 0.5;
-      overflow: hidden;
-  }
-  .tree li.nonSelectedElt .bloc {
-      min-height: 0;
-      width: 15px;
-      padding: 5px 2px;
-  }
- 
-  .tree li > .horizLeft,
-  .tree li > .horizRight {
-    position: absolute; top: 0;
-    width: 50%; height: 20px;
-    border-top: 1px solid #143e6e;
- 
-    background-image: url(arrow-NE.svg);
-    background-size: 5px;
-    background-position: left bottom;
-    background-repeat: no-repeat;
-  }
-  .tree li > .horizLeft {
-    background-image: url(arrow-NW.svg);
-    background-position: right bottom;
-  }
- 
- 
-  .tree li > .horizLeftBelow,
-  .tree li > .horizRightBelow {
-      position: absolute; bottom: 0;
-      width: 50%; height: 19px;
-      border-bottom: 1px solid #143e6e;
-  }
- 
-  .tree li > .horizLeft,
-  .tree li > .horizLeftBelow {
-    right: 50%;
-  }
-  .tree li > .horizRight,
-  .tree li > .horizRightBelow {
-    left: 50%;
-  }
-  .tree li > .horizRight {
-    border-left: 1px solid #143e6e;
-  }
-  .tree li.selectedElt > .horizLeftBelow {
-      border-right: 1px solid #143e6e;
-      border-radius: 0 0 5px 0;
-  }
- 
-  /* Remove left connector from first child and right connector from last child*/
-  .mainTree li:first-child > .horizLeft,
-  .tree li:last-child > .horizRight {
-    border-top: none;
-  }
- 
-  /* rounded left border */
-  .mainTree li:first-child > .horizRight {
-      border-radius: 5px 0 0 0;
-  }
- 
-  /* replace last border-left with border-right to allow rounded border in the left direction */
-  .tree li:last-child > .horizRight {
-    border-left: none;
-  }
-  .tree li:last-child > .horizLeft {
-    border-right: 1px solid #143e6e;
-    border-radius: 0 5px 0 0;
-  }
- 
-  /* but remove it for root node */
-  .mainTree > ul > li > .horizLeft {
-      display: none;
-  }
- 
-  .mainTree > ul, .mainTree > ul > li {
-      padding: 0;
-  }
- 
- /* add downward connectors from parents*/
-  .mainTree ul ul::before {
-    content: '';
-    position: absolute; top: 0; right: 50%;
-    border-right: 1px solid #143e6e;
-    width: 0; height: 20px;
-  }
- 
- 
-  .vertical > ul > li.withBorder {
-      border-left: 1px solid #143e6e;
-      border-top: 1px solid #143e6e;
-      border-radius: 5px 0 0 0;
-      width: 4px;
-      height: 24px;
-      padding: 0;
-      margin-top: -1px;
-  }
- 
-  .display_secondary_bloc .vertical > ul {
-      width: 34.2em;
-  }
-  .vertical li {
-      padding: 8px 20px 8px 20px;
-      pointer-events: none;
-  }
-  .display_secondary_bloc .vertical li {
-      padding-right: 2px;
-  }
-  .vertical li .bloc {
-    width: 15em;
-    display: block;
-    pointer-events: all;
-  }
- 
-  .vertical li.nonSelectedElt {
-      padding-top: 8px;
-  }
-  .vertical li.nonSelectedElt .bloc {
-    margin-top: 0;
-    min-height: initial;
-    height: 8px;
-  }
- 
-  .vertical .name {
-    padding: 5px 10px;
-  }
- 
-  .vertical li > .verticalTop,
-  .vertical li > .verticalBottom {
-      position: absolute; left: 0;
-      border-left: 1px solid #143e6e;
-      width: 20px; height: 50%;
- 
-    background-image: url(arrow-WN.svg);
-    background-size: 5px;
-    background-position: right bottom;
-    background-repeat: no-repeat;
-  }
-  .vertical li > .verticalBottom {
-     background-image: url(arrow-WS.svg);
-     background-position: right top;
-  }
- 
-  .vertical li .verticalTopRight,
-  .vertical li .verticalBottomRight {
-      position: absolute; right: 0;
-      border-right: 1px solid #143e6e;
-      width: 19px; height: 50%;
-  }
- 
-  .vertical li .verticalTop,
-  .vertical li .verticalTopRight {
-      bottom: 50%;
-  }
-  .vertical li .verticalBottom,
-  .vertical li .verticalBottomRight {
-      top: 50%;
-  }
- 
-  .fakeOne {
-      padding-top: 4px;
-      border-left: 1px solid #143e6e;
-      border-right: 1px solid #143e6e;
-  }
- 
-  .vertical li > .verticalTop,
-  .vertical li.selectedElt .verticalTopRight {
-      border-bottom: 1px solid #143e6e;
-  }
- 
-  .vertical li .first-bloc {
-      padding: 0;
-  }
- 
-  .display_secondary_bloc .vertical li.selectedElt .first-bloc {
-      border-radius: 5px 0 0 5px;
-      border-right: none;
-  }
- 
-  .vertical li:last-child > .verticalBottom {
-      border-left: none;
-  }
- 
-  /* rounded bottom border */
-  .vertical li:last-child > .verticalTop {
-      border-radius:  0 0 0 5px;
-  }
- 
-  .secondPane {
-      display: flex;
-  }
- 
-  .secondPane .tree {
-      flex-grow: 1;
-  }
- 
-  .members_other {
-    font-size: 80%;
-  }
- 
-  .thirdPane {
-      margin-top: 23px;
-      display: flex;
-  }
- 
-  .thirdPane > ul {
-      padding-top: 0;
-  }
-  .thirdPane li {
-    min-width: 10em;
-  }
-  .thirdPane li.nonSelectedElt {
-    min-width: initial;
-  }
- 
- li .secondary-bloc {
-     position: relative;
-     float: right;
-     background: white;
-     padding-top: 0;
-     margin-top: 0;
-     padding-right: 19px;
-     margin-right: -2px;
- }
- 
- li .secondary-bloc .verticalTopRight {
-     top: -8px;
- }
- 
- li .secondary-bloc .bloc {
-     border-radius: 0 5px 5px 0 !important;
- }
- 
- li .secondary-bloc .members {
-     margin-top: 0;
- }
- 
- .connect-blocs {
-     position: absolute;
-     left: 50%;
-     top: 0;
-     bottom: 0;
- 
-     background: white;
-     width: 1.52em;
-     border-style: solid;
- }
- .connect-blocs {
-     border-width: 1px 0;
-     margin: 8px 0 8px -10px;
- }
- 
- .empty4 {
-     flex-grow: 1;
-     border-top: 1px solid #143e6e;
-     min-width: 20px;
- }
- .display_secondary_bloc .empty4 {
-     min-width: none;
- }
- 
- 
- /*_____________________________ ORGANIGRAMME __________________________**/
- 
-.tree a  { /*color: #337ab7; */  color:#20558A;   }
- 
- 
- /**** ORGANIGRAMME : horizontale **/
- 
-.bordered
-   { background-color: #fff;border:2px solid  #B5C1DA; border:2px solid  #B5C1DA;
-     font-size:12px;
-     background-color: #F4F6FA; background-color:#EEF1F7;
-   }
- 
- 
-.bordered.gold
- {
-   border-color: #C89108; border-color: #95A7CB ;
-   background-color: #F4F6FA; background-color: #DEEAFE; border-width: 3px;
-   font-size:12px; font-weight: bold;
- }
- 
- 
-.bordered.leaf, .bordered.library {
-   border-color : #BCC7DE; border-color : #d9d9d9;
-   background-color: #f6f6f6;
- }
- 
- 
- 
- /***** ORGANIGRAMME : tous les vertical**/
- 
-.vertical li .first-bloc {
-   padding-top: 10px;
-   padding-right: 0px;
-   padding-bottom: 10px;
-   padding-left: 0px;
-   background-color: #eeee55;   background-color: #F4CD71;
-   background-color: #FDE7BE; background-color:#FADDA7;   background-color: #F4CD71;
-   border-color: #DAB559;
-   border-width:2px ;
- }
- 
- 
-.vertical li .selectedElt { border-width: 5px; }
- 
- 
-.OrgChart .imgCircle {
-     display: block;
-     /* float: left; */  float: right;
-     height: 26px;
-     margin: -18px 0 0 -23px;
-     width: 26px;
- }
- 
- .mainTree .members_other {
-    max-height: 10em;
-    overflow-y: auto;
-  }
-   .members {
-    text-align: left;
-    margin-top: 1em;
-  }
- 
-  .members .user-with-role {
-    clear: both;
-  }
- 
-  .members .role {
+    width: 139px;
+    height: 139px;
+    overflow: hidden;
+    border-radius: 50%;
+    padding-left: 0;
+}
+
+tr.UserInTable .imgCircle {
+    width: 105px;
+    height: 105px;
+}
+
+.imgCircle img {
+    width: 100%;
+    height: auto;
+    border: 0 none;
+    float: left;
+    margin: -20px 0 0 0px;
+    max-height: none;
+    max-width: none;
+    padding: 0;
+}
+
+.btn {
+    padding-top: 2px;
+    padding-right: 12px;
+    padding-bottom: 3px;
+    padding-left: 12px;
+    margin-bottom: 0px;
+    font-size: 12px;
+    font-weight: 400;
+    background-image: none;
+    border-top: 0px;
+    border-radius: 0px;
+}
+
+.UserInTable .btn-primary {
+    font-size: 12px;
+    width: 140px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    padding-top: 3px;
+    border-radius: 4px;
     color: #00326E;
-    font-size: 80%;
-    clear: both;
-  }
- 
-  .members .affiliationName {
-     font-variant: small-caps;
-     font-weight: bold;
-     font-size: 80%;
-  }
+    border: 1px solid #95a7cb;
+    background-color: #F4F6FA;
+}
 
-  .OrgChart .imgCircle {
-     width: 26px;
-     height: 26px;
-     margin: -18px 0 0 -23px;
-     display: block;
-     float: left;
-  }
-  .OrgChart .imgCircle img {
-      margin-top: -4px;
-  }
- 
-  .vertical .imgCircle {
-     margin: -13px 0 0 -13px;
-     z-index: 2;
-  }
- 
- .secondary-bloc .imgCircle {
-    margin: 0 2px 0 0;
- }
- 
-  .thirdPane .imgCircle {
+.UserInTable .btn-primary:hover {
+    background-color: #fff;
+    border: 1px solid #5381ac;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    font-weight: 600;
+    width: 140px;
+    padding-top: 3px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -ms-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.UserInTable h2 {
+    font-size: 16px;
+    margin-top: 15px;
+    color: #333;
+}
+
+
+/* ___________________________ (2-3) icones partag�s par Table & Fiche detaillee _______________________ */
+
+
+.boite .mail , .infoUser .mail {
+    background: url("/static/images/ANR-31.svg") no-repeat left top;
+    background-size: 1.6em;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.boite .phoneNumbers, .infoUser .phoneNumbers {
+    background: url("/static/images/ANR-32.svg") no-repeat left top;
+    background-size: 1.6em;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.affectations > label {
+    background: rgba(0, 0, 0, 0) url("/static/images/ANR-35.svg") no-repeat scroll left top / 2.2em auto;
+    margin-bottom: 0;
+    padding-bottom: 8px;
+    padding-left: 30px;
+    padding-top: 5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+
+/* ___________________________ (3) Fiche detaillee _______________________ */
+
+
+
+.User .boite {
+    position: relative;
+    font-size: 13px;
+    margin-top: 30px;
+    padding: 15px;
+    padding-top: 1px;
+    border-radius: 10px;
+    border: #b5c1da 1px solid;
+    border-top: #D5DCeA 25px solid;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4), 0 2px 4px 0 rgba(0, 0, 0, 0.40);
+    box-shadow: 3px 3px 3px 0px #dedede;
+}
+
+.boite h2 {
+    font-size: 22px;
+    color: #444
+}
+
+.boite .affectations {
+    margin-top: 14px;
+    margin-bottom: 30px;
+}
+
+.boite .affectations > label {
+    background: none;
+    padding-bottom: 4px;
+    padding-left: 0px;
+}
+
+
+
+/******** titres personnes*********/
+
+
+.boite .employeeType {
+    font-size: 17px;
+    margin-bottom: 0px;
+}
+
+.boite .supannRoleEntite {
+    font-size: 17px;
+    margin-bottom: 0 px;
+}
+
+.boite .description {
+    font-size: 15px;
+}
+
+.boite .affiliations {
+    font-family: "Brandon Grotesque",Arial,sans-serif;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #9f6c07;
+    margin-top: 26px;
+}
+
+.boite .supannActivite {
+    font-size: 13px;
+    color: #9f6c07
+}
+
+
+/* _________ page perso_______ */
+
+.boite .labeledURI {
+    background: rgba(0, 0, 0, 0) url("/static/images/ANR-46.svg") no-repeat scroll left top / 2.55em auto;
+    margin-bottom: 0;
+    margin-top: 14px;
+    padding: 6px 4px 0 35px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: normal;
+}
+
+.boite .labeledURI a {
+    text-transform: none;
+    font-size: 13px;
+}
+
+.boite .contactInformation {
+    border-left: 1px #888 dotted;
+    padding-left: 0;
+    padding-bottom: 0px;
+    margin-bottom: 20px;
+}
+
+
+
+
+.boite .address {
+    background: rgba(0, 0, 0, 0) url("/static/images/ANR-33.svg")
+
+
+    no-repeat scroll left 8px top / 1.6em auto;
+    padding-bottom: 0px;
+    padding-left: 36px;
+    padding-top: 3px;
+    margin-top: 3px;
+    line-height: 17px;
+}
+
+.boite .address > span {
+    display: block;
+}
+
+.boite .address {
+    background: none;
+}
+
+.boite .postalAddress {
+    font-size: 12px;
+}
+
+.glyphicon-map-marker {
+    color: #5381ac;
+    font-size: 14px;
+}
+
+.boite .userChartFormatLink {
+    background: rgba(0, 0, 0, 0) url("/static/images/ANR-52.svg") no-repeat scroll left 7px top / 1.6em auto;
+    border-bottom: 1px dotted #888;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    padding-left: 36px;
+    width: 190px;
+}
+
+.boite .mail {
+    padding-left: 36px;
+    background-position: left 7px top;
+    background-size: 1.5em;
+}
+
+.boite .phoneNumbers {
+    padding-left: 36px;
+    background-position: left 7px top;
+    background-size: 1.5em;
+}
+
+.userAnnuaireURL {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+
+.userAnnuaireURL a {
+    font-family: verdana, arial, sans-serif;
+}
+
+.userAnnuaireURL a:hover {
+    color: #00326e;
+}
+
+.modify_my_account {
+    color: #9a9a9a;
+    margin-left: 8px;
+    border-right: 0px red solid;
+    padding-right: 25px;
+    padding-bottom: 10px;
+    background: rgba(0, 0, 0, 0) url("/static/images/ecrire.png") no-repeat scroll right top;
+    background-size: 1.8em;
+}
+
+.modify_my_account a {
+    margin-left: 8px;
+    color: #9F6C07;
+}
+
+.backToHome .glyphicon.glyphicon-remove {
+    background-color: #D5DCEA;
+    border: 1px solid #D5DCEA;
+    border-radius: 4px;
+    color: #95a7cb;
+    font-size: 14px;
     margin: 0;
-    Xmargin: -2px 3px 0 -16px;
-  }
- 
-  .OrgChart li.nonSelectedElt .imgCircle {
-      display: none;
-  }
+    padding: 0px 4px;
+    position: absolute;
+}
 
-  .photoGallery {
-    width: 144px;
+
+
+/* _____________________ Trombino ______________________ */
+
+
+.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
+    border: 1px solid #ccc;
+}
+
+.photoGallery {
+    width: 140px;
     height: 240px;
     overflow: hidden;
     display: inline-block;
     margin: 0 12px;
-  }
-  
-  .photoGallery .photo {
-    height: 180px;
+}
+
+.photoGallery:hover {
+    text-decoration: none !important;
+}
+
+.photoGallery .photo {
+    height: 160px;
     overflow: hidden;
-  }
-  
-  .photoGallery .text {
+    border: 1px #999 solid;
+    background-color: #ccc;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.photoGallery .text {
     text-align: center;
     padding: 4px 0 8px 0px;
-    background-color: #eee;
-    border: 1px solid #ccc;
     font-size: 12px;
-    color:#20558A;
-  }
-  
-  .User .boite {
-    font-size: 13px;
-    margin-top: 30px;
-    padding: 15px;
-  
-    border:#aaaFB9 1px solid;
-    border-top: #D5DCeA 25px solid;
-    border-radius: 12px;
-  
-    background:url("https://eee-test.univ-paris1.fr/TESTYA/ANR-31.svg") no-repeat 510px 10px,
-             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-32.svg") no-repeat 550px 10px,
-             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-33.svg") no-repeat 590px 10px,
-             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-35.svg") no-repeat 630px 10px,
-             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-37.svg") no-repeat 670px 10px,
-             url("https://eee-test.univ-paris1.fr/TESTYA/ANR-36.svg") no-repeat 720px 10px;
-     background-size: 1.8em,1.8em,2em,2em,2em,2.5em ;
-  }
-  
-  .User .cap {
-    color:#555;
-    font-size: 24px;
-  }
-  
-  .User .imgMarg{
-    margin-top: 15px;
-  }
-  
-  .User .breadcrumb > li + li::before {
-    padding: 0 0 0 10px !important;
-  }
-  
-  .User .marginTop {
-    margin-top:10px;
-  }
-  
-  .User .formats > div {
-    background :none;  min-height: 27px;
-    color:#9F6C07;
-    font-size: 16px;
-    border :0px dotted yellowgreen;
-    border-bottom: #727780 3px solid ;
-    margin-right:1px;
-    text-align:left;
-  }
-  
-.UserInTable td {
-    vertical-align: middle !important;
-    font-family: arial,verdana !important;
-    font-size : 12px;
-    color: #555;
-  }
-  
-  .UserInTable a {
-    color:#20558A;
-  }
-  
-  .UserInTable .btn-primary {
-    font-size: 13px;
-    Xwidth: 140px;
-  
-    padding: 3px 12px;
-    margin-top:  30px;
-    margin-bottom: 10px;
-  
-    border:1px solid #ccc;
-    border-bottom-width: 2px;
-    border-radius: 4px;
-  
-    background-color: #fff;
-    color: #337AB7;
-  }
-  
-  .UserInTable .btn-primary:hover {
-    color: #000;
-    background-color:#B5C1DA;
     font-weight: bold;
-  }
-  
-  /**
-  Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
-  En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile
-  **/
-  @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .table tr td:first-child  {
+    background-color: #727780;
+    border: 1px #727780 solid;
+    color: #fff;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.photoGallery .text:hover {
+    background-color: #00326e;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.photoGallery .photo:hover {
+    border: 2px #00326e solid;
+    background-color: #00326e;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+
+/*-------------------------------------------------------------------------------------------*/
+
+
+
+.OrgChart {
+    padding: 20px;
+    padding-top: 40px;
+    margin-bottom: 20px;
+    background-color: #f4f6fa;
+    border: 1px solid #D5DcEa;
+    border-top-width: 5px;
+    border-radius: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+    position: relative;
+}
+
+.OrgChart .glyphicon.glyphicon-remove {
+    background-color: #eee;
+    background-color: #f4f6fa;
+    border: 1px solid #eee;
+    font-size: 13px;
+    color: #aaa;
+    padding: 4px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.OrgChart .role {
+    color: #eeeccc;
+    text-transform: uppercase;
+    padding-top: 4px;
+}
+
+.members .affiliationName {
+    color: #eeeccc;
+    text-transform: uppercase;
+    padding-top: 4px;
+}
+
+.OrgChart ul {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.OrgChart li {
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 5px 5px 5px 10px;
+}
+
+.OrgChart .sameBlocSize {
+    display: flex;
+}
+
+.OrgChart li .bloc {
+    border-radius: 5px;
+    display: inline-block;
+    min-height: 32px;
+    padding: 7px 5px;
+}
+
+.tree, .vertical {
+    font-size: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.bordered {
+    border: 2px solid #B5C1DA;
+    background-color: #F4F6FA;
+    background-color: #EEF1F7;
+}
+
+
+.pedagogy {
+    border-color: #a08777;
+    background-image: url("/static/images/pedagogy.png");
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+.secondary-bloc  .pedagogy {
+    background-size: 0.8em
+}
+
+.research {
+    border-color: #a08777;
+    background-image: url("/static/images/research.png");
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 12px !important;
+}
+
+.research:hover {
+    background-image: url("/static/images/research-on.svg");
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+.pedagogy:hover {
+    background-image: url("/static/images/pedagogy-on.svg");
+    background-repeat: no-repeat;
+    background-position: right top;
+}
+
+.mainTree ul {
+    padding-top: 20px;
+}
+
+.tree a {
+    color: #20558A;
+}
+
+.tree li {
+    padding-top: 20px;
+}
+
+.mainTree li li {
+    padding-bottom: 20px;
+    display: flex;
+}
+
+ /* We will use  .horizLeft and  .horizRight to draw the connectors. Both  .horizLeft and  .horizRight are displayed ABOVE li>a :
+    li .horizLeft, ul::before on the left
+    li .horizRight on the right
+  */
+
+.tree ul {
+    display: flex;
+}
+
+li.nonSelectedElt {
+    font-size: 30%;
+    text-align: initial;
+}
+
+li.nonSelectedElt .bloc {
+    opacity: 0.5;
+    overflow: hidden;
+}
+
+.tree li.nonSelectedElt .bloc {
+    min-height: 0;
+    width: 15px;
+    padding: 5px 2px;
+}
+
+.tree li > .horizLeft,
+  .tree li > .horizRight {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 20px;
+    border-top: 1px solid #aabbcc;
+    background-image: url(arrow-NE.svg);
+    background-size: 5px;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+}
+
+.tree li > .horizLeft {
+    background-image: url(arrow-NW.svg);
+    background-position: right bottom;
+}
+
+.tree li > .horizLeftBelow,
+  .tree li > .horizRightBelow {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 19px;
+    border-bottom: 1px solid #aabbcc;
+}
+
+.tree li > .horizLeft,
+  .tree li > .horizLeftBelow {
+    right: 50%;
+}
+
+.tree li > .horizRight,
+  .tree li > .horizRightBelow {
+    left: 50%;
+}
+
+.tree li > .horizRight {
+    border-left: 1px solid #aabbcc;
+}
+
+.tree li.selectedElt > .horizLeftBelow {
+    border-right: 1px solid #aabbcc;
+    border-radius: 0 0 5px 0;
+}
+
+/* Remove left connector from first child and right connector from last child*/
+.mainTree li:first-child > .horizLeft,
+  .tree li:last-child > .horizRight {
+    border-top: none;
+}
+
+/* rounded left border */
+.mainTree li:first-child > .horizRight {
+    border-radius: 5px 0 0 0;
+}
+
+/* replace last border-left with border-right to allow rounded border in the left direction */
+.tree li:last-child > .horizRight {
+    border-left: none;
+}
+
+.tree li:last-child > .horizLeft {
+    border-right: 1px solid #aabbcc;
+    border-radius: 0 5px 0 0;
+}
+
+/* but remove it for root node */
+.mainTree > ul > li > .horizLeft {
+    display: none;
+}
+
+.mainTree > ul, .mainTree > ul > li {
+    padding: 0;
+}
+
+/* add downward connectors from parents*/
+.mainTree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-right: 1px solid #aabbcc;
+    width: 0;
+    height: 20px;
+}
+
+.mainTree > ul > li.withBorder {
+    border-bottom: 1px solid #aabbcc;
+    margin-left: 4px;
+}
+
+.vertical > ul > li.withBorder {
+    border-left: 1px solid #aabbcc;
+    border-top: 1px solid #aabbcc;
+    border-radius: 5px 0 0 0;
+    width: 4px;
+    height: 24px;
+    padding: 0;
+    margin-top: -1px;
+}
+
+.display_secondary_bloc .vertical > ul {
+    width: 44.5em;
+}
+
+.vertical li {
+    padding: 8px 20px 8px 20px;
+    pointer-events: none;
+}
+
+.display_secondary_bloc .vertical li {
+    padding-right: 2px;
+}
+
+.vertical li .bloc {
+    width: 20em;
+    display: block;
+    pointer-events: all;
+}
+
+.vertical li.nonSelectedElt {
+    padding-top: 8px;
+}
+
+.vertical li.nonSelectedElt .bloc {
+    margin-top: 0;
+    min-height: initial;
+    height: 8px;
+}
+
+.vertical .name {
+    padding: 8px 3px;
+}
+
+.vertical li > .verticalTop,
+  .vertical li > .verticalBottom {
+    position: absolute;
+    left: 0;
+    border-left: 1px solid #aabbcc;
+    width: 20px;
+    height: 50%;
+    background-image: url(arrow-WN.svg);
+    background-size: 5px;
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+.vertical li > .verticalBottom {
+    background-image: url(arrow-WS.svg);
+    background-position: right top;
+}
+
+.vertical li .verticalTopRight,
+  .vertical li .verticalBottomRight {
+    position: absolute;
+    right: 0;
+    border-right: 1px solid #aabbcc;
+    width: 19px;
+    height: 50%;
+}
+
+.vertical li .verticalTop,
+  .vertical li .verticalTopRight {
+    bottom: 50%;
+}
+
+.vertical li .verticalBottom,
+  .vertical li .verticalBottomRight {
+    top: 50%;
+}
+
+.vertical li > .verticalTop,
+  .vertical li.selectedElt .verticalTopRight {
+    border-bottom: 1px solid #aabbcc;
+}
+
+.vertical li .first-bloc {
+    padding: 0;
+}
+
+.display_secondary_bloc .vertical li.selectedElt .first-bloc {
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+}
+
+.vertical li:last-child > .verticalBottom {
+    border-left: none;
+}
+
+/* rounded bottom border */
+.vertical li:last-child > .verticalTop {
+    border-radius: 0 0 0 5px;
+}
+
+.secondPane {
+    display: flex;
+}
+
+.secondPane .tree {
+    flex-grow: 1;
+}
+
+.members_other {
+    font-size: 80%;
+}
+
+.members_other .description {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.members_other .description span {
+    font-weight: normal;
+}
+
+.depth4 .members_other .description span {
+    color: #00326e;
+}
+
+.thirdPane {
+    margin-top: 23px;
+    display: flex;
+}
+
+.thirdPane > ul {
+    padding-top: 0;
+}
+
+.thirdPane li {
+    min-width: 10em;
+}
+
+.thirdPane li.nonSelectedElt {
+    min-width: initial;
+}
+
+li .secondary-bloc {
+    position: relative;
+    float: right;
+    padding-top: 0;
+    margin-top: 0;
+    padding-right: 19px;
+    margin-right: -2px;
+}
+
+li .secondary-bloc .verticalTopRight {
+    top: -8px;
+}
+
+li .secondary-bloc .bloc {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+li .secondary-bloc .members {
+    margin-top: 0;
+    border-left: 1px dotted #999;
+    padding-left: 5px;
+}
+
+.connect-blocs {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    background: white;
+    width: 1.52em;
+    border-style: solid;
+}
+
+.connect-blocs {
+    border-width: 1px 0;
+    margin: 8px 0 8px -10px;
+}
+
+.empty4 {
+    flex-grow: 1;
+    border-top: 1px solid #aabbcc;
+    min-width: 20px;
+}
+
+.display_secondary_bloc .empty4 {
+    min-width: none;
+}
+
+
+
+/* _____________________________ ORGANIGRAMME __________________________ **/
+
+
+/*** bloc image recherche par organigramme */
+
+
+.chartFormatLink {
+    min-height: 60px;
+    padding-top: 60px;
+    background: url("/static/images/ANR-38c.svg") no-repeat top center;
+    background-size: 5.8em;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Brandon Grotesque",Arial,sans-serif;
+    color: #777;
+    border: 1px solid white;
+    border-left: 2px solid #ccc;
+    border-right: 2px solid #fff;
+}
+
+.chartFormatLink:hover {
+    color: #20558a;
+    text-decoration: none !important;
+    border-left: 2px solid #c89108;
+    border-right: 2px solid #c89108;
+    border-radius: 9px;
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.4s linear;
+}
+
+.tree a {
+    color: #20558A;
+    color: #00326e;
+}
+
+
+
+/***** ORGANIGRAMME :  vertical **/
+
+
+
+.depth1 {
+    border: 3px solid #C89108;
+    background-color: #C89108;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+}
+
+.depth1 a {
+    color: white;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.depth2 {
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #FDE7BE;
+    background-color: #F4CD71;
+    border: 2px solid #F1C050;
+    border-top-width: 3px;
+    text-transform: uppercase;
+}
+
+.selectedElt .depth2 {
+    border: 3px solid #C89108;
+    background-color: #C89108;
+    -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    -moz-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    color: white;
+}
+
+.selectedElt .depth2 a {
+    color: white;
+}
+
+.vertical .depth3 {
+    background-color: #E6EEFB;
+    border: 2px solid #6f90b8;
+    border-top-width: 3px;
+    border-bottom-width: 1px;
+    padding-top: 10px !important;
+    padding-bottom: 6px !important;
+}
+
+.vertical .depth3 .name {
+    color: #00326e;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.selectedElt .depth3 {
+    color: white;
+    background-color: #20558a;
+    border: 3px solid  #20558a;
+    border-top-width: 4px;
+    padding-top: 9px !important;
+}
+
+.selectedElt .depth3 .name {
+    color: white;
+    font-weight: bold;
+}
+
+.selectedElt .depth3 .members {
+    padding-left: 6px;
+}
+
+.selectedElt .depth3 a {
+    color: white;
+    font-weight: normal;
+}
+
+.secondary-bloc .depth3 {
+    border-width: 3px;
+}
+
+li .secondary-bloc .bloc {
+    border-radius: 0 5px 5px 5px !important;
+}
+
+
+.depth4 {
+    background-color: #fff;
+    border: 1px solid #6f90b8 !important;
+    color: #333;
+    border-top-width: 2px !important;
+    padding-top: 12px !important;
+}
+
+.selectedElt .depth4 {
+    border: 2px solid #96A9CC;
+}
+
+.depth4 a {
+    font-weight: normal;
+}
+
+.depth4 .role, .depth4 .affiliationName {
+    color: #777 !important;
+}
+
+.depth4 .members {
+    background-color: #f9f9f9 !important;
+    color: #666;
+}
+
+.selectedElt .depth4 {
+    border: 2px solid #5381ac !important;
+    -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    -moz-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+}
+
+.selectedElt .depth4 .members {
+    border-top: 2px solid #6f90b8
+}
+
+.depth5, .depth6 {
+    background-color: #fff;
+    border: 1px solid #bbb !important;
+    color: #555
+}
+
+.selectedElt .depth5, .selectedElt.depth6 {
+    border-width: 2px;
+}
+
+.depth5 a, .depth5 a {
+    font-weight: normal;
+}
+
+.depth5 .role, .depth5 .affiliationName {
+    color: #777 !important;
+}
+
+.depth6 .role, .depth6 .affiliationName {
+    color: #777 !important;
+}
+
+.depth7 {
+    background-color: none;
+}
+
+.mainTree .members_other {
+    overflow-y: auto;
+}
+
+.members {
+    text-align: left;
+    padding-top: 0.7em;
+    border-top: #999 dotted 1px;
+    margin-top: 8px;
+}
+
+.secondary-bloc .depth3 .members {
+    padding-top: 0.5em;
+    padding-bottom: 0.2em;
+    border-top: 0;
+}
+
+.members .user-with-role {
+    clear: both;
+}
+
+.members .role {
+    font-size: 80%;
+    clear: both;
+}
+
+.members .affiliationName {
+    text-transform: uppercase;
+}
+
+.User .imgMarg {
+    margin-top: 15px;
+}
+
+.User .postalAddress {
+    white-space: pre-wrap;
+}
+
+.User .backToHome .glyphicon.glyphicon-remove {
+    top: -18px;
+    right: 3px;
+}
+
+/* test organigramme individu------*/
+
+
+
+/*  depth2   */
+.tree li.nonSelectedElt .bloc {
+    min-height: 69px;
+    width: 40px;
+}
+
+.tree li.nonSelectedElt .bloc:hover {
+    width: 70px;
+    opacity: 1;
+}
+
+/* depth2+4 */
+li.nonSelectedElt .bloc {
+    font-size: 7px;
+}
+
+li.nonSelectedElt .bloc:hover {
+    font-size: 9px;
+    opacity: 1
+}
+
+
+/*  depth3   */
+.vertical li.nonSelectedElt span {
+    width: 220px;
+}
+
+.vertical li.nonSelectedElt .bloc {
+    height: initial;
+}
+
+.vertical li.nonSelectedElt span {
+    font-size: 8px !important;
+    padding-top: 1px !important;
+}
+
+.vertical li.nonSelectedElt .bloc:hover {
+    background: none;
+}
+
+.vertical li.nonSelectedElt .bloc a:hover {
+    text-decoration: none;
+}
+
+
+
+/* _________________________ footer ______________ */
+
+
+.legalFooter {
+    font-size: 10px;
+    text-align: center;
+    color: #666;
+    border-top: 0px solid #ddd;
+    padding: 20px;
+    width: 55%;
+    margin: auto;
+}
+
+
+
+
+/********/
+
+
+
+@media screen and (max-width:1024px) {
+
+
+
+    .depth2 {
+        font-size: 10px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+
+
+
+/* _________________________  MODE MOBILE  ______________ */
+
+/**  Si mode mobile forcer la liste des personnes à s'adapter à la taille du mobile
+	En effet le tag "table" ne s'adapte pas automatiquement à la taille du mobile   **/
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+/* For mobile phones: */
+
+    .table tr td:first-child {
         float: right;
     }
-    .table tr td  {
-      display: block;
-      border-top: 0px solid #d42626 !important;
+
+    .table tr td {
+        display: block;
+        border-top: 0px solid #d42626 !important;
     }
+
     .table tr {
-      border: 1px solid #ccc;
+        border: 1px solid #ccc;
     }
-  }
-  
+
+    .search {
+        float: left;
+        width: 100%;
+        border: none;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .search form {
+        width: 100%;
+        padding-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+    }
+
+    .chartFormatLink {
+        background-position: center top 1px;
+        float: left;
+        width: 33%;
+        margin: 20px 33%;
+        margin-top: 2px;
+        border-left: 1px solid #bbb;
+        border-right: 1px solid #bbb;
+    }
+
+    .text-muted {
+        width: 100%;
+    }
+
+    .boite .contactInformation {
+        border: 0px;
+        padding-left: 11px
+    }
+
+    .boite .userChartFormatLink {
+        border: 0px;
+    }
+
+
+    /* barre mode d affichage */
+    .ChooseFormat .nav a {
+        font-size: 0px;
+    }
+
+    .ChooseFormat .glyphicon {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width:480px) {
+
+    .chartFormatLink {
+        min-height: 18px;
+        min-width: 120px;
+        padding: 8px;
+        background-image: none;
+        border: 1px solid white;
+        border-left: 2px solid #ccc;
+        border-right: 2px solid #ccc;
+    }
+}
+
+@media screen and (max-width:350px) {
+
+    .chartFormatLink {
+        display: none;
+    }
+
+    .legalFooter {
+        margin-top: 50px;
+    }
+}
+
+
+
+
+/* ______________________ SLIDER + MEDIA _______________________ */
+
+
+.Slider {
+    width: 77%;
+    max-width: 1100px;
+    min-width: 300px;
+    margin: auto;
+    margin-top: 45px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    background-color: white;
+    border-color: #6f90b8;
+    border-top-color: #95a7cb;
+    border-radius: 10px;
+}
+
+.Slider .slides img {
+    float: left;
+    max-width: 91%;
+    max-height: 91%;
+    vertical-align: middle;
+}
+
+.Slider .slides > li {
+    height: 345px;
+}
+
+.flex-caption {
+    margin: auto 0;
+    padding-right: 3rem;
+    font-size: 16px;
+    font-family: Arial,verdana;
+    font-weight: normal;
+    line-height: 22px;
+    color: #556677;
+}
+
+.flex-caption h1 {
+    font-size: 22px;
+    font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", "Luxi Sans", Arial, sans-serif;
+    margin: 0;
+    margin-bottom: 30px;
+    color: #555777;
+}
+
+.flex-caption a {
+    text-decoration: none;
+}
+
+.flex-caption a:visited {
+    text-decoration: none;
+    color: #00326e;
+}
+
+.flex-direction-nav {
+    opacity: 0.3;
+}
+
+.flex-direction-nav:hover {
+    opacity: 0.9;
+}
+
+@media screen and (max-width:1024px) {
+
+    .Slider {
+        width: 88%;
+        margin: auto;
+    }
+
+    .Slider .slides > li {
+        height: 300px;
+    }
+
+    .flex-caption {
+        top: 20% !important;
+    }
+
+    .Slider .slides img {
+        height: 75%;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .legalFooter {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:768px) {
+
+    .Slider {
+        width: 98%;
+        margin: auto;
+    }
+
+    .flex-caption {
+        top: 20% !important;
+        font-size: 14px;
+    }
+
+    .flex-caption h1 {
+        font-size: 17px !important;
+        margin-bottom: 15px !important;
+        font-weight: bold !important;
+    }
+
+    .flex-caption {
+        top: 15% !important;
+    }
+
+    .Slider .slides img {
+        max-width: 60%;
+        max-height: 60%;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+@media screen and (max-width:480px) {
+
+    .Slider .slides > li {
+        height: 285px;
+    }
+
+    .flex-caption h1 {
+        font-size: 15px !important;
+        font-size: 13px;
+    }
+
+    .flex-caption {
+        top: 15% !important;
+    }
+
+    .Slider .slides img {
+        max-width: 45%;
+        max-height: 45%;
+    }
+}
+
+@media screen and (max-width:350px) {
+
+    .Slider {
+        display: none;
+    }
+}
+
+@media print {
+    a:link:after, a:visited:after {
+        content: "";
+    }
+
+    .chartFormatLink, .search,
+    .glyphicon.glyphicon-remove, .Users .warning,
+    .Users .bg-info .ChooseFormat {
+        display: none;
+    }
+
+    #bandeau-anonyme .bandeau-titlebar {
+        display: none
+    }
+
+    .bandeau-logo {
+        display: none
+    }
+
+    .col-md-6 {
+        width: 100%;
+    }
+
+
+    /* pour logo test  */
+    .App {
+        margin: 0 !important;
+        padding-top: 45px;
+        background: rgba(0, 0, 0, 0) url("/static/images/logo_paris1.svg") no-repeat scroll center top / 220px auto !important;
+    }
+
+    .text-muted.affectationFilter {
+        margin-top: 15px !important;
+        margin-bottom: 0 !important;
+        padding-top: 0px !important;
+        width: 100% !important;
+        text-align: center !important;
+        border: none !important;
+    }
+
+    .text-muted.affectationFilter .name {
+        display: initial !important;
+        font-size: 17px !important;
+        width: 100% !important;
+        font-weight: bold;
+        font-family: Georgia, "DejaVu Serif", Norasi, "Times", serif;
+    }
+
+    .affectationFilter .filterChartFormatLink,
+   .affectationFilter .labeledURI,
+   .queryFilter {
+        display: none;
+    }
+
+    .OrgChart {
+        padding: 0 !important;
+        background: none;
+        border: 2px #999 solid;
+    }
+
+    .depth2 {
+        -webkit-print-color-adjust: exact;
+        background-color: #f4cd71 !important;
+        border-color: #f1c050;
+        border-style: solid;
+        border-width: 3px 2px 2px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .selectedElt .depth2 {
+        -webkit-print-color-adjust: exact;
+        background-color: #c89108 !important;
+        ;
+    border: 3px solid #c89108;
+    }
+
+    .selectedElt .depth2 a {
+        color: #fff !important;
+        font-size: 13px;
+    }
+
+    .vertical .depth3 {
+        background-color: #e6eefb !important;
+    }
+
+    .selectedElt .depth3 {
+        background-color: #20558a !important;
+    }
+
+    .selectedElt .depth3 .name {
+        color: #fff !important;
+        font-weight: bold;
+    }
+
+    .selectedElt .depth3 .members a {
+        color: #fff !important;
+    }
+
+    .selectedElt .depth3 .role {
+        color: #eeeccc !important;
+    }
+
+    .selectedElt .depth3 .description span {
+        color: #fff !important;
+    }
+
+    .legalFooter {
+        font-size: 11px;
+        margin: auto;
+        padding: 10px;
+        text-align: center;
+        width: 88%;
+    }
+}  /* FIN Print */
+
+
+

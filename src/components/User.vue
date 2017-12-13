@@ -6,22 +6,21 @@
 <div v-else class="container">
     <div class="row">
         <div class="col-md-12 formats">
-            <div class="bg-info" style="padding: 6px">
-           </div>
+            <div class="bg-info">
+            </div>
         </div>
     </div>
-    <ChooseFormat :format="format" style="padding-bottom: 2em"></ChooseFormat>
 </div>
 <div v-if="!person" class="container">
    <div class="row"><div class="col-md-12">
        Veuillez patienter
     </div></div>
 </div>
-<div v-else-if="format === 'chart'" class="container-fluid">
-    <div class="row"><div class="col-md-12" style="margin-top: 2em; display: flex; flex-wrap: wrap; justify-content: center">
+<div v-else-if="format === 'chart'">
+    <div style="margin-top: 2em; display: flex; flex-wrap: wrap; justify-content: center">
      <div v-for="aff in person.supannEntiteAffectation">
-        <OrgChart :selected="aff" :query="{ connected: connected, affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
-     </div></div>
+        <OrgChart :selected="aff" :query="{ affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
+     </div>
     </div>
 </div>
 <div v-else-if="format === 'trombi'" class="container">
@@ -30,8 +29,11 @@
   </div></div>
 </div>
 <div class="container" v-else>
- <div class="row"><div class="col-md-12">
   <div class="boite">
+    <router-link to="/">
+        <span class="badge backToHome"><span class='glyphicon glyphicon-remove'></span></span>
+    </router-link>
+
     <div class="row">
       <div class="col-md-2">
         <div class="text-center imgCircle imgMarg">
@@ -45,31 +47,39 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-5">
-              <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
-                <div v-for="emplType in person.employeeType">{{emplType}}</div>
+          <div class="col-md-7">
+              <div>
+                <div class="employeeType" v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
-              <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
+              <div class="supannRoleEntite" v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam('affectation', role.structure.key)"
                   tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
               </div>
-              <div v-for="desc in person.description">{{desc}}</div>
-              <div v-for="info in person.info">{{info}}</div>
-            <div>
+              <div class="description" v-for="desc in person.description">{{desc}}</div>
+            <div class="affiliations">
               <span v-for="(aff, index) in statusPers">
-                <span>{{index ? ' - ' : ''}}{{t(aff)}}</span>
+                <span>{{index ? ', ' : ''}}{{t(aff)}}</span>
               </span>
             </div>
-              <div v-for="uri in person.labeledURI" >
-                  Page perso :
-                  <a :href="uri" target="_blank">{{uri.replace(/^https?:\/\//, '')}}</a>
-              </div>
-            <div>
+            <div class="supannActivite">
               <span v-if="person['supannActivite-all']">
                 <span v-for="activite in person['supannActivite-all']">{{activite.name}}</span>
               </span>
             </div>
-            <div>
+              <div class="info" v-for="info in person.info">{{info}}</div>
+              <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
+                <label>Inscripts en diplôme :</label>
+                  <div v-for="diploma in lastDiplomas">
+                    <router-link :to="withParam('diploma', diploma.etapeCode)" >{{diploma.etape}}</router-link><br>
+                  </div>
+              </div>
+
+              <div v-for="uri in person.labeledURI" class="labeledURI">
+                  Page perso :
+                  <a :href="uri" target="_blank">{{uri.replace(/^https?:\/\//, '')}}</a>
+              </div>
+            <div class="affectations">
+              <label>Membre de :</label>
               <span v-for="i in breadcrumbTotal">
                 <span v-for="item in i">
                   <div v-if="item.category">
@@ -79,9 +89,11 @@
               </span>
             </div>
           </div>
-          <div class="col-md-7">
-            <div>Coordonnées</div>
-            <div>
+          <div class="col-md-5 contactInformation">
+            <div class="userChartFormatLink" v-if="isStaffOrFaculty">
+              <router-link :to="{ query: { format: 'chart' } }">Organigramme individuel</router-link>
+            </div>
+            <div class="mail">
                 <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
             </div>
             <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
@@ -105,61 +117,44 @@
                   <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}} (Fax)</span>
               </div>
           </div>
-          <div class="adress">
+          <div class="address" v-if="person.buildingName || person.postalAddress">
             <span v-if="person.buildingName">
-                <label >Site</label>
-                <span class="uneditable-input " v-for="buildingName in person.buildingName"> {{buildingName}}</span><br>
+                <label>Site :</label>
+                <span class="uneditable-input " v-for="buildingName in person.buildingName"> {{buildingName}}</span>
             </span>
             <span v-if="person.roomNumber">
-              <label>Bureau</label>
-              <span class="uneditable-input" v-for="roomNumber in person.roomNumber"> {{roomNumber}}</span><br>
+              <label>Bureau :</label>
+              <span class="uneditable-input" v-for="roomNumber in person.roomNumber">
+                {{roomNumber}}
+                <span v-if="person.up1RoomAccess" v-for="where in person.up1RoomAccess">- {{where}}</span>
+              </span>
             </span>
             <span v-if="person.up1FloorNumber">
-              <label>Étage</label>
-              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span><br>
+              <label>Étage :</label>
+              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}
+                <span v-if="person.up1"
+              </span>
             </span>
             <span v-if="person.postalAddress">
-              <label>Adresse postale</label>
-              <span style="display: inline-block; vertical-align: top">
-                <span style="white-space:pre-wrap;">{{person.postalAddress}}</span>
+              <span>
+                <span class="postalAddress">{{person.postalAddress}}</span>
                 <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + person.postalAddress" title="Afficher la carte" target="_blank">
-                  <span class="glyphicon glyphicon-map-marker"></span></a><br><br>
+                  <span class="glyphicon glyphicon-map-marker"></span></a>
                 </span>
               </span>
             </span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row marginTop">
-      <!--Affichage étudiant -->
-      <div v-if="person.eduPersonPrimaryAffiliation=='student'|| person.eduPersonPrimaryAffiliation=='alum'">
-        <div class="col-md-10 col-md-offset-2">
-          <div class="row">
-            <div class="col-md-12">
-              <div v-if="person['supannEntiteAffectation-all']">
-                <label>Structure(s)/Composante(s)</label>
-                <span class="uneditable-input" v-for="aff in person['supannEntiteAffectation-all']">
-                  {{aff.name}}
-                </span>
-              </div>
-              <div  v-if="lastDiplomas">
-                <label>Diplôme(s)</label>
-                <span style="display: inline-block; vertical-align: top">
-                  <span class="uneditable-input" v-for="diploma in lastDiplomas">
-                    <router-link :to="withParam('diploma', diploma.etapeCode)" >{{diploma.etape}}</router-link><br>
-                  </span>
-                </span>
-              </div>
-            </div>
-          </div>
-          <br>
-        </div>
-      </div>
-    </div>
-    </div>
   </div>
  </div></div>
+ <div class="userAnnuaireURL">
+    <a :href="user_public_url">{{user_public_url}}</a>
+
+    <span v-if="connected_uid === person.uid" class="modify_my_account">
+      | <a :href="config.modify_my_account_url"> Modifier mes informations</a>
+    </span>
+ </div>
 </div>
 </div>
 </template>
@@ -167,15 +162,12 @@
 <script>
 import * as WsService from "../WsService";
 import config from '../config';
+import helpers from '../helpers';
 import ChooseFormat from './ChooseFormat';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 
-
-function translateAffiliation(affiliation) {
-    let useful = config.usefulAffiliations.filter(a => a === affiliation)[0];
-    return useful && "STATUS_" + useful;
-}
+const unique = list => [...new Set(list)];
 
 const getLastDiplomas_ = (person) => {
     let inscriptions =person['supannEtuInscription-all'];
@@ -190,9 +182,12 @@ const getLastDiplomas_ = (person) => {
     ));
 };
 
-const computeStatusPers = (person) => (
-    person.eduPersonAffiliation.map(a => translateAffiliation(a)).filter(t => t)
-);
+const computeStatusPers = (person) => {
+    const affs = helpers.intersection(person.eduPersonAffiliation, config.usefulAffiliations);
+    let [t_r, other] = helpers.partition(affs, (aff => aff === "teacher" || aff === "researcher"));
+    if (t_r.length === 2) t_r = [ "teacher_researcher"];
+    return [...t_r, ...other].map(a => "STATUS_" + a);
+};
 
 // computes breadcrumbTotal, async !!
 function compute_breadcrumbTotal(person) {
@@ -213,12 +208,15 @@ const parentGroups = (groupKey) => (
 
 export default {
   name: "User",
-  props: ["userId", "connected", "format"],
+  props: ["userId", "format"],
   components: { ChooseFormat, Trombi, OrgChart },
   computed: {
     statusPers() { return computeStatusPers(this.person) },
+    isStaffOrFaculty() { return helpers.intersection(this.person.eduPersonAffiliation, [ "staff", "faculty"]).length },
     lastDiplomas() { return getLastDiplomas_(this.person) },
     photoURL() { return config.photoURL(this.person) },
+    user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
+    config() { return config; },
   },
   data() {
       return {
@@ -227,17 +225,16 @@ export default {
         breadcrumbTotal: [], //wsGroup[][];
       };
   },
-  mounted() {
-      this.updateAsyncData();
-  },
   watch: {
-      userId: 'updateAsyncData',
-      connected: 'updateAsyncData',
+      userId: {
+          handler: 'updateAsyncData',
+          immediate: true,
+      },
   },
   methods: {
       updateAsyncData() {
         let userId = this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain);
-        WsService.searchPersons({ token: userId, maxRows: 1, CAS: this.connected }).then(persons => persons[0]).then(person => {
+        WsService.searchPersons({ token: userId, maxRows: 1, CAS: config.connected }).then(persons => persons[0]).then(person => {
             this.error = !person && "Utilisateur inconnu";
             if (this.error) return;
             if (person.postalAddress) person.postalAddress = person.postalAddress.trim();

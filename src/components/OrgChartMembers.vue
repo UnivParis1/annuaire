@@ -3,20 +3,22 @@
     <span v-for="role in rolesGrouped">
       <div class="role">{{role.v}}&nbsp;: </div>
       <div class="user-with-role" v-for="u in role.group">
-        <Photo :user="u"></Photo>
-        <router-link :to="withUser(u.uid)">{{u.displayName}}</router-link>
+        <router-link :to="withUser(u)" :tag="u.mail ? 'a' : 'span'">{{u.displayName}}</router-link>
         <br>
       </div>
     </span>
     <span v-if="members && members.length">
       <br v-if="roles.length">
       <div class="members_other">
-        <span v-for="aff in affiliations" v-if="membersByAffiliation[aff].length">
-        <span class="affiliationName">{{t(translateAff(aff, membersByAffiliation[aff].length))}}</span><br>
-        <span v-for="u in membersByAffiliation[aff]" :title="u.info">
-          <router-link :to="withUser(u.mail)">{{u.displayName}}</router-link><br>
-        </span>
-        <br>
+        <span v-for="byAff in membersByAffiliation">
+          <span class="affiliationName" v-if="membersByAffiliation.length > 1">{{t(translateAff(byAff.v, byAff.group.length))}}<br></span>
+            <div v-for="byDescr in byAff.group" class="description">
+              <div>{{byDescr.v}}</div>
+              <span v-for="u in byDescr.group" :title="u.info">
+                <router-link :to="withUser(u)" :tag="u.mail ? 'a' : 'span'">{{u.displayName}}</router-link><br>
+              </span>
+            </div>
+           <br>
         </span>
       </div>
     </span>
@@ -25,50 +27,53 @@
 
 <script>
 import * as WsService from '../WsService';
+import * as sortUsers from '../sortUsers';
+import helpers from '../helpers';
 import config from '../config';
 import Photo from './Photo';
 
 
-function groupBy(l, by) {
-    let r = [];
-    let current;
-    for (let e of l) {
-        let v = by(e);
-        if (!current || v !== current.v) {
-            current = { v, group: [] };
-            r.push(current);
-        }
-        current.group.push(e);
-    }
-    return r;
-}
-
 export default {
-    props: ['affectation', 'roles', 'query'],
+    props: ['structure', 'onlyRoles', 'query'],
     components: { Photo },
     computed: {
+        affectation() {
+          return !this.onlyRoles && this.structure.key;
+        },
+        roles() {
+          return this.structure.roles;
+        },
         rolesGrouped() {
-            return groupBy(this.roles, u => u.supannRoleGenerique.join(", "));
+            return helpers.sortedGroupBy(this.roles, u => u.supannRoleGenerique.join(", "));
         },
         affiliations() {
-            return ['other', ...config.usefulAffiliations ].reverse();
+            return ['other', ...config.usefulAffiliationsGrouped ].reverse();
         },
         membersByAffiliation() {
             if (!this.members) return;
 
-            this.members.sort((a,b) => a.displayName < b.displayName ? -1 : 1);
-            let toIgnore = this.roles.map(e => e.uid);
+            let r = this.members;
 
-            let r = {};
-            this.affiliations.forEach(aff => r[aff] = []);
+            // remove dups
+            const toIgnore = this.roles.map(e => e.uid);
+            r = r.filter(person => !toIgnore.includes(person.uid));
 
-            for (let person of this.members) {
-                if (!toIgnore.includes(person.uid)) {
-                    let aff = person.eduPersonPrimaryAffiliation;
-                    aff = aff === "teacher" || aff === "researcher" ? "teacher_researcher" : aff;
-                    r[aff in r ? aff : "other"].push(person);
-                }
-            }
+            const isPedagogy = sortUsers.isPedagogy(this.structure);
+
+            r = r.map(person => {
+                // compute simplifiedAffiliation
+                let aff = person.eduPersonPrimaryAffiliation;
+                aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
+                person.simplifiedAffiliation = isPedagogy && helpers.includes(this.affiliations, aff) ? aff : "other";
+
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy) };
+            });
+
+            // full ordering
+            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'displayName' ]);
+            r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription' ]);
+
+            console.log(r);
             return r;
         }
     },
