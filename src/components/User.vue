@@ -80,7 +80,7 @@
               </div>
             <div class="affectations">
               <label>Membre de :</label>
-              <span v-for="i in breadcrumbTotal">
+              <span v-for="i in affectationsWithParents">
                 <span v-for="item in i">
                   <div v-if="item.category">
                     <router-link :to="withParam('affectation', item.rawKey)">{{item.name}}</router-link>
@@ -189,8 +189,7 @@ const computeStatusPers = (person) => {
     return [...t_r, ...other].map(a => "STATUS_" + a);
 };
 
-// computes breadcrumbTotal, async !!
-function compute_breadcrumbTotal(person) {
+function compute_affectationsWithParents(person) {
    let affectations = person.supannEntiteAffectation || [];
    // Si la personne possède plusieurs affectations, afficher autant de fil d'ariane que d'affectation
    return Promise.all(affectations.map(aff => parentGroups("structures-" + aff)));
@@ -211,6 +210,10 @@ export default {
   props: ["userId", "format"],
   components: { ChooseFormat, Trombi, OrgChart },
   computed: {
+    userMail() { return this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain) },
+    person() { return this.searchPerson && this.searchPerson.person },
+    error() { return this.searchPerson && this.searchPerson.error },
+
     statusPers() { return computeStatusPers(this.person) },
     isStaffOrFaculty() { return helpers.intersection(this.person.eduPersonAffiliation, [ "staff", "faculty"]).length },
     lastDiplomas() { return getLastDiplomas_(this.person) },
@@ -218,31 +221,16 @@ export default {
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
     config() { return config; },
   },
-  data() {
-      return {
-        person: undefined,
-        error: undefined,
-        breadcrumbTotal: [], //wsGroup[][];
-      };
-  },
-  watch: {
-      userId: {
-          handler: 'updateAsyncData',
-          immediate: true,
-      },
-  },
-  methods: {
-      updateAsyncData() {
-        let userId = this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain);
-        WsService.searchPersons({ token: userId, maxRows: 1, CAS: config.connected }).then(persons => persons[0]).then(person => {
-            this.error = !person && "Utilisateur inconnu";
-            if (this.error) return;
-            if (person.postalAddress) person.postalAddress = person.postalAddress.trim();
-            this.person = person;
-            //Récupérer les diplomes de l'étudiant
-            compute_breadcrumbTotal(person).then(l => this.breadcrumbTotal = l);
-        });
-      },
+  asyncComputed: {
+    affectationsWithParents() { // wsGroup[][];
+        return this.person && compute_affectationsWithParents(this.person);
+    },
+    async searchPerson() {
+        const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
+        if (!person) return { error: "Utilisateur inconnu" };
+        if (person.postalAddress) person.postalAddress = person.postalAddress.trim();
+        return { person };
+    },
   },
 }
 </script>

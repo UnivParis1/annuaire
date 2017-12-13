@@ -48,6 +48,10 @@ export let searchPersons = (wsparams) => (
     ))
 );
 
+export const searchPerson = (wsparams) => (
+    searchPersons({ maxRows: 1, ...wsparams }).then(persons => persons[0])
+)
+
 //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
 export let parentGroups = (pkey) => (
     wsgroupsJsonp("/getSuperGroups", pkey)
