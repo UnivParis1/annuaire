@@ -24,11 +24,13 @@ let wsgroupsJsonp = (name, params) => (
     cachedJsonp(config.wsgroupsURL + name, params)
 );
 
+export const group_roles_remove_supannListeRouge = group => {
+    if (group.roles) group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
+    return group;   
+};
+
 export let getGroupFromStruct = (affectation) => (
-    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true }).then(group => {
-        if (group.roles) group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
-        return group;   
-    })
+    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true }).then(group_roles_remove_supannListeRouge)
 );
 
 export let getRoleGenerique = (role) => (
@@ -109,6 +111,6 @@ export const OrgChart = {
         token: query.token,
         filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff',
         filter_supannEntiteAffectation: affectation, attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,employeeType,supannActivite-all',
-    });
+    }).then(persons => persons.filter(u => !u.supannListeRouge));
   },
 };

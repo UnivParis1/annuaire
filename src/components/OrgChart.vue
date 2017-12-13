@@ -116,6 +116,7 @@ import config from '../config';
      tree.key = tree.key.replace(/^structures-/, '');
      tree.fullname = tree.name;
      tree.name = tree.name.replace(/^[\w- ]*?\s[:–-] /i, '');
+     tree = WsService.group_roles_remove_supannListeRouge(tree);
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
        parent.roles = tree.roles;
      }
