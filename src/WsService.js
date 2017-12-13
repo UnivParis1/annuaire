@@ -25,7 +25,10 @@ let wsgroupsJsonp = (name, params) => (
 );
 
 export let getGroupFromStruct = (affectation) => (
-    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true })
+    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true }).then(group => {
+        if (group.roles) group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
+        return group;   
+    })
 );
 
 export let getRoleGenerique = (role) => (
