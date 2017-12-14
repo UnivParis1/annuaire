@@ -90,6 +90,10 @@ export default {
     return s.substr(0, sub.length) === sub;
   },
 
+  array_set(arr, arr2) {
+    arr.splice(0, arr.length, ...arr2);
+  },
+
   /* cf https://lodash.com/docs/#groupBy */
   /*groupBy(l, by) {
     let r = {};

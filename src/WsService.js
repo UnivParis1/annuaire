@@ -1,4 +1,5 @@
 import config from './config';
+import * as sortUsers from './sortUsers';
 
 let cache = {};
 
@@ -48,6 +49,7 @@ export let searchPersons = (wsparams) => (
           if (p.supannListeRouge) {
             p = { supannListeRouge: true };
           }
+          p = sortUsers.sortRoles(p);
           return p;
       })
     ))

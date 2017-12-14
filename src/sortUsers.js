@@ -60,3 +60,11 @@ export function descrAndWeight(person, isPedagogy, current_affectation_filter) {
     }
     return { weight: weight || "5_" };
 }
+
+export function sortRoles(person) {
+  let roles = person['supannRoleEntite-all'];
+  if (roles) {
+    helpers.array_set(roles, helpers.sortBy(roles, ['role_weight']));
+  }
+  return person;
+}
