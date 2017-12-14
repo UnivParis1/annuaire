@@ -122,7 +122,7 @@ export default {
         if (this.noFilters || this.query.format === 'chart') {
         } else {
           _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
-            persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p)) }));
+            persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), this.query.affectation) }));
             persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
             this.persons = persons;
           });

@@ -66,7 +66,7 @@ export default {
                 aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
                 person.simplifiedAffiliation = isPedagogy && helpers.includes(this.affiliations, aff) ? aff : "other";
 
-                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy) };
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, this.affectation) };
             });
 
             // full ordering

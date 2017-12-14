@@ -86,6 +86,10 @@ export default {
     return r;
   },
 
+  startsWith(s, sub) {
+    return s.substr(0, sub.length) === sub;
+  },
+
   /* cf https://lodash.com/docs/#groupBy */
   /*groupBy(l, by) {
     let r = {};

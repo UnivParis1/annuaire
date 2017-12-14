@@ -23,11 +23,12 @@ export const isPedagogyAffectation = (person) => (
     !!(person["supannEntiteAffectation-all"] || []).find(isPedagogy)
 );
 
-export function descrAndWeight(person, isPedagogy) {
+export function descrAndWeight(person, isPedagogy, current_affectation_filter) {
     let weight;
 
-    const roles = person['supannRoleEntite-all'];
+    let roles = person['supannRoleEntite-all'];
     if (roles) {
+      if (current_affectation_filter) roles = roles.filter(r => helpers.startsWith(r.structure.key, current_affectation_filter));
       const weight_ = helpers.minString(roles.map(r => r.role_weight).filter(w => w));
       if (weight_) weight = "0_" + weight_;
     }
