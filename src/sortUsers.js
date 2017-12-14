@@ -32,15 +32,6 @@ export function descrAndWeight(person, isPedagogy) {
       if (weight_) weight = "0_" + weight_;
     }
 
-    // hiding employeeType of teachers/researchers in administration
-    if (person.employeeType) {
-      const weight_ = Math.min(... person.employeeType.map(e => employeeType2index[e] || 9999));
-      if (!weight) weight = (isPedagogy ? "1_" : "4_") + number2fixedString(weight_);
-      if (isPedagogy) return {
-        simplifiedDescription: person.employeeType.join(', '),
-        weight,
-      };
-    }
     if (person.description) {
       const weight_ = Math.min(... person.description.map(e => activitesUP1_to_index[e] || 9999));
       // keep it only if it is listed in config.activitesUP1
@@ -54,6 +45,16 @@ export function descrAndWeight(person, isPedagogy) {
       if (descr) return {
         simplifiedDescription: descr,
         weight: weight || ("3_" + helpers.minString(person['supannActivite-all'].map(activite => activite.key))),
+      };
+    }
+    if (person.employeeType) {
+      const weight_ = Math.min(... person.employeeType.map(e => employeeType2index[e] || 9999));
+      if (!weight) weight = "4_" + number2fixedString(weight_);
+
+      // hiding employeeType of teachers/researchers in administration
+      if (isPedagogy) return {
+        simplifiedDescription: person.employeeType.join(', '),
+        weight,
       };
     }
     return { weight: weight || "5_" };
