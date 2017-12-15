@@ -29,7 +29,7 @@
         </td>
 
         <td class="col-md-4 infoUser">
-          <div v-if="!person.supannListeRouge" class="mail">
+          <div class="mail" v-if="person.mail">
             <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
           </div>
           <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.facsimileTelephoneNumber || person.mobile">
