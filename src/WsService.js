@@ -101,7 +101,7 @@ export async function compute_wsparams_user_filters ({ affiliation, affectation,
     } else {
         return wsparams;
     }
-};
+}
 
 export const OrgChart = {
   getMembers(query, affectation) {

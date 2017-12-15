@@ -47,7 +47,7 @@
             <div class="verticalTop" v-if="l4"></div>
             <div class="verticalBottom" v-if="l4"></div>
         </li>
-        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
+        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
 
@@ -74,7 +74,7 @@
    <div class="tree thirdPane" v-if="l4">
        <div class="empty4"></div>
        <ul>
-           <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
+           <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
                <div class="horizLeft"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(e)">
@@ -82,7 +82,7 @@
                  <members :structure="e" :onlyRoles="e5.key" :query="query" v-if="e === e4 || displayAll"></members>
                <div class="Xvertical" v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
                  <ul>
-                   <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
+                   <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
                        <span class="bloc" :class="classes(e)" :title="e.key">

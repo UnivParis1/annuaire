@@ -120,6 +120,7 @@ export default {
         this.persons = undefined;
 
         if (this.noFilters || this.query.format === 'chart') {
+          //
         } else {
           _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), this.query.affectation) }));
