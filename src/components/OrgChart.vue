@@ -102,13 +102,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import * as WsService from '../WsService';
-import * as sortUsers from '../sortUsers';
 import Photo from './Photo';
 import OrgChartMembers from './OrgChartMembers';
 import helpers from '../helpers';
-import config from '../config';
 
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
@@ -145,10 +142,6 @@ let withSubGroups = (e) => (
      })
 );
 
- function addSubGroups(e) {
-     if (!e.subGroups) withSubGroups(e);
- }
- 
  function get_selectedList(e1, selected) {
     let code2tree = {};
     function getCodes(tree) {

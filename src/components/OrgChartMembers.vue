@@ -73,7 +73,6 @@ export default {
             r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'displayName' ]);
             r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription' ]);
 
-            console.log(r);
             return r;
         }
     },
