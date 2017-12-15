@@ -20,7 +20,6 @@
               La recherche publique est limitée à {{maxRows}} résultats, pour plus de résultats,
               <a :href="connectedHref($route)">veuillez vous identifier.</a>
             </span>
-          </span>
         </div>
         <div class="col-md-12 warning" v-if="query.format === 'chart' && !connected" >
           <span>

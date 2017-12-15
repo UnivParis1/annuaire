@@ -43,7 +43,7 @@
   <div class="secondPane" v-if="l3" :class="{ display_secondary_bloc }">
    <div class="vertical">
      <ul>
-       <li class="withBorder"></li>
+       <li class="withBorder">
             <div class="verticalTop" v-if="l4"></div>
             <div class="verticalBottom" v-if="l4"></div>
         </li>
