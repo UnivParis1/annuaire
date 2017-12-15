@@ -92,7 +92,7 @@ export default {
     showUserOrStructure(userOrGroup) {
         // recherche de personne
         if (userOrGroup.category === 'users') {
-            this.go(this.withUser(userOrGroup));
+            this.go(userOrGroup.mail ? this.withUser(userOrGroup) : this.withParam('token', userOrGroup.displayName));
         } else if (userOrGroup.category === 'supannRoleGenerique') {
             this.go(this.withParam('role', userOrGroup.key));
         } else if (userOrGroup.category === 'supannActivite') {
