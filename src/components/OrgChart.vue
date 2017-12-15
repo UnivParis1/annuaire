@@ -78,7 +78,7 @@
                <div class="horizLeft"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(e)">
-                 <span :title="'(' + e.key + ') ' + e.fullname">{{e.name}}</span>
+                 <router-link :to="withParam('affectation', e.key)" :title="'(' + e.key + ') ' + e.fullname">{{e.name}}</router-link>
                  <members :structure="e" :onlyRoles="e5.key" :query="query" v-if="e === e4 || displayAll"></members>
                <div class="Xvertical" v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
                  <ul>
