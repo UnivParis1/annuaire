@@ -56,6 +56,7 @@
                   tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div class="description" v-for="desc in person.description">{{desc}}</div>
+              <div class="info" v-for="info in person.info" v-if="has_staff_description">{{info}}</div>
             <div class="affiliations">
               <span v-for="(aff, index) in statusPers">
                 <span>{{index ? ', ' : ''}}{{t(aff)}}</span>
@@ -66,7 +67,7 @@
                 <span v-for="activite in person['supannActivite-all']">{{activite.name}}</span>
               </span>
             </div>
-              <div class="info" v-for="info in person.info">{{info}}</div>
+              <div class="info" v-for="info in person.info" v-if="!has_staff_description">{{info}}</div>
               <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
                 <label>Inscripts en diplôme :</label>
                   <div v-for="diploma in lastDiplomas">
@@ -216,6 +217,7 @@ export default {
 
     statusPers() { return computeStatusPers(this.person) },
     isStaffOrFaculty() { return helpers.intersection(this.person.eduPersonAffiliation, [ "staff", "faculty"]).length },
+    has_staff_description() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
     lastDiplomas() { return getLastDiplomas_(this.person) },
     photoURL() { return config.photoURL(this.person) },
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },

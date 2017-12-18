@@ -14,7 +14,7 @@
                 <div v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
               <div v-for="desc in person.description">{{desc}}</div>
-              <div v-for="activite in person['supannActivite-all']" v-if="person['supannActivite-all']">{{activite.name}}</div>
+              <div v-for="activite in person['supannActivite-all']" v-if="person['supannActivite-all'] && !has_staff_description">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
           <td class="col-md-7" colspan="2" v-else>
@@ -65,6 +65,7 @@ export default {
   props: ['person', 'query'],
   computed: {
       connected() { return config.connected; },
+      has_staff_description() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
   },
 }
 </script>
