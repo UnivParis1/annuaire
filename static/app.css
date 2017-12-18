@@ -1083,11 +1083,11 @@ li.nonSelectedElt .bloc {
     margin-bottom: 1em;
 }
 
-.members_other .description span {
+.members_other .user-no-role {
     font-weight: normal;
 }
 
-.depth4 .members_other .description span {
+.depth4 .members_other .user-no-role {
     color: #00326e;
 }
 
@@ -1834,7 +1834,7 @@ li.nonSelectedElt .bloc:hover {
         color: #eeeccc !important;
     }
 
-    .selectedElt .depth3 .description span {
+    .selectedElt .depth3 .user-no-role {
         color: #fff !important;
     }
 

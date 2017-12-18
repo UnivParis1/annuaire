@@ -13,8 +13,8 @@
         <span v-for="byAff in membersByAffiliation">
           <span class="affiliationName" v-if="membersByAffiliation.length > 1">{{t(translateAff(byAff.v, byAff.group.length))}}<br></span>
             <div v-for="byDescr in byAff.group" class="description">
-              <div>{{byDescr.v}}</div>
-              <span v-for="u in byDescr.group" :title="u.info">
+              <div class="user-description">{{byDescr.v}}</div>
+              <span v-for="u in byDescr.group" :title="u.info" class="user-no-role">
                 <maybe-router-link :to="withUser(u)">{{u.displayName}}</maybe-router-link><br>
               </span>
             </div>
