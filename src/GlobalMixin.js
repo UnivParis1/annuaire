@@ -45,6 +45,11 @@ export default {
                 delete query.affectation;
                 delete query.diploma;
             }
+            if (name === "role" || name === "activite") {
+                delete query.role;
+                delete query.activite;
+            }
+
             if (name !== 'format') {
                 path = "/";
             }
