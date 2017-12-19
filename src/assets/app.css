@@ -733,6 +733,9 @@ Div.App {
 .OrgChart-outer {
     display: flex;
     flex-wrap: wrap;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 96%; 
 }
 /* center OrgChart */
 .OrgChart-outer::before, .OrgChart-outer::after {
@@ -1294,6 +1297,21 @@ li .secondary-bloc .members {
     background-color: #F6D891;
     color: #00326e;
 }
+
+
+.depth1_roles_below .bloc,
+.depth1_roles .bloc { 
+    background-color: #fde19f47;  
+    border: 1px solid #e5ce93;   
+	color: #333; 
+	
+} 
+
+
+
+
+
+
 .depth1_roles_below a,
 .depth1_roles a {
     font-weight: normal;
@@ -1402,9 +1420,11 @@ li .secondary-bloc .members {
 }
 
 .depth2 {
-    font-size: 1.15em;
+    font-size: 1.15em;	font-size:12px;
     font-weight: bold;
     background-color: #F6D891;
+    background-color: #FDE19F; 
+ 
     border: 2px solid #c89108;
     border-top-width: 3px;
     border-bottom-width: 1px;
@@ -1413,11 +1433,21 @@ li .secondary-bloc .members {
     background-color: #fff;
 }
 
+ 
+
 span.bordered.depth2 {
+    min-height: auto;
+}
+
+.bloc.bordered.depth2 {
+    max-width: 12rem;
+    min-width: 105px;
     min-height: 65px;
 }
 
-.depth2.organization {
+
+
+.organization {
     border: 1px dashed #c89108;
 }
 
@@ -1552,6 +1582,27 @@ li .secondary-bloc .bloc {
 .selectedElt .depth4 .members {
     border-top: 2px solid #6f90b8
 }
+
+
+
+ 
+.depth2, .depth3, .depth4  {
+     border: 1px solid #777;  
+	 border-width: 1px !important; 
+} 
+
+
+  
+
+
+
+
+
+
+
+
+
+
 
 .depth5, .depth6 {
     background-color: #fff;
@@ -2108,9 +2159,35 @@ li.nonSelectedElt .bloc:hover {
 }  /* FIN Print */
 
 
+
 .hideChart .userChartFormatLink,
 .hideChart .chartFormatLink,
 .hideChart .ChooseFormat .chart {
   display: none;
 }
+
+ 
+
+
+
+  
+
+
+
+/* les entitees virtuelles */ 
+.organization { 
+	border-style: dashed !important; 
+}
+
+.selectedElt > span > .depth2.organization  {
+   border-color: #FDE19F !important; 
+}
+
+.selectedElt .depth3.organization  {
+   border-color: #8ED8FD !important; 
+}
+ 
+  
+
+
 
