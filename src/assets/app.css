@@ -1,3 +1,12 @@
+
+  
+ 
+
+ 
+
+/*************Annuaire 16 nov 2021 ***********/ 
+
+
 .my-icon {
   display: inline-flex;
 }
@@ -727,15 +736,16 @@ Div.App {
 }
 
 
-/*-------------------------------------------------------------------------------------------*/
+/*________________________________________________*/
 
 
 .OrgChart-outer {
-    display: flex;
+    display: flex;  
+        /* display: initial;   pour corriger les double positionnments - yami */ 
     flex-wrap: wrap;
     margin-left: auto !important;
     margin-right: auto !important;
-    width: 96%; 
+    width: 96%  ; 
 }
 /* center OrgChart */
 .OrgChart-outer::before, .OrgChart-outer::after {
@@ -747,7 +757,8 @@ Div.App {
     padding: 20px;
     padding-top: 40px;
     margin-bottom: 20px;
-    background-color: #f4f6fa;
+    background-color: #fff; background-color: #f4f6f9; background-color: #f6f8fc;
+
     border: 1px solid #D5DcEa;
     border-top-width: 5px;
     border-radius: 15px;
@@ -771,7 +782,9 @@ Div.App {
 .OrgChart .role {
     color: #eeeccc;
     text-transform: uppercase;
-    padding-top: 4px;
+     
+    padding-top: 9px;
+
 }
 
 .members .affiliationName {
@@ -792,6 +805,7 @@ Div.App {
     list-style-type: none;
     position: relative;
     padding: 5px 5px 5px 10px;
+padding: 5px 5px 5px 5px; /* yam */ 
 }
 
 .OrgChart .sameBlocSize {
@@ -808,11 +822,11 @@ Div.App {
 .tree, .vertical {
     font-size: 12px;
     font-size: 11px;
-    font-weight: bold;
+    font-weight: bold; font-weight: normal;  /* yam */ 
 }
 
 .bordered {
-    border: 2px solid #B5C1DA;
+    border: 1px solid #aaa;
     background-color: #F4F6FA;
     background-color: #EEF1F7;
 }
@@ -834,7 +848,7 @@ Div.App {
     background-image: url("/images/research.png");
     background-repeat: no-repeat;
     background-position: right top;
-    padding-right: 12px !important;
+     
 }
 
 .research:hover {
@@ -1012,10 +1026,18 @@ li.nonSelectedElt .bloc {
 }
 
 .vertical li .bloc {
-    width: 20em;
+    width: 20em;  /*yam */ width: 18em;
     display: block;
     pointer-events: all;
 }
+
+.div_depth1 .vertical li .bloc {
+     
+    width: 23em; /*yam */ 
+      font-weight : normal; 
+}
+
+
 
 .vertical li.nonSelectedElt {
     padding-top: 8px;
@@ -1070,13 +1092,15 @@ li.nonSelectedElt .bloc {
 
 .vertical li > .verticalTop,
   .vertical li.selectedElt .verticalTopRight {
-    border-bottom: 1px solid #aabbcc;
+    border-bottom: 1px solid #aabbcc  ;    
+
 }
 
 .display_secondary_bloc .vertical li.selectedElt .bloc {
-    border-radius: 5px 0 0 5px;
-    border-right: none;
+    border-radius: 5px 0 0 5px ;
+    border-right: none;   
 }
+
 
 .vertical li:last-child > .verticalBottom {
     border-left: none;
@@ -1142,8 +1166,31 @@ li.nonSelectedElt .bloc {
     box-shadow: 0px 0px 10px gray; 
     text-align: center;
     cursor: pointer;
-    font-size: 110%;
+    font-size: 105%;
+
+margin-bottom: 10px;
+margin-top: 10px;
+ 
+  padding : 3px;
+ border: 1px solid #99999930;
+  border-radius: 2px;
+  
+  box-shadow: 0px 1px 1px #999;
+  -webkit-box-shadow: 0px 1px 1px #999;   
+  -moz-box-shadow: 0px 1px 1px #999;    
+
+background: #e7eaf161;
 }
+
+
+
+.show_hide_more_members:hover {
+    box-shadow: 0px 0px 6px gray; 
+  background: #e7eaf114;
+
+}
+
+
 
 .depth4 .members_other .user-no-role {
     color: #00326e;
@@ -1281,21 +1328,16 @@ li .secondary-bloc .members {
     padding-left: 0;
     padding-right: 0;
 }
-.depth1_roles_below .bloc,
-.depth1_roles .bloc {
-    padding: 5px 5px;
-    margin-bottom: 0.5rem;
-    border-radius: 4px;
-    background-color: #F6D891;
-    color: #00326e;
-}
 
+  
 
 .depth1_roles_below .bloc,
 .depth1_roles .bloc { 
-    background-color: #fde19f47;  
-    border: 1px solid #e5ce93;   
+
+     margin-bottom: 0.5rem;
+    border: 1px solid #bdbdbd;   
 	color: #333; 
+    background: #fde0996b;
 	
 } 
 
@@ -1396,7 +1438,7 @@ li .secondary-bloc .members {
 }
 
 .depth1 {
-    border: 3px solid #C89108;
+    
     background-color: #C89108;
     color: white;
     font-weight: bold;
@@ -1407,19 +1449,17 @@ li .secondary-bloc .members {
 
 .depth1 a {
     color: white;
-    font-weight: normal;
-    font-size: 14px;
+    -font-weight: normal;
+    font-size: 12px;
 }
 
 .depth2 {
     font-size: 1.15em;	font-size:12px;
     font-weight: bold;
-    background-color: #F6D891;
-    background-color: #FDE19F; 
+     
+   background-color: #FDE099 ; 
  
-    border: 2px solid #c89108;
-    border-top-width: 3px;
-    border-bottom-width: 1px;
+    
 }
 .depth2.external {
     background-color: #fff;
@@ -1433,8 +1473,9 @@ span.bordered.depth2 {
 
 .bloc.bordered.depth2 {
     max-width: 12rem;
-    min-width: 105px;
-    min-height: 65px;
+    min-width: 97px;
+    min-height: 88px; 
+
 }
 
 
@@ -1456,7 +1497,8 @@ span.bordered.depth2 {
 .depth2 .affiliationName,
 .depth2 .user-description {
     color: #4e3503;
-    color: #5A1A1A;
+    color: #5A1A1A; 
+     color : #232323; 
 }
 
 .depth2 .role,
@@ -1469,7 +1511,7 @@ span.bordered.depth2 {
 }
 
 .selectedElt > span > .depth2:not(.external) {
-    border: 3px solid #C89108;
+    
     background-color: #C89108;
     -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
     -moz-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
@@ -1482,10 +1524,8 @@ span.bordered.depth2 {
 }
 
 .vertical .depth3 {
-    background-color: #E6EEFB;
-    border: 2px solid #6f90b8;
-    border-top-width: 3px;
-    border-bottom-width: 1px;
+    background-color: #E6EEFB; 
+    border: 1px solid #888; 
     padding-top: 10px !important;
     padding-bottom: 6px !important;
 }
@@ -1500,9 +1540,7 @@ span.bordered.depth2 {
 
 .selectedElt .depth3 {
     color: white;
-    background-color: #20558a;
-    border: 3px solid  #20558a;
-    border-top-width: 4px;
+    background-color: #00326e; 
     padding-top: 9px !important;
 }
 
@@ -1537,15 +1575,14 @@ li .secondary-bloc .bloc {
 
 .depth4 {
     background-color: #fff;
-    border: 1px solid #6f90b8 !important;
-    color: #444;
-    border-top-width: 2px !important;
-    padding-top: 12px !important;
+    border: 1px solid #898989 ;
+    color: #333;
+     
+    padding-top: 12px !important; 
+     
 }
 
-.selectedElt .depth4 {
-    border: 2px solid #96A9CC;
-}
+ 
 
 .depth4 a {
     font-weight: normal;
@@ -1560,27 +1597,18 @@ li .secondary-bloc .bloc {
 }
 
 .depth4 .members {
-    background-color: #f9f9f9 !important;
-    color: #666;
+    background-color: #f6f6f6 !important;
+    color: #555;
+    padding-left: 3px;
 }
 
-.selectedElt .depth4 {
-    border: 2px solid #5381ac !important;
-    -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
-    -moz-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
-    box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
-}
-
-.selectedElt .depth4 .members {
-    border-top: 2px solid #6f90b8
-}
+ 
 
 
 
  
 .depth2, .depth3, .depth4  {
-     border: 1px solid #777;  
-	 border-width: 1px !important; 
+      border: 1px solid #aaa;   
 } 
 
 
@@ -1599,12 +1627,12 @@ li .secondary-bloc .bloc {
 .depth5, .depth6 {
     background-color: #fff;
     border: 1px solid #bbb !important;
-    color: #555
+    color: #555;
+     max-width: 130px; /* yam */ 
+
 }
 
-.selectedElt .depth5, .selectedElt.depth6 {
-    border-width: 2px;
-}
+ 
 
 .depth5 a, .depth5 a {
     font-weight: normal;
@@ -1664,7 +1692,9 @@ li .secondary-bloc .bloc {
     right: 5px;
 }
 
-/* test organigramme individu------*/
+
+
+/*__________ test organigramme individu ___________*/
 
 
 
@@ -1743,7 +1773,7 @@ li.nonSelectedElt .bloc:hover {
     .depth2 {
         font-size: 10px;
         font-weight: bold;
-        text-transform: uppercase;
+         
     }
 }
 
@@ -2152,6 +2182,7 @@ li.nonSelectedElt .bloc:hover {
 
 
 
+
 .hideChart .userChartFormatLink,
 .hideChart .chartFormatLink,
 .hideChart .ChooseFormat .chart {
@@ -2159,10 +2190,7 @@ li.nonSelectedElt .bloc:hover {
 }
 
  
-
-
-
-  
+ 
 
 
 
@@ -2171,15 +2199,31 @@ li.nonSelectedElt .bloc:hover {
 	border-style: dashed !important; 
 }
 
-.selectedElt > span > .depth2:not(.external).organization  {
-   border-color: #FDE19F !important; 
-}
-
-.selectedElt .depth3.organization  {
-   border-color: #8ED8FD !important; 
-}
  
-  
 
+/* DGS et ses child */ 
+
+.depth1_roles_below .bloc,
+.dgs , 
+.depth4.dgs, 
+.depth5.dgs, 
+.selectedElt > span > .depth2:not(.external).organization.dgs 
+ 
+ { border-radius: 0 !important;   
+     border-color: #18cbcb  !important ; /* bleu-vert */  
+ 
+     
+}
+
+
+.selectedElt > span > .bloc, /* l2 & l2bis */
+.selectedElt > .bloc /* l3 & l4 */ {
+    -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    -moz-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+    box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
+     border-width : 2px ; 
+}  
+
+  
 
 
