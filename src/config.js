@@ -15,14 +15,14 @@ export default {
     searchAuthMaxResult: 100, // Résultat maximal à afficher si authentifié
 
     slides: [
-        {
+        /*{
             img: "static/images/slider/organigramme.png",
             html: `
             <h1>Organigramme</h1>
             Un organigramme interactif est disponible.
             Vous pouvez visualiser l'organigramme d'une composante, d'une structure administrative, d'un laboratoire de recherche, d'un service, ...
             Vous pouvez situer un personnel dans l'organigramme.`,
-        },
+        },*/
         {
             img: "static/images/slider/acces-direct.png",
             html: `

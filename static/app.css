@@ -1897,4 +1897,11 @@ li.nonSelectedElt .bloc:hover {
 }  /* FIN Print */
 
 
+.search {
+  margin: 0 auto;
+  float: none;
+}
+.userChartFormatLink, .chartFormatLink, .ChooseFormat .nav .chart {
+  display: none;
+}
 
