@@ -1,3 +1,7 @@
+#bandeau-anonyme .bandeau-logo {
+    background-size: auto 85px !important;
+}
+
 a {
     color: #20558a;
 }
@@ -7,21 +11,18 @@ a:hover {
 }
 
 Div.App {
-    margin-top: 30px;
+    margin-top: 20px;
     font-family: Arial, Helvetica, "Liberation Sans", FreeSans, sans-serif;
     font-size: 12px;
     color: #555;
 }
 
-
-
 #bandeau-anonyme .bandeau-titlebar, #bandeau-anonyme .bandeau-titlebar a {
-    font-size: 23px !important;
-    padding: 13px 6px 18px 13px !important;
+    padding: 23px 0px 13px 0px !important;
 }
 
 .nav.nav-pills.menu-top.affiliations {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
 }
 
 .search {
@@ -244,11 +245,11 @@ Div.App {
     min-height: 27px;
     padding-left: 15px;
     font-size: 18px;
-    color: #FFEFBF;
+    color: #FED984;
 }
 
 .ChooseFormat {
-    margin-top: 25px;
+    margin-top: 9px;
 }
 
 .ChooseFormat .nav .btn {
@@ -759,6 +760,7 @@ tr.UserInTable .imgCircle {
     color: #eeeccc;
     text-transform: uppercase;
     padding-top: 4px;
+    border-bottom: 1px dotted;
 }
 
 .OrgChart ul {
@@ -1075,12 +1077,13 @@ li.nonSelectedElt .bloc {
 }
 
 .members_other {
-    font-size: 80%;
+    font-size: 88%;
 }
 
 .members_other .description {
     display: block;
     margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 .members_other .user-no-role {
@@ -1219,13 +1222,45 @@ li .secondary-bloc .members {
 }
 
 .depth2 {
-    font-size: 11px;
+    font-size: 1.15em;
     font-weight: bold;
-    background-color: #FDE7BE;
-    background-color: #F4CD71;
-    border: 2px solid #F1C050;
+    background-color: #F6D891;
+    border: 2px solid #c89108;
     border-top-width: 3px;
-    text-transform: uppercase;
+    border-bottom-width: 1px;
+}
+
+span.bordered.depth2 {
+    min-height: 65px;
+}
+
+.depth2.organization {
+    border: 1px dashed #c89108;
+}
+
+.depth2 .members {
+    font-size: 0.94em;
+    font-weight: normal;
+}
+
+.depth2 .members_other {
+    font-size: 0.90em;
+}
+
+.depth2 .role,
+.depth2 .affiliationName,
+.depth2 .user-description {
+    color: #4e3503;
+    color: #5A1A1A;
+}
+
+.depth2 .role,
+.depth2 .affiliationName {
+    font-weight: bold;
+}
+
+.depth2 .affiliationName {
+    border-bottom: 1px dotted;
 }
 
 .selectedElt .depth2 {
@@ -1273,6 +1308,10 @@ li .secondary-bloc .members {
     padding-left: 6px;
 }
 
+.depth3 .role, .depth3 .user-description {
+    color: #eeeccc;
+}
+
 .selectedElt .depth3 a {
     color: white;
     font-weight: normal;
@@ -1290,7 +1329,7 @@ li .secondary-bloc .bloc {
 .depth4 {
     background-color: #fff;
     border: 1px solid #6f90b8 !important;
-    color: #333;
+    color: #444;
     border-top-width: 2px !important;
     padding-top: 12px !important;
 }
@@ -1304,7 +1343,11 @@ li .secondary-bloc .bloc {
 }
 
 .depth4 .role, .depth4 .affiliationName {
-    color: #777 !important;
+    color: #666 !important;
+    line-height: 13px;
+    font-size: 90%;
+    margin-bottom: 4px;
+    margin-top: 8px;
 }
 
 .depth4 .members {
@@ -1338,11 +1381,11 @@ li .secondary-bloc .bloc {
 }
 
 .depth5 .role, .depth5 .affiliationName {
-    color: #777 !important;
+    color: #666 !important;
 }
 
 .depth6 .role, .depth6 .affiliationName {
-    color: #777 !important;
+    color: #666 !important;
 }
 
 .depth7 {
@@ -1368,10 +1411,11 @@ li .secondary-bloc .bloc {
 
 .members .user-with-role {
     clear: both;
+    font-size: 100%;
 }
 
 .members .role {
-    font-size: 80%;
+    font-size: 95%;
     clear: both;
 }
 
@@ -1453,6 +1497,8 @@ li.nonSelectedElt .bloc:hover {
     padding: 20px;
     width: 55%;
     margin: auto;
+    margin-bottom: 45px;
+    margin-top: 5px;
 }
 
 
@@ -1589,7 +1635,7 @@ li.nonSelectedElt .bloc:hover {
     max-width: 1100px;
     min-width: 300px;
     margin: auto;
-    margin-top: 45px;
+    margin-top: 41px;
     overflow: hidden;
     position: relative;
     border: 1px solid #ccc;
@@ -1614,6 +1660,7 @@ li.nonSelectedElt .bloc:hover {
 .flex-caption {
     margin: auto 0;
     padding-right: 3rem;
+    width: 100%;
     font-size: 16px;
     font-family: Arial,verdana;
     font-weight: normal;
@@ -1623,10 +1670,10 @@ li.nonSelectedElt .bloc:hover {
 
 .flex-caption h1 {
     font-size: 22px;
-    font-family: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", "Luxi Sans", Arial, sans-serif;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     margin: 0;
     margin-bottom: 30px;
-    color: #555777;
+    color: #556677;
 }
 
 .flex-caption a {
@@ -1839,11 +1886,13 @@ li.nonSelectedElt .bloc:hover {
     }
 
     .legalFooter {
-        font-size: 11px;
+        font-size: 10px;
         margin: auto;
+        margin-top: 30px;
         padding: 10px;
         text-align: center;
-        width: 88%;
+        color: #999;
+        width: 68%;
     }
 }  /* FIN Print */
 
