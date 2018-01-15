@@ -69,7 +69,6 @@
             </div>
               <div class="info" v-for="info in person.info" v-if="!has_staff_description">{{info}}</div>
               <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
-                <label>Inscripts en diplôme :</label>
                   <div v-for="diploma in lastDiplomas">
                     <router-link :to="withParam('diploma', diploma.etapeCode)" >{{diploma.etape}}</router-link><br>
                   </div>
