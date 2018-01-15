@@ -78,7 +78,7 @@
                   Page perso :
                   <a :href="uri" target="_blank">{{uri.replace(/^https?:\/\//, '')}}</a>
               </div>
-            <div class="affectations">
+            <div class="affectations" v-if="affectationsWithParents.length">
               <label>Membre de :</label>
               <span v-for="i in affectationsWithParents">
                 <span v-for="item in i">
