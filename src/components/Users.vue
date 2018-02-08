@@ -105,7 +105,7 @@ export default {
           return config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
       },
       slides() {
-          return config.slides;
+          return helpers.shuffle(...config.slides);
       },
   },
   watch: {
