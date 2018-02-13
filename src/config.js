@@ -34,7 +34,8 @@ export default {
             img: "static/images/slider/recherche-multi-critere.png",
             html: `
             <h1>Recherche multi-critère</h1>
-            Affinez votre recherche par un système combiné de filtres (statut, structure, fonction, nom, diplôme, ...).`,
+            Affinez votre recherche par un système combiné de filtres
+            <br><i>(statut, structure, fonction, nom, diplôme, ...)</i>.`,
         },
         {
             img: "static/images/slider/structure.png",
