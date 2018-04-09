@@ -10,10 +10,10 @@
               <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam('affectation', role.structure.key)" tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
               </div>
+              <div v-for="desc in person.description">{{desc}}</div>
               <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
                 <div v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
-              <div v-for="desc in person.description">{{desc}}</div>
               <div v-for="activite in person['supannActivite-all']" v-if="person['supannActivite-all'] && !has_staff_description">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
