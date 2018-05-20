@@ -224,7 +224,7 @@ export default {
   },
   asyncComputed: {
     affectationsWithParents() { // wsGroup[][];
-        return this.person && compute_affectationsWithParents(this.person);
+        return this.person ? compute_affectationsWithParents(this.person) : [];
     },
     async searchPerson() {
         const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
