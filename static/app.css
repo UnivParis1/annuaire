@@ -1893,11 +1893,13 @@ li.nonSelectedElt .bloc:hover {
 }  /* FIN Print */
 
 
-.search {
+.hideChart .search {
   margin: 0 auto;
   float: none;
 }
-.userChartFormatLink, .chartFormatLink, .ChooseFormat .nav .chart {
+.hideChart .userChartFormatLink,
+.hideChart .chartFormatLink,
+.hideChart .ChooseFormat .nav .chart {
   display: none;
 }
 

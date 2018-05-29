@@ -1,5 +1,5 @@
 <template>
-<div class="App">
+<div class="App" :class="{ hideChart: !allowChart }">
   <div class="container">
     <div class="search">
             <form @submit.prevent="showUsers(search_token)">
@@ -78,6 +78,7 @@ export default {
             return { ...wsparams, ...wsparams_filters }
         });
       },
+      allowChart() { return window.allowChart },
   },
 
   methods: {
