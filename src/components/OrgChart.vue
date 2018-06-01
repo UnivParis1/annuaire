@@ -43,10 +43,7 @@
   <div class="secondPane" v-if="l3" :class="{ display_secondary_bloc }">
    <div class="vertical">
      <ul>
-       <li class="withBorder">
-            <div class="verticalTop" v-if="l4"></div>
-            <div class="verticalBottom" v-if="l4"></div>
-        </li>
+       <li class="withBorder"></li>
         <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
