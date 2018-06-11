@@ -131,9 +131,7 @@
             </span>
             <span v-if="person.up1FloorNumber">
               <label>Étage :</label>
-              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}
-                <span v-if="person.up1"
-              </span>
+              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span>
             </span>
             <span v-if="person.postalAddress">
               <span>
