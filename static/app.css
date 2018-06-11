@@ -976,7 +976,7 @@ li.nonSelectedElt .bloc {
 }
 
 .vertical li {
-    padding: 8px 20px 8px 20px;
+    padding: 0px 20px 16px 20px;
     pointer-events: none;
 }
 
@@ -1116,10 +1116,6 @@ li .secondary-bloc {
     margin-right: -2px;
 }
 
-li .secondary-bloc .verticalTopRight {
-    top: -8px;
-}
-
 li .secondary-bloc .bloc {
     border-radius: 0 5px 5px 0 !important;
 }
@@ -1142,7 +1138,7 @@ li .secondary-bloc .members {
 
 .connect-blocs {
     border-width: 1px 0;
-    margin: 8px 0 8px -10px;
+    margin: 0px 0 16px -10px;
 }
 
 .empty4 {
