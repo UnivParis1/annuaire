@@ -8,7 +8,7 @@
         <td class="col-md-3" v-if="!person.supannListeRouge">
               <h2>{{person.supannCivilite}} {{person.displayName}}</h2>
               <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
-                 <router-link :to="withParam('affectation', role.structure.key)" tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
+                 <router-link :to="withParam('affectation', role.structure.key)" :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div v-for="desc in person.description">{{desc}}</div>
               <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">

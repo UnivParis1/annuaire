@@ -53,7 +53,7 @@
               </div>
               <div class="supannRoleEntite" v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam('affectation', role.structure.key)"
-                  tooltip-placement="top" :uib-tooltip="role.structure.description">{{role.structure.name}}</router-link>
+                  :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div class="description" v-for="desc in person.description">{{desc}}</div>
               <div class="info" v-for="info in person.info" v-if="has_staff_description">{{info}}</div>
