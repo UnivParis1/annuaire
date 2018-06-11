@@ -623,7 +623,7 @@ tr.UserInTable .imgCircle {
     color: #00326e;
 }
 
-.modify_my_account {
+.modify_account {
     color: #9a9a9a;
     margin-left: 8px;
     border-right: 0px red solid;
@@ -633,7 +633,7 @@ tr.UserInTable .imgCircle {
     background-size: 1.8em;
 }
 
-.modify_my_account a {
+.modify_account a {
     margin-left: 8px;
     color: #9F6C07;
 }

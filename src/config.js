@@ -6,6 +6,7 @@ export default {
     connected_pathname : '/ent/',
     wsgroupsURL: "https://wsgroups.univ-paris1.fr",
     modify_my_account_url: "https://ent.univ-paris1.fr/compte/",
+    comptex_annuaire_url: (person) => `https://comptex.univ-paris1.fr/annuaire/reuse/?uid=${person.uid}`,
     connected,
     photoURL: (person) => "https://userphoto.univ-paris1.fr/" + (person.uid ? "?uid=" + person.uid + "&penpalAffiliation=loggedUser" : "img/forbidden-male.jpg"),
 
