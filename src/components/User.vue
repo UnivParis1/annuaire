@@ -165,8 +165,6 @@ import ChooseFormat from './ChooseFormat';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 
-const unique = list => [...new Set(list)];
-
 const getLastDiplomas_ = (person) => {
     let inscriptions =person['supannEtuInscription-all'];
     if (!inscriptions) return [];
@@ -191,7 +189,7 @@ function compute_affectationsWithParents(person) {
    let affectations = person.supannEntiteAffectation || [];
    // Si la personne possède plusieurs affectations, afficher autant de fil d'ariane que d'affectation
    return Promise.all(affectations.map(aff => parentGroups("structures-" + aff)));
- };
+ }
 
 const objectValues = (o) => (
      Object.keys(o).map(key => o[key])
