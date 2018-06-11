@@ -42,9 +42,9 @@
 
   <div class="secondPane" v-if="l3" :class="{ display_secondary_bloc }">
    <div class="vertical">
-     <ul>
-       <li class="withBorder"></li>
-        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]">
+     <transition-group name="flip-list" tag="ul">
+        <li class="withBorder" key="__withBorder__"></li>
+        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]" :key="e.key">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
 
@@ -65,7 +65,7 @@
             <div class="verticalTopRight" v-if="l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
             <div class="verticalBottomRight" v-if="l4 && index < e3_index"></div>
         </li>
-    </ul>
+     </transition-group>
    </div>
 
    <div class="tree thirdPane" v-if="l4">
@@ -139,6 +139,12 @@ let withSubGroups = (e) => (
      })
 );
 
+const moveOneFirst = (list, e) => {
+  const [ l1, l2 ] = helpers.partition(list, (e_ => e_ === e));
+  return [ ...l1, ...l2 ];
+}
+
+
  function get_selectedList(e1, selected) {
     let code2tree = {};
     function getCodes(tree) {
@@ -170,7 +176,7 @@ export default {
      e3_index() { return this.l3.indexOf(this.e3) },
      e4_index() { return this.l4.indexOf(this.e4) },
      l2() { return this.e1.subGroups.filter(e => e.businessCategory !== "council") },
-     l3() { return this.e2.subGroups && helpers.sortBy(this.e2.subGroups, ['name']) },
+     l3() { return this.e2.subGroups && moveOneFirst(helpers.sortBy(this.e2.subGroups, ['name']), this.e3) },
      l4() { return (this.displayAll || this.e4.key) && this.e3.members && this.e3.subGroups && helpers.sortBy(this.e3.subGroups, ['name']) },
      l5() { return (this.displayAll || this.e5.key) && this.e3.members && this.e4.subGroups },
 
@@ -184,7 +190,10 @@ export default {
    },
    watch: {
     e3(e) {
-        if (e) WsService.OrgChart.getMembers(this.query, e.key).then(l => e.members = l);
+        if (e) {
+          WsService.OrgChart.getMembers(this.query, e.key).then(l => e.members = l);
+          setTimeout(() => this.$el.firstChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
     },
    },
    methods: {
@@ -195,3 +204,9 @@ export default {
 };
 
 </script>
+
+<style>
+ .flip-list-move {
+    transition: transform 1.5s;
+ }
+</style>
