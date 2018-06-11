@@ -78,7 +78,7 @@ export default {
             return { ...wsparams, ...wsparams_filters }
         });
       },
-      allowChart() { return window.allowChart },
+      allowChart() { return window.validApps.then(apps => "annuaire_organigramme" in apps) },
   },
 
   methods: {

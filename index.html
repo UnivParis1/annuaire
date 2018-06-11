@@ -12,12 +12,12 @@
     <!--Intégrer le bandeau ENT -->
     <script type="text/javascript">
       var connected = location.pathname.match(/^\/(annuaire|ent)\//);
-      var resolve_allowChart;
-      window.allowChart = new Promise(resolve => resolve_allowChart = resolve);
+      var resolve_validApps;
+      window.validApps = new Promise(resolve => resolve_validApps = resolve);
 
       if (connected)
         window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true, onload: function (pE) {
-          resolve_allowChart(!!pE.validApps.annuaire_organigramme);
+          resolve_validApps(pE.validApps);
         } };
       else
         window.bandeau_anonyme = { title: "Annuaire public" };
