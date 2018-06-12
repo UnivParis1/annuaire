@@ -94,28 +94,28 @@ export default {
     ],
 
     activitesUP1: [
-      "Assistant de direction",
+      "Assistant(e) de direction",
       "Accueil / Secrétariat",
-
-      "chargé de mission",
-      "chef de projet",
-      "Coordinateur",
-
+      "Chargé(e) de mission",
+      "Chef de projet",
+      "Coordinateur(ice)",
+      "Chargé(e) d'étude",
       "Gestionnaire administratif(ive)",
       "Gestionnaire de scolarité",
-
+      "Gestionnaire de courrier",
       "Responsable d'UE",
       "Responsable de diplôme",
       "Responsable de formation",
-
       "Responsable de licence",
       "Responsable de master 1",
       "Responsable de master 2",
       "Responsable de thèse",
-
-      "Conservateur de bibliothèque",
+      "Conservateur(rice) de bibliothèque",
       "Bibliothécaire",
       "Assistant(e) de bibliothèque",
       "Magasinier de bibliothèque",
+      "Responsable de la sécurité du système d'information",
+      "Correspondant informatique et liberté",
+      "Délégué à la protection des données",
     ],
 };
