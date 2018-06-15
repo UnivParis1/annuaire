@@ -56,18 +56,17 @@
                   :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div class="description" v-for="desc in person.description">{{desc}}</div>
-              <div class="info" v-for="info in person.info" v-if="has_staff_description">{{info}}</div>
+              <!--div class="description" v-for="activite in person_activitesUP1">{{activite.name}}</div-->
+              <div class="info" v-for="info in person.info" v-if="has_staff_and_activitesUP1">{{info}}</div>
             <div class="affiliations">
               <span v-for="(aff, index) in statusPers">
                 <span>{{index ? ', ' : ''}}{{t(aff)}}</span>
               </span>
             </div>
             <div class="supannActivite">
-              <span v-if="person['supannActivite-all']">
-                <span v-for="activite in person['supannActivite-all']">{{activite.name}}</span>
-              </span>
+                <span v-for="activite in person_activites">{{activite.name}}</span>
             </div>
-              <div class="info" v-for="info in person.info" v-if="!has_staff_description">{{info}}</div>
+              <div class="info" v-for="info in person.info" v-if="!has_staff_and_activitesUP1">{{info}}</div>
               <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
                   <div v-for="diploma in lastDiplomas">
                     <router-link :to="withParam('diploma', diploma.etapeCode)" >{{diploma.etape}}</router-link><br>
@@ -167,6 +166,7 @@ import helpers from '../helpers';
 import ChooseFormat from './ChooseFormat';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
+import { isActiviteUP1 } from '../sortUsers';
 
 const getLastDiplomas_ = (person) => {
     let inscriptions =person['supannEtuInscription-all'];
@@ -215,8 +215,11 @@ export default {
 
     statusPers() { return computeStatusPers(this.person) },
     isStaffOrFaculty() { return helpers.intersection(this.person.eduPersonAffiliation, [ "staff", "faculty"]).length },
-    has_staff_description() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
+    has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
+    //has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person_activitesUP1.length },
     lastDiplomas() { return getLastDiplomas_(this.person) },
+    person_activitesUP1() { return (this.person['supannActivite-all'] || []).filter(isActiviteUP1) },
+    person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
     photoURL() { return config.photoURL(this.person) },
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
     config() { return config; },

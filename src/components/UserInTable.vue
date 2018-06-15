@@ -11,10 +11,11 @@
                  <router-link :to="withParam('affectation', role.structure.key)" :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div v-for="desc in person.description">{{desc}}</div>
+              <!--div v-for="activite in person_activitesUP1">{{activite.name}}</div-->
               <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
                 <div v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
-              <div v-for="activite in person['supannActivite-all']" v-if="person['supannActivite-all'] && !has_staff_description">{{activite.name}}</div>
+              <div v-for="activite in person_activites" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
           <td class="col-md-7" colspan="2" v-else>
@@ -60,12 +61,16 @@
 
 <script>
 import config from '../config';
+import { isActiviteUP1 } from '../sortUsers';
 
 export default {
   props: ['person', 'query'],
   computed: {
       connected() { return config.connected; },
-      has_staff_description() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
+      has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person.description && this.person.description.length },
+      //has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person_activitesUP1.length },
+      person_activitesUP1() { return (this.person['supannActivite-all'] || []).filter(isActiviteUP1) },
+      person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
   },
 }
 </script>

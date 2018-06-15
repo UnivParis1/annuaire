@@ -23,6 +23,10 @@ export const isPedagogyAffectation = (person) => (
     !!(person["supannEntiteAffectation-all"] || []).find(isPedagogy)
 );
 
+export const isActiviteUP1 = (activite) => (
+  activite.key.match(/^\{UAI:0751717J:ACT\}/)
+);
+
 export function descrAndWeight(person, isPedagogy, current_affectation_filter) {
     let weight;
 
