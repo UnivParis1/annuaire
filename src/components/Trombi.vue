@@ -22,8 +22,8 @@ export default {
         if (person.supannListeRouge) return '';
 
         let lines = [person.displayName];
-        lines.push(... (person['supannRoleEntite-all'] || []).map(role => role.role));
-        lines.push(... (person.telephoneNumber || []));
+        lines.push(... (person['supannRoleEntite-all'] || []).map(role => role.role));
+        lines.push(... (person.telephoneNumber || []));
 
         return lines.join("\n");
     },
