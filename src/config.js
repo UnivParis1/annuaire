@@ -17,7 +17,7 @@ export default {
 
     slides: [
         /*{
-            img: "static/images/slider/organigramme.png",
+            img: "images/slider/organigramme.png",
             html: `
             <h1>Organigramme</h1>
             Un organigramme interactif est disponible.
@@ -25,28 +25,28 @@ export default {
             Vous pouvez situer un personnel dans l'organigramme.`,
         },*/
         {
-            img: "static/images/slider/acces-direct.png",
+            img: "images/slider/acces-direct.png",
             html: `
             <h1>Accès direct à une fiche</h1>
             Chaque fiche de contact dispose d'une URL dédiée.
             Le lien d'accès direct est affiché en bas de la fiche de contact.`,
         },
         {
-            img: "static/images/slider/recherche-multi-critere.png",
+            img: "images/slider/recherche-multi-critere.png",
             html: `
             <h1>Recherche multi-critère</h1>
             Affinez votre recherche par un système combiné de filtres
             <br><i>(statut, structure, fonction, nom, diplôme, ...)</i>.`,
         },
         {
-            img: "static/images/slider/structure.png",
+            img: "images/slider/structure.png",
             html: `
             <h1>Recherche d'une structure</h1>
             Saisissez les premières lettre d'un nom d'une structure.
             Une liste de structures s'affichent. Sélectionnez la structure recherchée.`,
         },
         {
-            img: "static/images/slider/diplome.png",
+            img: "images/slider/diplome.png",
             html: `
             <h1>Recherche d'étudiants d'un diplôme</h1>
             Saisissez les premières lettres d'un nom ou d'un code de diplôme.

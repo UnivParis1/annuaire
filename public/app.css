@@ -444,21 +444,21 @@ tr.UserInTable .imgCircle {
 
 
 .boite .mail , .infoUser .mail {
-    background: url("/static/images/ANR-31.svg") no-repeat left top;
+    background: url("/images/ANR-31.svg") no-repeat left top;
     background-size: 1.6em;
     padding-left: 30px;
     padding-bottom: 10px;
 }
 
 .boite .phoneNumbers, .infoUser .phoneNumbers {
-    background: url("/static/images/ANR-32.svg") no-repeat left top;
+    background: url("/images/ANR-32.svg") no-repeat left top;
     background-size: 1.6em;
     padding-left: 30px;
     padding-bottom: 10px;
 }
 
 .affectations > label {
-    background: rgba(0, 0, 0, 0) url("/static/images/ANR-35.svg") no-repeat scroll left top / 2.2em auto;
+    background: rgba(0, 0, 0, 0) url("/images/ANR-35.svg") no-repeat scroll left top / 2.2em auto;
     margin-bottom: 0;
     padding-bottom: 8px;
     padding-left: 30px;
@@ -538,7 +538,7 @@ tr.UserInTable .imgCircle {
 /* _________ page perso_______ */
 
 .boite .labeledURI {
-    background: rgba(0, 0, 0, 0) url("/static/images/ANR-46.svg") no-repeat scroll left top / 2.55em auto;
+    background: rgba(0, 0, 0, 0) url("/images/ANR-46.svg") no-repeat scroll left top / 2.55em auto;
     margin-bottom: 0;
     margin-top: 14px;
     padding: 6px 4px 0 35px;
@@ -563,7 +563,7 @@ tr.UserInTable .imgCircle {
 
 
 .boite .address {
-    background: rgba(0, 0, 0, 0) url("/static/images/ANR-33.svg")
+    background: rgba(0, 0, 0, 0) url("/images/ANR-33.svg")
 
 
     no-repeat scroll left 8px top / 1.6em auto;
@@ -592,7 +592,7 @@ tr.UserInTable .imgCircle {
 }
 
 .boite .userChartFormatLink {
-    background: rgba(0, 0, 0, 0) url("/static/images/ANR-52.svg") no-repeat scroll left 7px top / 1.6em auto;
+    background: rgba(0, 0, 0, 0) url("/images/ANR-52.svg") no-repeat scroll left 7px top / 1.6em auto;
     border-bottom: 1px dotted #888;
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -638,7 +638,7 @@ tr.UserInTable .imgCircle {
     border-right: 0px red solid;
     padding-right: 25px;
     padding-bottom: 10px;
-    background: rgba(0, 0, 0, 0) url("/static/images/ecrire.png") no-repeat scroll right top;
+    background: rgba(0, 0, 0, 0) url("/images/ecrire.png") no-repeat scroll right top;
     background-size: 1.8em;
 }
 
@@ -815,7 +815,7 @@ tr.UserInTable .imgCircle {
 
 .pedagogy {
     border-color: #a08777;
-    background-image: url("/static/images/pedagogy.png");
+    background-image: url("/images/pedagogy.png");
     background-repeat: no-repeat;
     background-position: right top;
 }
@@ -826,20 +826,20 @@ tr.UserInTable .imgCircle {
 
 .research {
     border-color: #a08777;
-    background-image: url("/static/images/research.png");
+    background-image: url("/images/research.png");
     background-repeat: no-repeat;
     background-position: right top;
     padding-right: 12px !important;
 }
 
 .research:hover {
-    background-image: url("/static/images/research-on.svg");
+    background-image: url("/images/research-on.svg");
     background-repeat: no-repeat;
     background-position: right top;
 }
 
 .pedagogy:hover {
-    background-image: url("/static/images/pedagogy-on.svg");
+    background-image: url("/images/pedagogy-on.svg");
     background-repeat: no-repeat;
     background-position: right top;
 }
@@ -1179,7 +1179,7 @@ li .secondary-bloc .members {
 .chartFormatLink {
     min-height: 60px;
     padding-top: 60px;
-    background: url("/static/images/ANR-38c.svg") no-repeat top center;
+    background: url("/images/ANR-38c.svg") no-repeat top center;
     background-size: 5.8em;
     text-align: center;
     text-transform: uppercase;
@@ -1814,7 +1814,7 @@ li.nonSelectedElt .bloc:hover {
     .App {
         margin: 0 !important;
         padding-top: 45px;
-        background: rgba(0, 0, 0, 0) url("/static/images/logo_paris1.svg") no-repeat scroll center top / 220px auto !important;
+        background: rgba(0, 0, 0, 0) url("/images/logo_paris1.svg") no-repeat scroll center top / 220px auto !important;
     }
 
     .text-muted.affectationFilter {
