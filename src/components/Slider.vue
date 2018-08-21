@@ -55,7 +55,7 @@ export default {
     width: 30px;
     height: 30px;
     margin: auto 1rem;
-    background: url(../../static/images/bg_direction_nav.png) no-repeat 0 0;
+    background: url(../../public/images/bg_direction_nav.png) no-repeat 0 0;
     text-indent: -9999px;
     
     cursor: pointer;
