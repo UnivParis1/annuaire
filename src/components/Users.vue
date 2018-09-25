@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div v-if="query.format === 'chart'">
+<div v-if="query.format === 'chart'" class="OrgChart-outer">
     <OrgChart :selected="query.affectation" :query="query" :displayAll="true"></OrgChart>
 </div>
 <div v-else-if="noFilters">
