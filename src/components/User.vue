@@ -16,12 +16,11 @@
        Veuillez patienter
     </div></div>
 </div>
-<div v-else-if="format === 'chart'">
-    <div style="margin-top: 2em; display: flex; flex-wrap: wrap; justify-content: center">
+<div v-else-if="format === 'chart'" class="OrgChart-outer">
      <div v-for="aff in person.supannEntiteAffectation">
+
         <OrgChart :selected="aff" :query="{ affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
      </div>
-    </div>
 </div>
 <div v-else-if="format === 'trombi'" class="container">
   <div class="row"><div class="col-md-12">
