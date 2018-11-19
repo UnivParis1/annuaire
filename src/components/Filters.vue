@@ -62,17 +62,14 @@
 
 
 <script>
-import * as WsService from '../WsService';
 import helpers from '../helpers';
 
 export default {
-  props: ['query'],
-  asyncComputed: {
-      queryO() {
-          return WsService.getQueryO(this.query);
-      },
-  },
+  props: ['queryO'],
   computed: {
+      query() {
+          return this.queryO && this.queryO.query || {};
+      },
       affectation() {
           return this.queryO && this.queryO.affectation;
       },

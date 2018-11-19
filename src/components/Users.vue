@@ -1,7 +1,7 @@
 <template>
 <div class="Users">
 <div class="container">
-    <Filters :query="query"></Filters>
+    <Filters :queryO="queryO"></Filters>
 
     <div class="row" v-if="!noFilters">
         <div class="col-md-12">
@@ -107,6 +107,9 @@ export default {
       slides() {
           return helpers.shuffle(...config.slides);
       },
+  },
+  asyncComputed: {
+      queryO() { return WsService.getQueryO(this.query) },
   },
   watch: {
     'query': {
