@@ -4,13 +4,13 @@
     <div class="search">
             <form @submit.prevent="showUsers(search_token)">
             <div class="form-group has-feedback">
-                <i class="glyphicon glyphicon-search form-control-feedback"></i>
                 <autocompleteUserAndGroup
                      class="form-control" v-auto-focus
                      :placeholder="placeholder || 'Rechercher une personne, une structure, une fonction, ...'"
                      :wsparams="wsparams" v-model="search_token"
                      @searchSuccess="searchResults = $event" @select="showUserOrStructure">
                 </autocompleteUserAndGroup>
+                <i class="glyphicon glyphicon-search form-control-feedback"></i>
             </div>
             </form>
 
