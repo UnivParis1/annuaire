@@ -98,6 +98,10 @@ export default {
     return s.substr(0, sub.length) === sub;
   },
 
+  lowerCaseFirstLetter(s) {
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  },
+
   array_set(arr, arr2) {
     arr.splice(0, arr.length, ...arr2);
   },
@@ -115,5 +119,21 @@ export default {
     return r;
   },*/
 
+  guess_affectation_gender(name) {
+    let short = name;
+    {
+      let m = name.match(/^(\S+) : (.*)/);
+      if (m) [, short, name] = m;
+    }
+    if (name.match(/^(Service|Département|Groupement|Institut) /)) {
+      return 'M';
+    } else if (name.match(/^(Direction|[EÉ]cole|Université|Unité|Présidence|Agence)/)) {
+      return 'F';
+    }
+    if (short.match(/^UFR/)) {
+      return 'F';
+    }
+    return 'M';
+  },
 }
 

@@ -18,6 +18,14 @@ export default {
         STATUS_staffs: "Personnels Biatss",
         STATUS_emerituss: "Professeurs émérites",
         STATUS_students:"Étudiants",
-        STATUS_alums:"Anciens étudiants"
+        STATUS_alums:"Anciens étudiants",
+
+        STATUS_one_teacher: "un(e) enseignant(e)",
+        STATUS_one_researcher: "un(e) chercheur",
+        "STATUS_one_teacher|researcher": "un(e) enseignant(e) / chercheur(se)",
+        STATUS_one_staff: "un personnel Biatss",
+        STATUS_one_emeritus: "un(e) professeur(e) émérite",
+        STATUS_one_student:"un(e) étudiant(e)",
+        STATUS_one_alum:"un(e) ancien(ne) étudiant(e)",
     },
 };

@@ -6,7 +6,8 @@
             <div class="form-group has-feedback">
                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
                 <autocompleteUserAndGroup
-                     placeholder="Rechercher une personne, une structure, une fonction, ..." class="form-control" v-auto-focus
+                     class="form-control" v-auto-focus
+                     :placeholder="placeholder || 'Rechercher une personne, une structure, une fonction, ...'"
                      :wsparams="wsparams" v-model="search_token"
                      @searchSuccess="searchResults = $event" @select="showUserOrStructure">
                 </autocompleteUserAndGroup>
@@ -42,6 +43,7 @@
 <script>
 import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup';
 import * as WsService from './WsService';
+import helpers from './helpers';
 import config from "./config";
 
 export default {
@@ -75,6 +77,27 @@ export default {
       const wsparams_filters = WsService.compute_wsparams_user_filters(this.queryO);
       let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: config.connected }
       return { ...wsparams, ...wsparams_filters }
+    },
+    placeholder() {
+      let what;
+      if (this.queryO) {
+        if (this.queryO.query.affiliation) {
+          what = this.t("STATUS_one_" + this.query.affiliation);
+        }
+        if (this.queryO.role) {
+          what = (what || "un(e)") + " " + helpers.lowerCaseFirstLetter(this.queryO.role.name);
+        }
+        if (this.queryO.affectation) {
+          if (!what) what = "une personne";
+          const gender = helpers.guess_affectation_gender(this.queryO.affectation.name);
+          const ou = this.queryO.affectation.name.replace(/ [:-] .*/, '');
+          what += " " + (ou.match(/^[AEIOUÉ]/i) ? "de l'" : gender === 'M' ? "du " : "de la ") + ou;
+        } else if (this.queryO.diploma) {
+          if (!what) what = "une personne";
+          what += " de " + this.queryO.diploma.name;
+        }
+      }
+      return what && `Vous recherchez ${what}`;
     },
   },
   asyncComputed: {
