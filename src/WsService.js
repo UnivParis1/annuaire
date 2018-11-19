@@ -72,6 +72,14 @@ export let getDiploma = (diploma) => (
     wsgroupsJsonp("/searchGroup", {filter_category:'diploma', token: diploma, maxRows: 1 }).then(l => l && l[0])
 );
 
+export const getQueryO = async (query) => ({
+  query,
+  affectation: query.affectation && await getGroupFromStruct(query.affectation),
+  role: query.role && await getRoleGenerique(query.role),
+  activite: query.activite && await getActivite(query.activite),
+  diploma: query.diploma && await getDiploma(query.diploma),
+});
+
 export async function compute_wsparams_user_filters ({ affiliation, affectation, diploma, role, activite }) {
     let wsparams = {};
 

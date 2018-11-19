@@ -68,20 +68,23 @@ import helpers from '../helpers';
 export default {
   props: ['query'],
   asyncComputed: {
-      affectation() {
-          return this.query.affectation && WsService.getGroupFromStruct(this.query.affectation);
-      },
-      role() {
-          return this.query.role && WsService.getRoleGenerique(this.query.role);
-      },
-      activite() {
-          return this.query.activite && WsService.getActivite(this.query.activite);
-      },
-      diploma() {
-          return this.query.diploma && WsService.getDiploma(this.query.diploma);
+      queryO() {
+          return WsService.getQueryO(this.query);
       },
   },
   computed: {
+      affectation() {
+          return this.queryO && this.queryO.affectation;
+      },
+      role() {
+          return this.queryO && this.queryO.role;
+      },
+      activite() {
+          return this.queryO && this.queryO.activite;
+      },
+      diploma() {
+          return this.queryO && this.queryO.diploma;
+      },
       affectationRolesGrouped() {
           return helpers.sortedGroupBy(this.affectation.roles, u => u.supannRoleGenerique.join(", "));
       },
