@@ -3,7 +3,12 @@
   <div class="container">
     <div class="search">
             <form @submit.prevent="showUsers(search_token)">
-            <div class="form-group has-feedback">
+            <div class="form-group has-feedback" :class="{ 'with-clear-all-filters': placeholder }">
+                <router-link class="clear-all-filters" v-if="placeholder"
+                   @click.native="search_token=''"
+                   :to="withParams({ affiliation: '', affectation: '', role: '', token: '' })">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </router-link>
                 <autocompleteUserAndGroup
                      class="form-control" v-auto-focus
                      :placeholder="placeholder || 'Rechercher une personne, une structure, une fonction, ...'"

@@ -227,7 +227,15 @@ Div.App {
     top: 7px;
 }
 
+.clear-all-filters {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+}
 
+.with-clear-all-filters input {
+  padding-left: 28px;
+}
 
 /******* ligne navigation affichage par liste / Trombino **********/
 
