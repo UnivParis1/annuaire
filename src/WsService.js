@@ -80,7 +80,8 @@ export const getQueryO = async (query) => ({
   diploma: query.diploma && await getDiploma(query.diploma),
 });
 
-export async function compute_wsparams_user_filters ({ affiliation, affectation, diploma, role, activite }) {
+export function compute_wsparams_user_filters (queryO) {
+    const { affiliation, affectation, diploma, role, activite } = queryO.query;
     let wsparams = {};
 
     wsparams.filter_mail = '*';
@@ -91,7 +92,7 @@ export async function compute_wsparams_user_filters ({ affiliation, affectation,
     }
 
     if (activite && activite.match(/^\{UAI:0751717J:ACT\}/)) {
-        wsparams.filter_description = (await getActivite(activite)).name;
+        wsparams.filter_description = queryO.activite.name;
     }
 
     if (diploma) {
@@ -102,7 +103,7 @@ export async function compute_wsparams_user_filters ({ affiliation, affectation,
           wsparams.filter_supannEntiteAffectation = affectation;
           return wsparams;
       } else {
-        const group = await getGroupFromStruct(affectation);
+        const group = queryO.affectation;
         wsparams.filter_member_of_group = "groups-employees." + group.businessCategory + "." + affectation;
         return wsparams;
       }

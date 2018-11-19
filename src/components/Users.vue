@@ -73,11 +73,10 @@ import Filters from './Filters';
 import Slider from './Slider';
 import config from '../config';
 
-function _getSearchPersons({ maxRows }, query) {
-    let wsparams = { maxRows, CAS: config.connected, token: query.token };
-    return WsService.compute_wsparams_user_filters(query).then(wsparams_filters =>
-        WsService.searchPersons({ ...wsparams, ...wsparams_filters })
-    ).then(persons => {
+function _getSearchPersons({ maxRows }, queryO) {
+    let wsparams = { maxRows, CAS: config.connected, token: queryO.query.token };
+    let wsparams_filters = WsService.compute_wsparams_user_filters(queryO);
+    return WsService.searchPersons({ ...wsparams, ...wsparams_filters }).then(persons => {
         persons.forEach(p => {
             p.photoURL = config.photoURL(p);
         });
@@ -112,7 +111,7 @@ export default {
       queryO() { return WsService.getQueryO(this.query) },
   },
   watch: {
-    'query': {
+    'queryO': {
         handler: 'updateAsyncData',
         immediate: true,
     },
@@ -121,10 +120,10 @@ export default {
     updateAsyncData() {
         this.persons = undefined;
 
-        if (this.noFilters || this.query.format === 'chart') {
+        if (this.noFilters || this.query.format === 'chart' || !this.queryO) {
           //
         } else {
-          _getSearchPersons({ maxRows: this.maxRows }, this.query).then((persons) => {
+          _getSearchPersons({ maxRows: this.maxRows }, this.queryO).then((persons) => {
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), this.query.affectation) }));
             persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
             this.persons = persons;

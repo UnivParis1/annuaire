@@ -69,15 +69,16 @@ export default {
   computed: {
     usefulAffiliationsGrouped() { return config.usefulAffiliationsGrouped },
     query() { return this.$route.query },
+    wsparams() {
+      //console.log('set_autocomplete_wsparams', this.query);
+      if (!this.queryO) return undefined;
+      const wsparams_filters = WsService.compute_wsparams_user_filters(this.queryO);
+      let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: config.connected }
+      return { ...wsparams, ...wsparams_filters }
+    },
   },
   asyncComputed: {
-      wsparams() {
-        //console.log('set_autocomplete_wsparams', this.query);
-        return WsService.compute_wsparams_user_filters(this.query).then(wsparams_filters => {
-            let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: config.connected }
-            return { ...wsparams, ...wsparams_filters }
-        });
-      },
+      queryO() { return WsService.getQueryO(this.query) },
       allowChart() { return window.validApps.then(apps => "annuaire_organigramme" in apps) },
   },
 
