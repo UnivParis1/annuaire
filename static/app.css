@@ -210,8 +210,8 @@ Div.App {
 
 
 .glyphicon.glyphicon-remove {
-    background-color: #aaa;
-    border: 1px solid #bbb;
+    background-color: #e55302;
+    border: 1px solid #e55302;
     border-radius: 2px;
     color: white;
     font-size: 9px;
@@ -223,13 +223,6 @@ Div.App {
     right: 0;
     top: 7px;
 }
-
-
-.glyphicon.glyphicon-remove {
-    background-color: #e55302;
-    border: 1px solid #e55302;
-}
-
 
 
 
