@@ -219,6 +219,9 @@ Div.App {
     padding: 1px;
     padding-left: 2px;
     padding-right: 1px;
+}
+.affiliations .glyphicon.glyphicon-remove,
+.Filters .glyphicon.glyphicon-remove {
     position: absolute;
     right: 0;
     top: 7px;
