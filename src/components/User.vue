@@ -146,10 +146,10 @@
  <div class="userAnnuaireURL">
     <a :href="user_public_url">{{user_public_url}}</a>
 
-    <span v-if="connected_uid === person.uid" class="modify_account">
+    <span v-if="connected_uid === person.uid" class="more_account_link modify_account">
       | <a :href="config.modify_my_account_url"> Modifier mes informations</a>
     </span>
-    <span v-else-if="allow_comptex_annuaire" class="modify_account">
+    <span v-else-if="allow_comptex_annuaire" class="more_account_link modify_account">
       | <a :href="config.comptex_annuaire_url(person)"> Modifier les coordonnées</a>
     </span>
  </div>

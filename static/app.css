@@ -627,9 +627,14 @@ tr.UserInTable .imgCircle {
     color: #00326e;
 }
 
-.modify_account {
+.more_account_link {
     color: #9a9a9a;
     margin-left: 8px;
+}
+.more_account_link a {
+    margin-left: 8px;
+}
+.modify_account {
     border-right: 0px red solid;
     padding-right: 25px;
     padding-bottom: 10px;
@@ -638,7 +643,6 @@ tr.UserInTable .imgCircle {
 }
 
 .modify_account a {
-    margin-left: 8px;
     color: #9F6C07;
 }
 
