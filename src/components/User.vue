@@ -146,6 +146,10 @@
  <div class="userAnnuaireURL">
     <a :href="user_public_url">{{user_public_url}}</a>
 
+    <span class="more_account_link">
+      | <a @click="download_vcard" href="#"> Ajouter à mes contacts</a>
+        <span class="glyphicon glyphicon-import"></span>
+    </span>
     <span v-if="connected_uid === person.uid" class="more_account_link modify_account">
       | <a :href="config.modify_my_account_url"> Modifier mes informations</a>
     </span>
@@ -159,6 +163,7 @@
 
 <script>
 import * as WsService from "../WsService";
+import * as vcard from '../vcard';
 import config from '../config';
 import helpers from '../helpers';
 import ChooseFormat from './ChooseFormat';
@@ -231,6 +236,16 @@ export default {
         return { person };
     },
     allow_comptex_annuaire() { return window.validApps.then(apps => "comptex-annuaire" in apps) },
+  },
+  methods: {
+      download_vcard: function (event) {
+        const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcard.format(this.person, this));
+        const link = document.createElement("a");
+        link.setAttribute("href", uri);
+        link.setAttribute("download", this.person.mail + ".vcf");
+        event.target.parentElement.appendChild(link); // needed on Firefox, but not Chromium.
+        link.click();
+      },
   },
 }
 </script>
