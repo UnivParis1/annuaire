@@ -147,7 +147,7 @@
     <a :href="user_public_url">{{user_public_url}}</a>
 
     <span class="more_account_link">
-      | <a @click="download_vcard" href="#"> Ajouter à mes contacts</a>
+      | <a :href="user_vcard_url"> Ajouter à mes contacts</a>
         <span class="glyphicon glyphicon-import"></span>
     </span>
     <span v-if="connected_uid === person.uid" class="more_account_link modify_account">
@@ -163,7 +163,6 @@
 
 <script>
 import * as WsService from "../WsService";
-import * as vcard from '../vcard';
 import config from '../config';
 import helpers from '../helpers';
 import ChooseFormat from './ChooseFormat';
@@ -224,6 +223,7 @@ export default {
     person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
     photoURL() { return config.photoURL(this.person) },
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
+    user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + this.userMail },
     config() { return config; },
   },
   asyncComputed: {
@@ -236,16 +236,6 @@ export default {
         return { person };
     },
     allow_comptex_annuaire() { return window.validApps.then(apps => "comptex-annuaire" in apps) },
-  },
-  methods: {
-      download_vcard: function (event) {
-        const uri = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcard.format(this.person, this));
-        const link = document.createElement("a");
-        link.setAttribute("href", uri);
-        link.setAttribute("download", this.person.mail + ".vcf");
-        event.target.parentElement.appendChild(link); // needed on Firefox, but not Chromium.
-        link.click();
-      },
   },
 }
 </script>
