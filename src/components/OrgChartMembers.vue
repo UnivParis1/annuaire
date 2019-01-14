@@ -70,8 +70,8 @@ export default {
             });
 
             // full ordering
-            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'displayName' ]);
-            r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription' ]);
+            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight' ]);
+            r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription' ], ['displayName']);
 
             return r;
         }

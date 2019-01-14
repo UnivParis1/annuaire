@@ -28,11 +28,13 @@ function sortedGroupBy(l, by) {
     return r;
  }
 
-function sortedGroupByFields(l, fields) {
-  if (fields.length === 0) return l;
+function sortedGroupByFields(l, fields, fieldsToSortLeaves = undefined) {
+  if (fields.length === 0) {
+    return fieldsToSortLeaves ? sortBy(l, fieldsToSortLeaves) : l;
+  }
   const [field, ...otherFields] = fields;
   let r = sortedGroupBy(l, elt => elt[field]);
-  r.forEach(subr => subr.group = sortedGroupByFields(subr.group, otherFields));
+  r.forEach(subr => subr.group = sortedGroupByFields(subr.group, otherFields, fieldsToSortLeaves));
   return r;
 }
 
