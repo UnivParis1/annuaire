@@ -1,3 +1,18 @@
+/* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, nor function param, only strings comparison */
+function sortBy(array, fields) {
+    let r = [...array];
+    const compareStrings = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    r.sort((a, b) => {
+      for (let field of fields) {
+        const c = compareStrings(a[field], b[field]);
+        if (c !== 0) return c;
+      }
+      return 0;
+    });
+    return r;
+}
+
+
 /* keeps the ordering, but relies on pre-ordering on the criteria */
 function sortedGroupBy(l, by) {
     let r = [];
@@ -22,6 +37,7 @@ function sortedGroupByFields(l, fields) {
 }
 
 export default {
+  sortBy,
   sortedGroupBy,
   sortedGroupByFields,
 
@@ -62,20 +78,6 @@ export default {
       for (let i in collection) r[i] = f(collection[i], i);
       return r;
     }
-  },
-
-  /* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, nor function param, only strings comparison */
-  sortBy(array, fields) {
-    let r = [...array];
-    const compareStrings = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
-    r.sort((a, b) => {
-      for (let field of fields) {
-        const c = compareStrings(a[field], b[field]);
-        if (c !== 0) return c;
-      }
-      return 0;
-    });
-    return r;
   },
 
   shuffle(...array) {
