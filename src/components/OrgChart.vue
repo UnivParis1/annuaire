@@ -121,17 +121,8 @@ import helpers from '../helpers';
      });
  }
  
-let getSubGroups = (key) => (
-     WsService.getSubGroups({
-         key: 'structures-' + key,
-         depth: 3,
-         filter_category: 'structures',
-         with_organization: true,
-     })
-);
- 
 let withSubGroups = (e) => (
-     getSubGroups(e.key).then(subGroups => {
+     WsService.getSubStructures(e.key).then(subGroups => {
          if (!subGroups) throw "error";
          e.subGroups = subGroups;
          initTree(e, e.depth);       

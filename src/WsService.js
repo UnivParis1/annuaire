@@ -68,6 +68,15 @@ export let getSubGroups = (wsparams) => (
     wsgroupsJsonp("/getSubGroups", wsparams)
 );
 
+export const getSubStructures = (key) => (
+  getSubGroups({
+      key: 'structures-' + key,
+      depth: 3,
+      filter_category: 'structures',
+      with_organization: true,
+  })
+);
+
 export let getDiploma = (diploma) => (
     wsgroupsJsonp("/searchGroup", {filter_category:'diploma', token: diploma, maxRows: 1 }).then(l => l && l[0])
 );
