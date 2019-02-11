@@ -85,7 +85,7 @@ export function compute_wsparams_user_filters (queryO) {
     let wsparams = {};
 
     wsparams.filter_mail = '*';
-    wsparams.filter_eduPersonAffiliation = affiliation;
+    wsparams.filter_eduPersonAffiliation = affiliation || !config.connected && config.usefulAffiliations.join('|') || undefined;
 
     if (role) {
         wsparams.filter_supannRoleGenerique = role;
