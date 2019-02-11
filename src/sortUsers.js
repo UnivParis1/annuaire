@@ -26,12 +26,12 @@ export const isActiviteUP1 = (activite) => (
   activite.key.match(/^\{UAI:0751717J:ACT\}/)
 );
 
-export function descrAndWeight(person, isPedagogy, current_affectation_filter) {
+export function descrAndWeight(person, isPedagogy, affectation_and_sub) {
     let weight;
 
     let roles = person['supannRoleEntite-all'];
     if (roles) {
-      if (current_affectation_filter) roles = roles.filter(r => helpers.startsWith(r.structure.key, current_affectation_filter));
+      if (affectation_and_sub) roles = roles.filter(r => r.structure.key in affectation_and_sub);
       const weight_ = helpers.minString(roles.map(r => r.role_weight).filter(w => w));
       if (weight_) weight = "0_" + weight_;
     }

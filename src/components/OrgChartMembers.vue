@@ -40,6 +40,9 @@ export default {
         affectation() {
           return !this.onlyRoles && this.structure.key;
         },
+        affectation_and_sub() {
+          return this.affectation ? WsService.getAllSubStructures(this.structure) : {};
+        },
         roles() {
           return this.structure.roles;
         },
@@ -66,7 +69,7 @@ export default {
                 aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
                 person.simplifiedAffiliation = isPedagogy && helpers.includes(this.affiliations, aff) ? aff : "other";
 
-                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, this.affectation) };
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, this.affectation_and_sub) };
             });
 
             // full ordering

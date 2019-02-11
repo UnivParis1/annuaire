@@ -117,17 +117,17 @@ export default {
     },
   },
   methods: {
-    updateAsyncData() {
+    async updateAsyncData() {
         this.persons = undefined;
 
         if (this.noFilters || this.query.format === 'chart' || !this.queryO) {
           //
         } else {
-          _getSearchPersons({ maxRows: this.maxRows }, this.queryO).then((persons) => {
-            persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), this.query.affectation) }));
+            let persons = await _getSearchPersons({ maxRows: this.maxRows }, this.queryO);
+            const affectation_and_sub = this.query.affectation && await WsService.getSubStructuresFlat(this.query.affectation);
+            persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), affectation_and_sub) }));
             persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
             this.persons = persons;
-          });
         }
     },
   },
