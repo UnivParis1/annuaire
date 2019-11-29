@@ -10,7 +10,7 @@
 
         <a class="flex-direction-nav flex-prev" @click="forceSlide = (i-1+nb) % nb">Previous</a>
 
-		<img :src="slide.img"/>
+		<img :src="slide.img" alt=""/>
 		<div class="flex-caption" v-html="slide.html"></div>
         
         <a class="flex-direction-nav flex-next" @click="forceSlide = (i+1) % nb">Next</a>
