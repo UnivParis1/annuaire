@@ -264,7 +264,7 @@ Div.App {
     min-height: 27px;
     padding-left: 15px;
     font-size: 18px;
-    color: #FED984;
+    color: #FBCD5F;
     display: flex;
     justify-content: space-between;
     margin-top: 9px;
@@ -352,7 +352,7 @@ Div.App {
 }
 
 .table-striped > tbody > tr:nth-of-type(2n+1) {
-    background-color: #f4f6fa;
+  background-color: #eeeff0;
 }
 
 .table-striped > tbody > tr:nth-of-type(2n) {
@@ -1180,7 +1180,7 @@ li .secondary-bloc .members {
     text-align: center;
     text-transform: uppercase;
     font-family: "Brandon Grotesque",Arial,sans-serif;
-    color: #777;
+    color: #727780;
     border: 1px solid white;
     border-left: 2px solid #ccc;
     border-right: 2px solid #fff;
