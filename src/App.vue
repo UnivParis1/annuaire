@@ -11,7 +11,8 @@
                 </router-link>
                 <autocompleteUserAndGroup
                      class="form-control" v-auto-focus
-                     :placeholder="placeholder || 'Rechercher une personne, une structure, une fonction, ...'"
+                     :placeholder="placeholder || default_placeholder"
+                     :aria-label="placeholder || default_placeholder"
                      :wsparams="wsparams" v-model="search_token"
                      @searchSuccess="searchResults = $event" @select="showUserOrStructure">
                 </autocompleteUserAndGroup>
@@ -104,6 +105,9 @@ export default {
         }
       }
       return what && `Vous recherchez ${what}`;
+    },
+    default_placeholder() {
+      return 'Rechercher une personne, une structure, une fonction, ...'
     },
   },
   asyncComputed: {
