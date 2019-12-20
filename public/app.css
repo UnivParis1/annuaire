@@ -20,8 +20,16 @@ Div.App {
     color: #555;
 }
 
-#bandeau-anonyme .bandeau-titlebar, #bandeau-anonyme .bandeau-titlebar a {
-    padding: 23px 0px 13px 0px !important;
+#bandeau-anonyme-title {
+  text-align: center;
+}
+#bandeau-anonyme-title, #bandeau-anonyme-title a {
+  color: #727780;
+  font-size: 30px;
+  padding: 23px 0px 13px 0px !important;
+}
+#bandeau-anonyme-title a:hover {
+  text-decoration: none;
 }
 
 .nav.affiliations {
@@ -1786,7 +1794,7 @@ li.nonSelectedElt .bloc:hover {
         display: none;
     }
 
-    #bandeau-anonyme .bandeau-titlebar {
+    #bandeau-anonyme-title {
         display: none
     }
 

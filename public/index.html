@@ -20,12 +20,13 @@
           resolve_validApps(pE.validApps);
         } };
       else
-        window.bandeau_anonyme = { title: "Annuaire public" };
+        window.bandeau_anonyme = {};
     </script>
-    <script type="text/javascript" src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+    <script src="https://ent.univ-paris1.fr/ProlongationENT/loader.js"></script>
+    <script src="https://ent.univ-paris1.fr/assets/bandeau-anonyme/loader.js"></script>
 
-    <div style="text-align:center">
-       <script src="https://ent.univ-paris1.fr/assets/bandeau-anonyme/loader.js"></script>
+    <div id="bandeau-anonyme-title"> <!-- will be hidden by ProlongationENT if connected -->
+      <a href="https://annuaire.univ-paris1.fr/">Annuaire public</a>
     </div>
 
     <div id="app"></div>
