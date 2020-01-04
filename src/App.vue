@@ -7,7 +7,7 @@
                 <router-link class="clear-all-filters" v-if="placeholder"
                    @click.native="search_token=''"
                    :to="withParams({ affiliation: '', affectation: '', role: '', token: '' })">
-                  <span class="glyphicon glyphicon-remove"></span>
+                  <my-icon name="remove"></my-icon>
                 </router-link>
                 <autocompleteUserAndGroup
                      class="form-control" v-auto-focus
@@ -27,7 +27,7 @@
                     {{t("STATUS_" + aff)}}
                     </router-link>
                     <router-link :to="withParam('affiliation', undefined)" v-if="aff == query.affiliation">
-                     <span class="badge"><span class='glyphicon glyphicon-remove'></span></span>
+                     <span class="badge"><my-icon name='remove'/></span>
                   </router-link>
                 </li>
             </div>
@@ -47,13 +47,14 @@
 
 <script>
 import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup';
+import MyIcon from './components/MyIcon';
 import * as WsService from './WsService';
 import helpers from './helpers';
 import config from "./config";
 
 export default {
   name: 'app',
-  components: { AutocompleteUserAndGroup },
+  components: { MyIcon, AutocompleteUserAndGroup },
 
   mounted() {
     this.$translate.setLang('french');

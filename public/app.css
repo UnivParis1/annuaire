@@ -1,3 +1,10 @@
+.my-icon {
+  display: inline-flex;
+}
+.my-icon > svg {
+  margin: auto;
+}
+
 a {
     color: #20558a;
 }
@@ -149,11 +156,8 @@ Div.App {
     text-decoration: none;
 }
 
-.affiliations li :hover {
-    color: #20558A !important;
-    text-decoration: none;
-    padding-bottom: 3px;
-    border-bottom: 1px solid #c89108;
+.my-icon-remove:hover {
+    fill: #20558A !important;
 }
 
 .affiliations li.selected {
@@ -214,27 +218,19 @@ Div.App {
 }
 
 
-
-.glyphicon.glyphicon-remove {
+.my-icon-remove {
     background-color: #e55302;
     border: 1px solid #e55302;
     border-radius: 2px;
-    color: white;
-    font-size: 9px;
+    fill: white;
+    --my-icon-size: 10px;
     margin: 0;
     padding: 1px;
     padding-left: 2px;
-    padding-right: 1px;
 }
 
-.affiliations .glyphicon.glyphicon-remove {
-    position: absolute;
-    right: 0;
-    top: 7px;
-}
-
-.Filters .glyphicon.glyphicon-remove {
-  margin-right: -2px;
+.affiliations .my-icon-remove {
+  margin-right: -9px;
   margin-left: 4px;
 }
 
@@ -657,12 +653,12 @@ tr.UserInTable .imgCircle {
     color: #9F6C07;
 }
 
-.backToHome .glyphicon.glyphicon-remove {
+.backToHome .my-icon-remove {
     background-color: #D5DCEA;
     border: 1px solid #D5DCEA;
     border-radius: 4px;
-    color: #95a7cb;
-    font-size: 14px;
+    fill: #95a7cb;
+    --my-icon-size: 14px;
     margin: 0;
     padding: 0px 4px;
     position: absolute;
@@ -762,12 +758,12 @@ tr.UserInTable .imgCircle {
     position: relative;
 }
 
-.OrgChart .glyphicon.glyphicon-remove {
+.OrgChart .my-icon-remove {
     background-color: #eee;
     background-color: #f4f6fa;
     border: 1px solid #eee;
-    font-size: 13px;
-    color: #aaa;
+    --my-icon-size: 13px;
+    fill: #aaa;
     padding: 4px;
     position: absolute;
     right: 5px;
@@ -1451,7 +1447,7 @@ li .secondary-bloc .bloc {
     white-space: pre-wrap;
 }
 
-.User .backToHome .glyphicon.glyphicon-remove {
+.User .backToHome .my-icon-remove {
     top: -18px;
     right: 3px;
 }
@@ -1803,7 +1799,7 @@ li.nonSelectedElt .bloc:hover {
     }
 
     .chartFormatLink, .search,
-    .glyphicon.glyphicon-remove, .Users .warning,
+    .my-icon-remove, .Users .warning,
     .Users .bg-info .ChooseFormat {
         display: none;
     }

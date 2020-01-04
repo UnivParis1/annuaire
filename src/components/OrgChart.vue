@@ -9,7 +9,7 @@
 </div>
 <div v-else class="OrgChart">
   <router-link to="/">
-    <span class="badge backToHome2"><span class='glyphicon glyphicon-remove'></span></span>
+    <span class="badge backToHome2"><my-icon name='remove'/></span>
   </router-link>
 
   <div class="tree mainTree">
@@ -101,6 +101,7 @@
 <script>
 import * as WsService from '../WsService';
 import OrgChartMembers from './OrgChartMembers';
+import MyIcon from './MyIcon';
 import helpers from '../helpers';
 
  function initTree(tree, depth, parent) {
@@ -153,7 +154,7 @@ const moveOneFirst = (list, e) => {
 }
 
 export default {
-   components: { members: OrgChartMembers },
+   components: { MyIcon, members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
    computed: {
      nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },

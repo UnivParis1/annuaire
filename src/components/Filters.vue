@@ -18,32 +18,32 @@
                </div>
               </div>
                   <router-link :to="withParam('affectation', undefined)">
-                      <span class='glyphicon glyphicon-remove'></span>
+                      <my-icon name='remove' />
                   </router-link>
                <!--div class="filterChartFormatLink"><router-link :to="withParam('format', 'chart')">Organigramme</router-link></div-->
             </div>
             <div class="diplomaFilter" v-if="diploma">
                   {{diploma.name}}
                   <router-link :to="withParam('diploma', undefined)">
-                      <span class='glyphicon glyphicon-remove'></span>
+                      <my-icon name='remove' />
                   </router-link>
             </div>
             <div class="roleFilter" v-if="role">
                     {{role.name}}
                     <router-link :to="withParam('role', undefined)">
-                        <span class='glyphicon glyphicon-remove'></span>
+                        <my-icon name='remove' />
                     </router-link>
             </div>
             <div class="roleFilter" v-if="activite">
                     {{activite.name}}
                     <router-link :to="withParam('activite', undefined)">
-                        <span class='glyphicon glyphicon-remove'></span>
+                        <my-icon name='remove' />
                     </router-link>
             </div>
             <div class="queryFilter" v-if="query.token">
                     {{query.token}}
                     <router-link :to="withParam('token', undefined)">
-                        <span class='glyphicon glyphicon-remove'></span>
+                        <my-icon name='remove' />
                     </router-link>
             </div>
         </div>
@@ -53,9 +53,11 @@
 
 <script>
 import helpers from '../helpers';
+import MyIcon from './MyIcon';
 
 export default {
   props: ['queryO'],
+  components: { MyIcon },
   computed: {
       query() {
           return this.queryO && this.queryO.query || {};

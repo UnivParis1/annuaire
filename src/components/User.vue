@@ -30,7 +30,7 @@
 <div class="container" v-else>
   <div class="boite">
     <router-link to="/">
-        <span class="badge backToHome"><span class='glyphicon glyphicon-remove'></span></span>
+        <span class="badge backToHome"><my-icon name='remove' /></span>
     </router-link>
 
     <div class="row">
@@ -167,6 +167,7 @@ import config from '../config';
 import helpers from '../helpers';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
+import MyIcon from './MyIcon';
 import { isActiviteUP1 } from '../sortUsers';
 
 const getLastDiplomas_ = (person) => {
@@ -208,7 +209,7 @@ const parentGroups = (groupKey) => (
 export default {
   name: "User",
   props: ["userId", "format"],
-  components: { Trombi, OrgChart },
+  components: { MyIcon, Trombi, OrgChart },
   computed: {
     userMail() { return this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain) },
     person() { return this.searchPerson && this.searchPerson.person },
