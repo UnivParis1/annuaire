@@ -7,8 +7,8 @@ import router from './router'
 import Translations from './translations'
 import GlobalMixin from './GlobalMixin'
 import AsyncComputed from 'vue-async-computed'
-import 'core-js/modules/es6.promise'; // needed by vue-async-computed (why does it not go through babel transform-runtime?)
-import 'core-js/modules/es6.array.find';
+import 'core-js/modules/es.promise'; // needed by vue-async-computed (why does it not go through babel transform-runtime?)
+import 'core-js/modules/es.array.find';
 import './directives';
 
 Vue.use(AsyncComputed)
