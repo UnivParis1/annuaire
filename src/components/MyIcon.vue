@@ -26,18 +26,10 @@ export default {
 <style>
 .my-icon {
   --my-icon-size: 12px;
-  --my-icon-ratio: 1;
 }
 .my-icon > svg {
-  width: calc(var(--my-icon-size) * var(--my-icon-ratio));
+  width: auto;
   height: var(--my-icon-size);
   display: block;
-}
-
-.my-icon-thList {
-  --my-icon-ratio: 1.2;
-}
-.my-icon-user {
-  --my-icon-ratio: 1.4;
 }
 </style>
