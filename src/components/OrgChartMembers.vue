@@ -30,12 +30,10 @@ import * as WsService from '../WsService';
 import * as sortUsers from '../sortUsers';
 import helpers from '../helpers';
 import config from '../config';
-import Photo from './Photo';
 
 
 export default {
     props: ['structure', 'onlyRoles', 'query'],
-    components: { Photo },
     computed: {
         affectation() {
           return !this.onlyRoles && this.structure.key;

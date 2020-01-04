@@ -100,7 +100,6 @@
 
 <script>
 import * as WsService from '../WsService';
-import Photo from './Photo';
 import OrgChartMembers from './OrgChartMembers';
 import helpers from '../helpers';
 
@@ -154,7 +153,7 @@ const moveOneFirst = (list, e) => {
 }
 
 export default {
-   components: { Photo, members: OrgChartMembers },
+   components: { members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
    computed: {
      nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },

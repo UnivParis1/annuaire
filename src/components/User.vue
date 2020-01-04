@@ -165,7 +165,6 @@
 import * as WsService from "../WsService";
 import config from '../config';
 import helpers from '../helpers';
-import ChooseFormat from './ChooseFormat';
 import Trombi from './Trombi';
 import OrgChart from './OrgChart';
 import { isActiviteUP1 } from '../sortUsers';
@@ -209,7 +208,7 @@ const parentGroups = (groupKey) => (
 export default {
   name: "User",
   props: ["userId", "format"],
-  components: { ChooseFormat, Trombi, OrgChart },
+  components: { Trombi, OrgChart },
   computed: {
     userMail() { return this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain) },
     person() { return this.searchPerson && this.searchPerson.person },
