@@ -184,24 +184,22 @@ Div.App {
 }
 
 .Filters .bg-info > .row > div {
-    padding: 4px 2px 3px 4px;
+    padding: 4px 29px 3px 4px;
     margin: 7px;
     color: #555;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: #c89108;
     font-size: 12px;
-}
 
-.text-muted {
+    position: relative;
     width: initial;
     clear: left;
     font-weight: bold;
-    padding-right: 29px !important;
     min-width: 129px;
 }
 
-.text-muted.affectationFilter .name {
+.affectationFilter .name {
     font-size: 18px;
     font-weight: normal;
     padding-bottom: 12px;
@@ -1585,7 +1583,7 @@ li.nonSelectedElt .bloc:hover {
         border-right: 1px solid #bbb;
     }
 
-    .text-muted {
+    .Filters .bg-info > .row > div {
         width: 100%;
     }
 
@@ -1817,7 +1815,7 @@ li.nonSelectedElt .bloc:hover {
         background: rgba(0, 0, 0, 0) url("/images/logo_paris1.svg") no-repeat scroll center top / 220px auto !important;
     }
 
-    .text-muted.affectationFilter {
+    .affectationFilter {
         margin-top: 15px !important;
         margin-bottom: 0 !important;
         padding-top: 0px !important;
@@ -1826,7 +1824,7 @@ li.nonSelectedElt .bloc:hover {
         border: none !important;
     }
 
-    .text-muted.affectationFilter .name {
+    .affectationFilter .name {
         display: initial !important;
         font-size: 17px !important;
         width: 100% !important;
