@@ -1,14 +1,10 @@
 <template>
 <div class="row Filters" v-if="affectation || diploma || role || activite || query.token">
-      <div class="col-md-12" >
         <div class="bg-info">
-          <div class="row">
             <div class="affectationFilter" v-if="affectation">
+              <div>
                <div class="name">
                    {{affectation.name}}
-                   <router-link :to="withParam('affectation', undefined)">
-                       <span class='glyphicon glyphicon-remove'></span>
-                   </router-link>
                </div>
 
                <div v-for="role in affectationRolesGrouped" class="manager">
@@ -20,44 +16,38 @@
                    Site web :
                    <a :href="affectation.labeledURI" target="_blank">{{affectation.labeledURI}}</a>
                </div>
+              </div>
+                  <router-link :to="withParam('affectation', undefined)">
+                      <span class='glyphicon glyphicon-remove'></span>
+                  </router-link>
                <!--div class="filterChartFormatLink"><router-link :to="withParam('format', 'chart')">Organigramme</router-link></div-->
             </div>
             <div class="diplomaFilter" v-if="diploma">
-              <div>
                   {{diploma.name}}
                   <router-link :to="withParam('diploma', undefined)">
                       <span class='glyphicon glyphicon-remove'></span>
                   </router-link>
-              </div>
             </div>
             <div class="roleFilter" v-if="role">
-                <div>
                     {{role.name}}
                     <router-link :to="withParam('role', undefined)">
                         <span class='glyphicon glyphicon-remove'></span>
                     </router-link>
-                </div>
             </div>
             <div class="roleFilter" v-if="activite">
-                <div>
                     {{activite.name}}
                     <router-link :to="withParam('activite', undefined)">
                         <span class='glyphicon glyphicon-remove'></span>
                     </router-link>
-                </div>
             </div>
             <div class="queryFilter" v-if="query.token">
-                <div>
                     {{query.token}}
                     <router-link :to="withParam('token', undefined)">
                         <span class='glyphicon glyphicon-remove'></span>
                     </router-link>
-                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
+</div>
 </template>
 
 
