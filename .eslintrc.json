@@ -9,6 +9,7 @@
     "eslint:recommended"
   ],
   "rules": {
+    "vue/no-use-v-if-with-v-for": "off",
     "vue/require-v-for-key": "on"
   },
   "parserOptions": {
