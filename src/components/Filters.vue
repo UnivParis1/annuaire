@@ -3,7 +3,7 @@
       <div class="col-md-12" >
         <div class="bg-info">
           <div class="row">
-            <div class="col-md-6 affectationFilter" v-if="affectation">
+            <div class="affectationFilter" v-if="affectation">
                <div class="name">
                    {{affectation.name}}
                    <router-link :to="withParam('affectation', undefined)">
@@ -22,7 +22,7 @@
                </div>
                <!--div class="filterChartFormatLink"><router-link :to="withParam('format', 'chart')">Organigramme</router-link></div-->
             </div>
-            <div class="col-md-6 diplomaFilter" v-if="diploma">
+            <div class="diplomaFilter" v-if="diploma">
               <div>
                   {{diploma.name}}
                   <router-link :to="withParam('diploma', undefined)">
@@ -30,7 +30,7 @@
                   </router-link>
               </div>
             </div>
-            <div class="col-md-3 roleFilter" v-if="role">
+            <div class="roleFilter" v-if="role">
                 <div>
                     {{role.name}}
                     <router-link :to="withParam('role', undefined)">
@@ -38,7 +38,7 @@
                     </router-link>
                 </div>
             </div>
-            <div class="col-md-3 roleFilter" v-if="activite">
+            <div class="roleFilter" v-if="activite">
                 <div>
                     {{activite.name}}
                     <router-link :to="withParam('activite', undefined)">
@@ -46,7 +46,7 @@
                     </router-link>
                 </div>
             </div>
-            <div class="col-md-3 queryFilter" v-if="query.token">
+            <div class="queryFilter" v-if="query.token">
                 <div>
                     {{query.token}}
                     <router-link :to="withParam('token', undefined)">

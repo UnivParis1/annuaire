@@ -193,10 +193,11 @@ Div.App {
     font-size: 12px;
 
     position: relative;
-    width: initial;
     clear: left;
     font-weight: bold;
     min-width: 129px;
+
+    float: left;
 }
 
 .affectationFilter .name {
