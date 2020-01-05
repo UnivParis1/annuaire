@@ -3,14 +3,6 @@
 <div v-if="error">
     {{error}}
 </div>
-<div v-else class="container">
-    <div class="row">
-        <div class="col-md-12 formats">
-            <div class="bg-info">
-            </div>
-        </div>
-    </div>
-</div>
 <div v-if="!person" class="container">
    <div class="row"><div class="col-md-12">
        Veuillez patienter
