@@ -1,6 +1,6 @@
 <template>
  <tr class="UserInTable">
-        <td class="col-md-1" >
+        <td>
           <div class="imgCircle">
             <img :title="person.supannListeRouge ? '': person.displayName" :src="person.photoURL" class="img-responsive">
           </div>
@@ -17,7 +17,7 @@
               <div v-for="activite in person_activites" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
-          <td class="col-md-7" colspan="2" v-else>
+          <td colspan="2" v-else>
               <span v-if="!connected">
                 <span class="text-warning">Seuls les personnels de l'université peuvent voir cette personne.</span>
                 <br>
@@ -28,7 +28,7 @@
               </span>
         </td>
 
-        <td class="col-md-4 infoUser">
+        <td class="infoUser">
           <div class="mail" v-if="person.mail">
             <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
           </div>
@@ -47,7 +47,7 @@
           </div>
         </td>
 
-        <td class="col-md-4">
+        <td>
           <div class="affectations" v-if="person['supannEntiteAffectation-all']">
           <label>Membre de :</label>
           <div v-for="affectation in person['supannEntiteAffectation-all']">

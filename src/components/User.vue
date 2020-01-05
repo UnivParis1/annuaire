@@ -26,11 +26,9 @@
     </router-link>
 
     <div class="row">
-      <div class="col-md-2">
         <div class="text-center imgCircle imgMarg">
             <img :title="person.displayName" :src="photoURL" class="img-responsive">
         </div>
-      </div>
       <div class="col-md-10">
         <div class="row">
           <div class="col-md-12">
@@ -38,7 +36,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-7">
+          <div class="col-md-7 fonctions-utilisateurs">
               <div>
                 <div class="employeeType" v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>

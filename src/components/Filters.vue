@@ -1,6 +1,6 @@
 <template>
 <div class="row Filters" v-if="affectation || diploma || role || activite || query.token">
-        <div>
+        <div class="col-md-12">
             <div class="affectationFilter" v-if="affectation">
               <div>
                <div class="name">

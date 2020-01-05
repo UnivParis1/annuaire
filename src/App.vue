@@ -20,8 +20,8 @@
             </form>
 
         <div class="text-center" >
-            <ul class="nav nav-pills menu-top affiliations" role="tablist">
-            <div class="radio-inline" v-for="aff in usefulAffiliationsGrouped">
+            <ul class="nav affiliations" role="tablist">
+              <span v-for="aff in usefulAffiliationsGrouped">
                 <li :class="aff == query.affiliation ? 'selected' : 'deselected'">
                   <router-link :to="withParam('affiliation', aff)">
                     {{t("STATUS_" + aff)}}
@@ -30,7 +30,7 @@
                      <span class="badge"><my-icon name='remove'/></span>
                   </router-link>
                 </li>
-            </div>
+              </span>
             </ul>
         </div>
     </div>

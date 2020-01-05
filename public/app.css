@@ -28,6 +28,10 @@ Div.App {
     margin-bottom: 22px;
 }
 
+.backToHome {
+  padding: 0;
+}
+
 .search {
     float: left;
     width: 75%;
@@ -141,6 +145,7 @@ Div.App {
 
 
 .affiliations > span {
+    display: inline-block;
     margin: 10px 0 0 0;
     padding: 0px;
     font-size: 11px;
@@ -359,17 +364,6 @@ Div.App {
     margin-right: 0;
 }
 
-.UserInTable td {
-    vertical-align: middle !important;
-    padding-top: 16px;
-    padding-bottom: 6px;
-}
-
-tr.UserInTable {
-    padding-top: 8px;
-    padding-bottom: 6px;
-}
-
 .table-striped > tbody > tr:nth-of-type(2n+1) {
     background-color: #f4f6fa;
 }
@@ -393,6 +387,10 @@ tr.UserInTable {
     overflow: hidden;
     border-radius: 50%;
     padding-left: 0;
+}
+
+.UserInTable td {
+  padding: 8px;
 }
 
 .UserInTable .imgCircle {
@@ -464,6 +462,9 @@ tr.UserInTable {
 
 /* ___________________________ (2-3) icones partag�s par Table & Fiche detaillee _______________________ */
 
+.boite > div {
+  padding-top: 18px;
+}
 
 .boite .mail , .infoUser .mail {
     background: url("/images/ANR-31.svg") no-repeat left top;
@@ -498,7 +499,7 @@ tr.UserInTable {
 .User .boite {
     position: relative;
     font-size: 13px;
-    margin-top: 30px;
+    margin-top: 50px;
     padding: 15px;
     padding-top: 1px;
     border-radius: 10px;
@@ -548,7 +549,7 @@ tr.UserInTable {
     text-transform: uppercase;
     font-size: 11px;
     color: #9f6c07;
-    margin-top: 26px;
+    margin-top: 16px;
 }
 
 .boite .supannActivite {
@@ -572,6 +573,10 @@ tr.UserInTable {
 .boite .labeledURI a {
     text-transform: none;
     font-size: 13px;
+}
+
+.fonctions-utilisateurs {
+    padding-right: 15px;
 }
 
 .boite .contactInformation {
@@ -1610,8 +1615,8 @@ li.nonSelectedElt .bloc:hover {
         border-right: 1px solid #bbb;
     }
 
-    .Filters > div > .row > div {
-        width: 100%;
+    .Filters > div {
+        align-items: stretch;
     }
 
     .boite .contactInformation {
