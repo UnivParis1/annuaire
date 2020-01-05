@@ -390,7 +390,6 @@ Div.App {
     width: 100%;
     height: auto;
     border: 0 none;
-    float: left;
     margin: -20px 0 0 0px;
     max-height: none;
     max-width: none;
@@ -1648,7 +1647,6 @@ li.nonSelectedElt .bloc:hover {
 }
 
 .Slider .slides img {
-    float: left;
     max-width: 91%;
     max-height: 91%;
     vertical-align: middle;
