@@ -253,7 +253,7 @@ Div.App {
 /******* ligne navigation affichage par liste / Trombino **********/
 
 
-.Users .bg-info {
+.nb-results-and-formats {
     background-color: #727780;
     min-height: 27px;
     padding-left: 15px;
@@ -1818,7 +1818,7 @@ li.nonSelectedElt .bloc:hover {
 
     .chartFormatLink, .search,
     .my-icon-remove, .Users .warning,
-    .Users .bg-info .ChooseFormat {
+    .nb-results-and-formats .ChooseFormat {
         display: none;
     }
 
