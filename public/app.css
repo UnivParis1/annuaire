@@ -307,6 +307,10 @@ Div.App {
     transition: all 0.3s linear;
 }
 
+.ChooseFormat .text {
+  margin-left: 2px;
+}
+
 .Users .warning {
     text-align: center;
     font-size: 15px;
