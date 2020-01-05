@@ -183,7 +183,7 @@ Div.App {
 
 /* __________________________FILTRES________________ */
 
-.Filters .bg-info {
+.Filters > div {
     background-color: #fff !important;
 
     display: flex;
@@ -197,7 +197,7 @@ Div.App {
     width: 100%;
 }
 
-.Filters .bg-info > div {
+.Filters > div > div {
     padding: 4px 2px 3px 4px;
     margin: 7px;
     color: #555;
@@ -213,7 +213,7 @@ Div.App {
     min-width: 129px;
 }
 
-.Filters .bg-info > div > a {
+.Filters > div > div > a {
     margin-left: 1.5rem;
 }
 
@@ -1610,7 +1610,7 @@ li.nonSelectedElt .bloc:hover {
         border-right: 1px solid #bbb;
     }
 
-    .Filters .bg-info > .row > div {
+    .Filters > div > .row > div {
         width: 100%;
     }
 
