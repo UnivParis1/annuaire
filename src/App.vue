@@ -1,6 +1,6 @@
 <template>
 <div class="App" :class="{ hideChart: !allowChart }">
-  <div class="container">
+  <div class="container row">
     <div class="search">
             <form @submit.prevent="showUsers(search_token)">
             <div class="form-group has-feedback" :class="{ 'with-clear-all-filters': placeholder }">

@@ -32,8 +32,12 @@ Div.App {
   padding: 0;
 }
 
+.App > .row {
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
 .search {
-    float: left;
     width: 75%;
     min-width: 250px;
     border: none;
@@ -41,7 +45,6 @@ Div.App {
 }
 
 .chartFormatLink {
-    float: right;
     width: 25%;
     margin-top: 10px;
     min-width: 100px;
@@ -1548,7 +1551,6 @@ li.nonSelectedElt .bloc:hover {
     }
 
     .search {
-        float: left;
         width: 100%;
         border: none;
         text-align: center;
@@ -1568,7 +1570,6 @@ li.nonSelectedElt .bloc:hover {
 
     .chartFormatLink {
         background-position: center top 1px;
-        float: left;
         width: 33%;
         margin: 20px 33%;
         margin-top: 2px;
@@ -1897,10 +1898,6 @@ li.nonSelectedElt .bloc:hover {
 }  /* FIN Print */
 
 
-.hideChart .search {
-  margin: 0 auto;
-  float: none;
-}
 .hideChart .userChartFormatLink,
 .hideChart .chartFormatLink,
 .hideChart .ChooseFormat .chart {
