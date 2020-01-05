@@ -1536,7 +1536,7 @@ li.nonSelectedElt .bloc:hover {
 
 /* For mobile phones: */
 
-    .table tr td:first-child {
+    .table tr td:first-child { /* the photo */
         float: right;
     }
 
