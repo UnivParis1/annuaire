@@ -134,7 +134,7 @@
               <span>
                 <span class="postalAddress">{{person.postalAddress}}</span>
                 <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + person.postalAddress" title="Afficher la carte" target="_blank">
-                  <span class="glyphicon glyphicon-map-marker"></span></a>
+                  <my-icon name="mapMarker"/></a>
                 </span>
               </span>
             </span>
@@ -148,7 +148,7 @@
 
     <span class="more_account_link">
       | <a :href="user_vcard_url"> Ajouter à mes contacts</a>
-        <span class="glyphicon glyphicon-import"></span>
+        <my-icon name="fileImport"/>
     </span>
     <span v-if="connected_uid === person.uid" class="more_account_link modify_account">
       | <a :href="config.modify_my_account_url"> Modifier mes informations</a>

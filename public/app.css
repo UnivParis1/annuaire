@@ -51,6 +51,12 @@ Div.App {
     border: none;
 }
 
+.search .my-icon-search {
+  --my-icon-size: 13px;
+  fill: #555;
+  height: 31px; /* force input's height */
+}
+
 .form-control {
     background-color: #fff;
     border: 1px solid #5381ac;
@@ -268,6 +274,7 @@ Div.App {
 
 .ChooseFormat .nav a {
     background-color: #727780;
+    fill: white;
     border: 0px;
     border-radius: 0px;
     font-size: 12px;
@@ -411,6 +418,10 @@ tr.UserInTable .imgCircle {
     background-image: none;
     border-top: 0px;
     border-radius: 0px;
+}
+
+.btn .my-icon {
+  vertical-align: sub;
 }
 
 .UserInTable .btn-primary {
@@ -593,9 +604,11 @@ tr.UserInTable .imgCircle {
     font-size: 12px;
 }
 
-.glyphicon-map-marker {
-    color: #5381ac;
-    font-size: 14px;
+.my-icon-mapMarker {
+    fill: #5381ac;
+    --my-icon-size: 14px;
+    vertical-align: top;
+    margin-left: 2px;
 }
 
 .boite .userChartFormatLink {
@@ -636,6 +649,7 @@ tr.UserInTable .imgCircle {
 
 .more_account_link {
     color: #9a9a9a;
+    fill: #9a9a9a;
     margin-left: 8px;
 }
 .more_account_link a {
@@ -1611,8 +1625,8 @@ li.nonSelectedElt .bloc:hover {
         font-size: 0px;
     }
 
-    .ChooseFormat .glyphicon {
-        font-size: 15px;
+    .ChooseFormat .my-icon {
+        --my-icon-size: 18px;
     }
 }
 

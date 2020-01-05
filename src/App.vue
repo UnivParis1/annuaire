@@ -15,7 +15,7 @@
                      :wsparams="wsparams" v-model="search_token"
                      @searchSuccess="searchResults = $event" @select="showUserOrStructure">
                 </autocompleteUserAndGroup>
-                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                <my-icon name="search" class="form-control-feedback" />
             </div>
             </form>
 
