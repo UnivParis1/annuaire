@@ -77,7 +77,7 @@
                <span class="bloc" :class="classes(e)">
                  <router-link :to="withParam('affectation', e.key)" :title="'(' + e.key + ') ' + e.fullname">{{e.name}}</router-link>
                  <members :structure="e" :onlyRoles="e5.key" :query="query" v-if="e === e4 || displayAll"></members>
-               <div class="Xvertical" v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
+               <div v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
                  <ul>
                    <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
