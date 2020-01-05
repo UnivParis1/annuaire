@@ -24,7 +24,7 @@ Div.App {
     padding: 23px 0px 13px 0px !important;
 }
 
-.nav.nav-pills.menu-top.affiliations {
+.nav.affiliations {
     margin-bottom: 22px;
 }
 
@@ -140,7 +140,7 @@ Div.App {
 /* _______________________ AFFILIATION ______________________ */
 
 
-.affiliations .radio-inline {
+.affiliations > span {
     margin: 10px 0 0 0;
     padding: 0px;
     font-size: 11px;
@@ -395,7 +395,7 @@ tr.UserInTable {
     padding-left: 0;
 }
 
-tr.UserInTable .imgCircle {
+.UserInTable .imgCircle {
     width: 105px;
     height: 105px;
 }
