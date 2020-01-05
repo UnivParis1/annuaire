@@ -264,20 +264,21 @@ Div.App {
     padding-left: 15px;
     font-size: 18px;
     color: #FED984;
-}
-
-.ChooseFormat {
+    display: flex;
+    justify-content: space-between;
     margin-top: 9px;
 }
 
-.ChooseFormat .nav .btn {
-    padding: 4px 10px;
-    min-height: 27px;
-    border-left: 1px solid #fff;
-    border-right: 1px solid #fff;
+.ChooseFormat {
+    display: inline-flex;
 }
 
-.ChooseFormat .nav a {
+.ChooseFormat .btn {
+    padding: 4px 10px;
+    border-left: 1px solid #fff;
+}
+
+.ChooseFormat a {
     background-color: #727780;
     fill: white;
     border: 0px;
@@ -285,7 +286,7 @@ Div.App {
     font-size: 12px;
 }
 
-.ChooseFormat .nav .chart {
+.ChooseFormat .chart {
     background-image: url(images/chart.svg);
     background-position: 5px 4px;
     background-size: 18px auto;
@@ -294,12 +295,12 @@ Div.App {
     display: inline-block;
 }
 
-.ChooseFormat .nav a.youarehere {
+.ChooseFormat a.youarehere {
     background-color: #9f6c07;
     transition: all 0.4s linear;
 }
 
-.ChooseFormat .nav a:hover {
+.ChooseFormat a:hover {
     background-color: #C89108;
     transition: all 0.3s linear;
 }
@@ -1590,7 +1591,7 @@ li.nonSelectedElt .bloc:hover {
 
 
     /* barre mode d affichage */
-    .ChooseFormat .nav a {
+    .ChooseFormat a {
         font-size: 0px;
     }
 
@@ -1902,7 +1903,7 @@ li.nonSelectedElt .bloc:hover {
 }
 .hideChart .userChartFormatLink,
 .hideChart .chartFormatLink,
-.hideChart .ChooseFormat .nav .chart {
+.hideChart .ChooseFormat .chart {
   display: none;
 }
 

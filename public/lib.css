@@ -130,15 +130,6 @@ table {
   }
 }
 
-.pull-right {
-    float: right;
-}
-
-.btn-group > .btn {
-    position: relative;
-    float: left;
-}
-
 body {
     line-height: 1.42;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
