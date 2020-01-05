@@ -296,19 +296,11 @@ Div.App {
 
 .ChooseFormat .nav a.youarehere {
     background-color: #9f6c07;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
 .ChooseFormat .nav a:hover {
     background-color: #C89108;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.3s linear;
 }
 
@@ -332,10 +324,6 @@ Div.App {
     border-radius: 9px;
     display: inline-block;
     padding: 1px 11px;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
@@ -344,10 +332,6 @@ Div.App {
     text-decoration: none;
     border: 1px solid #c89108;
     color: #20558a;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
@@ -446,10 +430,6 @@ Div.App {
     font-weight: 600;
     width: 140px;
     padding-top: 3px;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -ms-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
 }
 
@@ -713,10 +693,6 @@ Div.App {
     overflow: hidden;
     border: 1px #999 solid;
     background-color: #ccc;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
@@ -728,29 +704,17 @@ Div.App {
     background-color: #727780;
     border: 1px #727780 solid;
     color: #fff;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
 .photoGallery .text:hover {
     background-color: #00326e;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
 .photoGallery .photo:hover {
     border: 2px #00326e solid;
     background-color: #00326e;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
@@ -1226,10 +1190,6 @@ li .secondary-bloc .members {
     border-left: 2px solid #c89108;
     border-right: 2px solid #c89108;
     border-radius: 9px;
-    -webkit-transition: all 0.3s linear;
-    -moz-transition: all 0.3s linear;
-    -ms-transition: all 0.3s linear;
-    -o-transition: all 0.3s linear;
     transition: all 0.4s linear;
 }
 
