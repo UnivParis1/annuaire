@@ -232,7 +232,7 @@ Div.App {
 }
 
 
-.my-icon-remove {
+.my-icon.my-icon-remove {
     background-color: #e55302;
     border: 1px solid #e55302;
     border-radius: 2px;
