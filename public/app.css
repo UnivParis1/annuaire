@@ -673,7 +673,6 @@ Div.App {
     fill: #95a7cb;
     --my-icon-size: 14px;
     margin: 0;
-    padding: 0px 4px;
     position: absolute;
 }
 
@@ -1441,8 +1440,8 @@ li .secondary-bloc .bloc {
 }
 
 .User .backToHome .my-icon-remove {
-    top: -18px;
-    right: 3px;
+    top: -20px;
+    right: 5px;
 }
 
 /* test organigramme individu------*/
