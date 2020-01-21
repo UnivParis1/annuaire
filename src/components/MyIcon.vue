@@ -7,7 +7,7 @@ import remove from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/times.s
 import search from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/search.svg';
 import users from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/user-friends.svg';
 import mapMarker from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg';
-import fileImport from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/file-import.svg';
+import userPlus from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/user-plus.svg';
 import thList from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/th-list.svg';
 
 export default {
@@ -16,7 +16,7 @@ export default {
     icons() {
       return {
         remove, search, users,
-        mapMarker, fileImport, thList,
+        mapMarker, userPlus, thList,
       }
     },
   }

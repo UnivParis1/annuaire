@@ -138,7 +138,7 @@
 
     <span class="more_account_link">
       | <a :href="user_vcard_url"> Ajouter à mes contacts</a>
-        <my-icon name="fileImport"/>
+        <my-icon name="userPlus"/>
     </span>
     <span v-if="connected_uid === person.uid" class="more_account_link modify_account">
       | <a :href="config.modify_my_account_url"> Modifier mes informations</a>
