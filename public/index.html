@@ -13,7 +13,9 @@
     <script type="text/javascript">
       var connected = location.pathname.match(/^\/(annuaire|ent)\//);
       var resolve_validApps;
-      window.validApps = new Promise(resolve => resolve_validApps = resolve);
+      if (window.Promise) {
+	   window.validApps = new Promise(function (resolve) { resolve_validApps = resolve });
+      }
 
       if (connected)
         window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true, onload: function (pE) {
