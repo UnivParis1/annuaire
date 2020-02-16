@@ -6,7 +6,7 @@
     <div class="row" v-if="!noFilters">
         <div class="col-md-12">
             <div class="nb-results-and-formats">
-                <span v-if="persons">{{persons.length}} résultat(s)</span>
+               <span><span v-if="persons">{{persons.length}} résultat(s)</span></span>
                <ChooseFormat :format="query.format"></ChooseFormat>
            </div>
         </div>
