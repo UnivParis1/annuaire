@@ -73,15 +73,17 @@ import Filters from './Filters';
 import Slider from './Slider';
 import config from '../config';
 
-function _getSearchPersons({ maxRows }, queryO) {
+async function _getSearchPersons({ maxRows }, queryO) {
     let wsparams = { maxRows, CAS: config.connected, token: queryO.query.token };
-    let wsparams_filters = WsService.compute_wsparams_user_filters(queryO);
-    return WsService.searchPersons({ ...wsparams, ...wsparams_filters }).then(persons => {
-        persons.forEach(p => {
-            p.photoURL = config.photoURL(p);
-        });
-        return persons;
-    })
+    let wsparams_many_filters = WsService.compute_wsparams_user_many_filters(queryO);
+    let persons_l = await helpers.pmap(wsparams_many_filters, wsparams_filters => (
+      WsService.searchPersons({ ...wsparams, ...wsparams_filters })
+    ))
+    let persons = helpers.uniqBy([].concat(...persons_l), e => e.uid);
+    persons.forEach(p => {
+      p.photoURL = config.photoURL(p);
+    });
+    return persons;
 }
 
 export default {

@@ -103,7 +103,7 @@ export const getQueryO = async (query) => ({
   diploma: query.diploma && await getDiploma(query.diploma),
 });
 
-export function compute_wsparams_user_filters (queryO) {
+export function compute_wsparams_user_many_filters(queryO) {
     const { affiliation, affectation, diploma, role, activite } = queryO.query;
     let wsparams = {};
 
@@ -120,20 +120,27 @@ export function compute_wsparams_user_filters (queryO) {
 
     if (diploma) {
         wsparams.filter_member_of_group = "diploma-" + diploma;
-        return wsparams;
+        return [wsparams];
     } else if (affectation){
       if (affiliation === 'student' || affiliation === 'alum') {
           wsparams.filter_supannEntiteAffectation = affectation;
-          return wsparams;
+          return [wsparams];
       } else {
         const group = queryO.affectation;
-        wsparams.filter_member_of_group = "groups-employees." + group.businessCategory + "." + affectation;
-        return wsparams;
+
+        return [
+          { ...wsparams, filter_member_of_group: "groups-employees." + group.businessCategory + "." + affectation },
+          { ...wsparams, filter_uid: group.roles.map(u => u.uid).join('|') },
+        ]
       }
     } else {
-        return wsparams;
+        return [wsparams];
     }
 }
+
+export const compute_wsparams_user_filters = (queryO) => (
+  compute_wsparams_user_many_filters(queryO)[0]
+)
 
 export const OrgChart = {
   getMembers(query, affectation) {

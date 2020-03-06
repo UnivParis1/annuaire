@@ -82,6 +82,23 @@ export default {
     }
   },
 
+  pmap(collection, f) {
+    return Promise.all(collection.map(f))
+  },
+
+  uniqBy(l, by) {
+    let seen = {}
+    let r = []
+    for (const e of l) {
+      const key = by(e)
+      if (!(key in seen)) {
+        seen[key] = true
+        r.push(e)
+      }
+    }
+    return r
+  },
+
   shuffle(...array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
