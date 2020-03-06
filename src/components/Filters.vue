@@ -75,7 +75,7 @@ export default {
           return this.queryO && this.queryO.diploma;
       },
       affectationRolesGrouped() {
-          return helpers.sortedGroupBy(this.affectation.roles, u => u.supannRoleGenerique.join(", "));
+          return helpers.sortedGroupBy(this.affectation?.roles || [], u => u.supannRoleGenerique.join(", "));
       },
   },
 }
