@@ -8,7 +8,7 @@ export default {
     modify_my_account_url: "https://ent.univ-paris1.fr/compte/",
     comptex_annuaire_url: (person) => `https://comptex.univ-paris1.fr/annuaire/reuse/?uid=${person.uid}`,
     connected,
-    photoURL: (person) => "https://userphoto.univ-paris1.fr/" + (person.uid ? "?uid=" + person.uid + "&penpalAffiliation=loggedUser" : "img/forbidden-male.jpg"),
+    photoURL: (person) => "https://userphoto.univ-paris1.fr/" + "?uid=" + person.uid + "&penpalAffiliation=loggedUser",
 
     usefulAffiliationsGrouped: ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
