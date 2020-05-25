@@ -710,7 +710,7 @@ Div.App {
     height: 160px;
     overflow: hidden;
     border: 1px #999 solid;
-    background-color: #ccc;
+    background-color: #f8f8f8;
     transition: all 0.4s linear;
 }
 
@@ -732,7 +732,6 @@ Div.App {
 
 .photoGallery .photo:hover {
     border: 2px #00326e solid;
-    background-color: #00326e;
     transition: all 0.4s linear;
 }
 
