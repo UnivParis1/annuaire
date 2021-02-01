@@ -1,15 +1,16 @@
 <template>
-  <input type="search" :value="value" @input="oninput">
+  <input type="search" :value="modelValue" @input="oninput">
 </template>
 
 <script>
 import config from '../config';
 
 export default {
-  props: ['value', 'wsparams'],
+  model: { prop: 'modelValue', event: 'update:modelValue' },
+  props: ['modelValue', 'wsparams'],
   methods: {
       oninput(event) {
-          this.$emit('input', event.target.value);
+          this.$emit('update:modelValue', event.target.value);
       },
       installWidget() {
         if (!this.wsparams) return;
