@@ -100,8 +100,8 @@
 
 <script>
 import * as WsService from '../WsService';
-import OrgChartMembers from './OrgChartMembers';
-import MyIcon from './MyIcon';
+import OrgChartMembers from './OrgChartMembers.vue';
+import MyIcon from './MyIcon.vue';
 import helpers from '../helpers';
 
  function initTree(tree, depth, parent) {

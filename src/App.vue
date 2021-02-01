@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup';
-import MyIcon from './components/MyIcon';
+import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup.vue';
+import MyIcon from './components/MyIcon.vue';
 import * as WsService from './WsService';
 import helpers from './helpers';
 import config from "./config";

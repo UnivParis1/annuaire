@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueTranslate from 'vue-translate-plugin'
-import App from './App'
+import App from './App.vue'
 import router from './router'
 import Translations from './translations'
 import GlobalMixin from './GlobalMixin'

@@ -155,9 +155,9 @@
 import * as WsService from "../WsService";
 import config from '../config';
 import helpers from '../helpers';
-import Trombi from './Trombi';
-import OrgChart from './OrgChart';
-import MyIcon from './MyIcon';
+import Trombi from './Trombi.vue';
+import OrgChart from './OrgChart.vue';
+import MyIcon from './MyIcon.vue';
 import { isActiviteUP1 } from '../sortUsers';
 
 const getLastDiplomas_ = (person) => {

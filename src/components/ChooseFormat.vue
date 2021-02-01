@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import MyIcon from './MyIcon';
+import MyIcon from './MyIcon.vue';
 
 export default {
   props: ['format'],

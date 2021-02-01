@@ -65,12 +65,12 @@
 import * as WsService from "../WsService";
 import * as sortUsers from '../sortUsers';
 import helpers from '../helpers';
-import ChooseFormat from './ChooseFormat';
-import UserInTable from './UserInTable';
-import Trombi from './Trombi';
-import OrgChart from './OrgChart';
-import Filters from './Filters';
-import Slider from './Slider';
+import ChooseFormat from './ChooseFormat.vue';
+import UserInTable from './UserInTable.vue';
+import Trombi from './Trombi.vue';
+import OrgChart from './OrgChart.vue';
+import Filters from './Filters.vue';
+import Slider from './Slider.vue';
 import config from '../config';
 
 async function _getSearchPersons({ maxRows }, queryO) {

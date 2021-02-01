@@ -53,7 +53,7 @@
 
 <script>
 import helpers from '../helpers';
-import MyIcon from './MyIcon';
+import MyIcon from './MyIcon.vue';
 
 export default {
   props: ['queryO'],
