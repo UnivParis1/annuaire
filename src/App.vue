@@ -50,9 +50,10 @@
 import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup.vue';
 import MyIcon from './components/MyIcon.vue';
 import * as WsService from './WsService';
-import { AutoFocus } from './directives';
+import { AutoFocus, asyncComputed } from './directives';
 import helpers from './helpers';
 import config from "./config";
+import { computed } from "@vue/composition-api";
 
 export default {
   name: 'app',
@@ -71,6 +72,14 @@ export default {
       1- sélectionner une personne
       2- sélectionner une structure
   */
+  setup(props, context) {
+    const query = computed(() => context.root && context.root.$route.query || {})
+    return {
+      query,
+      queryO: asyncComputed(() => WsService.getQueryO(query.value)),
+      allowChart: asyncComputed(async () => "annuaire_organigramme" in (await window.validApps)),
+    }
+  },
   data() {
       return {
         search_token: '',
@@ -79,7 +88,6 @@ export default {
   },
   computed: {
     usefulAffiliationsGrouped() { return config.usefulAffiliationsGrouped },
-    query() { return this.$route.query },
     wsparams() {
       //console.log('set_autocomplete_wsparams', this.query);
       if (!this.queryO) return undefined;
@@ -111,10 +119,6 @@ export default {
     default_placeholder() {
       return 'Rechercher une personne, une structure, une fonction, ...'
     },
-  },
-  asyncComputed: {
-      queryO() { return WsService.getQueryO(this.query) },
-      allowChart() { return window.validApps.then(apps => "annuaire_organigramme" in apps) },
   },
 
   methods: {

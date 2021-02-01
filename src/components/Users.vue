@@ -118,6 +118,7 @@ export default {
         }
     });
     return {
+      noFilters, maxRows,
      ...state,
      ...toComputed({
       connected() {
