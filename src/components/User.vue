@@ -200,6 +200,17 @@ export default {
   name: "User",
   props: ["userId", "format"],
   components: { MyIcon, Trombi, OrgChart },
+  asyncComputed: {
+    affectationsWithParents() { // wsGroup[][];
+        return this.person ? compute_affectationsWithParents(this.person) : [];
+    },
+    async searchPerson() {
+        const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
+        if (!person) return { error: "Utilisateur inconnu" };
+        return { person };
+    },
+    allow_comptex_annuaire() { return window.validApps.then(apps => "comptex-annuaire" in apps) },
+  },
   computed: {
     userMail() { return this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain) },
     person() { return this.searchPerson && this.searchPerson.person },
@@ -215,17 +226,6 @@ export default {
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + this.userMail },
     config() { return config; },
-  },
-  asyncComputed: {
-    affectationsWithParents() { // wsGroup[][];
-        return this.person ? compute_affectationsWithParents(this.person) : [];
-    },
-    async searchPerson() {
-        const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
-        if (!person) return { error: "Utilisateur inconnu" };
-        return { person };
-    },
-    allow_comptex_annuaire() { return window.validApps.then(apps => "comptex-annuaire" in apps) },
   },
 }
 </script>

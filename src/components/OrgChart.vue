@@ -157,6 +157,19 @@ const moveOneFirst = (list, e) => {
 export default {
    components: { MaybeRouterLink, MyIcon, members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
+   asyncComputed: {
+    e1() {
+        return withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] });
+    },
+   },
+   watch: {
+    e3(e) {
+        if (e) {
+          WsService.OrgChart.getMembers(this.query, e.key).then(l => e.members = l);
+          setTimeout(() => this.$el.firstChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
+    },
+   },
    computed: {
      nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },
      selectedList() { return this.e1 && this.selected ? get_selectedList(this.e1, this.selected) : [] },
@@ -174,19 +187,6 @@ export default {
 
      display_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length > 0 },
      no_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length === 0 },
-   },
-   asyncComputed: {
-    e1() {
-        return withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] });
-    },
-   },
-   watch: {
-    e3(e) {
-        if (e) {
-          WsService.OrgChart.getMembers(this.query, e.key).then(l => e.members = l);
-          setTimeout(() => this.$el.firstChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-        }
-    },
    },
    methods: {
      classes(e) {

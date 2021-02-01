@@ -95,20 +95,6 @@ export default {
         persons: [],
       };
   },
-  computed: {
-      noFilters() {
-           return !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => this.query[filter]);
-      },
-      connected() {
-          return config.connected;
-      },
-      maxRows() {
-          return config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
-      },
-      slides() {
-          return helpers.shuffle(...config.slides);
-      },
-  },
   asyncComputed: {
       queryO() { return WsService.getQueryO(this.query) },
   },
@@ -132,6 +118,20 @@ export default {
             this.persons = persons;
         }
     },
+  },
+  computed: {
+      noFilters() {
+           return !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => this.query[filter]);
+      },
+      connected() {
+          return config.connected;
+      },
+      maxRows() {
+          return config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
+      },
+      slides() {
+          return helpers.shuffle(...config.slides);
+      },
   },
 }
 </script>
