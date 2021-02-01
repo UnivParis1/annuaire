@@ -223,9 +223,9 @@ export default {
     person_activitesUP1() { return (this.person['supannActivite-all'] || []).filter(isActiviteUP1) },
     person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
     photoURL() { return config.photoURL(this.person) },
-    user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + this.userMail },
     config() { return config; },
+    user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
   },
 }
 </script>
