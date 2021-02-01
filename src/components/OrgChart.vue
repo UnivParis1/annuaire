@@ -102,6 +102,7 @@
 import * as WsService from '../WsService';
 import OrgChartMembers from './OrgChartMembers.vue';
 import MyIcon from './MyIcon.vue';
+import { MaybeRouterLink } from '../directives';
 import helpers from '../helpers';
 
  function initTree(tree, depth, parent) {
@@ -154,7 +155,7 @@ const moveOneFirst = (list, e) => {
 }
 
 export default {
-   components: { MyIcon, members: OrgChartMembers },
+   components: { MaybeRouterLink, MyIcon, members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
    computed: {
      nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },

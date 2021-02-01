@@ -1,12 +1,10 @@
-import Vue from 'vue'
-
-Vue.directive('auto-focus', {
-    inserted(el) { 
+export const AutoFocus = {
+    inserted(el) {
         el.focus();
     }
-});
+};
 
-Vue.component('maybe-router-link', {
+export const MaybeRouterLink = {
     props: ['to'],
     template: `
        <router-link :to="to" v-if="to">
@@ -15,4 +13,4 @@ Vue.component('maybe-router-link', {
        <span v-else>
          <slot/>
        </span>`,
-});
+};

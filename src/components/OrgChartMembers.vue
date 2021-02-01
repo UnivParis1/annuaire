@@ -28,12 +28,14 @@
 <script>
 import * as WsService from '../WsService';
 import * as sortUsers from '../sortUsers';
+import { MaybeRouterLink } from '../directives';
 import helpers from '../helpers';
 import config from '../config';
 
 
 export default {
     props: ['structure', 'onlyRoles', 'query'],
+    components: { MaybeRouterLink },
     computed: {
         affectation() {
           return !this.onlyRoles && this.structure.key;

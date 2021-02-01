@@ -50,11 +50,13 @@
 import AutocompleteUserAndGroup from './components/AutocompleteUserAndGroup.vue';
 import MyIcon from './components/MyIcon.vue';
 import * as WsService from './WsService';
+import { AutoFocus } from './directives';
 import helpers from './helpers';
 import config from "./config";
 
 export default {
   name: 'app',
+  directives: { AutoFocus },
   components: { MyIcon, AutocompleteUserAndGroup },
 
   mounted() {

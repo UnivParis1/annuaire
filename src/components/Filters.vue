@@ -54,10 +54,11 @@
 <script>
 import helpers from '../helpers';
 import MyIcon from './MyIcon.vue';
+import { MaybeRouterLink } from '../directives';
 
 export default {
   props: ['queryO'],
-  components: { MyIcon },
+  components: { MaybeRouterLink, MyIcon },
   computed: {
       query() {
           return this.queryO && this.queryO.query || {};

@@ -12,9 +12,11 @@
 
 <script>
 import config from '../config';
+import { MaybeRouterLink } from '../directives';
 
 export default {
   props: ['person'],
+  components: { MaybeRouterLink },
   computed: {
     photoURL() { return config.photoURL(this.person) },
     title() {
