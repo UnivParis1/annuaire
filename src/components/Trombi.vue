@@ -12,15 +12,16 @@
 
 <script>
 import config from '../config';
-import { MaybeRouterLink } from '../directives';
+import { MaybeRouterLink, toComputed } from '../directives';
 
 export default {
   props: ['person'],
   components: { MaybeRouterLink },
-  computed: {
-    photoURL() { return config.photoURL(this.person) },
+  setup(props) {
+   return toComputed({
+    photoURL() { return config.photoURL(props.person) },
     title() {
-        const person = this.person;
+        const person = props.person;
         if (person.supannListeRouge) return '';
 
         let lines = [person.displayName];
@@ -29,7 +30,8 @@ export default {
 
         return lines.join("\n");
     },
-  },
+   })
+  }
 }
 </script>
 

@@ -28,48 +28,55 @@
 <script>
 import * as WsService from '../WsService';
 import * as sortUsers from '../sortUsers';
-import { MaybeRouterLink } from '../directives';
+import { MaybeRouterLink, asyncComputed, toComputed } from '../directives';
 import helpers from '../helpers';
 import config from '../config';
+import { computed } from '@vue/composition-api';
 
 
 export default {
     props: ['structure', 'onlyRoles', 'query'],
     components: { MaybeRouterLink },
-    computed: {
-        affectation() {
-          return !this.onlyRoles && this.structure.key;
-        },
-        affectation_and_sub() {
-          return this.affectation ? WsService.getAllSubStructures(this.structure) : {};
-        },
-        roles() {
-          return this.structure.roles;
-        },
+    setup(props) {
+      const affectation = computed(() => (
+          !props.onlyRoles && props.structure.key
+      ))
+      const affectation_and_sub = computed(() => (
+          affectation.value ? WsService.getAllSubStructures(props.structure) : {}
+      ))
+      const roles = computed(() => (
+        props.structure.roles
+      ))
+      const members = asyncComputed(() => (
+          WsService.OrgChart.getMembers(props.query, affectation.value)
+      ))
+      const affiliations = ['other', ...config.usefulAffiliationsGrouped ].reverse();
+
+
+      return {
+        members, roles,
+       ...toComputed({
         rolesGrouped() {
-            return helpers.sortedGroupBy(this.roles, u => u.supannRoleGenerique.join(", "));
-        },
-        affiliations() {
-            return ['other', ...config.usefulAffiliationsGrouped ].reverse();
+            return helpers.sortedGroupBy(roles.value, u => u.supannRoleGenerique.join(", "));
         },
         membersByAffiliation() {
-            if (!this.members) return;
+            if (!members.value) return;
 
-            let r = this.members;
+            let r = members.value;
 
             // remove dups
-            const toIgnore = this.roles.map(e => e.uid);
+            const toIgnore = roles.value.map(e => e.uid);
             r = r.filter(person => !toIgnore.includes(person.uid));
 
-            const isPedagogy = sortUsers.isPedagogy(this.structure);
+            const isPedagogy = sortUsers.isPedagogy(props.structure);
 
             r = r.map(person => {
                 // compute simplifiedAffiliation
                 let aff = person.eduPersonPrimaryAffiliation;
                 aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
-                person.simplifiedAffiliation = isPedagogy && helpers.includes(this.affiliations, aff) ? aff : "other";
+                person.simplifiedAffiliation = isPedagogy && helpers.includes(affiliations, aff) ? aff : "other";
 
-                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, this.affectation_and_sub) };
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation_and_sub.value) };
             });
 
             // full ordering
@@ -78,16 +85,11 @@ export default {
 
             return r;
         }
-    },
-    asyncComputed: {
-      members() {
-          return WsService.OrgChart.getMembers(this.query, this.affectation);
-      },
-    },
-    methods: {
+       }),
         translateAff(aff, plural) {
            return "STATUS_" + aff + (plural > 1 ? "s" : "");
         },
+      }
     },
 };
 </script>

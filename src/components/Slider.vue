@@ -20,14 +20,14 @@
 </template>
 
 <script>
+import { ref, computed } from '@vue/composition-api';
+
 export default {
   props: [ 'slides', 'slide_duration' ],
-  data() { 
-      return { forceSlide: null };
-  },
-  computed: {
-      nb() { return this.slides.length; },      
-  },
+  setup(props) { return {
+      forceSlide: ref(null),
+      nb: computed(() => props.slides.length),
+  } },
 };
 </script>
 

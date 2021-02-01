@@ -159,6 +159,8 @@ import Trombi from './Trombi.vue';
 import OrgChart from './OrgChart.vue';
 import MyIcon from './MyIcon.vue';
 import { isActiviteUP1 } from '../sortUsers';
+import { toComputed, asyncComputed } from '../directives';
+import { computed } from '@vue/composition-api';
 
 const getLastDiplomas_ = (person) => {
     let inscriptions =person['supannEtuInscription-all'];
@@ -200,31 +202,37 @@ export default {
   name: "User",
   props: ["userId", "format"],
   components: { MyIcon, Trombi, OrgChart },
-  asyncComputed: {
-    affectationsWithParents() { // wsGroup[][];
-        return this.person ? compute_affectationsWithParents(this.person) : [];
-    },
-    async searchPerson() {
-        const person = await WsService.searchPerson({ token: this.userMail, CAS: config.connected });
+  setup(props) {
+    const userMail = computed(() => props.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain))
+    const searchPerson = asyncComputed(async () => {
+        const person = await WsService.searchPerson({ token: userMail.value, CAS: config.connected });
         if (!person) return { error: "Utilisateur inconnu" };
         return { person };
-    },
-    allow_comptex_annuaire() { return window.validApps.then(apps => "comptex-annuaire" in apps) },
-  },
-  computed: {
-    userMail() { return this.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain) },
-    person() { return this.searchPerson && this.searchPerson.person },
-    error() { return this.searchPerson && this.searchPerson.error },
+    })
+    const person = computed(() => searchPerson.value && searchPerson.value.person)
+    const person_activitesUP1 = computed(() => (person.value['supannActivite-all'] || []).filter(isActiviteUP1))
 
-    statusPers() { return computeStatusPers(this.person) },
-    isStaffOrFaculty() { return helpers.intersection(this.person.eduPersonAffiliation, [ "staff", "faculty"]).length },
-    has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person_activitesUP1.length },
-    lastDiplomas() { return getLastDiplomas_(this.person) },
-    person_activitesUP1() { return (this.person['supannActivite-all'] || []).filter(isActiviteUP1) },
-    person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
-    photoURL() { return config.photoURL(this.person) },
-    user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + this.userMail },
+   return {
+     person, person_activitesUP1,
+   ...toComputed({
+    error() { return searchPerson.value && searchPerson.value.error },
+
+    statusPers() { return computeStatusPers(person.value) },
+    isStaffOrFaculty() { return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty"]).length },
+    has_staff_and_activitesUP1() { return person.value.eduPersonPrimaryAffiliation === 'staff' && person_activitesUP1.value.length },
+    lastDiplomas() { return getLastDiplomas_(person.value) },
+    person_activites() { return (person.value['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
+    photoURL() { return config.photoURL(person.value) },
+    user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
+   }),
+    affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
+        return person.value ? compute_affectationsWithParents(person.value) : [];
+    }),
+    allow_comptex_annuaire: asyncComputed(async () => "comptex-annuaire" in (await window.validApps)),
+   }
+    },
+  computed: { // kept here because it uses GlobalMixin.js
     user_public_url() { return this.publicHref(this.withUser({ mail: this.userId }, {})) },
   },
 }

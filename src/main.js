@@ -6,11 +6,13 @@ import App from './App.vue'
 import router from './router'
 import Translations from './translations'
 import GlobalMixin from './GlobalMixin'
+import VueCompositionAPI from '@vue/composition-api'
 import AsyncComputed from 'vue-async-computed'
 import 'core-js/modules/es.promise'; // needed by vue-async-computed (why does it not go through babel transform-runtime?)
 import 'core-js/modules/es.array.find';
 import './directives';
 
+Vue.use(VueCompositionAPI)
 Vue.use(AsyncComputed)
 Vue.use(VueTranslate)
 Vue.locales(Translations)

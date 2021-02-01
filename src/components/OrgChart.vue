@@ -7,7 +7,7 @@
     Veuillez patienter
   </div>
 </div>
-<div v-else class="OrgChart">
+<div v-else class="OrgChart" ref="root_elt">
   <router-link to="/">
     <span class="badge backToHome2"><my-icon name='remove'/></span>
   </router-link>
@@ -102,8 +102,9 @@
 import * as WsService from '../WsService';
 import OrgChartMembers from './OrgChartMembers.vue';
 import MyIcon from './MyIcon.vue';
-import { MaybeRouterLink } from '../directives';
+import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
+import { watch, ref, computed } from '@vue/composition-api';
 
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
@@ -115,18 +116,18 @@ import helpers from '../helpers';
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
        parent.roles = tree.roles;
      }
-     
+
      (tree.subGroups || []).forEach(e => {
          e.parentKey = tree.key;
          initTree(e, depth+1, tree);
      });
  }
- 
+
 let withSubGroups = (e) => (
      WsService.getSubStructures(e.key).then(subGroups => {
          if (!subGroups) throw "error";
          e.subGroups = subGroups;
-         initTree(e, e.depth);       
+         initTree(e, e.depth);
          return e;
      })
 );
@@ -144,7 +145,7 @@ const moveOneFirst = (list, e) => {
         (tree.subGroups || []).forEach(getCodes);
     }
     getCodes(e1);
-    
+
     let e = code2tree[selected];
     let r = [];
     while (e.depth >= 2) {
@@ -157,41 +158,42 @@ const moveOneFirst = (list, e) => {
 export default {
    components: { MaybeRouterLink, MyIcon, members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
-   asyncComputed: {
-    e1() {
-        return withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] });
-    },
-   },
-   watch: {
-    e3(e) {
+   setup(props) {
+    const root_elt = ref(null);
+    const e1 = asyncComputed(() => withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] }))
+    const selectedList = computed(() => e1.value && props.selected ? get_selectedList(e1.value, props.selected) : [])
+    const e2 = computed(() => selectedList.value[0] || {})
+    const e3 = computed(() => selectedList.value[1] || {})
+    const e4 = computed(() => selectedList.value[2] || {})
+    const e5 = computed(() => selectedList.value[3] || {})
+    const l2 = computed(() => e1.value.subGroups.filter(e => e.businessCategory !== "council"))
+    const l3 = computed(() => e2.value.subGroups && moveOneFirst(helpers.sortBy(e2.value.subGroups, ['name']), e3.value))
+    const l4 = computed(() => (props.displayAll || e4.value.key) && e3.value.members && e3.value.subGroups && helpers.sortBy(e3.value.subGroups, ['name']))
+    //const l5 = computed(() => (props.displayAll || e5.value.key) && e3.value.members && e4.value.subGroups)
+    watch(e3, (e) => {
         if (e) {
-          WsService.OrgChart.getMembers(this.query, e.key).then(l => e.members = l);
-          setTimeout(() => this.$el.firstChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+          WsService.OrgChart.getMembers(props.query, e.key).then(l => e.members = l);
+          setTimeout(() => {
+            root_elt.value.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+          }, 100);
         }
-    },
-   },
-   computed: {
-     nonSelectedEltClass() { return this.displayAll ? '' : 'nonSelectedElt' },
-     selectedList() { return this.e1 && this.selected ? get_selectedList(this.e1, this.selected) : [] },
-     e2() { return this.selectedList[0] || {} },
-     e3() { return this.selectedList[1] || {} },
-     e4() { return this.selectedList[2] || {} },
-     e5() { return this.selectedList[3] || {} },
-     e2_index() { return this.l2.indexOf(this.e2) },
-     e3_index() { return this.l3.indexOf(this.e3) },
-     e4_index() { return this.l4.indexOf(this.e4) },
-     l2() { return this.e1.subGroups.filter(e => e.businessCategory !== "council") },
-     l3() { return this.e2.subGroups && moveOneFirst(helpers.sortBy(this.e2.subGroups, ['name']), this.e3) },
-     l4() { return (this.displayAll || this.e4.key) && this.e3.members && this.e3.subGroups && helpers.sortBy(this.e3.subGroups, ['name']) },
-     l5() { return (this.displayAll || this.e5.key) && this.e3.members && this.e4.subGroups },
+    })
+    return {
+     root_elt,
+     e1, e2, e3, e4, e5, l2, l3, l4,
+    ...toComputed({
+     nonSelectedEltClass() { return props.displayAll ? '' : 'nonSelectedElt' },
+     e2_index() { return l2.value.indexOf(e2.value) },
+     e3_index() { return l3.value.indexOf(e3.value) },
+     e4_index() { return l4.value.indexOf(e4.value) },
 
-     display_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length > 0 },
-     no_secondary_bloc() { return this.e3 && this.e3.members && this.e3.members.length === 0 },
-   },
-   methods: {
+     display_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length > 0 },
+     no_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length === 0 },
+    }),
      classes(e) {
        return ['bordered', 'depth' + e.depth, e.businessCategory, { leaf: !e.subGroups }];
      },
+    }
    },
 };
 

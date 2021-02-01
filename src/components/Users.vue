@@ -72,6 +72,8 @@ import OrgChart from './OrgChart.vue';
 import Filters from './Filters.vue';
 import Slider from './Slider.vue';
 import config from '../config';
+import { ref, watchEffect, computed } from '@vue/composition-api';
+import { toComputed } from '../directives';
 
 async function _getSearchPersons({ maxRows }, queryO) {
     let wsparams = { maxRows, CAS: config.connected, token: queryO.query.token };
@@ -89,49 +91,44 @@ async function _getSearchPersons({ maxRows }, queryO) {
 export default {
   props: ['query'],
   components: { ChooseFormat, Trombi, UserInTable, Filters, OrgChart, Slider },
-  data() {
-      return {
+  setup(props) {
+    const state = {
         // users matching filters
-        persons: [],
-      };
-  },
-  asyncComputed: {
-      queryO() { return WsService.getQueryO(this.query) },
-  },
-  watch: {
-    'queryO': {
-        handler: 'updateAsyncData',
-        immediate: true,
-    },
-  },
-  methods: {
-    async updateAsyncData() {
-        this.persons = undefined;
+        persons: ref([]),
+        queryO: ref(null),
+    }
+    const noFilters = computed(() => (
+           !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => props.query[filter])
+    ))
+    const maxRows = computed(() => (
+          config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult
+    ))
+    watchEffect(async () => {
+        const queryO = state.queryO.value = await WsService.getQueryO(props.query)
+        state.persons.value = undefined;
 
-        if (this.noFilters || this.query.format === 'chart' || !this.queryO) {
+        if (noFilters.value || props.query.format === 'chart' || !queryO) {
           //
         } else {
-            let persons = await _getSearchPersons({ maxRows: this.maxRows }, this.queryO);
-            const affectation_and_sub = this.query.affectation && await WsService.getSubStructuresFlat(this.query.affectation);
+            let persons = await _getSearchPersons({ maxRows: maxRows.value }, queryO);
+            const affectation_and_sub = props.query.affectation && await WsService.getSubStructuresFlat(props.query.affectation);
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), affectation_and_sub) }));
             persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
-            this.persons = persons;
+            state.persons.value = persons;
         }
-    },
-  },
-  computed: {
-      noFilters() {
-           return !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => this.query[filter]);
-      },
+    });
+    return {
+     ...state,
+     ...toComputed({
       connected() {
           return config.connected;
-      },
-      maxRows() {
-          return config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult;
       },
       slides() {
           return helpers.shuffle(...config.slides);
       },
+     }),
+    }
   },
 }
 </script>
+

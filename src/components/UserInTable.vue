@@ -61,14 +61,18 @@
 <script>
 import config from '../config';
 import { isActiviteUP1 } from '../sortUsers';
+import { computed } from '@vue/composition-api';
 
 export default {
   props: ['person', 'query'],
-  computed: {
-      connected() { return config.connected; },
-      has_staff_and_activitesUP1() { return this.person.eduPersonPrimaryAffiliation === 'staff' && this.person_activitesUP1.length },
-      person_activitesUP1() { return (this.person['supannActivite-all'] || []).filter(isActiviteUP1) },
-      person_activites() { return (this.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
-  },
+  setup: (props) => {
+    const person_activitesUP1 = computed(() => (props.person['supannActivite-all'] || []).filter(isActiviteUP1))
+    return {
+      connected: config.connected,
+      person_activitesUP1,
+      has_staff_and_activitesUP1: computed(() => props.person.eduPersonPrimaryAffiliation === 'staff' && person_activitesUP1.value.length),
+      person_activites: computed(() => (props.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act))),
+    }
+  }
 }
 </script>

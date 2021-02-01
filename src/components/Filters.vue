@@ -54,31 +54,37 @@
 <script>
 import helpers from '../helpers';
 import MyIcon from './MyIcon.vue';
-import { MaybeRouterLink } from '../directives';
+import { MaybeRouterLink, toComputed } from '../directives';
+import { computed } from '@vue/composition-api';
 
 export default {
   props: ['queryO'],
   components: { MaybeRouterLink, MyIcon },
-  computed: {
+  setup(props) {
+    const affectation = computed(() => (
+          props.queryO && props.queryO.affectation
+    ))
+    return {
+      affectation,
+     ...toComputed({
       query() {
-          return this.queryO && this.queryO.query || {};
-      },
-      affectation() {
-          return this.queryO && this.queryO.affectation;
+          return props.queryO && props.queryO.query || {};
       },
       role() {
-          return this.queryO && this.queryO.role;
+          return props.queryO && props.queryO.role;
       },
       activite() {
-          return this.queryO && this.queryO.activite;
+          return props.queryO && props.queryO.activite;
       },
       diploma() {
-          return this.queryO && this.queryO.diploma;
+          return props.queryO && props.queryO.diploma;
       },
       affectationRolesGrouped() {
-          return helpers.sortedGroupBy(this.affectation?.roles || [], u => u.supannRoleGenerique.join(", "));
+          return helpers.sortedGroupBy(affectation.value?.roles || [], u => u.supannRoleGenerique.join(", "));
       },
-  },
+     }),
+    }
+  }
 }
 </script>
 
