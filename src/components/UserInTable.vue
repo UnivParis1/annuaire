@@ -17,6 +17,7 @@
               <div v-for="activite in person_activites" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
+        </td>
           <td colspan="2" v-else>
               <span v-if="!connected">
                 <span class="text-warning">Seuls les personnels de l'université peuvent voir cette personne.</span>
