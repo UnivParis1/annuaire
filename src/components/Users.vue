@@ -72,7 +72,7 @@ import OrgChart from './OrgChart.vue';
 import Filters from './Filters.vue';
 import Slider from './Slider.vue';
 import config from '../config';
-import { ref, watchEffect, computed } from '@vue/composition-api';
+import { ref, watchEffect, computed } from 'vue';
 import { toComputed } from '../directives';
 
 async function _getSearchPersons({ maxRows }, queryO) {

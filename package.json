@@ -5,22 +5,24 @@
   "author": "Pascal Rigaux <pascal.rigaux@univ-paris1.fr>",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.0",
-    "@vue/composition-api": "^1.0.0-rc.1",
+    "@vitejs/plugin-vue": "^1.1.4",
     "raw-loader": "^4.0.0",
-    "vue": "^2.6.6",
-    "vue-router": "^3.0.2",
-    "vue-translate-plugin": "^1.2.0"
+    "vite": "^2.0.0",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.3",
+    "vue3-translate-plugin": "github:UnivParis1/vue3translate"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.2",
     "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-service": "^4.1.2",
+    "@vue/compiler-sfc": "^3.0.5",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",

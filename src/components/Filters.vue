@@ -55,7 +55,7 @@
 import helpers from '../helpers';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed } from '../directives';
-import { computed } from '@vue/composition-api';
+import { computed } from 'vue';
 
 export default {
   props: ['queryO'],

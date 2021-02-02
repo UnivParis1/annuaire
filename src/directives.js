@@ -1,4 +1,4 @@
-import { reactive, computed, watchEffect } from '@vue/composition-api'
+import { reactive, computed, watchEffect } from 'vue'
 import helpers from './helpers'
 
 /**

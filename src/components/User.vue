@@ -160,7 +160,7 @@ import OrgChart from './OrgChart.vue';
 import MyIcon from './MyIcon.vue';
 import { isActiviteUP1 } from '../sortUsers';
 import { toComputed, asyncComputed } from '../directives';
-import { computed } from '@vue/composition-api';
+import { computed } from 'vue';
 
 const getLastDiplomas_ = (person) => {
     let inscriptions =person['supannEtuInscription-all'];

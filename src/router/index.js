@@ -1,12 +1,9 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Users from '@/components/Users.vue'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import Users from '../components/Users.vue'
 import User from '../components/User.vue'
 import config from '../config'
 
-Vue.use(Router)
-
-const opts = {
+export default createRouter({
   routes: [
     { path: '/:userId',
       component: User,
@@ -17,11 +14,5 @@ const opts = {
       props: (route) => ({ query: route.query }),
     },
   ],
-};
-
-if (process.env.NODE_ENV === 'production') {
-  opts.mode = 'history';
-  opts.base = config.connected ? config.connected_pathname : config.public_pathname;
-}
-
-export default new Router(opts)
+  history: process.env.NODE_ENV === 'production' ? createWebHistory(config.connected ? config.connected_pathname : config.public_pathname) : createWebHashHistory()
+})

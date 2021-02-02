@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import remove from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/times.svg';
-import search from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/search.svg';
-import users from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/user-friends.svg';
-import mapMarker from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg';
-import userPlus from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/user-plus.svg';
-import thList from '!raw-loader!@fortawesome/fontawesome-free/svgs/solid/th-list.svg';
+import remove from '@fortawesome/fontawesome-free/svgs/solid/times.svg?raw';
+import search from '@fortawesome/fontawesome-free/svgs/solid/search.svg?raw';
+import users from '@fortawesome/fontawesome-free/svgs/solid/user-friends.svg?raw';
+import mapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg?raw';
+import userPlus from '@fortawesome/fontawesome-free/svgs/solid/user-plus.svg?raw';
+import thList from '@fortawesome/fontawesome-free/svgs/solid/th-list.svg?raw';
 
 export default {
   props: ['name'],

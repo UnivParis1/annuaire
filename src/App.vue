@@ -53,7 +53,7 @@ import * as WsService from './WsService';
 import { AutoFocus, asyncComputed } from './directives';
 import helpers from './helpers';
 import config from "./config";
-import { computed } from "@vue/composition-api";
+import { computed } from "vue";
 
 export default {
   name: 'app',

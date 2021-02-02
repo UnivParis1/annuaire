@@ -31,7 +31,7 @@ import * as sortUsers from '../sortUsers';
 import { MaybeRouterLink, asyncComputed, toComputed } from '../directives';
 import helpers from '../helpers';
 import config from '../config';
-import { computed } from '@vue/composition-api';
+import { computed } from 'vue';
 
 
 export default {

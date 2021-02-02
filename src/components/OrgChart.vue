@@ -104,7 +104,7 @@ import OrgChartMembers from './OrgChartMembers.vue';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
-import { watch, ref, computed } from '@vue/composition-api';
+import { watch, ref, computed } from 'vue';
 
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs

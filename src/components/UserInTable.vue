@@ -62,7 +62,7 @@
 <script>
 import config from '../config';
 import { isActiviteUP1 } from '../sortUsers';
-import { computed } from '@vue/composition-api';
+import { computed } from 'vue';
 
 export default {
   props: ['person', 'query'],
