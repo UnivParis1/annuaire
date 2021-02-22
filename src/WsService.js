@@ -78,14 +78,14 @@ export const getSubStructures = (key) => (
 );
 
 export const getSubStructuresFlat = (key) => (
-  getSubStructures(key).then(l => getAllSubStructures({ key, subTree: l }))
+  getSubStructures(key).then(l => getAllSubStructures({ key, subGroups: l }))
 )
 
 export const getAllSubStructures = (tree) => {
   let r = {};
   function getSubs(tree) {
     r[tree.key.replace(/^structures-/, '')] = true;
-    (tree.subTree || []).forEach(getSubs);
+    (tree.subGroups || []).forEach(getSubs);
   }
   getSubs(tree);
   return r;
