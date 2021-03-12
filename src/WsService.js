@@ -25,13 +25,40 @@ let wsgroupsJsonp = (name, params) => (
     cachedJsonp(config.wsgroupsURL + name, params)
 );
 
-export const group_roles_remove_supannListeRouge = group => {
-    if (group.roles) group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
-    return group;   
+// if you users for role XX have same gender, we can use "supannRoleGenerique" name
+// otherwise we fallback on non-gendered name
+const group_roles_handle_gender = (roles) => {
+  let code2name = {}
+  for (const user of roles) {
+    let i = 0;
+    for (const all of user['supannRoleGenerique-all']) {
+      const gender_name = user.supannRoleGenerique[i++];
+      if (code2name[all.code] && code2name[all.code] !== gender_name) {
+        code2name[all.code] = all.name
+      } else {
+        code2name[all.code] = gender_name; // fallback on non-gendered name
+      }
+    }
+  }
+  // code2name is computed, set all names to the computed values
+  for (const user of roles) {
+    let i = 0;
+    for (const all of user['supannRoleGenerique-all']) {
+       user.supannRoleGenerique[i++] = code2name[all.code];
+    }
+  }
+}
+
+export const group_roles_remove_supannListeRouge_and_handle_gender = group => {
+    if (group.roles) {
+      group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
+      group_roles_handle_gender(group.roles);
+    }
+    return group;
 };
 
 export let getGroupFromStruct = (affectation) => (
-    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true }).then(group_roles_remove_supannListeRouge)
+    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true, attrs: 'roles,roles.supannRoleGenerique-all' }).then(group_roles_remove_supannListeRouge_and_handle_gender)
 );
 
 export let getRoleGenerique = (role) => (
@@ -74,6 +101,7 @@ export const getSubStructures = (key) => (
       depth: 3,
       filter_category: 'structures',
       with_organization: true,
+      attrs: 'roles,roles.supannRoleGenerique-all',
   })
 );
 

@@ -110,7 +110,7 @@ import helpers from '../helpers';
      tree.key = tree.key.replace(/^structures-/, '');
      tree.fullname = tree.name;
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
-     tree = WsService.group_roles_remove_supannListeRouge(tree);
+     tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree);
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
        parent.roles = tree.roles;
      }
