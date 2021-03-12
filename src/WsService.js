@@ -58,7 +58,12 @@ export const group_roles_remove_supannListeRouge_and_handle_gender = group => {
 };
 
 export let getGroupFromStruct = (affectation) => (
-    wsgroupsJsonp("/getGroup", { key: "structures-" + affectation, with_organization: true, attrs: 'roles,roles.supannRoleGenerique-all' }).then(group_roles_remove_supannListeRouge_and_handle_gender)
+    wsgroupsJsonp("/getGroup", {
+        CAS: config.connected,
+        key: "structures-" + affectation,
+        with_organization: true,
+        attrs: 'roles,roles.supannRoleGenerique-all',
+    }).then(group_roles_remove_supannListeRouge_and_handle_gender)
 );
 
 export let getRoleGenerique = (role) => (
@@ -97,6 +102,7 @@ export let getSubGroups = (wsparams) => (
 
 export const getSubStructures = (key) => (
   getSubGroups({
+      CAS: config.connected,
       key: 'structures-' + key,
       depth: 3,
       filter_category: 'structures',
