@@ -16,12 +16,42 @@
   <ul>
     <li style="flex-grow: 1;" :class="{ withBorder: e2.key }"></li>
     <li>
-      <span class="bloc" :class="classes(e1)">
-        {{e1.roles[0].supannRoleGenerique[0]}}
-        <br>
-        <maybe-router-link :to="withUser(e1.roles[0])">{{e1.roles[0].displayName}}</maybe-router-link>
-      </span>
-      <ul>
+      <div class="div_depth1">
+        <ul class="depth1_roles vertical">
+            <li v-for="(b,i) in e1_roles[0]">
+                <span class="bloc members">
+                    {{b[1]}}<br>
+                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                </span>
+                <div class="verticalTopRight" v-if="i > 0"></div>
+                <div class="verticalBottomRight" v-if="i < e1_roles[0].length - 1"></div>
+            </li>
+        </ul>
+        <div class="depth1_col2">
+         <div></div> <!-- padding -->
+         <div>
+            <div class="horizLeft"></div>
+            <div class="horizRight"></div>
+            <span class="bloc" :class="classes(e1)">
+            {{e1.top_role.supannRoleGenerique[0]}}
+            <br>
+            <maybe-router-link :to="withUser(e1.top_role)">{{e1.top_role.displayName}}</maybe-router-link>
+            </span>
+         </div>
+         <div class="vertBelow"></div>
+        </div>
+        <ul class="depth1_roles vertical">
+            <li v-for="(b,i) in e1_roles[1]">
+                <span class="bloc members">
+                    {{b[1]}}<br>
+                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                </span>
+                <div class="verticalTop" v-if="i > 0"></div>
+                <div class="verticalBottom" v-if="i < e1_roles[1].length - 1"></div>
+            </li>
+        </ul>
+      </div>
+      <ul class="ul_depth2">
           <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
@@ -114,7 +144,7 @@ import { watch, ref, computed } from 'vue';
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
      tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree);
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
-       parent.roles = tree.roles;
+       parent.top_role = tree.roles[0]
      }
 
      (tree.subGroups || []).forEach(e => {
@@ -123,14 +153,15 @@ import { watch, ref, computed } from 'vue';
      });
  }
 
-let withSubGroups = (e) => (
-     WsService.getSubStructures(e.key).then(subGroups => {
-         if (!subGroups) throw "error";
-         e.subGroups = subGroups;
-         initTree(e, e.depth);
-         return e;
-     })
-);
+let withSubGroups = async (e) => {
+    const subGroups = await WsService.getSubStructures(e.key)
+    if (!subGroups) throw "error";
+    e.subGroups = subGroups;
+    initTree(e, e.depth);
+    e.roles = (await WsService.getGroupFromStruct('UP1')).roles
+    e.roles = helpers.sortBy(e.roles, ['supannRoleGenerique'])
+    return e;
+}
 
 const moveOneFirst = (list, e) => {
   const [ l1, l2 ] = helpers.partition(list, (e_ => e_ === e));
@@ -186,7 +217,16 @@ export default {
      e2_index() { return l2.value.indexOf(e2.value) },
      e3_index() { return l3.value.indexOf(e3.value) },
      e4_index() { return l4.value.indexOf(e4.value) },
-
+     e1_roles() { 
+         let l = []
+         for (const role of e1.value.roles) {
+             for (const name of role.supannRoleGenerique) {
+                 l.push([role, name])
+             }
+         }
+         const half = Math.floor(l.length / 2)
+         return [ l.slice(0, half), l.slice(half) ]
+     },
      display_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length > 0 },
      no_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length === 0 },
     }),

@@ -1,5 +1,5 @@
 <template>
-  <div class="members" v-if="members && members.length || roles.length">
+  <div class="members" :class="{ withSeparator: !noSeparator }" v-if="members && members.length || roles.length">
     <span v-for="role in rolesGrouped">
       <div class="role">{{role.v}}&nbsp;: </div>
       <div class="user-with-role" v-for="u in role.group">
@@ -35,7 +35,7 @@ import { computed } from 'vue';
 
 
 export default {
-    props: ['structure', 'onlyRoles', 'query'],
+    props: ['structure', 'onlyRoles', 'query', 'noSeparator'],
     components: { MaybeRouterLink },
     setup(props) {
       const affectation = computed(() => (

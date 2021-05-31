@@ -855,10 +855,6 @@ Div.App {
     background-position: right top;
 }
 
-.mainTree ul {
-    padding-top: 20px;
-}
-
 .tree a {
     color: #20558A;
 }
@@ -867,7 +863,7 @@ Div.App {
     padding-top: 20px;
 }
 
-.mainTree li li {
+.ul_depth2 li {
     padding-bottom: 20px;
     display: flex;
 }
@@ -971,17 +967,6 @@ li.nonSelectedElt .bloc {
 
 .mainTree > ul, .mainTree > ul > li {
     padding: 0;
-}
-
-/* add downward connectors from parents*/
-.mainTree ul ul::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 50%;
-    border-right: 1px solid #aabbcc;
-    width: 0;
-    height: 20px;
 }
 
 .mainTree > ul > li.withBorder {
@@ -1179,6 +1164,14 @@ li .secondary-bloc .members {
     min-width: none;
 }
 
+.foo {
+    height: 24px;
+    width: 2px;
+    position: absolute;
+    background: #aabbcc;
+    bottom: -23px;
+    left: 0;
+}
 
 
 /* _____________________________ ORGANIGRAMME __________________________ **/
@@ -1220,6 +1213,96 @@ li .secondary-bloc .members {
 /***** ORGANIGRAMME :  vertical **/
 
 
+.div_depth1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.depth1_roles {
+    flex-direction: column;
+}
+.depth1_roles li {
+    padding-bottom: 0;
+}
+.depth1_roles .bloc {
+    padding: 5px 5px;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    background-color: #F6D891;
+    color: #00326e;
+}
+.depth1_roles a {
+    font-weight: normal;
+}
+
+.depth1_roles li:first-child .verticalBottomRight,
+.depth1_roles li:first-child .verticalBottom {
+    border-top: 1px dashed #abc; /* ou solid #dba */
+}
+.depth1_roles li:first-child .verticalBottomRight {
+    border-radius: 0 5px 0 0;
+
+}
+.depth1_roles li:first-child .verticalBottom {
+    border-radius: 5px 0 0 0;
+}
+.depth1_roles .verticalTop {
+    border-bottom: 1px dashed #abc !important;
+}
+.depth1_roles .verticalTop,
+.depth1_roles .verticalBottom {
+    border-left: 1px dashed #abc !important;
+}
+
+.depth1_roles .verticalTopRight {
+    border-bottom: 1px dashed #abc !important;
+}
+.depth1_roles .verticalTopRight,
+.depth1_roles .verticalBottomRight {
+    border-right: 1px dashed #abc !important;
+}
+.vertical li:last-child > .verticalTopRight {
+    border-radius: 0 0 5px 0;
+}
+
+.div_depth1 .bloc {
+    min-height: initial !important;
+}
+.div_depth1 .horizRight,
+.div_depth1 .horizLeft {
+    position: absolute;
+    top: 3.8rem;
+    width: 69px;
+    border-top: 1px dashed #abc;
+}
+
+.div_depth1 .horizRight {
+    left: 0;
+}
+.div_depth1 .horizLeft {
+    right: 0;
+}
+
+.depth1_col2 {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+
+}
+.depth1_col2 > div:nth-child(2) {
+    padding: 2rem 69px 0;
+    position: relative;
+}
+
+.depth1_col2 > div:first-child,
+.depth1_col2 .vertBelow {
+    height: 50%;
+}
+.depth1_col2 .vertBelow {
+    width: 50%;
+    border-right: 1px solid #abc;
+}
 
 .depth1 {
     border: 3px solid #C89108;
@@ -1414,6 +1497,8 @@ li .secondary-bloc .bloc {
 
 .members {
     text-align: left;
+}
+.members.withSeparator {
     padding-top: 0.7em;
     border-top: #999 dotted 1px;
     margin-top: 8px;
