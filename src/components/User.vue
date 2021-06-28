@@ -182,10 +182,12 @@ const computeStatusPers = (person) => {
     return [...t_r, ...other].map(a => "STATUS_" + a);
 };
 
-function compute_affectationsWithParents(person) {
+async function compute_affectationsWithParents(person) {
    let affectations = person.supannEntiteAffectation || [];
    // Si la personne possède plusieurs affectations, afficher autant de fil d'ariane que d'affectation
-   return Promise.all(affectations.map(aff => parentGroups("structures-" + aff)));
+   const l = await Promise.all(affectations.map(aff => parentGroups("structures-" + aff)))
+   // filtrer les réponses vides (ie les structures d'affectation de type "organization", qui sont ignorées par wsgroups) (GLPI UP1#116750)
+   return l.filter(i => i.length)
  }
 
 const objectValues = (o) => (
