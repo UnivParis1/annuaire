@@ -54,6 +54,7 @@ import { AutoFocus, asyncComputed } from './directives';
 import helpers from './helpers';
 import config from "./config";
 import { computed } from "vue";
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'app',
@@ -73,7 +74,8 @@ export default {
       2- sélectionner une structure
   */
   setup(props, context) {
-    const query = computed(() => context.root && context.root.$route.query || {})
+    const $route = useRoute()
+    const query = computed(() => $route.query || {})
     return {
       query,
       queryO: asyncComputed(() => WsService.getQueryO(query.value)),
