@@ -57,7 +57,7 @@
               <div class="horizRight"></div>
               <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
                <span class="bloc" :class="classes(e)">
-                <router-link :to="withParam('affectation', e.key)" :title="e.key">{{e.name}}</router-link>
+                <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>
                 <members :structure="e2" :query="query" v-if="e === e2 && !e3.key"></members>
                </span>
               </span>
@@ -87,7 +87,7 @@
             <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
 
             <span class="bloc first-bloc" :class="classes(e)">
-              <router-link :to="withParam('affectation', e.key)" :title="e.key">
+              <router-link :to="withParam('affectation', e.key)">
                 <span class="name">{{e.name}}</span>
               </router-link>
               <members :structure="e" :onlyRoles="e4.key" :query="query" v-if="e === e3 && !display_secondary_bloc"></members>
@@ -105,15 +105,15 @@
                <div class="horizLeft"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(e)">
-                 <router-link :to="withParam('affectation', e.key)" :title="'(' + e.key + ') ' + e.fullname">{{e.name}}</router-link>
+                 <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.name}}</router-link>
                  <members :structure="e" :onlyRoles="e5.key" :query="query" v-if="e === e4 || displayAll"></members>
                <div v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
                  <ul>
                    <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
-                       <span class="bloc" :class="classes(e)" :title="e.key">
-                           <span :title="'(' + e.key + ') ' + e.fullname">{{e.name}}</span>
+                       <span class="bloc" :class="classes(e)">
+                           <span :title="e.fullname">{{e.name}}</span>
                            <members :structure="e" :query="query" v-if="e === e5 || displayAll"></members>
                        </span>
                    </li>
