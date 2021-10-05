@@ -2,7 +2,7 @@
 <div v-if="query.affiliation === 'student' || query.affiliation === 'alum'" class="container">
    <h5>Les étudiants ne sont pas affichés dans l'organigramme.</h5>
 </div>
-<div v-else-if="!e1">
+<div v-else-if="!el.e1">
   <div class="container">
     Veuillez patienter
   </div>
@@ -14,7 +14,7 @@
 
   <div class="tree mainTree">
   <ul>
-    <li style="flex-grow: 1;" :class="{ withBorder: e2.key }"></li>
+    <li style="flex-grow: 1;"></li>
     <li>
       <div class="div_depth1">
         <ul class="depth1_roles vertical">
@@ -32,10 +32,10 @@
          <div>
             <div class="horizLeft"></div>
             <div class="horizRight"></div>
-            <span class="bloc" :class="classes(e1)">
-            {{e1.top_role.supannRoleGenerique[0]}}
+            <span class="bloc" :class="classes(1, el.e1)">
+            {{el.e1.top_role.supannRoleGenerique[0]}}
             <br>
-            <maybe-router-link :to="withUser(e1.top_role)">{{e1.top_role.displayName}}</maybe-router-link>
+            <maybe-router-link :to="withUser(el.e1.top_role)">{{el.e1.top_role.displayName}}</maybe-router-link>
             </span>
          </div>
          <div class="vertBelow"></div>
@@ -51,18 +51,42 @@
             </li>
         </ul>
       </div>
-      <ul class="ul_depth2">
-          <li v-for="(e, index) in l2" :key="e.key" :class="[ e === e2 ? 'selectedElt' : nonSelectedEltClass ]">
+      <ul class="ul_depth2" :class="{ ul_last_depth2: !el.e2b.key }">
+          <li v-for="e in el.l2" :key="e.key" :class="[ e === el.e2 ? 'selectedElt' : nonSelectedEltClass ]">
               <div class="horizLeft"></div>
               <div class="horizRight"></div>
-              <span :class="{ sameBlocSize: e3.key || !e2.key || e2.businessCategory === 'organization' }">
-               <span class="bloc" :class="classes(e)">
+              <span :class="{ sameBlocSize: (el.e3.key || !el.e2.key || el.e2.businessCategory === 'organization') && !el.l2b }">
+               <span class="bloc" :class="classes(2, e)">
                 <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>
-                <members :structure="e2" :query="query" v-if="e === e2 && !e3.key"></members>
+                <members :structure="el.e2" :query="query" v-if="e === el.e2 && !el.e2b.key && !el.e3.key"></members>
                </span>
+
+            <div v-if="e === el.e2 && el.l2b">
+              <div class="smallVertical"></div>
+              <ul class="ul_last_depth2">
+                  <li v-for="e in el.l2b" :key="e.key" :class="[ e === el.e2b ? 'selectedElt' : nonSelectedEltClass ]">
+                      <div class="horizLeft"></div>
+                      <div class="horizRight"></div>
+                      <span :class="{ sameBlocSize: el.e3.key || !el.e2b.key || el.e2b.businessCategory === 'organization' }">
+                      <span class="bloc" :class="classes(2, e)">
+                          <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>
+                          <members :structure="el.e2b" :query="query" v-if="e === el.e2b && !el.e3.key"></members>
+                      </span>
+                      </span>
+                      <template v-if="e === el.e2b">
+                        <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
+                        <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
+                        <div class="horizRightBelow magic_line_right" v-if="!el.e3.key && el.l4" ref="magic_line_2to4_right"></div>
+                      </template>
+                  </li>
+              </ul>
+            </div>
               </span>
-              <div class="horizLeftBelow" v-if="index <= e2_index"></div>
-              <div class="horizRightBelow" v-if="index < e2_index"></div>
+            <template v-if="e === el.e2 && !el.e2b.key">
+              <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
+              <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
+              <div class="horizRightBelow magic_line_right" v-if="!el.e3.key && el.l4" ref="magic_line_2to4_right"></div>
+            </template>
           </li>
       </ul>
     </li>
@@ -70,58 +94,61 @@
   </ul>
   </div>
 
-  <div class="secondPane" v-if="l3" :class="{ display_secondary_bloc }">
-   <div class="vertical">
+  <div class="secondPane" ref="secondPane_elt" v-if="el.l3 || el.l4" :class="{ display_secondary_bloc }">
+   <div class="vertical" v-if="el.l3">
      <transition-group name="flip-list" tag="ul">
         <li class="withBorder" key="__withBorder__"></li>
-        <li v-for="(e, index) in l3" :class="[ e === e3 ? 'selectedElt' : nonSelectedEltClass ]" :key="e.key">
+        <li v-for="(e, index) in el.l3" :class="[ e === el.e3 ? 'selectedElt' : nonSelectedEltClass ]" :key="e.key">
             <div class="verticalTop"></div>
             <div class="verticalBottom"></div>
 
-            <div class="secondary-bloc" v-if="e === e3 && display_secondary_bloc">
-              <div class="bloc" :class="classes(e)">
-                <members :structure="e" :onlyRoles="e4.key" :query="query"></members>
+            <div class="secondary-bloc" v-if="e === el.e3 && display_secondary_bloc">
+              <div class="bloc" :class="classes(3, e)">
+                <members :structure="e" :onlyRoles="el.e4.key" :query="query"></members>
             </div>
-              <div class="verticalTopRight" v-if="l4"></div>
+              <div class="verticalTopRight" v-if="el.l4"></div>
             </div>
-            <div class="connect-blocs" :class="classes(e)" v-if="e === e3 && display_secondary_bloc"></div>
+            <div class="connect-blocs" :class="classes(3, e)" v-if="e === el.e3 && display_secondary_bloc"></div>
 
-            <span class="bloc first-bloc" :class="classes(e)">
+            <span class="bloc first-bloc" :class="classes(3, e)">
               <router-link :to="withParam('affectation', e.key)">
                 <span class="name">{{e.name}}</span>
               </router-link>
-              <members :structure="e" :onlyRoles="e4.key" :query="query" v-if="e === e3 && !display_secondary_bloc"></members>
+              <members :structure="e" :onlyRoles="el.e4.key" :query="query" v-if="e === el.e3 && !display_secondary_bloc"></members>
             </span>
-            <div class="verticalTopRight" v-if="l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
-            <div class="verticalBottomRight" v-if="l4 && index < e3_index"></div>
+            <div class="verticalTopRight" v-if="el.l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
+            <div class="verticalBottomRight" v-if="el.l4 && index < e3_index"></div>
         </li>
      </transition-group>
    </div>
 
-   <div class="tree thirdPane" v-if="l4">
-       <div class="empty4"></div>
-       <ul>
-           <li v-for="e in l4" :class="[ e === e4 ? 'selectedElt' : nonSelectedEltClass ]">
-               <div class="horizLeft"></div>
+   <div class="tree thirdPane" v-if="el.l4">
+       <div class="empty4" :class="{ empty4WithBorder: el.e3.key }"></div>
+       <div style="position: relative">
+         <div class="empty4Top" ref="empty4Top_elt" v-if="!el.e3.key"></div>
+         <ul>
+           <li v-for="(e,index) in el.l4" :class="[ e === el.e4 ? 'selectedElt' : nonSelectedEltClass ]">
+               <div class="horizLeft" v-if="index > 0 || el.e3.key"></div>
                <div class="horizRight"></div>
-               <span class="bloc" :class="classes(e)">
+               <span class="bloc" :class="classes(4, e)">
                  <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.name}}</router-link>
-                 <members :structure="e" :onlyRoles="e5.key" :query="query" v-if="e === e4 || displayAll"></members>
-               <div v-if="e.subGroups && (displayAll || e === e4 && e5.key)">
+                 <members :structure="e" :onlyRoles="el.e5.key" :query="query" v-if="e === el.e4 || displayAll"></members>
+               <div v-if="e.subGroups && (displayAll || e === el.e4 && el.e5.key)">
                  <ul>
-                   <li v-for="e in e.subGroups" :class="[ e === e5 ? 'selectedElt' : nonSelectedEltClass ]">
+                   <li v-for="e in e.subGroups" :class="[ e === el.e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
-                       <span class="bloc" :class="classes(e)">
+                       <span class="bloc" :class="classes(5, e)">
                            <span :title="e.fullname">{{e.name}}</span>
-                           <members :structure="e" :query="query" v-if="e === e5 || displayAll"></members>
+                           <members :structure="e" :query="query" v-if="e === el.e5 || displayAll"></members>
                        </span>
                    </li>
                  </ul>
                </div>
                </span>
            </li>
-       </ul>
+         </ul>
+        </div>
        <div style="flex-grow: 1" ></div>
    </div>
   </div>
@@ -134,7 +161,7 @@ import OrgChartMembers from './OrgChartMembers.vue';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
-import { watch, ref, computed } from 'vue';
+import { watch, watchEffect, ref, computed } from 'vue';
 
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
@@ -183,25 +210,76 @@ const moveOneFirst = (list, e) => {
         r.unshift(e);
         e = code2tree[e.parentKey];
     }
-    return r;
+    return r
+}
+
+function compute_eX_lX(e1, sel, { displayAll }) {
+    const l2 = e1.subGroups.filter(e => e.businessCategory !== "council")
+    const e2 = sel.shift() || {}
+    const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && e2.subGroups
+    const e2b = l2b && sel.shift() || {}
+    let [ l3b, l3_ ] = helpers.partition((l2b ? e2b : e2).subGroups || [], e => e.up1Flags?.includes("included"))
+    if (l3_.length === 0 && l3b.find(e => e.subGroups)) {
+        // on a que des niveaux 3 à mettre au niveau 4, MAIS certains sont complexes, donc on met tout au niveau 3
+        [ l3b, l3_ ] = [ [], l3b ]
+    }
+    const e3 = sel[0] && l3_.find(e => e.key === sel[0].key) && sel.shift() || {}
+    const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, ['name']), e3)
+    const [ e4, e5 ] = [...sel, {}, {}]
+    const l4_ = (displayAll || e4.key) && e3.subGroups || l3b.length && l3b || []
+    const l4 = l4_.length && helpers.sortBy(l4_, ['name'])
+    return { e1, e2, l2, e2b, l2b, e3, l3, e4, l4, e5, l3b, l3_ }
 }
 
 export default {
    components: { MaybeRouterLink, MyIcon, members: OrgChartMembers },
    props: ['selected', 'query', 'displayAll'],
    setup(props) {
-    const root_elt = ref(null);
     const e1 = asyncComputed(() => withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] }))
-    const selectedList = computed(() => e1.value && props.selected ? get_selectedList(e1.value, props.selected) : [])
-    const e2 = computed(() => selectedList.value[0] || {})
-    const e3 = computed(() => selectedList.value[1] || {})
-    const e4 = computed(() => selectedList.value[2] || {})
-    const e5 = computed(() => selectedList.value[3] || {})
-    const l2 = computed(() => e1.value.subGroups.filter(e => e.businessCategory !== "council"))
-    const l3 = computed(() => e2.value.subGroups && moveOneFirst(helpers.sortBy(e2.value.subGroups, ['name']), e3.value))
-    const l4 = computed(() => (props.displayAll || e4.value.key) && e3.value.members && e3.value.subGroups && helpers.sortBy(e3.value.subGroups, ['name']))
-    //const l5 = computed(() => (props.displayAll || e5.value.key) && e3.value.members && e4.value.subGroups)
-    watch(e3, (e) => {
+    const el = computed(() => {
+        if (!e1.value) return {}
+        const sel = props.selected ? get_selectedList(e1.value, props.selected) : []
+        return compute_eX_lX(e1.value, sel, props)
+    })
+
+    const magic_line_2to3 = ref(null)
+    const secondPane_elt = ref(null)
+    const set_magic_line_2to3_width = () => { 
+        const el = magic_line_2to3.value
+        const other_elt = secondPane_elt.value
+        if (el && other_elt) {
+            const deltaX = el.getBoundingClientRect().right - other_elt.getBoundingClientRect().x
+            console.log("set_magic_line_2to3_width", el.getBoundingClientRect(), other_elt.getBoundingClientRect);
+            el.style.width = `${deltaX - 4}px`
+        }
+    }
+    watchEffect(set_magic_line_2to3_width)
+    window.addEventListener('resize', set_magic_line_2to3_width)
+
+    const magic_line_2to4 = ref(null)
+    const magic_line_2to4_right = ref(null)
+    const empty4Top_elt = ref(null)
+    const set_magic_line_2to4_width = () => { 
+        const el = magic_line_2to4.value
+        const el_right = magic_line_2to4_right.value
+        const other_elt = empty4Top_elt.value
+        if (el && el_right && other_elt) {
+            const deltaX = el.getBoundingClientRect().right - other_elt.getBoundingClientRect().right
+            console.log("set_magic_line_2to4_width", el.getBoundingClientRect(), other_elt.getBoundingClientRect, deltaX);
+            if (deltaX > 0) {
+                el.style.width = `${deltaX}px`
+                el_right.style.opacity = 0
+            } else {
+                el_right.style.width = `${-deltaX}px`
+                el.style.opacity = 0
+            }
+        }
+    }
+    watchEffect(set_magic_line_2to4_width)
+    window.addEventListener('resize', set_magic_line_2to4_width)
+
+    const root_elt = ref(null);
+    watch(el, (e) => {
         if (e) {
           WsService.OrgChart.getMembers(props.query, e.key).then(l => e.members = l);
           setTimeout(() => {
@@ -210,16 +288,14 @@ export default {
         }
     })
     return {
-     root_elt,
-     e1, e2, e3, e4, e5, l2, l3, l4,
+     root_elt, magic_line_2to3, magic_line_2to4, magic_line_2to4_right, empty4Top_elt, secondPane_elt,
+     el,
     ...toComputed({
      nonSelectedEltClass() { return props.displayAll ? '' : 'nonSelectedElt' },
-     e2_index() { return l2.value.indexOf(e2.value) },
-     e3_index() { return l3.value.indexOf(e3.value) },
-     e4_index() { return l4.value.indexOf(e4.value) },
+     e3_index()  { return el.value.l3?.indexOf(el.value.e3) },
      e1_roles() { 
          let l = []
-         for (const role of e1.value.roles) {
+         for (const role of el.value?.e1.roles) {
              for (const name of role.supannRoleGenerique) {
                  l.push([role, name])
              }
@@ -227,11 +303,11 @@ export default {
          const half = Math.floor(l.length / 2)
          return [ l.slice(0, half), l.slice(half) ]
      },
-     display_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length > 0 },
-     no_secondary_bloc() { return e3.value && e3.value.members && e3.value.members.length === 0 },
+     display_secondary_bloc() { return el.value?.e3?.members?.length > 0 },
+     no_secondary_bloc() { return el.value?.e3?.members?.length === 0 },
     }),
-     classes(e) {
-       return ['bordered', 'depth' + e.depth, e.businessCategory, { leaf: !e.subGroups }];
+     classes(depth, e) {
+       return ['bordered', 'depth' + depth, e.businessCategory, { leaf: !e.subGroups }];
      },
     }
    },

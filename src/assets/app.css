@@ -855,8 +855,11 @@ Div.App {
 }
 
 .ul_depth2 li {
-    padding-bottom: 20px;
     display: flex;
+    padding-bottom: 0;
+}
+.ul_last_depth2 > li {
+    padding-bottom: 20px;
 }
 
  /* We will use  .horizLeft and  .horizRight to draw the connectors. Both  .horizLeft and  .horizRight are displayed ABOVE li>a :
@@ -930,6 +933,13 @@ li.nonSelectedElt .bloc {
     border-radius: 0 0 5px 0;
 }
 
+.magic_line_right {
+    border-left: 1px solid #aabbcc;
+    border-radius: 0 0 0 5px;
+    margin-left: -1px; /* next to the magic line left (if it is displayed) */
+}
+    
+
 /* Remove left connector from first child and right connector from last child*/
 .mainTree li:first-child > .horizLeft,
   .tree li:last-child > .horizRight {
@@ -954,6 +964,13 @@ li.nonSelectedElt .bloc {
 /* but remove it for root node */
 .mainTree > ul > li > .horizLeft {
     display: none;
+}
+
+.smallVertical {
+    border-right: 1px solid #aabbcc;
+    height: 18px;
+    display: flex;
+    width: 50%;
 }
 
 .mainTree > ul, .mainTree > ul > li {
@@ -1147,8 +1164,18 @@ li .secondary-bloc .members {
 
 .empty4 {
     flex-grow: 1;
-    border-top: 1px solid #aabbcc;
     min-width: 20px;
+}
+.empty4WithBorder {
+    border-top: 1px solid #aabbcc;
+}
+.empty4Top {
+    position: absolute;
+    top: -23px;
+    height: 23px;
+    width: 50%;
+    border-right: 1px solid #aabbcc;
+    Xborder-radius: 0 5px 0 0;
 }
 
 .display_secondary_bloc .empty4 {
@@ -1353,7 +1380,7 @@ span.bordered.depth2 {
     border-bottom: 1px dotted;
 }
 
-.selectedElt .depth2 {
+.selectedElt > span > .depth2 {
     border: 3px solid #C89108;
     background-color: #C89108;
     -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
@@ -1362,7 +1389,7 @@ span.bordered.depth2 {
     color: white;
 }
 
-.selectedElt .depth2 a {
+.selectedElt > span > .depth2 a {
     color: white;
 }
 
@@ -1965,14 +1992,14 @@ li.nonSelectedElt .bloc:hover {
         text-transform: uppercase;
     }
 
-    .selectedElt .depth2 {
+    .selectedElt > span > .depth2 {
         -webkit-print-color-adjust: exact;
         background-color: #c89108 !important;
         ;
     border: 3px solid #c89108;
     }
 
-    .selectedElt .depth2 a {
+    .selectedElt > span > .depth2 a {
         color: #fff !important;
         font-size: 13px;
     }
