@@ -104,7 +104,7 @@ export const getSubStructures = (key) => (
   getSubGroups({
       CAS: config.connected,
       key: 'structures-' + key,
-      depth: 3,
+      depth: 9,
       filter_category: 'structures',
       with_organization: true,
       attrs: 'roles,roles.supannRoleGenerique-all',
