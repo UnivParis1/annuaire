@@ -9,9 +9,9 @@
     </div></div>
 </div>
 <div v-else-if="format === 'chart'" class="OrgChart-outer">
-     <div v-for="aff in person.supannEntiteAffectation">
+     <div v-for="aff in person['supannEntiteAffectation-all']">
 
-        <OrgChart :selected="aff" :query="{ affectation: aff, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
+        <OrgChart :selected="aff.key" :query="{ affectation: aff.key, token: person.mail }" :displayAll="false" class="text-center"></OrgChart>
      </div>
 </div>
 <div v-else-if="format === 'trombi'" class="container">
@@ -183,9 +183,9 @@ const computeStatusPers = (person) => {
 };
 
 async function compute_affectationsWithParents(person) {
-   let affectations = person.supannEntiteAffectation || [];
+   let affectations = person['supannEntiteAffectation-all'] || [];
    // Si la personne possède plusieurs affectations, afficher autant de fil d'ariane que d'affectation
-   const l = await Promise.all(affectations.map(aff => parentGroups("structures-" + aff)))
+   const l = await Promise.all(affectations.map(aff => parentGroups("structures-" + aff.key)))
    // filtrer les réponses vides (ie les structures d'affectation de type "organization", qui sont ignorées par wsgroups) (GLPI UP1#116750)
    return l.filter(i => i.length)
  }
