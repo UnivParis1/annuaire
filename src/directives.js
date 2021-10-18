@@ -1,8 +1,7 @@
 import { reactive, computed, watchEffect } from 'vue'
 import helpers from './helpers'
 
-/**
- * xx@type {<T extends { [key: string]: () => any }>(attr_fns: T) => { [P in keyof T]: { value: ReturnType<T[P]> } } } } */
+/** @type {<T extends { [key: string]: () => any }, P>(attr_fns: T) => { [P in keyof T]: { value: ReturnType<T[P]> } } } */
 export const toComputed = (attr_fns) => (
   helpers.map(attr_fns, computed)
 )
