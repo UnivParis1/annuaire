@@ -116,10 +116,39 @@
               </router-link>
               <members :structure="e" :onlyRoles="el.e4.key" :query="query" v-if="e === el.e3 && !display_secondary_bloc"></members>
             </span>
-            <div class="verticalTopRight" v-if="el.l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
-            <div class="verticalBottomRight" v-if="el.l4 && index < e3_index"></div>
+            <div class="verticalTopRight" v-if="!el.l3b && el.l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
+            <div class="verticalBottomRight" v-if="!el.l3b && el.l4 && index < e3_index"></div>
+            <div class="connect_l3b" v-if="el.l3b && index === e3_index"></div>
         </li>
      </transition-group>
+   </div>
+
+   <div class="secondPane secondPaneB" v-if="el.l3b" :class="{ display_secondary_bloc }">
+    <div class="vertical" v-if="el.l3">
+      <transition-group name="flip-list" tag="ul">
+          <li v-for="(e, index) in el.l3b" :class="[ e === el.e3b ? 'selectedElt' : nonSelectedEltClass ]" :key="e.key">
+              <div class="verticalTop"></div>
+              <div class="verticalBottom"></div>
+
+              <div class="secondary-bloc" v-if="e === el.e3b && display_secondary_bloc">
+                <div class="bloc" :class="classes(3, e)">
+                  <members :structure="e" :onlyRoles="el.e4.key" :query="query"></members>
+              </div>
+                <div class="verticalTopRight" v-if="el.l4"></div>
+              </div>
+              <div class="connect-blocs" :class="classes(3, e)" v-if="e === el.e3b && display_secondary_bloc"></div>
+
+              <span class="bloc" :class="classes(3, e)">
+                <router-link :to="withParam('affectation', e.key)">
+                  <span class="name">{{e.fullname}}</span>
+                </router-link>
+                <members :structure="e" :onlyRoles="el.e4.key" :query="query" v-if="e === el.e3b && !display_secondary_bloc"></members>
+              </span>
+              <div class="verticalTopRight" v-if="el.l4 && (index < e3_index || index === e3_index && !display_secondary_bloc)"></div>
+              <div class="verticalBottomRight" v-if="el.l4 && index < e3_index"></div>
+          </li>
+      </transition-group>
+     </div>
    </div>
 
    <div class="tree thirdPane" v-if="el.l4">
@@ -175,10 +204,13 @@ import { watch, watchEffect, ref, computed } from 'vue';
        parent.top_role = tree.roles[0]
      }
 
+     let max_depth = depth;
      (tree.subGroups || []).forEach(e => {
          e.parentKey = tree.key;
          initTree(e, depth+1, tree);
+         max_depth = Math.max(max_depth, e.max_depth)
      });
+     tree.max_depth = max_depth
  }
 
 let withSubGroups = async (e) => {
@@ -219,17 +251,20 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const e2 = sel.shift() || {}
     const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && helpers.sortBy(e2.subGroups, ['prio', 'name'])
     const e2b = l2b && sel.shift() || {}
-    let [ l3b, l3_ ] = helpers.partition((l2b ? e2b : e2).subGroups || [], e => e.up1Flags?.includes("included"))
-    if (l3_.length === 0 && l3b.find(e => e.subGroups)) {
+    let [ l3i, l3_ ] = helpers.partition((l2b ? e2b : e2).subGroups || [], e => e.up1Flags?.includes("included"))
+    if (l3_.length === 0 && l3i.find(e => e.subGroups)) {
         // on a que des niveaux 3 à mettre au niveau 4, MAIS certains sont complexes, donc on met tout au niveau 3
-        [ l3b, l3_ ] = [ [], l3b ]
+        [ l3i, l3_ ] = [ [], l3i ]
     }
     const e3 = sel[0] && l3_.find(e => e.key === sel[0].key) && sel.shift() || {}
     const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, ['fullname']), e3)
+    const l3b_ = e3.max_depth >= 7 && e3.subGroups
+    const e3b = l3b_ && sel.shift() || {}
+    const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5 ] = [...sel, {}, {}]
-    const l4_ = (displayAll || e4.key) && e3.subGroups || l3b.length && l3b || []
+    const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || l3i.length && l3i || []
     const l4 = l4_.length && helpers.sortBy(l4_, ['name'])
-    return { e1, e2, l2, e2b, l2b, e3, l3, e4, l4, e5, l3b, l3_ }
+    return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, l3i, l3_ }
 }
 
 export default {

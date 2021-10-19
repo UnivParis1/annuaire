@@ -1089,6 +1089,30 @@ li.nonSelectedElt .bloc {
     flex-grow: 1;
 }
 
+.secondPaneB li {
+    padding: 10px 20px;
+}
+
+.connect_l3b {
+    top: 0;
+    right: 0;
+    height: 30%;
+    width: 20px;
+    position: absolute;
+    border-bottom: 1px solid #aabbcc;
+}
+
+.secondPaneB {
+    margin-top: 24px;
+    margin-left: -1px;
+}
+
+/* Remove left connector from first child and right connector from last child*/
+.secondPaneB li:first-child > .verticalTop {
+    border-left: none;
+}
+
+
 .members_other {
     font-size: 88%;
 }
