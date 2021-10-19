@@ -168,6 +168,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
      tree.depth = depth;
      tree.key = tree.key.replace(/^structures-/, '');
      tree.fullname = tree.name;
+     tree.prio = tree.up1Flags?.[0]?.match(/^\{PRIO\}(.*)/)?.[1]
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
      tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree);
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
@@ -214,7 +215,7 @@ const moveOneFirst = (list, e) => {
 }
 
 function compute_eX_lX(e1, sel, { displayAll }) {
-    const l2 = e1.subGroups.filter(e => e.businessCategory !== "council")
+    const l2 = helpers.sortBy(e1.subGroups.filter(e => e.businessCategory !== "council"), ['prio', 'name'])
     const e2 = sel.shift() || {}
     const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && e2.subGroups
     const e2b = l2b && sel.shift() || {}
