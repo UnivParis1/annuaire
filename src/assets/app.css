@@ -1103,6 +1103,18 @@ li.nonSelectedElt .bloc {
     font-weight: normal;
 }
 
+.members_other.many_members {
+    max-height: 17rem;
+    overflow-y: hidden;
+}
+
+.show_hide_more_members {
+    box-shadow: 0px 0px 10px gray; 
+    text-align: center;
+    cursor: pointer;
+    font-size: 110%;
+}
+
 .depth4 .members_other .user-no-role {
     color: #00326e;
 }
@@ -1502,10 +1514,6 @@ li .secondary-bloc .bloc {
 
 .depth7 {
     background-color: none;
-}
-
-.mainTree .members_other {
-    overflow-y: auto;
 }
 
 .members {

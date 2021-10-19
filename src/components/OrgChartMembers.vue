@@ -9,7 +9,7 @@
     </span>
     <span v-if="members && members.length">
       <br v-if="roles.length">
-      <div class="members_other">
+      <div class="members_other" :class="{many_members: !show_many_members && many_members}">
         <span v-for="byAff in membersByAffiliation">
           <span class="affiliationName" v-if="membersByAffiliation.length > 1">{{t(translateAff(byAff.v, byAff.group.length))}}<br></span>
             <div v-for="byDescr in byAff.group" class="description">
@@ -21,6 +21,7 @@
            <br>
         </span>
       </div>
+      <div class="show_hide_more_members" v-if="many_members" @click="show_many_members = !show_many_members">{{show_many_members ? 'Voir moins' : 'Voir plus'}}</div>
     </span>
   </div>
 </template>
@@ -31,7 +32,7 @@ import * as sortUsers from '../sortUsers';
 import { MaybeRouterLink, asyncComputed, toComputed } from '../directives';
 import helpers from '../helpers';
 import config from '../config';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 
 
 export default {
@@ -51,13 +52,16 @@ export default {
           WsService.OrgChart.getMembers(props.query, affectation.value)
       ))
       const affiliations = ['other', ...config.usefulAffiliationsGrouped ].reverse();
-
+      const show_many_members = ref(false)
 
       return {
-        members, roles,
+        members, roles, show_many_members,
        ...toComputed({
         rolesGrouped() {
             return helpers.sortedGroupBy(roles.value, u => u.supannRoleGenerique.join(", "));
+        },
+        many_members() {
+            return members.value?.length > 30
         },
         membersByAffiliation() {
             if (!members.value) return;
