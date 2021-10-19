@@ -1387,7 +1387,6 @@ span.bordered.depth2 {
 .vertical .depth3 .name {
     color: #00326e;
     font-size: 11px;
-    text-transform: uppercase;
 }
 
 .selectedElt .depth3 {
