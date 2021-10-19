@@ -1067,11 +1067,7 @@ li.nonSelectedElt .bloc {
     border-bottom: 1px solid #aabbcc;
 }
 
-.vertical li .first-bloc {
-    padding: 0;
-}
-
-.display_secondary_bloc .vertical li.selectedElt .first-bloc {
+.display_secondary_bloc .vertical li.selectedElt .bloc {
     border-radius: 5px 0 0 5px;
     border-right: none;
 }
