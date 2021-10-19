@@ -112,7 +112,7 @@
 
             <span class="bloc first-bloc" :class="classes(3, e)">
               <router-link :to="withParam('affectation', e.key)">
-                <span class="name">{{e.name}}</span>
+                <span class="name">{{e.fullname}}</span>
               </router-link>
               <members :structure="e" :onlyRoles="el.e4.key" :query="query" v-if="e === el.e3 && !display_secondary_bloc"></members>
             </span>
@@ -224,7 +224,7 @@ function compute_eX_lX(e1, sel, { displayAll }) {
         [ l3b, l3_ ] = [ [], l3b ]
     }
     const e3 = sel[0] && l3_.find(e => e.key === sel[0].key) && sel.shift() || {}
-    const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, ['name']), e3)
+    const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, ['fullname']), e3)
     const [ e4, e5 ] = [...sel, {}, {}]
     const l4_ = (displayAll || e4.key) && e3.subGroups || l3b.length && l3b || []
     const l4 = l4_.length && helpers.sortBy(l4_, ['name'])
