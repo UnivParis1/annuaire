@@ -9,6 +9,7 @@ import users from '@fortawesome/fontawesome-free/svgs/solid/user-friends.svg?raw
 import mapMarker from '@fortawesome/fontawesome-free/svgs/solid/map-marker-alt.svg?raw';
 import userPlus from '@fortawesome/fontawesome-free/svgs/solid/user-plus.svg?raw';
 import thList from '@fortawesome/fontawesome-free/svgs/solid/th-list.svg?raw';
+import chart from '@fortawesome/fontawesome-free/svgs/solid/sitemap.svg?raw'
 
 export default {
   props: ['name'],
@@ -17,6 +18,7 @@ export default {
       return {
         remove, search, users,
         mapMarker, userPlus, thList,
+        chart,
       }
     },
   }

@@ -9,6 +9,7 @@
                   <span class="text">Trombinoscope</span>
               </router-link>
               <router-link class="btn btn-primary chart" :class="{ youarehere: format === 'chart' }" title="Afficher l'organigramme" :to="withParam('format', 'chart')" >
+                  <my-icon name='chart'/>
                   <span class="text">Organigramme</span>
               </router-link>
     </div>

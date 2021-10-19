@@ -295,15 +295,6 @@ Div.App {
     font-size: 12px;
 }
 
-.ChooseFormat .chart {
-    background-image: url(images/chart.svg);
-    background-position: 5px 4px;
-    background-size: 18px auto;
-    background-repeat: no-repeat;
-    padding-left: 31px;
-    display: inline-block;
-}
-
 .ChooseFormat a.youarehere {
     background-color: #9f6c07;
     transition: all 0.4s linear;
