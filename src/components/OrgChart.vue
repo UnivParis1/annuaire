@@ -110,7 +110,7 @@
             </div>
             <div class="connect-blocs" :class="classes(3, e)" v-if="e === el.e3 && display_secondary_bloc"></div>
 
-            <span class="bloc first-bloc" :class="classes(3, e)">
+            <span class="bloc" :class="classes(3, e)">
               <router-link :to="withParam('affectation', e.key)">
                 <span class="name">{{e.fullname}}</span>
               </router-link>
