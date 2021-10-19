@@ -217,7 +217,7 @@ const moveOneFirst = (list, e) => {
 function compute_eX_lX(e1, sel, { displayAll }) {
     const l2 = helpers.sortBy(e1.subGroups.filter(e => e.businessCategory !== "council"), ['prio', 'name'])
     const e2 = sel.shift() || {}
-    const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && e2.subGroups
+    const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && helpers.sortBy(e2.subGroups, ['prio', 'name'])
     const e2b = l2b && sel.shift() || {}
     let [ l3b, l3_ ] = helpers.partition((l2b ? e2b : e2).subGroups || [], e => e.up1Flags?.includes("included"))
     if (l3_.length === 0 && l3b.find(e => e.subGroups)) {
