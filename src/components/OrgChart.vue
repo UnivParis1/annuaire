@@ -281,12 +281,12 @@ export default {
     const magic_line_2to3 = ref(null)
     const secondPane_elt = ref(null)
     const set_magic_line_2to3_width = () => { 
-        const el = magic_line_2to3.value
+        const elt = magic_line_2to3.value
         const other_elt = secondPane_elt.value
-        if (el && other_elt) {
-            const deltaX = el.getBoundingClientRect().right - other_elt.getBoundingClientRect().x
-            console.log("set_magic_line_2to3_width", el.getBoundingClientRect(), other_elt.getBoundingClientRect);
-            el.style.width = `${deltaX - 4}px`
+        if (elt && other_elt) {
+            const deltaX = elt.getBoundingClientRect().right - other_elt.getBoundingClientRect().x
+            console.log("set_magic_line_2to3_width", elt.getBoundingClientRect(), other_elt.getBoundingClientRect);
+            elt.style.width = `${deltaX - 4}px`
         }
     }
     watchEffect(set_magic_line_2to3_width)
@@ -296,18 +296,18 @@ export default {
     const magic_line_2to4_right = ref(null)
     const empty4Top_elt = ref(null)
     const set_magic_line_2to4_width = () => { 
-        const el = magic_line_2to4.value
-        const el_right = magic_line_2to4_right.value
+        const elt = magic_line_2to4.value
+        const elt_right = magic_line_2to4_right.value
         const other_elt = empty4Top_elt.value
-        if (el && el_right && other_elt) {
-            const deltaX = el.getBoundingClientRect().right - other_elt.getBoundingClientRect().right
-            console.log("set_magic_line_2to4_width", el.getBoundingClientRect(), other_elt.getBoundingClientRect, deltaX);
+        if (elt && elt_right && other_elt) {
+            const deltaX = elt.getBoundingClientRect().right - other_elt.getBoundingClientRect().right
+            console.log("set_magic_line_2to4_width", elt.getBoundingClientRect(), other_elt.getBoundingClientRect, deltaX);
             if (deltaX > 0) {
-                el.style.width = `${deltaX}px`
-                el_right.style.opacity = 0
+                elt.style.width = `${deltaX}px`
+                elt_right.style.opacity = 0
             } else {
-                el_right.style.width = `${-deltaX}px`
-                el.style.opacity = 0
+                elt_right.style.width = `${-deltaX}px`
+                elt.style.opacity = 0
             }
         }
     }
