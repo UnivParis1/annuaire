@@ -262,7 +262,7 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const e3b = l3b_ && sel.shift() || {}
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5 ] = [...sel, {}, {}]
-    const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || l3i.length && l3i || []
+    const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || !e3.key && l3i.length && l3i || []
     const l4 = l4_.length && helpers.sortBy(l4_, ['name'])
     return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, l3i, l3_ }
 }
