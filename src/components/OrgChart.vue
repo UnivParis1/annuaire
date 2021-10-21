@@ -156,7 +156,7 @@
        <div style="position: relative">
          <div class="empty4Top" ref="empty4Top_elt" v-if="!el.e3.key"></div>
          <ul>
-           <li v-for="(e,index) in el.l4" :class="[ e === el.e4 ? 'selectedElt' : nonSelectedEltClass ]">
+           <li v-for="(e,index) in el.l4" :class="[ e === el.e4 ? 'selectedElt' : nonSelectedEltClass, !el.e3.key && el.l4.length === 1 ? 'l2_to_only_one_l4' : '' ]">
                <div class="horizLeft" v-if="index > 0 || el.e3.key"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(4, e)">

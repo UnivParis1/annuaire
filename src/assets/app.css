@@ -1210,6 +1210,10 @@ li .secondary-bloc .members {
     Xborder-radius: 0 5px 0 0;
 }
 
+.tree li.l2_to_only_one_l4 {
+    padding-top: 0;
+}
+
 .display_secondary_bloc .empty4 {
     min-width: none;
 }
