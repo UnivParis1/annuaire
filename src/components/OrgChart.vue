@@ -320,6 +320,8 @@ export default {
           WsService.OrgChart.getMembers(props.query, e.key).then(l => e.members = l);
           setTimeout(() => {
             root_elt.value.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+            set_magic_line_2to3_width()
+            set_magic_line_2to4_width()
           }, 100);
         }
     })
