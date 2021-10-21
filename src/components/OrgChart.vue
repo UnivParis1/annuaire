@@ -335,7 +335,8 @@ export default {
          let l = []
          for (const role of el.value?.e1.roles) {
              for (const name of role.supannRoleGenerique) {
-                 l.push([role, name])
+                 if (props.displayAll || role.mail === props.query.token)
+                    l.push([role, name])
              }
          }
          const half = Math.floor(l.length / 2)
