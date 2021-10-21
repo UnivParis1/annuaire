@@ -1279,6 +1279,10 @@ li .secondary-bloc .members {
 .depth1_roles li {
     padding-bottom: 0;
 }
+.depth1_roles li.onlyOne {
+    padding-left: 0;
+    padding-right: 0;
+}
 .depth1_roles .bloc {
     padding: 5px 5px;
     margin-bottom: 0.5rem;
@@ -1355,6 +1359,7 @@ li .secondary-bloc .members {
 }
 .depth1_col2 .vertBelow {
     width: 50%;
+    min-height: 2rem;
     border-right: 1px solid #abc;
 }
 

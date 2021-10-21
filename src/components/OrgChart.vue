@@ -18,7 +18,7 @@
     <li>
       <div class="div_depth1">
         <ul class="depth1_roles vertical">
-            <li v-for="(b,i) in e1_roles[0]">
+            <li v-for="(b,i) in e1_roles[0]" :class="{ onlyOne: e1_roles[0].length === 1 }">
                 <span class="bloc members">
                     {{b[1]}}<br>
                     <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
@@ -30,8 +30,8 @@
         <div class="depth1_col2">
          <div></div> <!-- padding -->
          <div>
-            <div class="horizLeft"></div>
-            <div class="horizRight"></div>
+            <div class="horizRight" v-if="e1_roles[0].length"></div>
+            <div class="horizLeft" v-if="e1_roles[1].length"></div>
             <span class="bloc" :class="classes(1, el.e1)">
             {{el.e1.top_role.supannRoleGenerique[0]}}
             <br>
@@ -41,7 +41,7 @@
          <div class="vertBelow"></div>
         </div>
         <ul class="depth1_roles vertical">
-            <li v-for="(b,i) in e1_roles[1]">
+            <li v-for="(b,i) in e1_roles[1]" :class="{ onlyOne: e1_roles[1].length === 1 }">
                 <span class="bloc members">
                     {{b[1]}}<br>
                     <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
