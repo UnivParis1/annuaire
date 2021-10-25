@@ -30,9 +30,8 @@ let wsgroupsJsonp = (name, params) => (
 const group_roles_handle_gender = (roles) => {
   let code2name = {}
   for (const user of roles) {
-    let i = 0;
     for (const all of user['supannRoleGenerique-all']) {
-      const gender_name = user.supannRoleGenerique[i++];
+      const gender_name = all['name-gender'];
       if (code2name[all.code] && code2name[all.code] !== gender_name) {
         code2name[all.code] = all.name // fallback on non-gendered name
       } else {
