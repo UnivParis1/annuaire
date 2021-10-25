@@ -27,11 +27,11 @@ let wsgroupsJsonp = (name, params) => (
 
 // if you users for role XX have same gender, we can use "supannRoleGenerique" name
 // otherwise we fallback on non-gendered name
-const group_roles_handle_gender = (roles) => {
+const group_roles_handle_gender = (roles, opts) => {
   let code2name = {}
   for (const user of roles) {
     for (const all of user['supannRoleGenerique-all']) {
-      const gender_name = all['name-gender'];
+      const gender_name = opts.prefer_short_name && all['name-gender-short'] || all['name-gender'];
       if (code2name[all.code] && code2name[all.code] !== gender_name) {
         code2name[all.code] = all.name // fallback on non-gendered name
       } else {
@@ -45,10 +45,10 @@ const group_roles_handle_gender = (roles) => {
   }
 }
 
-export const group_roles_remove_supannListeRouge_and_handle_gender = group => {
+export const group_roles_remove_supannListeRouge_and_handle_gender = (group, opts = {}) => {
     if (group.roles) {
       group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
-      group_roles_handle_gender(group.roles);
+      group_roles_handle_gender(group.roles, opts);
     }
     return group;
 };

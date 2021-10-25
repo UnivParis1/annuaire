@@ -199,7 +199,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
      tree.fullname = tree.name;
      tree.prio = tree.up1Flags?.[0]?.match(/^\{PRIO\}(.*)/)?.[1]
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
-     tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree);
+     tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree, { prefer_short_name : true });
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
        parent.top_role = tree.roles[0]
      }
