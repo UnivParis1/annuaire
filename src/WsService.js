@@ -42,10 +42,7 @@ const group_roles_handle_gender = (roles) => {
   }
   // code2name is computed, set all names to the computed values
   for (const user of roles) {
-    let i = 0;
-    for (const all of user['supannRoleGenerique-all']) {
-       user.supannRoleGenerique[i++] = code2name[all.code];
-    }
+    user.supannRoleGenerique = user['supannRoleGenerique-all'].map(({code}) => code2name[code])
   }
 }
 
