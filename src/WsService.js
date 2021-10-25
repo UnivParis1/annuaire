@@ -34,9 +34,9 @@ const group_roles_handle_gender = (roles) => {
     for (const all of user['supannRoleGenerique-all']) {
       const gender_name = user.supannRoleGenerique[i++];
       if (code2name[all.code] && code2name[all.code] !== gender_name) {
-        code2name[all.code] = all.name
+        code2name[all.code] = all.name // fallback on non-gendered name
       } else {
-        code2name[all.code] = gender_name; // fallback on non-gendered name
+        code2name[all.code] = gender_name;
       }
     }
   }
