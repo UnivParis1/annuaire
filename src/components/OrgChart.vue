@@ -64,44 +64,11 @@
             </li>
         </ul>
       </div>
-      <ul class="ul_depth2" :class="{ ul_last_depth2: !el.e2b.key }">
-          <li v-for="e in el.l2" :key="e.key" :class="[ e === el.e2 ? 'selectedElt' : nonSelectedEltClass ]">
-              <div class="horizLeft"></div>
-              <div class="horizRight"></div>
-              <span :class="{ sameBlocSize: (el.e3.key || !el.e2.key || el.e2.businessCategory === 'organization') && !el.l2b }">
-               <span class="bloc" :class="classes(2, e)">
-                <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>
-                <members :structure="el.e2" :query="query" v-if="e === el.e2 && !el.e2b.key && !el.e3.key"></members>
-               </span>
-
-            <div v-if="e === el.e2 && el.l2b">
-              <div class="smallVertical"></div>
-              <ul class="ul_last_depth2">
-                  <li v-for="e in el.l2b" :key="e.key" :class="[ e === el.e2b ? 'selectedElt' : nonSelectedEltClass ]">
-                      <div class="horizLeft"></div>
-                      <div class="horizRight"></div>
-                      <span :class="{ sameBlocSize: el.e3.key || !el.e2b.key || el.e2b.businessCategory === 'organization' }">
-                      <span class="bloc" :class="classes(2, e)">
-                          <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>
-                          <members :structure="el.e2b" :query="query" v-if="e === el.e2b && !el.e3.key"></members>
-                      </span>
-                      </span>
-                      <template v-if="e === el.e2b">
-                        <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
-                        <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
-                        <div class="horizRightBelow magic_line_right" v-if="!el.e3.key && el.l4" ref="magic_line_2to4_right"></div>
-                      </template>
-                  </li>
-              </ul>
-            </div>
-              </span>
-            <template v-if="e === el.e2 && !el.e2b.key">
-              <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
-              <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
-              <div class="horizRightBelow magic_line_right" v-if="!el.e3.key && el.l4" ref="magic_line_2to4_right"></div>
-            </template>
-          </li>
-      </ul>
+      <OrgChartLevel2 :el="el" :displayAll="displayAll" :query="query">
+        <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
+        <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
+        <div class="horizRightBelow magic_line_right" v-if="!el.e3.key && el.l4" ref="magic_line_2to4_right"></div>
+       </OrgChartLevel2>
     </li>
     <li style="flex-grow: 1"></li>
   </ul>
@@ -199,7 +166,9 @@
 
 <script>
 import * as WsService from '../WsService';
+import OrgChartLevel2 from './OrgChartLevel2.vue';
 import OrgChartMembers from './OrgChartMembers.vue';
+import { bloc_helpers } from './OrgChartLevel2.vue';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
@@ -286,7 +255,7 @@ function compute_eX_lX(e1, sel, { displayAll }) {
 }
 
 export default {
-   components: { MaybeRouterLink, MyIcon, members: OrgChartMembers },
+   components: { MaybeRouterLink, MyIcon, members: OrgChartMembers, OrgChartLevel2 },
    props: ['selected', 'query', 'displayAll'],
    setup(props) {
     const e1 = asyncComputed(() => withSubGroups({ name: "", key: 'UP1', depth: 1, businessCategory: "gold", roles: [] }))
@@ -347,7 +316,6 @@ export default {
      root_elt, magic_line_2to3, magic_line_2to4, magic_line_2to4_right, empty4Top_elt, secondPane_elt,
      el,
     ...toComputed({
-     nonSelectedEltClass() { return props.displayAll ? '' : 'nonSelectedElt' },
      e3_index()  { return el.value.l3?.indexOf(el.value.e3) },
      e1_roles() { 
          let l = []
@@ -364,9 +332,7 @@ export default {
      display_secondary_bloc() { return el.value?.e3?.members?.length > 0 },
      no_secondary_bloc() { return el.value?.e3?.members?.length === 0 },
     }),
-     classes(depth, e) {
-       return ['bordered', 'depth' + depth, e.businessCategory, { leaf: !e.subGroups }];
-     },
+    ...bloc_helpers(props),
     }
    },
 };
