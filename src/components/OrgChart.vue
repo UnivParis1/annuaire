@@ -140,7 +140,7 @@
                <div class="horizLeft" v-if="index > 0 || el.e3.key"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(4, e)">
-                 <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.name}}</router-link>
+                 <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.businessCategory === 'research' ? e.fullname : e.name}}</router-link>
                  <members :structure="e" :onlyRoles="el.e5.key" :query="query" v-if="e === el.e4 || displayAll"></members>
                <div v-if="e.subGroups && (displayAll || e === el.e4 && el.e5.key)">
                  <ul>
