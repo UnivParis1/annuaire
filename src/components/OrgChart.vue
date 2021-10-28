@@ -203,6 +203,17 @@ import { watch, watchEffect, ref, computed } from 'vue';
 let withSubGroups = async (e) => {
     const subGroups = await WsService.getSubStructures(e.key)
     if (!subGroups) throw "error";
+
+    const move_up = (k1, k2) => {
+        const sub1 = subGroups.find(e => e.key === k1)
+        const e = sub1.subGroups.find(e => e.key === k2)
+        e.external = true
+        subGroups.push(e)
+        sub1.subGroups = sub1.subGroups.filter(e => e.key !== k2)   
+    }
+    move_up("structures-COV", "structures-CV6_3")
+    move_up("structures-IU", "structures-IU4_3")
+
     e.subGroups = subGroups;
     initTree(e, e.depth);
     e.roles = (await WsService.getGroupFromStruct('UP1')).roles

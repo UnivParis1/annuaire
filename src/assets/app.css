@@ -1409,6 +1409,9 @@ li .secondary-bloc .members {
     border-top-width: 3px;
     border-bottom-width: 1px;
 }
+.depth2.external {
+    background-color: #fff;
+}
 
 span.bordered.depth2 {
     min-height: 65px;
