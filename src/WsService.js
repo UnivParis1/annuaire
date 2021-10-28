@@ -28,20 +28,23 @@ let wsgroupsJsonp = (name, params) => (
 // if you users for role XX have same gender, we can use "supannRoleGenerique" name
 // otherwise we fallback on non-gendered name
 const group_roles_handle_gender = (roles, opts) => {
-  let code2name = {}
+  const to_name = (all, gendered) => opts.prefer_short_name && all[gendered ? 'name-gender-short' : 'name-short'] || all[gendered ? 'name-gender' : 'name']
+  const to_category = (all) => (all.weight || '') + ':' + to_name(all)
+  let c2gname = {}
   for (const user of roles) {
     for (const all of user['supannRoleGenerique-all']) {
-      const gender_name = opts.prefer_short_name && all['name-gender-short'] || all['name-gender'];
-      if (code2name[all.code] && code2name[all.code] !== gender_name) {
-        code2name[all.code] = all.name // fallback on non-gendered name
+      const gender_name = to_name(all, 'gendered');
+      const category = to_category(all)
+      if (c2gname[category] && c2gname[category] !== gender_name) {
+        c2gname[category] = to_name(all) // fallback on non-gendered name
       } else {
-        code2name[all.code] = gender_name;
+        c2gname[category] = gender_name;
       }
     }
   }
-  // code2name is computed, set all names to the computed values
+  // c2gname is computed, set all names to the computed values
   for (const user of roles) {
-    user.supannRoleGenerique = user['supannRoleGenerique-all'].map(({code}) => code2name[code])
+    user.supannRoleGenerique = user['supannRoleGenerique-all'].map(all => c2gname[to_category(all)])
   }
 }
 
