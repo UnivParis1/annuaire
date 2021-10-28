@@ -210,6 +210,11 @@ import { watch, watchEffect, ref, computed } from 'vue';
          initTree(e, depth+1, tree);
          max_depth = Math.max(max_depth, e.max_depth)
      });
+     // hide some structures
+     if (tree.subGroups) tree.subGroups = tree.subGroups.filter(e => (
+         ![ "COV1", "UR_EXT" ].includes(e.key) && // en attendant d'avoir un flag qui nous disent lesquelles sans avoir une liste en dur ici
+         !(e.businessCategory === 'organization' && !e.subGroups?.length) // cacher les coquilles vides
+     ))
      tree.max_depth = max_depth
  }
 
