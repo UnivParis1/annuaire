@@ -4,7 +4,7 @@ function sortBy(array, fields) {
     const compareStrings = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
     r.sort((a, b) => {
       for (let field of fields) {
-        const c = compareStrings(a[field], b[field]);
+        const c = compareStrings(a[field] || '', b[field] || '');
         if (c !== 0) return c;
       }
       return 0;

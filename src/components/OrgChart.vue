@@ -250,7 +250,7 @@ const moveOneFirst = (list, e) => {
 }
 
 function compute_eX_lX(e1, sel, { displayAll }) {
-    const l2 = helpers.sortBy(e1.subGroups.filter(e => e.businessCategory !== "council"), ['prio', 'name'])
+    const l2 = helpers.sortBy(e1.subGroups.filter(e => e.businessCategory !== "council"), ['external','prio', 'name'])
     const e2 = sel.shift() || {}
     const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && helpers.sortBy(e2.subGroups, ['prio', 'name'])
     const e2b = l2b && sel.shift() || {}
