@@ -1,8 +1,8 @@
 <template>
 <ul class="ul_depth2" :class="{ ul_last_depth2: !el.e2b.key }">
-  <li v-for="e in el.l2" :key="e.key" :class="[ e === el.e2 ? 'selectedElt' : nonSelectedEltClass ]">
-    <div class="horizLeft"></div>
-    <div class="horizRight"></div>
+  <li v-for="(e,i) in el.l2" :key="e.key" :class="[ e === el.e2 ? 'selectedElt' : nonSelectedEltClass, !e.external && (el.l2[i+1] || {}).external ? 'last-internal' : '' ]">
+    <div class="horizLeft" v-if="!e.external"></div>
+    <div class="horizRight" v-if="!e.external"></div>
     <span :class="{ sameBlocSize: (el.e3.key || !el.e2.key || el.e2.businessCategory === 'organization') && !el.l2b }">
         <span class="bloc" :class="classes(2, e)">
             <router-link :to="withParam('affectation', e.key)">{{e.name}}</router-link>

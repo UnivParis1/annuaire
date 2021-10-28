@@ -942,7 +942,8 @@ li.nonSelectedElt .bloc {
 
 /* Remove left connector from first child and right connector from last child*/
 .mainTree li:first-child > .horizLeft,
-  .tree li:last-child > .horizRight {
+.tree li.last-internal > .horizRight,
+.tree li:last-child > .horizRight {
     border-top: none;
 }
 
@@ -952,10 +953,12 @@ li.nonSelectedElt .bloc {
 }
 
 /* replace last border-left with border-right to allow rounded border in the left direction */
+.tree li.last-internal > .horizRight,
 .tree li:last-child > .horizRight {
     border-left: none;
 }
 
+.tree li.last-internal > .horizLeft,
 .tree li:last-child > .horizLeft {
     border-right: 1px solid #aabbcc;
     border-radius: 0 5px 0 0;
