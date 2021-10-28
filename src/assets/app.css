@@ -1283,6 +1283,7 @@ li .secondary-bloc .members {
     padding-left: 0;
     padding-right: 0;
 }
+.depth1_roles_below .bloc,
 .depth1_roles .bloc {
     padding: 5px 5px;
     margin-bottom: 0.5rem;
@@ -1290,6 +1291,7 @@ li .secondary-bloc .members {
     background-color: #F6D891;
     color: #00326e;
 }
+.depth1_roles_below a,
 .depth1_roles a {
     font-weight: normal;
 }
@@ -1320,6 +1322,20 @@ li .secondary-bloc .members {
 .depth1_roles .verticalBottomRight {
     border-right: 1px dashed #abc !important;
 }
+
+.depth1_roles_below {
+    position: relative;
+}
+.depth1_roles_below > div {
+    position: absolute;
+    border-right: 1px solid #abc;
+    height: 20px;
+    width: 36%;
+}
+.depth1_roles_below > ul {
+    position: absolute;
+}
+
 .vertical li:last-child > .verticalTopRight {
     border-radius: 0 0 5px 0;
 }
@@ -1331,7 +1347,7 @@ li .secondary-bloc .members {
 .div_depth1 .horizLeft {
     position: absolute;
     top: 3.8rem;
-    width: 69px;
+    width: 109px;
     border-top: 1px dashed #abc;
 }
 
@@ -1349,7 +1365,7 @@ li .secondary-bloc .members {
 
 }
 .depth1_col2 > div:nth-child(2) {
-    padding: 2rem 69px 0;
+    padding: 2rem 109px 0;
     position: relative;
 }
 
@@ -1361,6 +1377,9 @@ li .secondary-bloc .members {
     width: 50%;
     min-height: 2rem;
     border-right: 1px solid #abc;
+}
+.depth1_col2 .vertBelow.with_role_below {
+    min-height: 5rem;
 }
 
 .depth1 {

@@ -18,36 +18,49 @@
     <li>
       <div class="div_depth1">
         <ul class="depth1_roles vertical">
-            <li v-for="(b,i) in e1_roles[0]" :class="{ onlyOne: e1_roles[0].length === 1 }">
+            <li v-for="(b,i) in e1_roles.left" :class="{ onlyOne: e1_roles.left.length === 1 }">
                 <span class="bloc members">
                     {{b[1]}}<br>
                     <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
                 </span>
                 <div class="verticalTopRight" v-if="i > 0"></div>
-                <div class="verticalBottomRight" v-if="i < e1_roles[0].length - 1"></div>
+                <div class="verticalBottomRight" v-if="i < e1_roles.left.length - 1"></div>
             </li>
         </ul>
         <div class="depth1_col2">
          <div></div> <!-- padding -->
          <div>
-            <div class="horizRight" v-if="e1_roles[0].length"></div>
-            <div class="horizLeft" v-if="e1_roles[1].length"></div>
+            <div class="horizRight" v-if="e1_roles.left.length"></div>
+            <div class="horizLeft" v-if="e1_roles.right.length"></div>
             <span class="bloc" :class="classes(1, el.e1)">
             {{el.e1.top_role.supannRoleGenerique[0]}}
             <br>
             <maybe-router-link :to="withUser(el.e1.top_role)">{{el.e1.top_role.displayName}}</maybe-router-link>
             </span>
          </div>
-         <div class="vertBelow"></div>
+
+        <span class="depth1_roles_below" v-if="e1_roles.below.length">
+          <div></div>
+          <ul>
+            <li v-for="(b,i) in e1_roles.below">
+                <span class="bloc members">
+                    {{b[1]}}<br>
+                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                </span>
+            </li>
+          </ul>
+        </span>
+        
+         <div class="vertBelow" :class="{ with_role_below: e1_roles.below.length }"></div>
         </div>
         <ul class="depth1_roles vertical">
-            <li v-for="(b,i) in e1_roles[1]" :class="{ onlyOne: e1_roles[1].length === 1 }">
+            <li v-for="(b,i) in e1_roles.right" :class="{ onlyOne: e1_roles.right.length === 1 }">
                 <span class="bloc members">
                     {{b[1]}}<br>
                     <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
                 </span>
                 <div class="verticalTop" v-if="i > 0"></div>
-                <div class="verticalBottom" v-if="i < e1_roles[1].length - 1"></div>
+                <div class="verticalBottom" v-if="i < e1_roles.right.length - 1"></div>
             </li>
         </ul>
       </div>
@@ -338,14 +351,15 @@ export default {
      e3_index()  { return el.value.l3?.indexOf(el.value.e3) },
      e1_roles() { 
          let l = []
+         let below = []
          for (const role of el.value?.e1.roles) {
              for (const name of role.supannRoleGenerique) {
                  if (props.displayAll || role.mail === props.query.token)
-                    l.push([role, name])
+                    (name.match(/Direct.* général.* des services/) ? below : l).push([role, name])
              }
          }
          const half = Math.floor(l.length / 2)
-         return [ l.slice(0, half), l.slice(half) ]
+         return { left: l.slice(0, half), right: l.slice(half), below }
      },
      display_secondary_bloc() { return el.value?.e3?.members?.length > 0 },
      no_secondary_bloc() { return el.value?.e3?.members?.length === 0 },
