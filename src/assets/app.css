@@ -762,7 +762,7 @@ Div.App {
     border: 1px solid #eee;
     --my-icon-size: 13px;
     fill: #aaa;
-    padding: 4px;
+    margin: 4px;
     position: absolute;
     right: 5px;
     top: 5px;
