@@ -1,11 +1,11 @@
-/* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, only strings or function param comparison */
+/* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, only converted-to-strings comparison */
 function sortBy(array, fields_or_comparator) {
     let r = [...array];
-    const compare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    const compare = (a, b) => (a?.toString() || '').localeCompare(b?.toString() || '')
     r.sort((a, b) => {
       if (fields_or_comparator instanceof Array) {
         for (let field of fields_or_comparator) {
-            const c = compare(a[field] || '', b[field] || '')
+            const c = compare(a[field], b[field])
             if (c !== 0) return c;
         }
         return 0;
