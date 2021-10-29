@@ -1,13 +1,17 @@
-/* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, nor function param, only strings comparison */
-function sortBy(array, fields) {
+/* similar to https://lodash.com/docs/#sortBy , but limited : not a stable sort, only strings or function param comparison */
+function sortBy(array, fields_or_comparator) {
     let r = [...array];
-    const compareStrings = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+    const compare = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
     r.sort((a, b) => {
-      for (let field of fields) {
-        const c = compareStrings(a[field] || '', b[field] || '');
-        if (c !== 0) return c;
+      if (fields_or_comparator instanceof Array) {
+        for (let field of fields_or_comparator) {
+            const c = compare(a[field] || '', b[field] || '')
+            if (c !== 0) return c;
+        }
+        return 0;
+      } else {
+        return compare(fields_or_comparator(a), fields_or_comparator(b))
       }
-      return 0;
     });
     return r;
 }

@@ -260,7 +260,7 @@ function compute_eX_lX(e1, sel, { displayAll }) {
         [ l3i, l3_ ] = [ [], l3i ]
     }
     const e3 = sel[0] && l3_.find(e => e.key === sel[0].key) && sel.shift() || {}
-    const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, ['fullname']), e3)
+    const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, e => (e.businessCategory === 'organization' ? "1" : "2") + e.fullname), e3)
     const l3b_ = e3.max_depth >= 7 && e3.subGroups
     const e3b = l3b_ && sel.shift() || {}
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
