@@ -120,7 +120,7 @@
 
               <span class="bloc" :class="classes(3, e)">
                 <router-link :to="withParam('affectation', e.key)">
-                  <span class="name">{{e.fullname}}</span>
+                  <span class="name">{{e.name}}</span>
                 </router-link>
                 <members :structure="e" :onlyRoles="el.e4.key" :query="query" v-if="e === el.e3b && !display_secondary_bloc"></members>
               </span>
