@@ -1476,7 +1476,7 @@ span.bordered.depth2 {
     border-bottom: 1px dotted;
 }
 
-.selectedElt > span > .depth2 {
+.selectedElt > span > .depth2:not(.external) {
     border: 3px solid #C89108;
     background-color: #C89108;
     -webkit-box-shadow: 2px 4px 2px -1px rgba(153,153,153,1);
@@ -1485,7 +1485,7 @@ span.bordered.depth2 {
     color: white;
 }
 
-.selectedElt > span > .depth2 a {
+.selectedElt > span > .depth2:not(.external) a {
     color: white;
 }
 
@@ -2179,7 +2179,7 @@ li.nonSelectedElt .bloc:hover {
 	border-style: dashed !important; 
 }
 
-.selectedElt > span > .depth2.organization  {
+.selectedElt > span > .depth2:not(.external).organization  {
    border-color: #FDE19F !important; 
 }
 
