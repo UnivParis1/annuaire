@@ -187,7 +187,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
      }
 
      let max_depth = depth;
-     (tree.subGroups || []).forEach(e => {
+     tree.subGroups?.forEach(e => {
          e.parentKey = tree.key;
          initTree(e, depth+1, tree);
          max_depth = Math.max(max_depth, e.max_depth)
