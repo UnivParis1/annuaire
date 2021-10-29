@@ -1158,14 +1158,6 @@ li.nonSelectedElt .bloc {
     padding-top: 0;
 }
 
-.thirdPane li {
-    min-width: 10em;
-}
-
-.thirdPane li.nonSelectedElt {
-    min-width: initial;
-}
-
 li .secondary-bloc {
     position: relative;
     float: right;
