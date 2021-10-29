@@ -204,10 +204,15 @@ let withSubGroups = async (e) => {
     const subGroups = await WsService.getSubStructures(e.key)
     if (!subGroups) throw "error";
 
+    function set_external_rec(e) {
+        e.external = true
+        e.subGroups?.forEach(set_external_rec)
+    }
+
     const move_up = (k1, k2) => {
         const sub1 = subGroups.find(e => e.key === k1)
         const e = sub1.subGroups.find(e => e.key === k2)
-        e.external = true
+        set_external_rec(e)
         subGroups.push(e)
         sub1.subGroups = sub1.subGroups.filter(e => e.key !== k2)   
     }

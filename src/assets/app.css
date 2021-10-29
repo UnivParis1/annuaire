@@ -1467,6 +1467,9 @@ span.bordered.depth2 {
     padding-top: 10px !important;
     padding-bottom: 6px !important;
 }
+.vertical .depth3.external {
+    background-color: #fff;
+}
 
 .vertical .depth3 .name {
     color: #00326e;
@@ -1481,8 +1484,10 @@ span.bordered.depth2 {
     padding-top: 9px !important;
 }
 
-.selectedElt .depth3 .name {
+.selectedElt .depth3:not(.external) .name {
     color: white;
+}
+.selectedElt .depth3 .name {
     font-weight: bold;
 }
 
