@@ -37,7 +37,7 @@ import OrgChartMembers from './OrgChartMembers.vue';
 
 export const bloc_helpers = (props) => ({
     classes: (depth, e) => (
-        ['bordered', 'depth' + depth, e.businessCategory, { leaf: !e.subGroups }, { external: e.external } ]
+        ['bordered', 'depth' + depth, e.businessCategory, { leaf: !e.subGroups }, { external: e.external }, { dgs: e.dgs } ]
     ),
     nonSelectedEltClass: computed(() => 
         props.displayAll ? '' : 'nonSelectedElt'

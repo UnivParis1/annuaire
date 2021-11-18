@@ -204,20 +204,24 @@ let withSubGroups = async (e) => {
     const subGroups = await WsService.getSubStructures(e.key)
     if (!subGroups) throw "error";
 
-    function set_external_rec(e) {
-        e.external = true
-        e.subGroups?.forEach(set_external_rec)
+    function set_flag_rec(e, flag, value) {
+        function rec(e) {
+            e[flag] = value
+            e.subGroups?.forEach(rec)
+        }
+        rec(e)
     }
 
     const move_up = (k1, k2) => {
         const sub1 = subGroups.find(e => e.key === k1)
         const e = sub1.subGroups.find(e => e.key === k2)
-        set_external_rec(e)
+        set_flag_rec(e, 'external', true)
         subGroups.push(e)
         sub1.subGroups = sub1.subGroups.filter(e => e.key !== k2)   
     }
     move_up("structures-COV", "structures-CV6_3")
     move_up("structures-IU", "structures-IU4_3")
+    subGroups.filter(e => ["structures-DG", "structures-DC_2", "structures-UFR_2", "structures-SCSG_2", "structures-BD_2"].includes(e.key)).forEach(e => set_flag_rec(e, "dgs", true))
 
     e.subGroups = subGroups;
     initTree(e, e.depth);
