@@ -20,8 +20,8 @@
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.left" :class="{ onlyOne: e1_roles.left.length === 1 }">
                 <span class="bloc members">
-                    {{b[1]}}<br>
-                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}<br>
+                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
                 </span>
                 <div class="verticalTopRight" v-if="i > 0"></div>
                 <div class="verticalBottomRight" v-if="i < e1_roles.left.length - 1"></div>
@@ -44,8 +44,8 @@
           <ul>
             <li v-for="(b,i) in e1_roles.below">
                 <span class="bloc members">
-                    {{b[1]}}<br>
-                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}<br>
+                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
                 </span>
             </li>
           </ul>
@@ -56,8 +56,8 @@
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.right" :class="{ onlyOne: e1_roles.right.length === 1 }">
                 <span class="bloc members">
-                    {{b[1]}}<br>
-                    <maybe-router-link :to="withUser(b[0])">{{b[0].displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}<br>
+                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
                 </span>
                 <div class="verticalTop" v-if="i > 0"></div>
                 <div class="verticalBottom" v-if="i < e1_roles.right.length - 1"></div>
@@ -226,7 +226,6 @@ let withSubGroups = async (e) => {
     e.subGroups = subGroups;
     initTree(e, e.depth);
     e.roles = (await WsService.getGroupFromStruct('UP1')).roles
-    e.roles = helpers.sortBy(e.roles, ['supannRoleGenerique'])
     return e;
 }
 
@@ -340,12 +339,13 @@ export default {
      e1_roles() { 
          let l = []
          let below = []
-         for (const role of el.value?.e1.roles) {
-             for (const name of role.supannRoleGenerique) {
-                 if (props.displayAll || role.mail === props.query.token)
-                    (name.match(/Direct.* général.* des services/) ? below : l).push([role, name])
+         for (const user of el.value?.e1.roles) {
+             if (props.displayAll || user.mail === props.query.token)
+                for (const role of user['supannRoleGenerique-all']) {
+                    (role.name.match(/Direct.* général.* des services/) ? below : l).push({ user, role })
              }
          }
+         l = helpers.sortBy(l, (e) => (e.role.weight || '{PRIO}999') + ":" + e.role.name)
          const half = Math.floor(l.length / 2)
          return { left: l.slice(0, half), right: l.slice(half), below }
      },
