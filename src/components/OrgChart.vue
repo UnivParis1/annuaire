@@ -140,7 +140,7 @@
                <div class="horizLeft" v-if="index > 0 || el.e3.key"></div>
                <div class="horizRight"></div>
                <span class="bloc" :class="classes(4, e)">
-                 <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.businessCategory === 'research' ? e.fullname : e.name}}</router-link>
+                 <router-link :to="withParam('affectation', e.key)" :title="e.fullname">{{e.name_}}</router-link>
                  <members :structure="e" :onlyRoles="el.e5.key" :query="query" v-if="e === el.e4 || displayAll"></members>
                <div v-if="e.subGroups && (displayAll || e === el.e4 && el.e5.key)">
                  <ul>
@@ -269,7 +269,8 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5 ] = [...sel, {}, {}]
     const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || !e3.key && l3i.length && l3i || []
-    const l4 = l4_.length && helpers.sortBy(l4_, ['name'])
+    l4_.forEach(e => e.name_ = e.businessCategory === 'research' ? e.fullname : e.name)
+    const l4 = l4_.length && helpers.sortBy(l4_, ['name_'])
     return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, l3i, l3_ }
 }
 
