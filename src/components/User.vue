@@ -158,7 +158,7 @@ import helpers from '../helpers';
 import Trombi from './Trombi.vue';
 import OrgChart from './OrgChart.vue';
 import MyIcon from './MyIcon.vue';
-import { isActiviteUP1 } from '../sortUsers';
+import { isActiviteUP1, removeReferensIfRifseep } from '../sortUsers';
 import { toComputed, asyncComputed } from '../directives';
 import { computed } from 'vue';
 
@@ -223,7 +223,7 @@ export default {
     isStaffOrFaculty() { return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty"]).length },
     has_staff_and_activitesUP1() { return person.value.eduPersonPrimaryAffiliation === 'staff' && person_activitesUP1.value.length },
     lastDiplomas() { return getLastDiplomas_(person.value) },
-    person_activites() { return (person.value['supannActivite-all'] || []).filter(act => !isActiviteUP1(act)) },
+    person_activites() { return removeReferensIfRifseep((person.value['supannActivite-all'] || []).filter(act => !isActiviteUP1(act))) },
     photoURL() { return config.photoURL(person.value) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },

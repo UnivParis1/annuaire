@@ -61,13 +61,13 @@
 
 <script>
 import config from '../config';
-import { isActiviteUP1 } from '../sortUsers';
+import { isActiviteUP1, removeReferensIfRifseep } from '../sortUsers';
 import { computed } from 'vue';
 
 export default {
   props: ['person', 'query'],
   setup: (props) => {
-    const person_activitesUP1 = computed(() => (props.person['supannActivite-all'] || []).filter(isActiviteUP1))
+    const person_activitesUP1 = computed(() => removeReferensIfRifseep((props.person['supannActivite-all'] || []).filter(isActiviteUP1)))
     return {
       connected: config.connected,
       person_activitesUP1,
