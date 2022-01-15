@@ -26,10 +26,19 @@ export const isActiviteUP1 = (activite) => (
   activite.key.match(/^\{UAI:0751717J:ACT\}/)
 );
 
-export const removeReferensIfRifseep = (activites) => {
-  const hasRifseep = activites.filter(activite => activite.key.match(/^\{UAI:0751717J:RIFSEEP\}/))
-  //if (hasRifseep) { console.log("keeping", hasRifseep.map(a => a.name), "removing", activites.filter(activite => activite.key.match(/^\{REFERENS\}/)).map(e => e.name)) }
-  return hasRifseep ? activites.filter(activite => !activite.key.match(/^\{REFERENS\}/)) : activites
+export const activitesByCategory = (person, no_emplois_if_role) => {
+    let activites = person['supannActivite-all'] || []
+    const referens = activites.filter(activite => activite.key.match(/^\{REFERENS\}/))
+    const rifseep = activites.filter(activite => activite.key.match(/^\{UAI:0751717J:RIFSEEP\}/))
+    const emplois = rifseep.length ? rifseep : referens
+    const cnu = activites.filter(activite => activite.key.match(/^\{CNU\}/))
+    const up1 = activites.filter(isActiviteUP1)
+    const various = [
+        ...cnu,
+        ...(person['supannRoleEntite-all'] && no_emplois_if_role ? [] : emplois),
+    ]
+    return { up1, referens, emplois, cnu, various }
+
 }
 
 export function descrAndWeight(person, isPedagogy, affectation, affectation_and_sub) {
@@ -46,11 +55,18 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
     }
 
     if (person['supannActivite-all']) {
-      const l = removeReferensIfRifseep(person['supannActivite-all']);
-      const descr = l.filter(activite => isPedagogy || !activite.key.match(/^\{CNU\}/)).map(activite => activite.name).join(', ')
+      const cats = activitesByCategory(person, false)
+      const descr = [
+        ...(isPedagogy ? cats.cnu : []),
+        ...cats.emplois
+      ].map(activite => activite.name).join(', ')
       if (descr) return {
         simplifiedDescription: descr,
-        weight: weight || ("3_" + helpers.minString(l.map(activite => (isActiviteUP1(activite) ? '0_' : '1_') + activite.key))),
+        weight: weight || ("3_" + helpers.minString([
+            ...cats.up1.map(activite => '0_' + activite.key),
+            ...cats.referens.map(activite => '1_' + activite.key),
+            ...cats.various.map(activite => '2_' + activite.key),
+        ])),
       };
     }
     if (person.employeeType) {

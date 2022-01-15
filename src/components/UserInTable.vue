@@ -10,11 +10,11 @@
               <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam('affectation', role.structure.key)" :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
-              <div v-for="activite in person_activitesUP1">{{activite.name}}</div>
+              <div v-for="activite in person_activites_cats.up1">{{activite.name}}</div>
               <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
                 <div v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
-              <div v-for="activite in person_activites" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
+              <div v-for="activite in person_activites_cats.various" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
         </td>
@@ -61,18 +61,17 @@
 
 <script>
 import config from '../config';
-import { isActiviteUP1, removeReferensIfRifseep } from '../sortUsers';
+import { activitesByCategory } from '../sortUsers';
 import { computed } from 'vue';
 
 export default {
   props: ['person', 'query'],
   setup: (props) => {
-    const person_activitesUP1 = computed(() => removeReferensIfRifseep((props.person['supannActivite-all'] || []).filter(isActiviteUP1)))
+    const person_activites_cats = computed(() => activitesByCategory(props.person, true))
     return {
       connected: config.connected,
-      person_activitesUP1,
-      has_staff_and_activitesUP1: computed(() => props.person.eduPersonPrimaryAffiliation === 'staff' && person_activitesUP1.value.length),
-      person_activites: computed(() => (props.person['supannActivite-all'] || []).filter(act => !isActiviteUP1(act))),
+      person_activites_cats,
+      has_staff_and_activitesUP1: computed(() => props.person.eduPersonPrimaryAffiliation === 'staff' && person_activites_cats.value.up1.length),
     }
   }
 }

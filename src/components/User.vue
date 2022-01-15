@@ -44,7 +44,7 @@
                  <router-link :to="withParam('affectation', role.structure.key)"
                   :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
-              <div class="description" v-for="activite in person_activitesUP1">{{activite.name}}</div>
+              <div class="description" v-for="activite in person_activites_cats.up1">{{activite.name}}</div>
               <div class="info" v-for="info in person.info" v-if="has_staff_and_activitesUP1">{{info}}</div>
             <div class="affiliations">
               <span v-for="(aff, index) in statusPers">
@@ -52,7 +52,7 @@
               </span>
             </div>
             <div class="supannActivite">
-                <span v-for="(activite, index) in person_activites">{{index ? ', ' : ''}}{{activite.name}}</span>
+                <span v-for="(activite, index) in person_activites_cats.various">{{index ? ', ' : ''}}{{activite.name}}</span>
             </div>
               <div class="info" v-for="info in person.info" v-if="!has_staff_and_activitesUP1">{{info}}</div>
               <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
@@ -158,7 +158,7 @@ import helpers from '../helpers';
 import Trombi from './Trombi.vue';
 import OrgChart from './OrgChart.vue';
 import MyIcon from './MyIcon.vue';
-import { isActiviteUP1, removeReferensIfRifseep } from '../sortUsers';
+import { activitesByCategory } from '../sortUsers';
 import { toComputed, asyncComputed } from '../directives';
 import { computed } from 'vue';
 
@@ -212,18 +212,17 @@ export default {
         return { person };
     })
     const person = computed(() => searchPerson.value && searchPerson.value.person)
-    const person_activitesUP1 = computed(() => (person.value['supannActivite-all'] || []).filter(isActiviteUP1))
+    const person_activites_cats = computed(() => activitesByCategory(person.value, true))
 
    return {
-     person, person_activitesUP1,
+     person, person_activites_cats,
    ...toComputed({
     error() { return searchPerson.value && searchPerson.value.error },
 
     statusPers() { return computeStatusPers(person.value) },
     isStaffOrFaculty() { return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty"]).length },
-    has_staff_and_activitesUP1() { return person.value.eduPersonPrimaryAffiliation === 'staff' && person_activitesUP1.value.length },
+    has_staff_and_activitesUP1() { return person.value.eduPersonPrimaryAffiliation === 'staff' && person_activites_cats.value.up1.length },
     lastDiplomas() { return getLastDiplomas_(person.value) },
-    person_activites() { return removeReferensIfRifseep((person.value['supannActivite-all'] || []).filter(act => !isActiviteUP1(act))) },
     photoURL() { return config.photoURL(person.value) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
