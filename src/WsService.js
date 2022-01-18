@@ -187,7 +187,7 @@ export const OrgChart = {
         filter_not_employeeType: 'Personnel en activité ponctuelle',
         filter_supannEntiteAffectation: affectation,
         profile_supannEntiteAffectation: affectation,
-        attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,employeeType,supannActivite-all',
+        attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,supannCivilite,employeeType,supannActivite-all',
     }).then(persons => persons.filter(u => !u.supannListeRouge));
   },
 };
