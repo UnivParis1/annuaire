@@ -14,7 +14,7 @@
               <div v-if="person.eduPersonPrimaryAffiliation=='teacher'||person.eduPersonPrimaryAffiliation=='researcher'">
                 <div v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
-              <div v-for="activite in person_activites_cats.various" v-if="!has_staff_and_activitesUP1">{{activite.name}}</div>
+              <div v-for="activite in person_activites_cats.various" v-if="!has_staff_and_activitesUP1">{{activite['name-gender'] || activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
         </td>

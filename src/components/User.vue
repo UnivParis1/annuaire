@@ -52,7 +52,7 @@
               </span>
             </div>
             <div class="supannActivite">
-                <span v-for="(activite, index) in person_activites_cats.various">{{index ? ', ' : ''}}{{activite.name}}</span>
+                <span v-for="(activite, index) in person_activites_cats.various">{{index ? ', ' : ''}}{{activite['name-gender'] || activite.name}}</span>
             </div>
               <div class="info" v-for="info in person.info" v-if="!has_staff_and_activitesUP1">{{info}}</div>
               <div class="supannEtuInscription" v-if="lastDiplomas && lastDiplomas.length">
