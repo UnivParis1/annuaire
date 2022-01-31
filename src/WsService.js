@@ -103,6 +103,20 @@ export let getSubGroups = (wsparams) => (
     wsgroupsJsonp("/getSubGroups", wsparams)
 );
 
+export let getSubAndSuperGroups = (wsparams) => (
+    wsgroupsJsonp("/getSubAndSuperGroups", wsparams)
+);
+
+export const getSubAndSuperStructures = (key) => (
+    getSubAndSuperGroups({
+        CAS: config.connected,
+        key: 'structures-' + key,
+        depth: 9,
+        filter_category: 'structures',
+        with_organization: true,
+    })
+  );
+  
 export const getSubStructures = (key) => (
   getSubGroups({
       CAS: config.connected,
@@ -114,9 +128,14 @@ export const getSubStructures = (key) => (
   })
 );
 
-export const getSubStructuresFlat = (key) => (
-  getSubStructures(key).then(l => getAllSubStructures({ key, subGroups: l }))
-)
+export const getSubAndSuperStructuresFlat = async (key) => {
+  let { subGroups, superGroups } = await getSubAndSuperStructures(key)
+  let r = getAllSubStructures({ key, subGroups })
+  for (key in superGroups) {
+      r[simple_structureKey(key)] = true
+  }
+  return r
+}
 
 export const getAllSubStructures = (tree) => {
   let r = {};
