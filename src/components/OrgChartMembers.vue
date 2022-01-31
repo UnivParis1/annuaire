@@ -42,7 +42,7 @@ export default {
       const affectation = computed(() => (
           !props.onlyRoles && props.structure.key
       ))
-      const affectation_and_sub = computed(() => (
+      const affectation_and_related = computed(() => (
           affectation.value ? WsService.getAllSubStructures(props.structure) : {}
       ))
       const roles = computed(() => (
@@ -80,7 +80,7 @@ export default {
                 aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
                 person.simplifiedAffiliation = isPedagogy && helpers.includes(affiliations, aff) ? aff : "other";
 
-                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation.value, affectation_and_sub.value) };
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation.value, affectation_and_related.value) };
             });
 
             // full ordering

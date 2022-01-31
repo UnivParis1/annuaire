@@ -41,12 +41,12 @@ export const activitesByCategory = (person, no_emplois_if_role) => {
 
 }
 
-export function descrAndWeight(person, isPedagogy, affectation, affectation_and_sub) {
+export function descrAndWeight(person, isPedagogy, affectation, affectation_and_related) {
     let weight;
 
     let roles = person['supannRoleEntite-all'];
     if (roles) {
-      if (affectation_and_sub) roles = roles.filter(r => r.structure.key in affectation_and_sub);
+      if (affectation_and_related) roles = roles.filter(r => r.structure.key in affectation_and_related);
       const weight_ = helpers.minString(roles.map(r => r.role_weight).filter(w => w));
       if (weight_) {
         const role = roles.find(r => r.role_weight === weight_)
