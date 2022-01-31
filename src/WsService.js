@@ -56,6 +56,10 @@ export const group_roles_remove_supannListeRouge_and_handle_gender = (group, opt
     return group;
 };
 
+export const simple_structureKey = (key) => (
+    key.replace(/^structures-/, '')
+)
+
 export let getGroupFromStruct = (affectation) => (
     wsgroupsJsonp("/getGroup", {
         CAS: config.connected,
@@ -117,7 +121,7 @@ export const getSubStructuresFlat = (key) => (
 export const getAllSubStructures = (tree) => {
   let r = {};
   function getSubs(tree) {
-    r[tree.key.replace(/^structures-/, '')] = true;
+    r[simple_structureKey(tree.key)] = true;
     (tree.subGroups || []).forEach(getSubs);
   }
   getSubs(tree);

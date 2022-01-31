@@ -177,7 +177,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
      tree.depth = depth;
-     tree.key = tree.key.replace(/^structures-/, '');
+     tree.key = WsService.simple_structureKey(tree.key);
      tree.fullname = tree.name;
      tree.prio = tree.up1Flags?.[0]?.match(/^\{PRIO\}(.*)/)?.[1]
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
