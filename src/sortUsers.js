@@ -56,7 +56,7 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
 
     if (person['supannActivite-all']) {
       const cats = activitesByCategory(person, false)
-      const cats_for_name = [ ...(isPedagogy ? cats.cnu : []), ...cats.emplois ]
+      const cats_for_name = [ ...(isPedagogy ? cats.cnu : []), ...cats.emplois, ...cats.up1 ]
       const descr = cats_for_name.map(activite => activite.name).join(', ')
       const descr_gender = cats_for_name.map(activite => activite['name-gender'] || activite.name).join(', ')
       if (descr) return {
