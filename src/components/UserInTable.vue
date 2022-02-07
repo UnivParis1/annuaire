@@ -33,7 +33,7 @@
           <div class="mail" v-if="person.mail">
             <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
           </div>
-          <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.facsimileTelephoneNumber || person.mobile">
+          <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile">
             <div v-for="telNum in person.telephoneNumber">
               <a :href="'tel:' + telNum" target="_blank">{{telNum}}</a>
             </div>
@@ -44,7 +44,6 @@
             <div v-for="mobile in person.mobile">
                <a :href="'tel:' + mobile" target="_blank">{{mobile}}</a>
             </div>
-            <div v-for="telFac in person.facsimileTelephoneNumber">{{telFac}} (Fax)</div>
           </div>
         </td>
 

@@ -83,7 +83,7 @@
             <div class="mail">
                 <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
             </div>
-            <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile || person.facsimileTelephoneNumber">
+            <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile">
               <div v-if="person.telephoneNumber">
                 <span class="uneditable-input" v-for="telephoneNumber in person.telephoneNumber">
                     <a :href="'tel:' + telephoneNumber" target="_blank"> {{telephoneNumber}}</a>
@@ -99,9 +99,6 @@
               </div>
               <div v-if="person.mobile">
                   <span class="uneditable-input" v-for="mobile in person.mobile"> <a :href="'tel:' + mobile" target="_blank">{{mobile}}</a></span>
-              </div>
-              <div v-if="person.facsimileTelephoneNumber">
-                  <span class="uneditable-input" v-for="facsimileTelephoneNumber in person.facsimileTelephoneNumber"> {{facsimileTelephoneNumber}} (Fax)</span>
               </div>
           </div>
           <div class="address" v-if="person.buildingName || person.postalAddress">
