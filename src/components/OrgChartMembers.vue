@@ -84,7 +84,7 @@ export default {
             });
 
             // full ordering
-            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight' ]);
+            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'simplifiedDescription' ]);
             r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription', 'simplifiedDescription_gender' ], ['displayName']);
 
             // re-group simplifiedDescription/simplifiedDescription_gender: use "simplifiedDescription_gender" if it is the only one in "simplifiedDescription"
