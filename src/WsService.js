@@ -170,8 +170,12 @@ export function compute_wsparams_user_many_filters(queryO) {
         wsparams.filter_supannRoleGenerique = role;
     }
 
-    if (activite && activite.match(/^\{UAI:0751717J:ACT\}/)) {
-        wsparams.filter_description = queryO.activite.name;
+    if (activite) {
+        if (activite.match(/^\{UAI:0751717J:ACT\}/)) {
+            wsparams.filter_description = queryO.activite.name;
+        } else {
+            wsparams.filter_supannActivite = queryO.activite.key;
+        }
     }
 
     if (diploma) {
