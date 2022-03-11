@@ -47,11 +47,11 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
     let roles = person['supannRoleEntite-all'];
     if (roles) {
       if (affectation_and_related) roles = roles.filter(r => r.structure.key in affectation_and_related);
-      const weight_ = helpers.minString(roles.map(r => r.role_weight).filter(w => w));
-      if (weight_) {
-        const role = roles.find(r => r.role_weight === weight_)
-        weight = (role.structure.key === affectation ? "0" : "1") + "_" + weight_ + "_" + role.structure.level;
-      }
+      weight = helpers.minString(roles.map(r => (
+        r.role_weight ?
+          (r.structure.key === affectation ? "0" : "1") + "_" + r.role_weight + "_" + r.structure.level :
+          ''
+      )))
     }
 
     if (person['supannActivite-all']) {
