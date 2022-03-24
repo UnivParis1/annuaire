@@ -12,14 +12,14 @@
     <!--Intégrer le bandeau ENT -->
     <script type="text/javascript">
       var connected = location.pathname.match(/^\/(annuaire|ent)\//);
-      var resolve_validApps;
+      var resolve_loggedUser;
       if (window.Promise) {
-	   window.validApps = new Promise(function (resolve) { resolve_validApps = resolve });
+	   window.loggedUser = new Promise(function (resolve) { resolve_loggedUser = resolve });
       }
 
       if (connected)
         window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true, onload: function (pE) {
-          resolve_validApps(pE.validApps);
+          resolve_loggedUser({ validApps: pE.validApps, uid: pE.DATA.user });
         } };
       else
         window.bandeau_anonyme = {};

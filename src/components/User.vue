@@ -227,7 +227,18 @@ export default {
     affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
         return person.value ? compute_affectationsWithParents(person.value) : [];
     }),
-    allow_comptex_annuaire: asyncComputed(async () => "comptex-annuaire" in (await window.validApps)),
+    allow_comptex_annuaire: asyncComputed(async () => {
+        const personAffectation = person.value.supannEntiteAffectationPrincipale
+        if (!personAffectation ||
+            !helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty", "teacher"]).length) {
+            return false
+        } else {
+            const roles = (await WsService.getGroupFromStruct(personAffectation)).roles
+            const loggedUser = await window.loggedUser
+            return roles.find((role) => role.uid === loggedUser.uid) ||
+                "dsidoc" in (await loggedUser.validApps) // MOCHE mais fonctionne car "dsidoc" est réservé à la DSIUN. Or la DSIUN est autorisé à modifier les données de tout le monde sur comptex/annuaire
+        }
+    }),
    }
     },
   computed: { // kept here because it uses GlobalMixin.js

@@ -79,7 +79,7 @@ export default {
     return {
       query,
       queryO: asyncComputed(() => WsService.getQueryO(query.value)),
-      allowChart: asyncComputed(async () => "annuaire_organigramme" in (await window.validApps)),
+      allowChart: asyncComputed(async () => "annuaire_organigramme" in (await window.loggedUser).validApps),
     }
   },
   data() {
