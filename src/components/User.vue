@@ -173,10 +173,17 @@ const getLastDiplomas_ = (person) => {
 };
 
 const computeStatusPers = (person) => {
-    const affs = helpers.intersection(person.eduPersonAffiliation, config.usefulAffiliations);
-    let [t_r, other] = helpers.partition(affs, (aff => aff === "teacher" || aff === "researcher"));
-    if (t_r.length === 2) t_r = [ "teacher_researcher"];
-    return [...t_r, ...other].map(a => "STATUS_" + a);
+    let affs = person.eduPersonAffiliation
+    if (person.eduPersonPrimaryAffiliation) {
+        // have eduPersonPrimaryAffiliation first
+        affs.unshift(person.eduPersonPrimaryAffiliation)
+    }
+    affs = helpers.intersection(affs, config.usefulAffiliations)
+    // unify teacher/researcher
+    affs = affs.map(aff => aff === "teacher" || aff === "researcher" ? "teacher_researcher" : aff)
+    // remove duplicates (from eduPersonPrimaryAffiliation or teacher/researcher)
+    affs = helpers.uniqBy(affs, aff=>aff)
+    return affs.map(a => "STATUS_" + a);
 };
 
 async function compute_affectationsWithParents(person) {
