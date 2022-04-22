@@ -104,18 +104,18 @@
           <div class="address" v-if="person.buildingName || person.postalAddress">
             <span v-if="person.buildingName">
                 <label>Site :</label>
-                <span class="uneditable-input " v-for="buildingName in person.buildingName"> {{buildingName}}</span>
+                <span style="margin-left: 0.5em" class="uneditable-input " v-for="buildingName in person.buildingName">{{buildingName}}</span>
             </span>
             <span v-if="person.roomNumber">
               <label>Bureau :</label>
-              <span class="uneditable-input" v-for="roomNumber in person.roomNumber">
+              <span style="margin-left: 0.5em" class="uneditable-input" v-for="roomNumber in person.roomNumber">
                 {{roomNumber}}
                 <span v-if="person.up1RoomAccess" v-for="where in person.up1RoomAccess">- {{where}}</span>
               </span>
             </span>
             <span v-if="person.up1FloorNumber">
               <label>Étage :</label>
-              <span class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber"> {{up1FloorNumber}}</span>
+              <span style="margin-left: 0.5em" class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber">{{up1FloorNumber}}</span>
             </span>
             <span v-if="person.postalAddress">
               <span>
