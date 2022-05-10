@@ -151,6 +151,20 @@
                            <span :title="e.fullname">{{e.name}}</span>
                            <members :structure="e" :query="query" v-if="e === el.e5 || displayAll"></members>
                        </span>
+
+                       <div v-if="e.subGroups && (displayAll || e === el.e5 && el.e6.key)">
+                          <ul>
+                            <li v-for="e in e.subGroups" :class="[ e === el.e6 ? 'selectedElt' : nonSelectedEltClass ]">
+                                <div class="verticalTop"></div>
+                                <div class="verticalBottom"></div>
+                                <span class="bloc" :class="classes(6, e)">
+                                    <span :title="e.fullname">{{e.name}}</span>
+                                    <members :structure="e" :query="query" v-if="e === el.e6 || displayAll"></members>
+                                </span>
+                            </li>
+                          </ul>
+                       </div>
+
                    </li>
                  </ul>
                </div>
@@ -267,11 +281,11 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const l3b_ = e3.max_depth >= 7 && e3.subGroups
     const e3b = l3b_ && sel.shift() || {}
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
-    const [ e4, e5 ] = [...sel, {}, {}]
+    const [ e4, e5, e6 ] = [...sel, {}, {}, {} ]
     const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || !e3.key && l3i.length && l3i || []
     l4_.forEach(e => e.name_ = e.businessCategory === 'research' ? e.fullname : e.name)
     const l4 = l4_.length && helpers.sortBy(l4_, ['name_'])
-    return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, l3i, l3_ }
+    return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, e6, l3i, l3_ }
 }
 
 export default {
