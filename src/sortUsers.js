@@ -28,7 +28,7 @@ export const isActiviteUP1 = (activite) => (
 
 export const activitesByCategory = (person, no_emplois_if_role) => {
     let activites = person['supannActivite-all'] || []
-    const referens = activites.filter(activite => activite.key.match(/^\{REFERENS\}/))
+    const referens = activites.filter(activite => activite.key.match(/^\{REFERENS\}/)) // useful for sorting users
     const rifseep = activites.filter(activite => activite.key.match(/^\{UAI:0751717J:RIFSEEP\}/))
     const emplois = rifseep.length ? rifseep : referens
     const cnu = activites.filter(activite => activite.key.match(/^\{CNU\}/))
