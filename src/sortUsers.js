@@ -30,14 +30,13 @@ export const activitesByCategory = (person, no_emplois_if_role) => {
     let activites = person['supannActivite-all'] || []
     const referens = activites.filter(activite => activite.key.match(/^\{REFERENS\}/)) // useful for sorting users
     const rifseep = activites.filter(activite => activite.key.match(/^\{UAI:0751717J:RIFSEEP\}/))
-    const emplois = rifseep.length ? rifseep : referens
     const cnu = activites.filter(activite => activite.key.match(/^\{CNU\}/))
     const up1 = activites.filter(isActiviteUP1)
     const various = [
         ...cnu,
-        ...(person['supannRoleEntite-all'] && no_emplois_if_role ? [] : emplois),
+        ...(person['supannRoleEntite-all'] && no_emplois_if_role ? [] : rifseep),
     ]
-    return { up1, referens, emplois, cnu, various }
+    return { up1, referens, rifseep, cnu, various }
 
 }
 
@@ -56,7 +55,7 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
 
     if (person['supannActivite-all']) {
       const cats = activitesByCategory(person, false)
-      const cats_for_name = [ ...(isPedagogy ? cats.cnu : []), ...cats.emplois, ...cats.up1 ]
+      const cats_for_name = [ ...(isPedagogy ? cats.cnu : []), ...cats.rifseep, ...cats.up1 ]
       const descr = cats_for_name.map(activite => activite.name).join(', ')
       const descr_gender = cats_for_name.map(activite => activite['name-gender'] || activite.name).join(', ')
       if (descr) return {
