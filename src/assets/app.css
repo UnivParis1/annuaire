@@ -1026,7 +1026,7 @@ li.nonSelectedElt .bloc {
 }
 
 .vertical li .bloc {
-    width: 20em;  /*yam */ width: 18em;
+    width: 12.37rem;
     display: block;
     pointer-events: all;
 }
@@ -1722,7 +1722,7 @@ li.nonSelectedElt .bloc:hover {
 
 /*  depth3   */
 .vertical li.nonSelectedElt span {
-    width: 220px;
+    width: 12.37rem;
 }
 
 .vertical li.nonSelectedElt .bloc {
