@@ -84,7 +84,7 @@ export default {
             });
 
             // full ordering
-            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'simplifiedDescription' ]);
+            r = helpers.sortBy(r, [ 'simplifiedAffiliation', 'weight', 'simplifiedDescription', 'simplifiedDescription_gender' ]);
             r = helpers.sortedGroupByFields(r, [ 'simplifiedAffiliation', 'simplifiedDescription', 'simplifiedDescription_gender' ], ['displayName']);
 
             // re-group simplifiedDescription/simplifiedDescription_gender: use "simplifiedDescription_gender" if it is the only one in "simplifiedDescription"
@@ -93,7 +93,7 @@ export default {
                     if  (byGender.group.length === 1 && byGender.group[0].v) {
                         byGender.v = byGender.group[0].v
                     }
-                    byGender.group = [].concat(...byGender.group.map(byDescr => byDescr.group))
+                    byGender.group = helpers.sortBy([].concat(...byGender.group.map(byDescr => byDescr.group)), ['displayName'])
                 }
             }
 
