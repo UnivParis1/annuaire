@@ -52,7 +52,7 @@
 
 
 <script>
-import helpers from '../helpers';
+import * as sortUsers from '../sortUsers';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed } from '../directives';
 import { computed } from 'vue';
@@ -80,7 +80,7 @@ export default {
           return props.queryO && props.queryO.diploma;
       },
       affectationRolesGrouped() {
-          return helpers.sortedGroupBy(affectation.value?.roles || [], u => u.supannRoleGenerique.join(", "));
+          return sortUsers.rolesGrouped(affectation.value?.roles);
       },
      }),
     }

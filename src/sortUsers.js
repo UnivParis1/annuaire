@@ -88,3 +88,7 @@ export function sortRoles(person) {
   }
   return person;
 }
+
+export function rolesGrouped(roles) {
+    return helpers.sortedGroupBy(roles || [], u => u.supannRoleGenerique.join(", "));
+}

@@ -58,7 +58,7 @@ export default {
         members, roles, show_many_members,
        ...toComputed({
         rolesGrouped() {
-            return helpers.sortedGroupBy(roles.value, u => u.supannRoleGenerique.join(", "));
+            return sortUsers.rolesGrouped(roles.value);
         },
         many_members() {
             return members.value?.length > 30
