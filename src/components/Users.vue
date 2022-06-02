@@ -113,7 +113,7 @@ export default {
             let persons = await _getSearchPersons({ maxRows: maxRows.value }, queryO);
             const affectation_and_related = props.query.affectation && await WsService.getSubAndSuperStructuresFlat(props.query.affectation);
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), props.query.affectation, affectation_and_related) }));
-            persons = helpers.sortBy(persons, [ 'weight', 'displayName' ]);
+            persons = helpers.sortBy(persons, [ 'weight', 'simplifiedDescription', 'displayName' ]);
             state.persons.value = persons;
         }
     });
