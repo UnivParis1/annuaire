@@ -90,5 +90,7 @@ export function sortRoles(person) {
 }
 
 export function rolesGrouped(roles) {
-    return helpers.sortedGroupBy(roles || [], u => u.supannRoleGenerique.join(", "));
+    // NB: wsgroups gives roles sorted by role weight + uid
+    // we want to group + sort by displayName
+    return helpers.sortedGroupByDeep(roles || [], [ u => u.supannRoleGenerique.join(", ") ], ['displayName']);
 }
