@@ -37,7 +37,7 @@ function sortedGroupByDeep(l, fields, fieldsToSortLeaves = undefined) {
     return fieldsToSortLeaves ? sortBy(l, fieldsToSortLeaves) : l;
   }
   const [field, ...otherFields] = fields;
-  let r = sortedGroupBy(l, elt => elt[field]);
+  let r = sortedGroupBy(l, typeof field === 'string' ? elt => elt[field] : field);
   r.forEach(subr => subr.group = sortedGroupByDeep(subr.group, otherFields, fieldsToSortLeaves));
   return r;
 }
