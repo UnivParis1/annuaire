@@ -32,20 +32,20 @@ function sortedGroupBy(l, by) {
     return r;
  }
 
-function sortedGroupByFields(l, fields, fieldsToSortLeaves = undefined) {
+function sortedGroupByDeep(l, fields, fieldsToSortLeaves = undefined) {
   if (fields.length === 0) {
     return fieldsToSortLeaves ? sortBy(l, fieldsToSortLeaves) : l;
   }
   const [field, ...otherFields] = fields;
   let r = sortedGroupBy(l, elt => elt[field]);
-  r.forEach(subr => subr.group = sortedGroupByFields(subr.group, otherFields, fieldsToSortLeaves));
+  r.forEach(subr => subr.group = sortedGroupByDeep(subr.group, otherFields, fieldsToSortLeaves));
   return r;
 }
 
 export default {
   sortBy,
   sortedGroupBy,
-  sortedGroupByFields,
+  sortedGroupByDeep,
 
   /* cf https://lodash.com/docs/#partition */
   partition(collection, predicate) {
