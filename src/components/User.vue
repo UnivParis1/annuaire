@@ -180,7 +180,9 @@ const computeStatusPers = (person) => {
     }
     affs = helpers.intersection(affs, config.usefulAffiliations)
     // unify teacher/researcher
-    affs = affs.map(aff => aff === "teacher" || aff === "researcher" ? "teacher_researcher" : aff)
+    if (affs.includes("teacher") && affs.includes("researcher")) {
+        affs = affs.map(aff => aff === "teacher" || aff === "researcher" ? "teacher_researcher" : aff)
+    }
     // remove duplicates (from eduPersonPrimaryAffiliation or teacher/researcher)
     affs = helpers.uniqBy(affs, aff=>aff)
     return affs.map(a => "STATUS_" + a);
