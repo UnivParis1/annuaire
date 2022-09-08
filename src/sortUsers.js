@@ -48,7 +48,7 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
       if (affectation_and_related) roles = roles.filter(r => r.structure.key in affectation_and_related);
       weight = helpers.minString(roles.map(r => (
         r.role_weight ?
-          (r.structure.key === affectation ? "0" : "1") + "_" + r.role_weight + "_" + r.structure.level :
+          (r.structure.key === affectation ? "0" : "1") + "_" + r.structure.level + "_" + r.role_weight :
           ''
       )))
     }
