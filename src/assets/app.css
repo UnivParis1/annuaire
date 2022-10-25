@@ -319,9 +319,9 @@ Div.App {
   vertical-align: text-top;
 }
 
+.User .warning,
 .Users .warning {
     text-align: center;
-    font-size: 15px;
     color: #555;
     font-style: italic;
     font-family: Georgia, "DejaVu Serif", Norasi, "Times", serif;
@@ -329,6 +329,11 @@ Div.App {
     margin-bottom: 15px;
 }
 
+.Users .warning {
+    font-size: 15px;
+}
+
+.User .warning a,
 .Users .warning a {
     background-color: #f4e9ce;
     border: 1px solid #d8b252;
@@ -338,6 +343,7 @@ Div.App {
     transition: all 0.4s linear;
 }
 
+.User .warning a:hover,
 .Users .warning a:hover {
     background-color: #fff;
     text-decoration: none;

@@ -143,6 +143,9 @@
     <span v-else-if="allow_comptex_annuaire" class="more_account_link modify_account">
       | <a :href="config.comptex_annuaire_url(person)"> Modifier les coordonnées</a>
     </span>
+    <span v-if="!config.connected">
+      &nbsp; <span class="warning"><a :href="connectedHref($route)">Vous connecter pour voir tout</a></span>
+    </span>
  </div>
 </div>
 </div>
