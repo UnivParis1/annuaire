@@ -349,7 +349,19 @@ Div.App {
     text-decoration: none;
     border: 1px solid #c89108;
     color: #20558a;
-    transition: all 0.4s linear;
+    transition: all 0.3s linear; 
+}
+
+.User .error {
+   margin : 30px; 
+   padding: 15px;
+   line-height: 2;
+   text-align: center;
+   font-size: 16px;
+   color: #cf4a02;
+   border: 1px #aaa dotted;
+   background: #f8f8f9;
+   box-shadow: 3px 3px 3px 0 #dedede;
 }
 
 

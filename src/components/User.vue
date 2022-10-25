@@ -1,9 +1,11 @@
 <template>
 <div class="User">
-<div v-if="error">
-    {{error}}
+<div class="container" v-if="error">
+    <div class="error">
+        {{error}}
+    </div>
 </div>
-<div v-if="!person" class="container">
+<div v-else-if="!person" class="container">
    <div class="row"><div class="col-md-12">
        Veuillez patienter
     </div></div>
