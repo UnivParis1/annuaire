@@ -9,7 +9,7 @@ export default {
     comptex_annuaire_url: (person) => `https://comptex.univ-paris1.fr/annuaire/reuse/?uid=${person.uid}`,
     connected,
     photoURL: (person) => "https://userphoto.univ-paris1.fr/" + "?uid=" + person.uid + "&penpalAffiliation=" + (connected ? "loggedUser" : "anonymous"),
-    orgChart_hidden_structures: [ "COV1", "UR_EXT" ],
+    orgChart_hidden_structures: [ "COV1", "UR_EXT", "CV7_3" ],
 
     usefulAffiliationsGrouped: ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
