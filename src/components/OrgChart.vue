@@ -186,6 +186,7 @@ import { bloc_helpers } from './OrgChartLevel2.vue';
 import MyIcon from './MyIcon.vue';
 import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
+import config from "../config";
 import { watch, watchEffect, ref, computed } from 'vue';
 
  function initTree(tree, depth, parent) {
@@ -208,7 +209,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
      });
      // hide some structures
      if (tree.subGroups) tree.subGroups = tree.subGroups.filter(e => (
-         ![ "COV1", "UR_EXT" ].includes(e.key) && // en attendant d'avoir un flag qui nous disent lesquelles sans avoir une liste en dur ici
+         !config.orgChart_hidden_structures.includes(e.key) && // en attendant d'avoir un flag qui nous disent lesquelles sans avoir une liste en dur ici
          !(e.businessCategory === 'organization' && !e.subGroups?.length) // cacher les coquilles vides
      ))
      tree.max_depth = max_depth

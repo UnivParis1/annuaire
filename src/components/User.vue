@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="col-md-5 contactInformation">
-            <div class="userChartFormatLink" v-if="isStaffOrFaculty">
+            <div class="userChartFormatLink" v-if="isStaffOrFaculty && allow_chart">
               <router-link :to="{ query: { format: 'chart' } }">Organigramme individuel</router-link>
             </div>
             <div class="mail">
@@ -237,6 +237,9 @@ export default {
     photoURL() { return config.photoURL(person.value) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
+    allow_chart() {
+          return person.value?.['supannEntiteAffectation-all']?.some(affectation => !config.orgChart_hidden_structures.includes(affectation.key))
+    },
    }),
     affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
         return person.value ? compute_affectationsWithParents(person.value) : [];

@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="nb-results-and-formats">
                <span><span v-if="persons">{{persons.length}} résultat(s)</span></span>
-               <ChooseFormat :format="query.format"></ChooseFormat>
+               <ChooseFormat :format="query.format" :allow_chart="allow_chart"></ChooseFormat>
            </div>
         </div>
       </div>
@@ -123,6 +123,9 @@ export default {
      ...toComputed({
       connected() {
           return config.connected;
+      },
+      allow_chart() {
+          return !config.orgChart_hidden_structures.includes(props.query.affectation)
       },
       slides() {
           return helpers.shuffle(...config.slides);
