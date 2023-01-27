@@ -210,7 +210,7 @@ export const OrgChart = {
     return searchPersons({
         CAS: config.connected,
         token: query.token,
-        filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff',
+        filter_eduPersonPrimaryAffiliation: query.affiliation || 'teacher|researcher|staff|emeritus',
         filter_not_employeeType: 'Personnel en activité ponctuelle',
         filter_supannEntiteAffectation: affectation,
         profile_supannEntiteAffectation: affectation,

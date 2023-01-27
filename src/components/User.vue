@@ -237,7 +237,7 @@ export default {
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
     allow_chart() {
-          return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty" ]).length &&
+          return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty", "emeritus" ]).length &&
             person.value?.['supannEntiteAffectation-all']?.some(affectation => !config.orgChart_hidden_structures.includes(affectation.key))
     },
    }),
