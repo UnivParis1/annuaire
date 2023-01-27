@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="col-md-5 contactInformation">
-            <div class="userChartFormatLink" v-if="isStaffOrFaculty && allow_chart">
+            <div class="userChartFormatLink" v-if="allow_chart">
               <router-link :to="{ query: { format: 'chart' } }">Organigramme individuel</router-link>
             </div>
             <div class="mail">
@@ -231,14 +231,14 @@ export default {
     error() { return searchPerson.value && searchPerson.value.error },
 
     statusPers() { return computeStatusPers(person.value) },
-    isStaffOrFaculty() { return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty"]).length },
     has_staff_and_activitesUP1() { return person.value.eduPersonPrimaryAffiliation === 'staff' && person_activites_cats.value.up1.length },
     lastDiplomas() { return getLastDiplomas_(person.value) },
     photoURL() { return config.photoURL(person.value) },
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
     allow_chart() {
-          return person.value?.['supannEntiteAffectation-all']?.some(affectation => !config.orgChart_hidden_structures.includes(affectation.key))
+          return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty" ]).length &&
+            person.value?.['supannEntiteAffectation-all']?.some(affectation => !config.orgChart_hidden_structures.includes(affectation.key))
     },
    }),
     affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
