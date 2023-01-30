@@ -77,8 +77,9 @@ export default {
             r = r.map(person => {
                 // compute simplifiedAffiliation
                 let aff = person.eduPersonPrimaryAffiliation;
-                aff = aff === "teacher" || aff === "researcher" ? "teacher|researcher" : aff;
-                person.simplifiedAffiliation = isPedagogy && helpers.includes(affiliations, aff) ? aff : "other";
+                person.simplifiedAffiliation = !isPedagogy ? "other" :
+                    aff === "teacher" || aff === "researcher" || aff === "emeritus" ? "teacher|researcher|emeritus" :
+                    helpers.includes(affiliations, aff) ? aff : "other";
 
                 return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation.value, affectation_and_related.value) };
             });

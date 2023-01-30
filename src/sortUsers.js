@@ -70,7 +70,7 @@ export function descrAndWeight(person, isPedagogy, affectation, affectation_and_
     }
     if (person.employeeType) {
       const weight_ = Math.min(... person.employeeType.map(e => employeeType2index[e] || 9999));
-      if (!weight) weight = "4_" + number2fixedString(weight_);
+      if (!weight) weight = (person.eduPersonPrimaryAffiliation === 'emeritus' ? "2_" : "4_") + number2fixedString(weight_);
 
       // hiding employeeType of teachers/researchers in administration
       if (isPedagogy) return {
