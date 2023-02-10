@@ -242,12 +242,19 @@ Div.App {
     margin-left: 1.5rem;
 }
 
-.affectationFilter .name {
+.affectationFilter .name,
+.siteFilter .name {
     font-size: 18px;
     font-weight: normal;
     padding-bottom: 12px;
 }
+.siteFilter .manager {
+    padding-bottom: 6px;
+}
 
+.Filters .postalAddress {
+    white-space: pre-wrap;
+}
 
 .my-icon.my-icon-remove {
     background-color: #e55302;
@@ -486,7 +493,7 @@ Div.App {
     padding-bottom: 10px;
 }
 
-.boite .phoneNumbers, .infoUser .phoneNumbers {
+.boite .phoneNumbers, .infoUser .phoneNumbers, .Filters .phoneNumbers {
     background: url("/images/ANR-32.svg") no-repeat left top;
     background-size: 1.6em;
     padding-left: 30px;

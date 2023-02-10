@@ -154,13 +154,14 @@ export let getDiploma = (diploma) => (
 export const getQueryO = async (query) => ({
   query,
   affectation: query.affectation && await getGroupFromStruct(query.affectation),
+  site: query.site && await getGroupFromStruct(query.site),
   role: query.role && await getRoleGenerique(query.role),
   activite: query.activite && await getActivite(query.activite),
   diploma: query.diploma && await getDiploma(query.diploma),
 });
 
 export function compute_wsparams_user_many_filters(queryO) {
-    const { affiliation, affectation, diploma, role, activite } = queryO.query;
+    const { affiliation, affectation, diploma, site, role, activite } = queryO.query;
     let wsparams = {};
 
     wsparams.filter_mail = '*';
@@ -168,6 +169,10 @@ export function compute_wsparams_user_many_filters(queryO) {
 
     if (role) {
         wsparams.filter_supannRoleGenerique = role;
+    }
+
+    if (site) {
+        wsparams.filter_buildingName = queryO.site.name;
     }
 
     if (activite) {

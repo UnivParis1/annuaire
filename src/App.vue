@@ -6,7 +6,7 @@
             <div class="form-group has-feedback" :class="{ 'with-clear-all-filters': placeholder }">
                 <router-link class="clear-all-filters" v-if="placeholder"
                    @click.native="search_token=''"
-                   :to="withParams({ affiliation: '', affectation: '', role: '', token: '' })">
+                   :to="withParams({ affiliation: '', affectation: '', site: '', role: '', token: '' })">
                   <my-icon name="remove"></my-icon>
                 </router-link>
                 <autocompleteUserAndGroup
@@ -114,6 +114,9 @@ export default {
         } else if (this.queryO.diploma) {
           if (!what) what = "une personne";
           what += " de " + this.queryO.diploma.name;
+        } else if (this.queryO.site) {
+          if (!what) what = "une personne";
+          what += " affectée au site " + this.queryO.site.name;
         }
       }
       return what && `Vous recherchez ${what}`;
@@ -143,7 +146,10 @@ export default {
         } else {
             // recherche d'un groupe "structures-xxx" or "diploma-xxx"
             let [, kind, val] = userOrGroup.key.match(/^(\w+)-(.*)/) || [];
-            this.go(this.withParam(kind === 'structures' ? 'affectation' : kind, val));
+            if (kind === 'structures') {
+                kind = userOrGroup.category === 'location' ? 'site' : 'affectation'
+            }
+            this.go(this.withParam(kind, val));
         }
     },
 

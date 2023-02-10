@@ -43,7 +43,7 @@
                 <div class="employeeType" v-for="emplType in person.employeeType">{{emplType}}</div>
               </div>
               <div class="supannRoleEntite" v-for="role in person['supannRoleEntite-all']">{{role.role}}
-                 <router-link :to="withParam('affectation', role.structure.key)"
+                 <router-link :to="withParam(role.structure.businessCategory === 'location' ? 'site' : 'affectation', role.structure.key)"
                   :title="role.structure.description">{{role.structure.name}}</router-link>
               </div>
               <div class="description" v-for="activite in person_activites_cats.up1">{{activite.name}}</div>

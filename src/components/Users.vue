@@ -98,7 +98,7 @@ export default {
         queryO: ref(null),
     }
     const noFilters = computed(() => (
-           !['token', 'affectation', 'affiliation', 'diploma', 'role', 'activite'].find(filter => props.query[filter])
+           !['token', 'affectation', 'affiliation', 'diploma', 'role', 'site', 'activite'].find(filter => props.query[filter])
     ))
     const maxRows = computed(() => (
           config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult
