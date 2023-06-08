@@ -72,7 +72,7 @@ import OrgChart from './OrgChart.vue';
 import Filters from './Filters.vue';
 import Slider from './Slider.vue';
 import config from '../config';
-import { ref, watchEffect, computed } from 'vue';
+import { ref, watch, watchEffect, computed } from 'vue';
 import { toComputed } from '../directives';
 
 async function _getSearchPersons({ maxRows }, queryO) {
@@ -103,6 +103,13 @@ export default {
     const maxRows = computed(() => (
           config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult
     ))
+    watch(() => props.query.format, (format) => {
+        const pE = window.prolongation_ENT
+        if (pE?.DATA) {
+            const url = "https://ent.univ-paris1.fr/annuaire/log?" + new URLSearchParams({ user: pE.DATA.user, url_search: 'format=' + (format || 'list') })
+            pE.helpers.loadScript(url)
+        }
+    }, { immediate: true })
     watchEffect(async () => {
         const queryO = state.queryO.value = await WsService.getQueryO(props.query)
         state.persons.value = undefined;
