@@ -136,6 +136,9 @@ export const getSubAndSuperStructuresFlat = async (key) => {
   }
   return r
 }
+export const getManySubAndSuperStructuresFlat = async (keys) => (
+    Object.assign({}, ...await Promise.all(keys.map(getSubAndSuperStructuresFlat)))
+)
 
 export const getAllSubStructures = (tree) => {
   let r = {};

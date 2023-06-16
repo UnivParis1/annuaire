@@ -81,7 +81,7 @@ export default {
                     aff === "teacher" || aff === "researcher" || aff === "emeritus" ? "teacher|researcher|emeritus" :
                     helpers.includes(affiliations, aff) ? aff : "other";
 
-                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation.value, affectation_and_related.value) };
+                return { ...person, ... sortUsers.descrAndWeight(person, isPedagogy, affectation.value && [affectation.value], affectation_and_related.value) };
             });
 
             // full ordering
