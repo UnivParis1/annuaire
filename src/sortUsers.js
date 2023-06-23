@@ -32,9 +32,11 @@ export const activitesByCategory = (person, no_emplois_if_role) => {
     const rifseep = activites.filter(activite => activite.key.match(/^\{UAI:0751717J:RIFSEEP\}/))
     const cnu = activites.filter(activite => activite.key.match(/^\{CNU\}/))
     const up1 = activites.filter(isActiviteUP1)
+    const has_non_location_role = person['supannRoleEntite-all']?.some(role => role?.structure?.businessCategory !== 'location')
     const various = [
         ...cnu,
-        ...(person['supannRoleEntite-all'] && no_emplois_if_role ? [] : rifseep),
+        // On n'affiche pas les fonctions Rifseep pour les utilisateurs ayant une fonction structurelle ou fonctionnelle
+        ...(has_non_location_role && no_emplois_if_role ? [] : rifseep),
     ]
     return { up1, referens, rifseep, cnu, various }
 
