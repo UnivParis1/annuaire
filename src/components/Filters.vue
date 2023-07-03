@@ -32,6 +32,7 @@
                   <span v-for="(u, i) in role.group">{{i ? ", " : ''}}<maybe-router-link :to="withUser(u)">{{u.displayName}}</maybe-router-link>
                   </span>
                </div>
+               <img style="float: right; margin-left: 0.5rem; margin-right: -39px; max-width: 130px" alt="" :src="`https://ws-centres.univ-paris1.fr/images/${site.rawKey}.jpg`">
                <div class="phoneNumbers" v-if="site.telephoneNumber">
                     <a :href="'tel:' + site.telephoneNumber" target="_blank"> {{site.telephoneNumber}}</a>
                </div>
