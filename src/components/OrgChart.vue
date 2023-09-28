@@ -7,7 +7,8 @@
     Veuillez patienter
   </div>
 </div>
-<div v-else class="OrgChart" ref="root_elt">
+<div v-else>
+  <div class="OrgChart" ref="root_elt">
   <router-link to="/">
     <span class="badge backToHome2"><my-icon name='remove'/></span>
   </router-link>
@@ -174,7 +175,13 @@
         </div>
        <div style="flex-grow: 1" ></div>
    </div>
+  </div> <!-- secondPane -->
+  </div> <!-- OrgChart -->
+  
+  <div class="dgs legende">
+    *- Les personnels BIATSS des structures encadrées en vert sont sous l'autorité hiérarchique du DGS
   </div>
+
   </div>
 </template>
 
