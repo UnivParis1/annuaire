@@ -73,6 +73,7 @@ import Filters from './Filters.vue';
 import Slider from './Slider.vue';
 import config from '../config';
 import { ref, watch, watchEffect, computed } from 'vue';
+import { useRouter } from 'vue-router'
 import { toComputed } from '../directives';
 
 async function _getSearchPersons({ maxRows }, queryO) {
@@ -110,8 +111,14 @@ export default {
             pE.helpers.loadScript(url)
         }
     }, { immediate: true })
+    const router = useRouter()
     watchEffect(async () => {
         const queryO = state.queryO.value = await WsService.getQueryO(props.query)
+        if (queryO.affectation && queryO.affectation.rawKey !== props.query.affectation) {
+            // affectation has different case than LDAP,
+            // normalize it to avoid having to compare ignoring case
+            router.replace({ query: { ...props.query, affectation: queryO.affectation.rawKey } });
+        }
         state.persons.value = undefined;
 
         if (noFilters.value || props.query.format === 'chart' || !queryO) {
