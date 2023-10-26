@@ -238,7 +238,7 @@ export default {
     config() { return config; },
     allow_chart() {
           return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty", "emeritus" ]).length &&
-            person.value?.['supannEntiteAffectation-all']?.some(affectation => !config.orgChart_hidden_structures.includes(affectation.key))
+            person.value?.['supannEntiteAffectation-all']?.some(affectation => affectation.name && !config.orgChart_hidden_structures.includes(affectation.key))
     },
    }),
     affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
