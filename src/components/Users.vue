@@ -102,9 +102,8 @@ export default {
     const noFilters = computed(() => (
            !['token', 'affectation', 'affiliation', 'diploma', 'role', 'site', 'activite'].find(filter => props.query[filter])
     ))
-    const maxRows = computed(() => (
-          config.connected ? config.searchAuthMaxResult : config.searchNoauthMaxResult
-    ))
+    const maxRows = computed(() => config.searchMaxResult(props.query))
+
     watch(() => props.query.format, (format) => {
         const pE = window.prolongation_ENT
         if (pE?.DATA) {

@@ -13,8 +13,7 @@ export default {
 
     usefulAffiliationsGrouped: ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
-    searchNoauthMaxResult: 5, // Résultat maximal à afficher si pas authentifié
-    searchAuthMaxResult: 100, // Résultat maximal à afficher si authentifié
+    searchMaxResult: (query) => connected ? (query.format === 'trombi' ? 1000 : 100) : 5,
 
     slides: [
         /*{
