@@ -21,6 +21,10 @@
               <a :href="connectedHref($route)">veuillez vous identifier.</a>
             </span>
         </div>
+        <div class="col-md-12 warning" v-if="connected && multiple_student_years" >
+            Les résultats renvoient à la fois les étudiants de l'année courante et de l'année précédente. 
+            <router-link :to="withParam('annee_courante', true)">Limiter aux inscrits de l'année courante</router-link>
+        </div>
         <div class="col-md-12 warning" v-if="query.format === 'chart' && !connected" >
           <span>
               Seul les responsables sont affichés, pour voir tous les personnels,
@@ -145,6 +149,16 @@ export default {
       },
       slides() {
           return helpers.shuffle(...config.slides);
+      },
+      multiple_student_years() {
+          if (props.query.affiliation === 'student' && props.query.affectation && !props.query.annee_courante) {
+            const years = state.persons.value?.map(person => (
+                Math.max.apply(null, person['supannEtuInscription-all']?.map(item => item.anneeinsc))
+            ))
+            return helpers.uniqBy(years, year => year).length > 1
+          } else {
+            return false
+          }
       },
      }),
     }

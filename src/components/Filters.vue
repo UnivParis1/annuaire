@@ -65,6 +65,12 @@
                         <my-icon name='remove' />
                     </router-link>
             </div>
+            <div class="annee_couranteFilter" v-if="query.annee_courante">
+                    Limiter aux inscrits de l'année courante
+                    <router-link :to="withParam('annee_courante', undefined)">
+                        <my-icon name='remove' />
+                    </router-link>
+            </div>
             <div class="queryFilter" v-if="query.token">
                     {{query.token}}
                     <router-link :to="withParam('token', undefined)">

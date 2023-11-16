@@ -164,7 +164,7 @@ export const getQueryO = async (query) => ({
 });
 
 export function compute_wsparams_user_many_filters(queryO) {
-    const { affiliation, affectation, diploma, site, role, activite } = queryO.query;
+    const { affiliation, affectation, diploma, site, role, activite, annee_courante } = queryO.query;
     let wsparams = {};
 
     wsparams.filter_mail = '*';
@@ -191,7 +191,7 @@ export function compute_wsparams_user_many_filters(queryO) {
         return [wsparams];
     } else if (affectation){
       if (affiliation === 'student' || affiliation === 'alum') {
-          wsparams.filter_supannEntiteAffectation = affectation;
+          wsparams[annee_courante ? 'filter_student_affectation_annee_courante' : 'filter_supannEntiteAffectation'] = affectation;
           return [wsparams];
       } else {
         const group = queryO.affectation;
