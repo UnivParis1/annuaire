@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12 warning" v-if="persons && persons.length >= maxRows" >
+        <div class="col-md-12 warning" v-if="persons && persons.length >= (globalInfo?.maxRows || maxRows)" >
             <span v-if="connected">
               Le nombre de résultats est limité. Veuillez affiner la recherche.
             </span>
@@ -96,6 +96,7 @@ export default {
     const state = {
         // users matching filters
         persons: ref([]),
+        globalInfo: ref(undefined),
         queryO: ref(null),
     }
     const noFilters = computed(() => (
@@ -125,6 +126,7 @@ export default {
           //
         } else {
             let persons = await _getSearchPersons({ maxRows: maxRows.value }, queryO);
+            state.globalInfo.value = persons[0]?.globalInfo
             const query_structures = [props.query.affectation, props.query.site].filter(s => s)
             const structures_and_related = query_structures.length && await WsService.getManySubAndSuperStructuresFlat(query_structures)
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), query_structures, structures_and_related) }));
