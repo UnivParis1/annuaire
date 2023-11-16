@@ -13,7 +13,7 @@ export default {
 
     usefulAffiliationsGrouped: ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
-    searchNoauthMaxResult: 5, // Résultat maximal à afficher si pasa uthentifié
+    searchNoauthMaxResult: 5, // Résultat maximal à afficher si pas authentifié
     searchAuthMaxResult: 100, // Résultat maximal à afficher si authentifié
 
     slides: [
