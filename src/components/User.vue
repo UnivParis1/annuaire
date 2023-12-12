@@ -218,7 +218,7 @@ export default {
   setup(props) {
     const userMail = computed(() => props.userId.replace(/@(\w*)$/, (_, w) => '@' + w + (w && '.') + config.domain))
     const searchPerson = asyncComputed(async () => {
-        const person = await WsService.searchPerson({ token: userMail.value, CAS: config.connected });
+        const person = await WsService.searchPerson({ id: userMail.value, CAS: config.connected });
         if (!person) return { error: "Utilisateur inconnu" };
         return { person };
     })
