@@ -14,13 +14,15 @@ export default {
       },
       installWidget() {
         if (!this.wsparams) return;
+        if (this.$el?.kraaden_autocomplete_installed) {
+            this.$el.kraaden_autocomplete_installed.params.wsParams = this.wsparams
+            return
+        }
 
         let select = (event, ui) => {
             // NB: this event is called before the selected value is set in the "input"
             ui.item.id = ui.item.value;
             ui.item.name = ui.item.label;
-            // afficher prénom et nom de la personne sélectionnée sur le input
-            jQuery(this.$el).val(ui.item.label);
 
             this.$emit("select", ui.item);
         };
@@ -36,10 +38,12 @@ export default {
             listeRouge_one:    warning_listeRouge,
         };
 
-        let params = { select, onSearchSuccess, warningMsgs, wsParams: this.wsparams };
+        let params = { select, onSearchSuccess, warningMsgs, wsParams: this.wsparams, disableAutoSelect: true };
         // autocompleteUser de jQuery gère l'autocomplétion
         let searchURL = config.wsgroupsURL + '/search';
         jQuery(this.$el)['autocompleteUserAndGroup'](searchURL, params);
+        // save the object to allow updating it:
+        this.$el.kraaden_autocomplete_installed.params = params
       },
   },
   watch: {

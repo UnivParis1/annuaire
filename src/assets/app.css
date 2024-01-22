@@ -99,9 +99,8 @@ Div.App {
     box-shadow: 3px 6px 2px -3px rgba(102,102,102,1);
 }
 
-.ui-menu-item {
-    padding-left: 2px !important;
-    padding-right: 2px !important;
+.autocomplete > .ui-menu-item.odd {
+    background-color: transparent; /* override to have no stripes */
 }
 
 .ui-widget {
@@ -111,7 +110,6 @@ Div.App {
 .ui-menu-item.odd {
     border-top: 1px dotted #999;
     border-bottom: 1px dotted #999;
-    background-color: white !important;
 }
 
 .ui-autocomplete-loading :hover {
@@ -120,7 +118,7 @@ Div.App {
 
 
 /* Les statuts centr�  */
-.ui-menu .kind {
+.autocomplete .group {
     text-transform: uppercase;
     color: #666 !important;
     text-align: center;
@@ -131,7 +129,7 @@ Div.App {
     background-color: #f0f0f0 !important;
 }
 
-.ui-menu .warning {
+.autocomplete .warning {
     color: #20558a !important;
     background-color: #f4f6fa;
     padding: 10px !important;
@@ -141,23 +139,25 @@ Div.App {
     border-top-right-radius: 0px;
 }
 
-.ui-corner-all .warning a {
+.autocomplete .warning a {
     color: #20558a!important;
     border: 1px #999 solid;
     text-align: center;
     text-transform: uppercase;
     width: 101px;
     margin-top: 6px;
-    padding: 3px !important;
+    padding: 3px 7px !important;
+    border-radius: 4px;
+    display: block;
 }
 
-.ui-corner-all .warning a:hover {
+.autocomplete .warning a:hover {
     border: 1px #999 solid;
     margin-top: 6px !important;
     text-align: center;
     font-weight: bold !important;
     background-color: #fff !important;
-    padding: 3px !important;
+    padding: 3px 7px !important;
 }
 
 
