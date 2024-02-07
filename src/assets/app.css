@@ -75,6 +75,10 @@ Div.App {
     border: none;
 }
 
+.search input::-webkit-search-cancel-button {
+    display: none;
+}
+
 .search .my-icon-search {
   --my-icon-size: 13px;
   fill: #555;
