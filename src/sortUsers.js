@@ -50,7 +50,7 @@ export function descrAndWeight(person, isPedagogy, structures, structures_and_re
       if (structures_and_related) roles = roles.filter(r => r.structure.key in structures_and_related);
       weight = helpers.minString(roles.map(r => (
         r.role_weight ?
-          (structures.includes(r.structure.key) ? "0" : "1") + "_" + r.structure.level + "_" + r.role_weight :
+          (structures.includes(r.structure.key) ? "0" : "1") + "_" + r.structure.level + "_" + r.role_weight + "_" + r.structure.name :
           ''
       )))
     }
