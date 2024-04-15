@@ -291,8 +291,8 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5, e6 ] = [...sel, {}, {}, {} ]
     const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || !e3.key && l3i.length && l3i || []
-    l4_.forEach(e => e.name_ = e.businessCategory === 'research' ? e.fullname : e.name)
-    const l4 = l4_.length && helpers.sortBy(l4_, ['name_'])
+    l4_.forEach(e => e.name_ = e.up1Flags?.includes('no-chart-title') ? '' : e.businessCategory === 'research' ? e.fullname : e.name)
+    const l4 = l4_.length && helpers.sortBy(l4_, e => e.name_ === '' ? 'xxx' : e.name_)
     return { e1, e2, l2, e2b, l2b, e3, l3, e3b, l3b, e4, l4, e5, e6, l3i, l3_ }
 }
 
