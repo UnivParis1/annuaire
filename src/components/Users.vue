@@ -132,6 +132,10 @@ export default {
             state.globalInfo.value = persons[0]?.globalInfo
             const query_structures = [props.query.affectation, props.query.site].filter(s => s)
             const structures_and_related = query_structures.length && await WsService.getManySubAndSuperStructuresFlat(query_structures)
+            if (props.query.affectation !== 'UP1') {
+                // UP1 est un parent, mais sans réel lien avec la structure visualisée. Donc ignorer les roles sur UP1 (GLPI UP1#163277)
+                delete structures_and_related['UP1']
+            }
             persons = persons.map(p => ({...p, ...sortUsers.descrAndWeight(p, sortUsers.isPedagogyAffectation(p), query_structures, structures_and_related) }));
             persons = helpers.sortBy(persons, [ 'weight', 'simplifiedDescription', 'displayName' ]);
             state.persons.value = persons;
