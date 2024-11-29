@@ -128,7 +128,7 @@ export const getSubStructures = (key) => (
   })
 );
 
-export const getSubAndSuperStructuresFlat = async (key) => {
+const getSubAndSuperStructuresFlat = async (key) => {
   let { subGroups, superGroups } = await getSubAndSuperStructures(key)
   let r = getAllSubStructures({ key, subGroups })
   for (key in superGroups) {
