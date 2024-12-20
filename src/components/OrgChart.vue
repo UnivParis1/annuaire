@@ -196,6 +196,12 @@ import helpers from '../helpers';
 import config from "../config";
 import { watch, watchEffect, ref, computed } from 'vue';
 
+ const isPresidentOuAdministrateurProvisoire = (user) => (
+    user['supannRoleGenerique-all']?.some(role => 
+        ['{UAI:0751717J:HARPEGE.FCSTR}1', '{UAI:0751717J:SIHAM:FCT}2003'].includes(role.code)
+    )
+ )
+
  function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
      tree.depth = depth;
@@ -205,7 +211,9 @@ import { watch, watchEffect, ref, computed } from 'vue';
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
      tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree, { prefer_short_name : true });
      if (tree.key === 'PR' && parent && parent.roles.length === 0) {
-       parent.top_role = tree.roles[0]
+       parent.top_role = isPresidentOuAdministrateurProvisoire(tree.roles[0]) ? tree.roles[0] : 
+        // si pas de président, afficher une boite vide (GLPI UP1#181444)
+        { displayName: '                                    ', supannRoleGenerique: [' '] }
      }
 
      let max_depth = depth;
