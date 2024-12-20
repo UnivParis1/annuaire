@@ -197,7 +197,7 @@ import config from "../config";
 import { watch, watchEffect, ref, computed } from 'vue';
 
  const isPresidentOuAdministrateurProvisoire = (user) => (
-    user['supannRoleGenerique-all']?.some(role => 
+    user?.['supannRoleGenerique-all']?.some(role => 
         ['{UAI:0751717J:HARPEGE.FCSTR}1', '{UAI:0751717J:SIHAM:FCT}2003'].includes(role.code)
     )
  )
@@ -210,10 +210,8 @@ import { watch, watchEffect, ref, computed } from 'vue';
      tree.prio = tree.up1Flags?.[0]?.match(/^\{PRIO\}(.*)/)?.[1]
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
      tree = WsService.group_roles_remove_supannListeRouge_and_handle_gender(tree, { prefer_short_name : true });
-     if (tree.key === 'PR' && parent && parent.roles.length === 0) {
-       parent.top_role = isPresidentOuAdministrateurProvisoire(tree.roles[0]) ? tree.roles[0] : 
-        // si pas de président, afficher une boite vide (GLPI UP1#181444)
-        { displayName: '                                    ', supannRoleGenerique: [' '] }
+     if (['PR', 'UP1'].includes(tree.key) && isPresidentOuAdministrateurProvisoire(tree.roles[0])) {
+       (parent ?? tree).top_role = tree.roles[0]
      }
 
      let max_depth = depth;
@@ -256,6 +254,10 @@ let withSubGroups = async (e) => {
     e.subGroups = subGroups;
     e.roles = (await WsService.getGroupFromStruct('UP1')).roles
     initTree(e, e.depth);
+
+    // si pas de président, afficher une boite vide (GLPI UP1#181444)
+    e.top_role ??= { displayName: '                                    ', supannRoleGenerique: [' '] }
+    
     return e;
 }
 
