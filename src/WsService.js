@@ -103,11 +103,11 @@ export let getSubGroups = (wsparams) => (
     wsgroupsJsonp("/getSubGroups", wsparams)
 );
 
-export let getSubAndSuperGroups = (wsparams) => (
+let getSubAndSuperGroups = (wsparams) => (
     wsgroupsJsonp("/getSubAndSuperGroups", wsparams)
 );
 
-export const getSubAndSuperStructures = (key) => (
+const getSubAndSuperStructures = (key) => (
     getSubAndSuperGroups({
         CAS: config.connected,
         key: 'structures-' + key,
