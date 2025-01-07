@@ -246,8 +246,8 @@ let withSubGroups = async (e) => {
     subGroups.filter(e => ["structures-DG", "structures-DC_2", "structures-UFR_2", "structures-SCSG_2", "structures-BD_2"].includes(e.key)).forEach(e => set_flag_rec(e, "dgs", true))
 
     e.subGroups = subGroups;
-    initTree(e, e.depth);
     e.roles = (await WsService.getGroupFromStruct('UP1')).roles
+    initTree(e, e.depth);
     return e;
 }
 
