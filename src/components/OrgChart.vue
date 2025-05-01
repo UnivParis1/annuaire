@@ -179,7 +179,7 @@
   </div> <!-- OrgChart -->
   
   <div class="dgs legende">
-    *- Les personnels BIATSS des structures encadrées en vert sont sous l'autorité hiérarchique du DGS
+    *- Les personnels BIATPSS des structures encadrées en vert sont sous l'autorité hiérarchique du DGS
   </div>
 
   </div>
