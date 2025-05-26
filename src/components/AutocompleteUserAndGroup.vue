@@ -32,10 +32,8 @@ export default {
             return data; // we could filter the results, but we just want to know the results
         };
 
-        const warning_listeRouge = `Les personnels de l'université peuvent voir d'autres résultats. <br><a onclick='document.location = this.href' href='${this.connectedHref({})}'>Connexion</a>`;
         const warningMsgs = {
-            listeRouge_plural: warning_listeRouge,
-            listeRouge_one:    warning_listeRouge,
+            maybeListeRouge: `La recherche publique est limitée, pour plus de résultats, veuillez vous identifier. <br><a onclick='document.location = this.href' href='${this.connectedHref({})}'>Connexion</a>`,
         };
 
         let params = { select, onSearchSuccess, warningMsgs, wsParams: this.wsparams, disableAutoSelect: true };
