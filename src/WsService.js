@@ -48,9 +48,8 @@ const group_roles_handle_gender = (roles, opts) => {
   }
 }
 
-export const group_roles_remove_supannListeRouge_and_handle_gender = (group, opts = {}) => {
+export const group_roles_may_handle_gender = (group, opts = {}) => {
     if (group.roles) {
-      group.roles = group.roles.filter(u => u.uid !== "supannListeRouge");
       group_roles_handle_gender(group.roles, opts);
     }
     return group;
@@ -66,7 +65,7 @@ export let getGroupFromStruct = (affectation) => (
         key: "structures-" + affectation,
         with_organization: true,
         attrs: 'roles,roles.supannRoleGenerique-all',
-    }).then(group_roles_remove_supannListeRouge_and_handle_gender)
+    }).then(group_roles_may_handle_gender)
 );
 
 export let getRoleGenerique = (role) => (
@@ -80,10 +79,6 @@ export let getActivite = (key) => (
 export let searchPersons = (wsparams) => (
     wsgroupsJsonp("/searchUser", wsparams).then(persons => (
       persons.map(p => {
-          p.supannListeRouge = p.supannCivilite === 'supannListeRouge';
-          if (p.supannListeRouge) {
-            p = { supannListeRouge: true };
-          }
           p = sortUsers.sortRoles(p);
           return p;
       })
@@ -223,6 +218,6 @@ export const OrgChart = {
         filter_supannEntiteAffectation: affectation,
         profile_supannEntiteAffectation: affectation,
         attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,supannCivilite,employeeType,supannActivite-all',
-    }).then(persons => persons.filter(u => !u.supannListeRouge));
+    });
   },
 };

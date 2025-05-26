@@ -33,7 +33,7 @@ export default {
         };
 
         const warningMsgs = {
-            maybeListeRouge: `La recherche publique est limitée, pour plus de résultats, veuillez vous identifier. <br><a onclick='document.location = this.href' href='${this.connectedHref({})}'>Connexion</a>`,
+            suggestSearchUserCAS: `La recherche publique est limitée, pour plus de résultats, veuillez vous identifier. <br><a onclick='document.location = this.href' href='${this.connectedHref({})}'>Connexion</a>`,
         };
 
         let params = { select, onSearchSuccess, warningMsgs, wsParams: this.wsparams, disableAutoSelect: true };

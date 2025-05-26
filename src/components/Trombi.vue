@@ -5,7 +5,7 @@
                     :src="photoURL" class="img-responsive">
             </div>
             <div class="text">
-                {{person.supannListeRouge ? "Personne sur liste rouge" : person.displayName}}
+                {{person.displayName}}
             </div>
       </maybe-router-link>
 </template>
@@ -22,7 +22,6 @@ export default {
     photoURL() { return config.photoURL(props.person) },
     title() {
         const person = props.person;
-        if (person.supannListeRouge) return '';
 
         let lines = [person.displayName];
         lines.push(... (person['supannRoleEntite-all'] || []).map(role => role.role));

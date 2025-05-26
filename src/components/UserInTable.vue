@@ -2,10 +2,10 @@
  <tr class="UserInTable">
         <td>
           <div class="imgCircle">
-            <img :title="person.supannListeRouge ? '': person.displayName" :src="person.photoURL" class="img-responsive">
+            <img :title="person.displayName" :src="person.photoURL" class="img-responsive">
           </div>
         </td>
-        <td class="col-md-3" v-if="!person.supannListeRouge">
+        <td class="col-md-3">
               <h2>{{person.supannCivilite}} {{person.displayName}}</h2>
               <div v-for="role in person['supannRoleEntite-all']">{{role.role}}
                  <router-link :to="withParam(role.structure.businessCategory === 'location' ? 'site' : 'affectation', role.structure.key)" :title="role.structure.description">{{role.structure.name}}</router-link>
@@ -17,16 +17,6 @@
               <div v-for="activite in person_activites_cats.various" v-if="!has_staff_and_activitesUP1">{{activite['name-gender'] || activite.name}}</div>
               <div v-for="info in person.info">{{info}}</div>
               <router-link :to="withUser(person)" class="btn btn-primary" title="Afficher la fiche" v-if="person.mail">Fiche détaillée</router-link>
-        </td>
-          <td colspan="2" v-else>
-              <span v-if="!connected">
-                <span class="text-warning">Seuls les personnels de l'université peuvent voir cette personne.</span>
-                <br>
-                <a class="btn btn-primary" :href="connectedHref($route)"> Connexion </a>
-              </span>
-              <span v-else>
-                <span class="text-warning">Cette personne est sur la liste rouge.</span>
-              </span>
         </td>
 
         <td class="infoUser">
