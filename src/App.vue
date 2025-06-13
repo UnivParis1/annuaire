@@ -25,7 +25,7 @@
               <span v-for="aff in usefulAffiliationsGrouped">
                 <li :class="aff == query.affiliation ? 'selected' : 'deselected'">
                   <router-link :to="withParam('affiliation', aff)">
-                    {{t("STATUS_" + aff)}}
+                    {{affiliation_to_text(aff)}}
                     </router-link>
                     <router-link :to="withParam('affiliation', undefined)" v-if="aff == query.affiliation">
                      <span class="badge"><my-icon name='remove'/></span>

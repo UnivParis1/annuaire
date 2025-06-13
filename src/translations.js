@@ -10,7 +10,8 @@ export default {
         "STATUS_teacher|researcher|emeritus": "Enseignant / Chercheur",
         STATUS_staff: "Personnel Biatpss",
         STATUS_emeritus: "Professeur émérite",
-        STATUS_student:"Étudiant",
+        connected_STATUS_student:"Étudiant",
+        STATUS_student:"Doctorant",
         STATUS_alum:"Ancien étudiant",
 
         STATUS_teachers: "Enseignants",

@@ -11,7 +11,9 @@ export default {
     photoURL: (person) => "https://userphoto.univ-paris1.fr/" + "?uid=" + person.uid + "&penpalAffiliation=" + (connected ? "loggedUser" : "anonymous"),
     orgChart_hidden_structures: [ "COV1", "EA_2474", "UR_EXT", "CV7_3" ],
 
-    usefulAffiliationsGrouped: ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ],
+    usefulAffiliationsGrouped: connected ? 
+        ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ] :
+        ['teacher|researcher', 'staff', 'emeritus', 'student' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
     searchMaxResult: (query) => connected ? (query.format === 'trombi' ? 1000 : 100) : 5,
 

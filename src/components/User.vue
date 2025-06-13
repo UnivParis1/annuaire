@@ -50,7 +50,7 @@
               <div class="info" v-for="info in person.info" v-if="has_staff_and_activitesUP1">{{info}}</div>
             <div class="affiliations">
               <span v-for="(aff, index) in statusPers">
-                <span>{{index ? ', ' : ''}}{{t(aff)}}</span>
+                <span>{{index ? ', ' : ''}}{{affiliation_to_text(aff)}}</span>
               </span>
             </div>
             <div class="supannActivite">
@@ -190,7 +190,7 @@ const computeStatusPers = (person) => {
     }
     // remove duplicates (from eduPersonPrimaryAffiliation or teacher/researcher)
     affs = helpers.uniqBy(affs, aff=>aff)
-    return affs.map(a => "STATUS_" + a);
+    return affs;
 };
 
 async function compute_affectationsWithParents(person) {

@@ -7,6 +7,21 @@ export default {
     },
   },
   methods: {
+    translateWithFallback(...keys) {
+        let key
+        for (key of keys) {
+            const text = this.t(key)
+            if (text !== key) return text
+        }
+        // fallback on last key
+        return key
+    },
+    affiliation_to_text(aff) {
+        return this.translateWithFallback(...[
+            ...config.connected ? ["connected_STATUS_" + aff] : [],
+            "STATUS_" + aff,
+        ])
+    },
     routerResolveFullHref(location, wantPublic) {
         const a = document.createElement('a');
         a.href = this.$router.resolve(location).href;
