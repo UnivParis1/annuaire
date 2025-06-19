@@ -76,6 +76,24 @@ export let getActivite = (key) => (
     wsgroupsJsonp("/search", { token: key, kinds: 'supannActivite', maxRows: 1 }).then(r => r.supannActivite[0])
 );
 
+export let searchPersonsAttrs = (view) => {
+    let attrs = 'uid,displayName,mail,info,eduPersonPrimaryAffiliation,supannCivilite,employeeType,supannActivite-all'
+    // unused ?
+    attrs += ',description'
+    if (view === 'Users' || view === 'User') {
+        attrs +=
+            ',telephoneNumber,supannAutreTelephone,mobile' +
+            ',supannRoleEntite-all,supannEntiteAffectation-all' +
+            ',supannEtuInscription-all'
+    }
+    if (view === 'User') {
+        attrs += 
+            ',supannEntiteAffectationPrincipale,eduPersonAffiliation' + 
+            ',buildingName,labeledURI,roomNumber,up1FloorNumber,up1RoomAccess,postalAddress'
+    }
+    return attrs
+}
+
 export let searchPersons = (wsparams) => (
     wsgroupsJsonp("/searchUser", wsparams).then(persons => (
       persons.map(p => {
@@ -86,7 +104,7 @@ export let searchPersons = (wsparams) => (
 );
 
 export const searchPerson = (wsparams) => (
-    searchPersons({ maxRows: 1, ...wsparams }).then(persons => persons[0])
+    searchPersons({ maxRows: 1, attrs: searchPersonsAttrs('User'), ...wsparams }).then(persons => persons[0])
 )
 
 //exemple url https://wsgroups.univ-paris1.fr/getSuperGroups?key=structures-DGHA&depth=10
@@ -217,7 +235,7 @@ export const OrgChart = {
         filter_not_employeeType: 'Personnel en activité ponctuelle',
         filter_supannEntiteAffectation: affectation,
         profile_supannEntiteAffectation: affectation,
-        attrs: 'uid,displayName,mail,info,description,eduPersonPrimaryAffiliation,supannCivilite,employeeType,supannActivite-all',
+        attrs: searchPersonsAttrs('OrgChart'),
     });
   },
 };

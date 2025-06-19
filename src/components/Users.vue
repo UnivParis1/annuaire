@@ -81,7 +81,7 @@ import { useRouter } from 'vue-router'
 import { toComputed } from '../directives';
 
 async function _getSearchPersons({ maxRows }, queryO) {
-    let wsparams = { maxRows, CAS: config.connected, token: queryO.query.token };
+    let wsparams = { maxRows, CAS: config.connected, token: queryO.query.token, attrs: WsService.searchPersonsAttrs('Users') };
     let wsparams_many_filters = WsService.compute_wsparams_user_many_filters(queryO);
     let persons_l = await helpers.pmap(wsparams_many_filters, wsparams_filters => (
       WsService.searchPersons({ ...wsparams, ...wsparams_filters })
