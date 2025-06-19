@@ -105,8 +105,8 @@
           </div>
           <div class="address" v-if="person.buildingName || person.postalAddress">
             <span v-if="person.buildingName">
-                <label>Site :</label>
-                <span style="margin-left: 0.5em" class="uneditable-input " v-for="buildingName in person.buildingName">{{buildingName}}</span>
+                <label style="margin-right: 0.5em">Site :</label>
+                <span class="uneditable-input " v-for="(buildingName, i) in person.buildingName">{{i ? ' - ' : ''}}{{buildingName}}</span>
             </span>
             <span v-if="person.roomNumber">
               <label>Bureau :</label>
