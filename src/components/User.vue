@@ -120,12 +120,12 @@
               <span style="margin-left: 0.5em" class="uneditable-input" v-for="up1FloorNumber in person.up1FloorNumber">{{up1FloorNumber}}</span>
             </span>
             <span v-if="person.postalAddress">
-              <span>
-                <span class="postalAddress">{{person.postalAddress}}</span>
-                <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + person.postalAddress" title="Afficher la carte" target="_blank">
+              <div style="margin-bottom: 5px" v-for="postalAddress in person.postalAddress">
+                <span class="postalAddress">{{postalAddress}}</span>
+                <span><a :href="'http://maps.google.fr/maps?t=m&amp;z=16&amp;q=' + postalAddress" title="Afficher la carte" target="_blank">
                   <my-icon name="mapMarker"/></a>
                 </span>
-              </span>
+              </div>
             </span>
           </div>
         </div>
