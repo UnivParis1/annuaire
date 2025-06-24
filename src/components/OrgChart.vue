@@ -211,6 +211,7 @@ import { watch, watchEffect, ref, computed } from 'vue';
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
      tree = WsService.group_roles_may_handle_gender(tree, { prefer_short_name : true });
      if (['PR', 'UP1'].includes(tree.key) && isPresidentOuAdministrateurProvisoire(tree.roles[0])) {
+       // la personne avec le rôle PR/UP1 de plus haut poids est president (ou admin provisoire)
        (parent ?? tree).top_role = tree.roles[0]
      }
 
