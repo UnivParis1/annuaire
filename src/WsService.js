@@ -235,6 +235,7 @@ export const OrgChart = {
         filter_not_employeeType: 'Personnel en activité ponctuelle',
         filter_supannEntiteAffectation: affectation,
         profile_supannEntiteAffectation: affectation,
+        profile_required: true, // ignore users which do not have the wanted affectation
         attrs: searchPersonsAttrs('OrgChart'),
     });
   },
