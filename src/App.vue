@@ -94,7 +94,7 @@ export default {
       //console.log('set_autocomplete_wsparams', this.query);
       if (!this.queryO) return undefined;
       const wsparams_filters = WsService.compute_wsparams_user_filters(this.queryO);
-      let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", group_attrs: "businessCategory", CAS: config.connected }
+      let wsparams = { kinds: 'users,groups,supannRoleGenerique,supannActivite', filter_category: "structures|diploma", with_organization: true, group_attrs: "businessCategory", CAS: config.connected }
       return { ...wsparams, ...wsparams_filters }
     },
     placeholder() {
