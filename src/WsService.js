@@ -48,7 +48,7 @@ const group_roles_handle_gender = (roles, opts) => {
   }
 }
 
-export const group_roles_may_handle_gender = (group, opts = {}) => {
+export const group_roles_may_handle_gender = async (group, opts = {}) => {
     if (group.roles) {
       group_roles_handle_gender(group.roles, opts);
     }

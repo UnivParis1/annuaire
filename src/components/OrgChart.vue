@@ -202,25 +202,25 @@ import { watch, watchEffect, ref, computed } from 'vue';
     )
  )
 
- function initTree(tree, depth, parent) {
+ async function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
      tree.depth = depth;
      tree.key = WsService.simple_structureKey(tree.key);
      tree.fullname = tree.name;
      tree.prio = tree.up1Flags?.[0]?.match(/^\{PRIO\}(.*)/)?.[1]
      tree.name = tree.name.replace(/^[\wÀ-ú. -]*?\s: /i, '')
-     tree = WsService.group_roles_may_handle_gender(tree, { prefer_short_name : true });
+     tree = await WsService.group_roles_may_handle_gender(tree, { prefer_short_name : true });
      if (['PR', 'UP1'].includes(tree.key) && isPresidentOuAdministrateurProvisoire(tree.roles[0])) {
        // la personne avec le rôle PR/UP1 de plus haut poids est president (ou admin provisoire)
        (parent ?? tree).top_role = tree.roles[0]
      }
 
      let max_depth = depth;
-     tree.subGroups?.forEach(e => {
+     for (const e of tree.subGroups ?? []) {
          e.parentKey = tree.key;
-         initTree(e, depth+1, tree);
+         await initTree(e, depth+1, tree);
          max_depth = Math.max(max_depth, e.max_depth)
-     });
+     }
      // hide some structures
      if (tree.subGroups) tree.subGroups = tree.subGroups.filter(e => (
          !config.orgChart_hidden_structures.includes(e.key) && // en attendant d'avoir un flag qui nous disent lesquelles sans avoir une liste en dur ici
@@ -254,7 +254,7 @@ let withSubGroups = async (e) => {
 
     e.subGroups = subGroups;
     e.roles = (await WsService.getGroupFromStruct('UP1')).roles
-    initTree(e, e.depth);
+    await initTree(e, e.depth);
 
     // si pas de président, afficher une boite vide (GLPI UP1#181444)
     e.top_role ??= { displayName: '                                    ', supannRoleGenerique: [' '] }
