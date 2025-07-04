@@ -52,6 +52,10 @@ export const group_roles_may_handle_gender = async (group, opts = {}) => {
     if (group.roles) {
       group_roles_handle_gender(group.roles, opts);
     }
+    if (group.businessCategory === 'organization') {
+        // de façon dérogatoire, afficher les personnes dans toutes les sous-structures (en ignorant les structures incluses ou non)
+        group.flatNonIncludedSubGroups = getAllNonIncludedSubStructures(await getSubStructures(group.rawKey))
+    }
     return group;
 };
 
@@ -163,6 +167,20 @@ export const getAllSubStructures = (tree) => {
   return r;
 }
 
+const getAllNonIncludedSubStructures = (subGroups) => {
+  let r = [];
+  function getSubs(l) {
+    for (const tree of l || []) {
+        if (!tree.up1Flags?.includes("included")) {
+            r.push(tree);
+            getSubs(tree.subGroups)
+        }
+    }
+  }
+  getSubs(subGroups);
+  return r
+}
+
 export let getDiploma = (diploma) => (
     wsgroupsJsonp("/searchGroup", {filter_category:'diploma', token: diploma, maxRows: 1 }).then(l => l && l[0])
 );
@@ -208,9 +226,16 @@ export function compute_wsparams_user_many_filters(queryO) {
           return [wsparams];
       } else {
         const group = queryO.affectation;
+        const filter_member_of_group = 
+            (group.flatNonIncludedSubGroups ?? [group]).filter(g => (
+                // simplify the search: there is no use searching people in organization structures
+                g.businessCategory !== 'organization'
+            )).map(g => (
+                "groups-employees." + g.businessCategory + "." + simple_structureKey(g.key)
+            )).join('|')
 
         return [
-          { ...wsparams, filter_member_of_group: "groups-employees." + group.businessCategory + "." + affectation },
+          { ...wsparams, filter_member_of_group },
           { ...wsparams, filter_uid: group.roles.map(u => u.uid).join('|') },
         ]
       }
