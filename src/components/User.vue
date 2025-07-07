@@ -82,8 +82,8 @@
             <div class="userChartFormatLink" v-if="allow_chart">
               <router-link :to="{ query: { format: 'chart' } }">Organigramme individuel</router-link>
             </div>
-            <div class="mail">
-                <a :href="'mailto:' + person.mail" target="_blank">{{person.mail}}</a>
+            <div class="mail" v-for="mail in [person.mail, ...person.supannAutreMail || [] ]">
+                <a :href="'mailto:' + mail" target="_blank">{{mail}}</a>
             </div>
             <div class="phoneNumbers" v-if="person.telephoneNumber || person.supannAutreTelephone || person.mobile">
               <div v-if="person.telephoneNumber">

@@ -92,6 +92,7 @@ export let searchPersonsAttrs = (view) => {
     }
     if (view === 'User') {
         attrs += 
+            ',supannAutreMail' +
             ',supannEntiteAffectationPrincipale,eduPersonAffiliation' + 
             ',buildingName,labeledURI,roomNumber,up1FloorNumber,up1RoomAccess,postalAddress-multi'
     }
