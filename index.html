@@ -18,7 +18,7 @@
       }
 
       if (connected)
-        window.prolongation_ENT_args = { current: 'annuaire',delegateAuth: true, onload: function (pE) {
+        window.prolongation_ENT_args = { current: 'annuaire', mfa: true, delegateAuth: true, onload: function (pE) {
           resolve_loggedUser({ validApps: pE.validApps, uid: pE.DATA.user });
         } };
       else
