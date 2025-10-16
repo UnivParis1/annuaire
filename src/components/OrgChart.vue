@@ -17,7 +17,11 @@
   <ul>
     <li style="flex-grow: 1;"></li>
     <li>
+    
+      <!-- début du bloc président + rôles sur UP1 -->
       <div class="div_depth1">
+
+        <!-- à gauche -->
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.left" :class="{ onlyOne: e1_roles.left.length === 1 }">
                 <span class="bloc members">
@@ -28,6 +32,8 @@
                 <div class="verticalBottomRight" v-if="i < e1_roles.left.length - 1"></div>
             </li>
         </ul>
+
+        <!-- bloc avec la présidente + sous la présidence -->
         <div class="depth1_col2">
          <div></div> <!-- padding -->
          <div>
@@ -40,7 +46,7 @@
             </span>
          </div>
 
-        <span class="depth1_roles_below" v-if="e1_roles.below.length">
+         <span class="depth1_roles_below" v-if="e1_roles.below.length">
           <div></div>
           <ul>
             <li v-for="(b,i) in e1_roles.below">
@@ -50,10 +56,12 @@
                 </span>
             </li>
           </ul>
-        </span>
+         </span>
         
          <div class="vertBelow" :class="{ with_role_below: e1_roles.below.length }"></div>
         </div>
+
+        <!-- à droite -->
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.right" :class="{ onlyOne: e1_roles.right.length === 1 }">
                 <span class="bloc members">
@@ -64,7 +72,8 @@
                 <div class="verticalBottom" v-if="i < e1_roles.right.length - 1"></div>
             </li>
         </ul>
-      </div>
+      </div><!-- fin du bloc président + rôles sur UP1 -->
+
       <OrgChartLevel2 :el="el" :displayAll="displayAll" :query="query">
         <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
         <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
