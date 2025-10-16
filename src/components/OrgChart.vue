@@ -25,8 +25,10 @@
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.left" :class="{ onlyOne: e1_roles.left.length === 1 }">
                 <span class="bloc members">
-                    {{b.role['name-gender']}}<br>
-                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}
+                    <template v-for="user in b.users"><br>
+                        <maybe-router-link :to="withUser(user)">{{user.displayName}}</maybe-router-link>
+                    </template>
                 </span>
                 <div class="verticalTopRight" v-if="i > 0"></div>
                 <div class="verticalBottomRight" v-if="i < e1_roles.left.length - 1"></div>
@@ -51,8 +53,10 @@
           <ul>
             <li v-for="(b,i) in e1_roles.below">
                 <span class="bloc members">
-                    {{b.role['name-gender']}}<br>
-                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}
+                    <template v-for="user in b.users"><br>
+                        <maybe-router-link :to="withUser(user)">{{user.displayName}}</maybe-router-link>
+                    </template>
                 </span>
             </li>
           </ul>
@@ -65,8 +69,10 @@
         <ul class="depth1_roles vertical">
             <li v-for="(b,i) in e1_roles.right" :class="{ onlyOne: e1_roles.right.length === 1 }">
                 <span class="bloc members">
-                    {{b.role['name-gender']}}<br>
-                    <maybe-router-link :to="withUser(b.user)">{{b.user.displayName}}</maybe-router-link>
+                    {{b.role['name-gender']}}
+                    <template v-for="user in b.users"><br>
+                        <maybe-router-link :to="withUser(user)">{{user.displayName}}</maybe-router-link>
+                    </template>
                 </span>
                 <div class="verticalTop" v-if="i > 0"></div>
                 <div class="verticalBottom" v-if="i < e1_roles.right.length - 1"></div>
@@ -204,6 +210,22 @@ import { MaybeRouterLink, toComputed, asyncComputed } from '../directives';
 import helpers from '../helpers';
 import config from "../config";
 import { watch, watchEffect, ref, computed } from 'vue';
+
+// [1,1,1,1] => 2 (pour diviser en [1,1] et [1,1])
+// [3,1,1,1] => 1 (pour diviser en [3] et [1,1,1])
+// [2,1,1,1] => 1 (pour diviser en [2] et [1,1,1]) car préférence à moins de choses à gauche !
+function separer_en_deux_avec_ponderation(l, by) {
+    const total = helpers.sum(l, by)
+    let i = 0
+    let left = []
+    while (true) {
+        const next_pond = by(l[0])
+        if (i + next_pond / 2 >= total / 2) break;
+        i += next_pond
+        left.push(l.shift())
+    }
+    return [left, l]
+}
 
  const isPresidentOuAdministrateurProvisoire = (user) => (
     user?.['supannRoleGenerique-all']?.some(role => 
@@ -387,11 +409,14 @@ export default {
                     l.push({ user, role })
              }
          }
+         l = Object.values(helpers.groupBy(l, one => one.role.name)).map(grouped => ({ role: grouped[0].role, users: grouped.map(one => one.user) }))
          let below; [below, l] = helpers.partition(l, e => e.role.name.match(/Direct.* général.* des services/))
 
          l = helpers.sortBy(l, (e) => (e.role.weight || '{PRIO}999') + ":" + e.role.name)
-         const half = Math.floor(l.length / 2)
-         return { left: l.slice(0, half), right: l.slice(half), below }
+
+         // on veut que les blocs soient correctement répartis, en gérant que certains blocs sont plus haut que d'autres
+         const [left, right] = separer_en_deux_avec_ponderation(l, e => 1 + e.users.length)
+         return { left, right, below }
      },
      display_secondary_bloc() { return el.value?.e3?.members?.length > 0 },
      no_secondary_bloc() { return el.value?.e3?.members?.length === 0 },

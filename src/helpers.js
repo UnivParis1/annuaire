@@ -132,7 +132,7 @@ export default {
   },
 
   /* cf https://lodash.com/docs/#groupBy */
-  /*groupBy(l, by) {
+  groupBy(l, by) {
     let r = {};
     for (let e of l) {
         let v = by(e);
@@ -142,7 +142,15 @@ export default {
         r[v].push(e);
     }
     return r;
-  },*/
+  },
+
+  sum(l, by) {
+    let i = 0;
+    for (const e of l) {
+        i += by(e)
+    }
+    return i
+  },
 
   guess_affectation_gender(name) {
     let short = name;
