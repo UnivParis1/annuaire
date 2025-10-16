@@ -381,13 +381,14 @@ export default {
      e3_index()  { return el.value.l3?.indexOf(el.value.e3) },
      e1_roles() { 
          let l = []
-         let below = []
          for (const user of el.value?.e1.roles) {
              if (props.displayAll || user.mail === props.query.token)
                 for (const role of user['supannRoleGenerique-all']) {
-                    (role.name.match(/Direct.* général.* des services/) ? below : l).push({ user, role })
+                    l.push({ user, role })
              }
          }
+         let below; [below, l] = helpers.partition(l, e => e.role.name.match(/Direct.* général.* des services/))
+
          l = helpers.sortBy(l, (e) => (e.role.weight || '{PRIO}999') + ":" + e.role.name)
          const half = Math.floor(l.length / 2)
          return { left: l.slice(0, half), right: l.slice(half), below }
