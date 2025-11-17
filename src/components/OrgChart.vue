@@ -218,11 +218,13 @@ function separer_en_deux_avec_ponderation(l, by) {
     const total = helpers.sum(l, by)
     let i = 0
     let left = []
-    while (true) {
-        const next_pond = by(l[0])
-        if (i + next_pond / 2 >= total / 2) break;
-        i += next_pond
-        left.push(l.shift())
+    if (l.length) {
+        while (true) {
+            const next_pond = by(l[0])
+            if (i + next_pond / 2 >= total / 2) break;
+            i += next_pond
+            left.push(l.shift())
+        }
     }
     return [left, l]
 }
