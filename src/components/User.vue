@@ -224,9 +224,12 @@ export default {
     })
     const person = computed(() => searchPerson.value && searchPerson.value.person)
     const person_activites_cats = computed(() => activitesByCategory(person.value, true))
+    const affectationsWithParents = asyncComputed(async () => { // wsGroup[][];
+        return person.value ? compute_affectationsWithParents(person.value) : [];
+    })
 
    return {
-     person, person_activites_cats,
+     person, person_activites_cats, affectationsWithParents,
    ...toComputed({
     error() { return searchPerson.value && searchPerson.value.error },
 
@@ -241,9 +244,6 @@ export default {
             person.value?.['supannEntiteAffectation-all']?.some(affectation => affectation.name && !config.orgChart_hidden_structures.includes(affectation.key))
     },
    }),
-    affectationsWithParents: asyncComputed(async () => { // wsGroup[][];
-        return person.value ? compute_affectationsWithParents(person.value) : [];
-    }),
     allow_comptex_annuaire: asyncComputed(async () => {
         const personAffectation = person.value.supannEntiteAffectationPrincipale
         if (!personAffectation ||
