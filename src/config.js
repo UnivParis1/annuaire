@@ -15,7 +15,7 @@ export default {
         ['teacher|researcher', 'staff', 'emeritus', 'student', 'alum' ] :
         ['teacher|researcher', 'staff', 'emeritus', 'student' ],
     usefulAffiliations: ['teacher', 'researcher', 'staff', 'emeritus', 'student', 'alum' ],
-    searchMaxResult: (query) => connected ? (query.format === 'trombi' || query.affectation ? 1000 : 100) : 5,
+    searchMaxResult: (query) => connected ? (query.affectation ? 1000 : 100) : 5,
 
     slides: [
         /*{
