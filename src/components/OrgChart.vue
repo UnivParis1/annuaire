@@ -355,7 +355,7 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, e => (e.businessCategory === 'organization' ? "1" : "2") + e.fullname), e3)
 
     // le niveau 3b est affiché verticalement, c'est une 2e colonne à droite du niveau 3
-    const l3b_ = e3.max_depth >= 7 && e3.subGroups
+    const l3b_ = e3.subGroups?.find(e => e?.businessCategory === 'organization') && e3.subGroups
     const e3b = l3b_ && sel.shift() || {}
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5, e6 ] = [...sel, {}, {}, {} ]
