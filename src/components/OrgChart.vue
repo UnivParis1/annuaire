@@ -80,6 +80,7 @@
         </ul>
       </div><!-- fin du bloc président + rôles sur UP1 -->
 
+      <!-- niveaux 2 et 2b -->
       <OrgChartLevel2 :el="el" :displayAll="displayAll" :query="query">
         <div class="horizLeftBelow" v-if="el.l3" ref="magic_line_2to3"></div>
         <div class="horizLeftBelow" v-if="!el.e3.key && el.l4" ref="magic_line_2to4"></div>
@@ -91,6 +92,7 @@
   </div>
 
   <div class="secondPane" ref="secondPane_elt" v-if="el.l3 || el.l4" :class="{ display_secondary_bloc }">
+   <!-- niveau 3 : vertical -->
    <div class="vertical" v-if="el.l3">
      <transition-group name="flip-list" tag="ul">
         <li class="withBorder" key="__withBorder__"></li>
@@ -119,6 +121,7 @@
      </transition-group>
    </div>
 
+   <!-- niveau 3b : vertical, 2e colonne à droite du niveau 3 -->
    <div class="secondPane secondPaneB" v-if="el.l3b" :class="{ display_secondary_bloc }">
     <div class="vertical" v-if="el.l3">
       <transition-group name="flip-list" tag="ul">
@@ -147,6 +150,7 @@
      </div>
    </div>
 
+   <!-- niveau 4, horizontal -->
    <div class="tree thirdPane" v-if="el.l4">
        <div class="empty4" :class="{ empty4WithBorder: el.e3.key }"></div>
        <div style="position: relative">
@@ -160,6 +164,8 @@
                  <members :structure="e" :onlyRoles="el.e5.key" :query="query" v-if="e === el.e4 || displayAll"></members>
                <div v-if="e.subGroups && (displayAll || e === el.e4 && el.e5.key)">
                  <ul>
+
+                   <!-- niveau 5, inclus dans la boite du la structure niveau 4 -->
                    <li v-for="e in e.subGroups" :class="[ e === el.e5 ? 'selectedElt' : nonSelectedEltClass ]">
                        <div class="verticalTop"></div>
                        <div class="verticalBottom"></div>
@@ -333,8 +339,13 @@ const moveOneFirst = (list, e) => {
 function compute_eX_lX(e1, sel, { displayAll }) {
     const l2 = helpers.sortBy(e1.subGroups.filter(e => e.businessCategory !== "council"), ['external','prio', 'name'])
     const e2 = sel.shift() || {}
+
+    // le niveau 2b est affiché horizontalement, comme le niveau 2
     const l2b = e2.subGroups?.find(e => e?.businessCategory === 'organization') && helpers.sortBy(e2.subGroups, ['prio', 'name'])
     const e2b = l2b && sel.shift() || {}
+
+    // le niveau 3 est affiché verticalement
+    // NB : si les sous-structures de niveau 3 sont "included", l3 n'est pas utilisé, et l3i est affiché en niveau 4
     let [ l3i, l3_ ] = helpers.partition((l2b ? e2b : e2).subGroups || [], e => e.up1Flags?.includes("included"))
     if (l3_.length === 0 && l3i.find(e => e.subGroups)) {
         // on a que des niveaux 3 à mettre au niveau 4, MAIS certains sont complexes, donc on met tout au niveau 3
@@ -342,10 +353,14 @@ function compute_eX_lX(e1, sel, { displayAll }) {
     }
     const e3 = sel[0] && l3_.find(e => e.key === sel[0].key) && sel.shift() || {}
     const l3 = l3_.length && moveOneFirst(helpers.sortBy(l3_, e => (e.businessCategory === 'organization' ? "1" : "2") + e.fullname), e3)
+
+    // le niveau 3b est affiché verticalement, c'est une 2e colonne à droite du niveau 3
     const l3b_ = e3.max_depth >= 7 && e3.subGroups
     const e3b = l3b_ && sel.shift() || {}
     const l3b = l3b_ && moveOneFirst(helpers.sortBy(l3b_, ['fullname']), e3b)
     const [ e4, e5, e6 ] = [...sel, {}, {}, {} ]
+
+    // le niveau 4 est affiché horizontalement
     const l4_ = (displayAll || e4.key) && (l3b ? e3b : e3).subGroups || !e3.key && l3i.length && l3i || []
     l4_.forEach(e => e.name_ = e.up1Flags?.includes('no-chart-title') ? '' : e.businessCategory === 'research' ? e.fullname : e.name)
     const l4 = l4_.length && helpers.sortBy(l4_, e => e.name_ === '' ? 'xxx' : e.name_)
