@@ -149,7 +149,7 @@ export default {
           return config.connected;
       },
       allow_chart() {
-          return !config.orgChart_hidden_structures.includes(props.query.affectation)
+          return !state.queryO.value?.affectation?.up1Flags?.includes('no-chart-display')
       },
       slides() {
           return helpers.shuffle(...config.slides);

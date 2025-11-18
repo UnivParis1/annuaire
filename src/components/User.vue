@@ -240,8 +240,11 @@ export default {
     user_vcard_url() { return config.wsgroupsURL + "/searchUser?format=vcard&CAS=" + config.connected + "&token=" + userMail.value },
     config() { return config; },
     allow_chart() {
+          // NB: we can not use person['supannEntiteAffectation-all'] because it does not contain up1Flags
+          // since we already affectationsWithParents, we can use it:
+          const affectations = affectationsWithParents.value?.map(withParents => withParents[0])
           return helpers.intersection(person.value.eduPersonAffiliation, [ "staff", "faculty", "emeritus" ]).length &&
-            person.value?.['supannEntiteAffectation-all']?.some(affectation => affectation.name && !config.orgChart_hidden_structures.includes(affectation.key))
+            affectations?.some(affectation => affectation.name && !affectation.up1Flags?.includes('no-chart-display'))
     },
    }),
     allow_comptex_annuaire: asyncComputed(async () => {

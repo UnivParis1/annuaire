@@ -256,7 +256,7 @@ function separer_en_deux_avec_ponderation(l, by) {
      }
      // hide some structures
      if (tree.subGroups) tree.subGroups = tree.subGroups.filter(e => (
-         !config.orgChart_hidden_structures.includes(e.key) && // en attendant d'avoir un flag qui nous disent lesquelles sans avoir une liste en dur ici
+         !e.up1Flags?.includes('no-chart-display') &&
          !(e.businessCategory === 'organization' && !e.subGroups?.length) // cacher les coquilles vides
      ))
      tree.max_depth = max_depth
