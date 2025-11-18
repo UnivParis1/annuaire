@@ -235,6 +235,18 @@ function separer_en_deux_avec_ponderation(l, by) {
     )
  )
 
+function hide_some_structures(subGroups) {
+    return subGroups.flatMap(e => (
+        e.up1Flags?.includes('no-chart-display') ? 
+            // si la structure n'est pas une feuille, on affiche directement les enfants, comme si la structure n'existait pas
+            hide_some_structures(e.subGroups ?? []) :
+        // cacher les coquilles vides
+        (e.businessCategory === 'organization' && !e.subGroups?.length) ? [] : 
+        // on conserve la structure
+        [e]
+    ))
+}
+
  async function initTree(tree, depth, parent) {
      tree.members = undefined; // init for vuejs
      tree.depth = depth;
@@ -248,17 +260,17 @@ function separer_en_deux_avec_ponderation(l, by) {
        (parent ?? tree).top_role = tree.roles[0]
      }
 
+     if (tree.subGroups) {
+        // NB : on cache les structures AVANT d'appeler en récursion initTree : pour que "depth" et "max_depth" ait la valeur APRES suppression des structures cachées
+        tree.subGroups = hide_some_structures(tree.subGroups)
+     }
+
      let max_depth = depth;
      for (const e of tree.subGroups ?? []) {
          e.parentKey = tree.key;
          await initTree(e, depth+1, tree);
          max_depth = Math.max(max_depth, e.max_depth)
      }
-     // hide some structures
-     if (tree.subGroups) tree.subGroups = tree.subGroups.filter(e => (
-         !e.up1Flags?.includes('no-chart-display') &&
-         !(e.businessCategory === 'organization' && !e.subGroups?.length) // cacher les coquilles vides
-     ))
      tree.max_depth = max_depth
  }
 
